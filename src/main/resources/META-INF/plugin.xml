@@ -1,15 +1,21 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.tbusk.valajetbrainsplugin</id>
-    <name>vala-jetbrains-plugin</name>
+    <id>com.tbusk.vala_plugin</id>
+    <name>Vala</name>
     <vendor>tbusk</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.tbusk.valajetbrainsplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.tbusk.valajetbrainsplugin.startup.MyProjectActivity" />
+        <fileType name="Vala File"
+                  implementationClass="language.ValaFileType"
+                  fieldName="INSTANCE"
+                  language="Vala"
+                  extensions="vala"/>
+        <lang.parserDefinition language="Vala"
+                               implementationClass="com.tbusk.vala_plugin.ValaParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory language="Vala"
+                                       implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
     </extensions>
 </idea-plugin>
