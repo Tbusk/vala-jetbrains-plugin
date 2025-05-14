@@ -8,7 +8,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Vala File"
-                  implementationClass="language.ValaFileType"
+                  implementationClass="com.tbusk.vala_plugin.language.ValaFileType"
                   fieldName="INSTANCE"
                   language="Vala"
                   extensions="vala"/>

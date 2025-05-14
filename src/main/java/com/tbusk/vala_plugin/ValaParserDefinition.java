@@ -11,8 +11,8 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.tbusk.vala_plugin.psi.ValaTypes;
-import language.ValaFile;
-import language.ValaLanguage;
+import com.tbusk.vala_plugin.language.ValaFile;
+import com.tbusk.vala_plugin.language.ValaLanguage;
 import org.jetbrains.annotations.NotNull;
 
 public class ValaParserDefinition implements ParserDefinition {

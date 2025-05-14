@@ -1,4 +1,4 @@
-package language;
+package com.tbusk.vala_plugin.language;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import com.intellij.openapi.util.NlsContexts;

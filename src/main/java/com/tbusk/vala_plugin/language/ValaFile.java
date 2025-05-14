@@ -1,4 +1,4 @@
-package language;
+package com.tbusk.vala_plugin.language;
 
 import com.intellij.extapi.psi.PsiFileBase;
 import com.intellij.openapi.fileTypes.FileType;
