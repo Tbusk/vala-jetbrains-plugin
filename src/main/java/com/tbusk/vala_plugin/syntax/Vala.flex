@@ -69,6 +69,23 @@ FALSE="false"
 STRUCT="struct"
 ENUM="enum"
 VAR="var"
+CLASS_DECLARATION="class"
+INTERFACE_DECLARATION="interface"
+CONST="const"
+
+// access modifiers
+PUBLIC="public"
+PRIVATE="private"
+PROTECTED="protected"
+STATIC="static"
+INTERNAL="internal"
+ABSTRACT="abstract"
+OVERRIDE="override"
+VIRTUAL="virtual"
+UNOWNED="unowned"
+VOID="void"
+NULL="null"
+CRITICAL="critical"
 
 COMMENT="//"[^\r\n]*
 BLOCK_COMMENT="/*"([^*]|"*"+[^*/])*"*"+"/"
@@ -113,9 +130,27 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     {BOOL}        { return ValaTypes.BOOL; }
     {TRUE}        { return ValaTypes.TRUE; }
     {FALSE}       { return ValaTypes.FALSE; }
-    {STRUCT}      { return ValaTypes.STRUCT; }
-    {ENUM}        { return ValaTypes.ENUM; }
+    {STRUCT}      { return ValaTypes.STRUCT_DECLARATION; }
+    {ENUM}        { return ValaTypes.ENUM_DECLARATION; }
     {VAR}         { return ValaTypes.VAR; }
+    {CLASS_DECLARATION} { return ValaTypes.CLASS_DECLARATION; }
+    {INTERFACE_DECLARATION} { return ValaTypes.INTERFACE_DECLARATION; }
+    {CONST}       { return ValaTypes.CONST; }
+    {VOID}        { return ValaTypes.VOID; }
+    {NULL}        { return ValaTypes.NULL; }
+    {CRITICAL}    { return ValaTypes.CRITICAL; }
+
+
+    // Access Modifiers
+    {PUBLIC}      { return ValaTypes.PUBLIC; }
+    {PRIVATE}     { return ValaTypes.PRIVATE; }
+    {PROTECTED}   { return ValaTypes.PROTECTED; }
+    {STATIC}      { return ValaTypes.STATIC; }
+    {INTERNAL}    { return ValaTypes.INTERNAL; }
+    {ABSTRACT}    { return ValaTypes.ABSTRACT; }
+    {OVERRIDE}    { return ValaTypes.OVERRIDE; }
+    {VIRTUAL}     { return ValaTypes.VIRTUAL; }
+    {UNOWNED}       { return ValaTypes.UNOWNED; }
 
     // Other tokens
     {IDENTIFIER}       { return ValaTypes.IDENTIFIER; }

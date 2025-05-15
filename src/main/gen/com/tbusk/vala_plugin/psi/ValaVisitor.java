@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class ValaVisitor extends PsiElementVisitor {
 
+  public void visitAccessModifiers(@NotNull ValaAccessModifiers o) {
+    visitPsiElement(o);
+  }
+
   public void visitComments(@NotNull ValaComments o) {
     visitPsiElement(o);
   }

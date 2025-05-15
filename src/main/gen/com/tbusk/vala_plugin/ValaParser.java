@@ -36,6 +36,28 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // PUBLIC | PROTECTED | PRIVATE | INTERNAL | STATIC | ABSTRACT | OVERRIDE | VIRTUAL | UNOWNED | VOID | NULL | CRITICAL
+  public static boolean access_modifiers(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "access_modifiers")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, ACCESS_MODIFIERS, "<access modifiers>");
+    r = consumeToken(b, PUBLIC);
+    if (!r) r = consumeToken(b, PROTECTED);
+    if (!r) r = consumeToken(b, PRIVATE);
+    if (!r) r = consumeToken(b, INTERNAL);
+    if (!r) r = consumeToken(b, STATIC);
+    if (!r) r = consumeToken(b, ABSTRACT);
+    if (!r) r = consumeToken(b, OVERRIDE);
+    if (!r) r = consumeToken(b, VIRTUAL);
+    if (!r) r = consumeToken(b, UNOWNED);
+    if (!r) r = consumeToken(b, VOID);
+    if (!r) r = consumeToken(b, NULL);
+    if (!r) r = consumeToken(b, CRITICAL);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
   // COMMENT | DOC_COMMENT | BLOCK_COMMENT
   public static boolean comments(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "comments")) return false;
@@ -50,7 +72,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // CHAR | UCHAR | UNICHAR | INT | UINT | LONG | ULONG | SHORT | USHORT | INT8 | INT16 | INT32 | INT64 |
-  //     UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | STRUCT | ENUM | VAR
+  //     UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | VAR | CONST
   public static boolean data_types(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "data_types")) return false;
     boolean r;
@@ -77,9 +99,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
-    if (!r) r = consumeToken(b, STRUCT);
-    if (!r) r = consumeToken(b, ENUM);
     if (!r) r = consumeToken(b, VAR);
+    if (!r) r = consumeToken(b, CONST);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -153,7 +174,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // comments | statement | if_statement | while_statement | for_statement |
-  //     function_declaration | class_declaration | namespace_statement | using_statement  | return_statement |
+  //     function_declaration | class_declaration | interface_declaration | struct_declaration | enum_declaration | namespace_statement | using_statement  | return_statement |
   //     try_statement
   static boolean valid_expressions(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "valid_expressions")) return false;
@@ -165,6 +186,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, FOR_STATEMENT);
     if (!r) r = consumeToken(b, FUNCTION_DECLARATION);
     if (!r) r = consumeToken(b, CLASS_DECLARATION);
+    if (!r) r = consumeToken(b, INTERFACE_DECLARATION);
+    if (!r) r = consumeToken(b, STRUCT_DECLARATION);
+    if (!r) r = consumeToken(b, ENUM_DECLARATION);
     if (!r) r = consumeToken(b, NAMESPACE_STATEMENT);
     if (!r) r = consumeToken(b, USING_STATEMENT);
     if (!r) r = consumeToken(b, RETURN_STATEMENT);

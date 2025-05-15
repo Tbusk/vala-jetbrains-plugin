@@ -15,7 +15,7 @@
 
 root ::= valid_expressions*
 private valid_expressions ::= (comments | statement | if_statement | while_statement | for_statement |
-    function_declaration | class_declaration | namespace_statement | using_statement  | return_statement |
+    function_declaration | class_declaration | interface_declaration | struct_declaration | enum_declaration | namespace_statement | using_statement  | return_statement |
     try_statement)
 
 comments ::=  COMMENT | DOC_COMMENT | BLOCK_COMMENT
@@ -23,6 +23,8 @@ comments ::=  COMMENT | DOC_COMMENT | BLOCK_COMMENT
 statement ::= (IDENTIFIER | STRING | NUMBER | tokens) ";"?
 
 data_types ::= (CHAR | UCHAR | UNICHAR | INT | UINT | LONG | ULONG | SHORT | USHORT | INT8 | INT16 | INT32 | INT64 |
-    UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | STRUCT | ENUM | VAR )
+    UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | VAR | CONST )
 
-private tokens ::= WHITE_SPACE | SEMICOLON | COMMA | DOT | LPAREN | RPAREN | LBRACE | RBRACE | PLUS | LBRACKET | RBRACKET | EQUALS | GREATER_THAN | LESS_THAN | MULTIPLY | DIVIDE | MINUS
+access_modifiers ::= (PUBLIC | PROTECTED | PRIVATE | INTERNAL | STATIC | ABSTRACT | OVERRIDE | VIRTUAL | UNOWNED | VOID | NULL | CRITICAL )
+
+private tokens ::= ( WHITE_SPACE | SEMICOLON | COMMA | DOT | LPAREN | RPAREN | LBRACE | RBRACE | PLUS | LBRACKET | RBRACKET | EQUALS | GREATER_THAN | LESS_THAN | MULTIPLY | DIVIDE | MINUS )

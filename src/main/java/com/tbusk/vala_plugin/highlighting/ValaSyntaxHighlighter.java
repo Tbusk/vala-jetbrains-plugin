@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tbusk.vala_plugin.psi.ValaTypes.IF_STATEMENT;
 
 public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
 
@@ -24,6 +23,9 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey IDENTIFIER = TextAttributesKey.createTextAttributesKey("IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
     public static final TextAttributesKey KEYWORD = TextAttributesKey.createTextAttributesKey("KEYWORDS", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey OPERATIONS = TextAttributesKey.createTextAttributesKey("OPERATIONS", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey BRACKETS = TextAttributesKey.createTextAttributesKey("BRACKETS", DefaultLanguageHighlighterColors.BRACKETS);
+    public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("NUMBER", DefaultLanguageHighlighterColors.NUMBER);
 
     private static final TextAttributesKey[] LINE_COMMENT_KEYS = new TextAttributesKey[]{LINE_COMMENT};
     private static final TextAttributesKey[] BLOCK_COMMENT_KEYS = new TextAttributesKey[]{BLOCK_COMMENT};
@@ -34,16 +36,21 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
     private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEYWORD};
     private static final TextAttributesKey[] OPERATIONS_KEYS = new TextAttributesKey[]{OPERATIONS};
+    private static final TextAttributesKey[] BRACKETS_KEYS = new TextAttributesKey[]{BRACKETS};
+    private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
+    private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
 
-    private static final HashMap<IElementType, TextAttributesKey[]> tokenHighlightMap = new HashMap<>(Map.ofEntries(
+    private static final HashMap<IElementType, TextAttributesKey[]> tokenHighlightMap = new HashMap<>(Map.<IElementType, TextAttributesKey[]>ofEntries(
             Map.entry(ValaTypes.COMMENT, LINE_COMMENT_KEYS),
             Map.entry(ValaTypes.BLOCK_COMMENT, BLOCK_COMMENT_KEYS),
             Map.entry(ValaTypes.DOC_COMMENT, DOC_COMMENT_KEYS),
             Map.entry(ValaTypes.SEMICOLON, SEMICOLON_KEYS),
             Map.entry(ValaTypes.LPAREN, PARENTHESIS_KEYS),
             Map.entry(ValaTypes.RPAREN, PARENTHESIS_KEYS),
+            Map.entry(ValaTypes.LBRACE, BRACKETS_KEYS),
+            Map.entry(ValaTypes.RBRACE, BRACKETS_KEYS),
             Map.entry(ValaTypes.IDENTIFIER, IDENTIFIER_KEYS),
-            Map.entry(IF_STATEMENT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.IF_STATEMENT, KEYWORD_KEYS),
             Map.entry(ValaTypes.FOR_STATEMENT, KEYWORD_KEYS),
             Map.entry(ValaTypes.WHILE_STATEMENT, KEYWORD_KEYS),
             Map.entry(ValaTypes.NAMESPACE_STATEMENT, KEYWORD_KEYS),
@@ -78,10 +85,26 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
             Map.entry(ValaTypes.BOOL, KEYWORD_KEYS),
             Map.entry(ValaTypes.TRUE, KEYWORD_KEYS),
             Map.entry(ValaTypes.FALSE, KEYWORD_KEYS),
-            Map.entry(ValaTypes.STRUCT, KEYWORD_KEYS),
-            Map.entry(ValaTypes.ENUM, KEYWORD_KEYS),
-            Map.entry(ValaTypes.VAR, KEYWORD_KEYS)
-
+            Map.entry(ValaTypes.STRUCT_DECLARATION, KEYWORD_KEYS),
+            Map.entry(ValaTypes.ENUM_DECLARATION, KEYWORD_KEYS),
+            Map.entry(ValaTypes.VAR, KEYWORD_KEYS),
+            Map.entry(ValaTypes.CLASS_DECLARATION, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INTERFACE_DECLARATION, KEYWORD_KEYS),
+            Map.entry(ValaTypes.CONST, KEYWORD_KEYS),
+            Map.entry(ValaTypes.PUBLIC, KEYWORD_KEYS),
+            Map.entry(ValaTypes.PRIVATE, KEYWORD_KEYS),
+            Map.entry(ValaTypes.PROTECTED, KEYWORD_KEYS),
+            Map.entry(ValaTypes.ABSTRACT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.VIRTUAL, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INTERNAL, KEYWORD_KEYS),
+            Map.entry(ValaTypes.STATIC, KEYWORD_KEYS),
+            Map.entry(ValaTypes.OVERRIDE, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UNOWNED, KEYWORD_KEYS),
+            Map.entry(ValaTypes.VOID, KEYWORD_KEYS),
+            Map.entry(ValaTypes.NULL, KEYWORD_KEYS),
+            Map.entry(ValaTypes.STRING, STRING_KEYS),
+            Map.entry(ValaTypes.NUMBER, NUMBER_KEYS),
+            Map.entry(ValaTypes.CRITICAL, KEYWORD_KEYS)
     ));
 
     @NotNull
