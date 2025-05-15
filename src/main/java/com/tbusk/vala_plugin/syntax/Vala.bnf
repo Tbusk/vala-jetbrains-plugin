@@ -11,20 +11,154 @@
     elementTypeHolderClass="com.tbusk.vala_plugin.psi.ValaTypes"
     elementTypeClass="com.tbusk.vala_plugin.psi.ValaElementType"
     tokenTypeClass="com.tbusk.vala_plugin.psi.ValaTokenType"
+
+    tokens=[
+        SEMICOLON=";"
+        COMMA=","
+        DOT="."
+        LPAREN="("
+        RPAREN=")"
+        LBRACE="{"
+        RBRACE="}"
+        LBRACKET="["
+        RBRACKET="]"
+        AT="@"
+        QUESTION_MARK="?"
+        COLON=":"
+        EQUALS="="
+        PLUS="+"
+        MINUS="-"
+        MULTIPLY="*"
+        DIVIDE="/"
+        INCREMENT="++"
+        DECREMENT="--"
+        MODULO="%"
+        PLUS_EQUALS="+="
+        MINUS_EQUALS="-="
+        MULTIPLY_EQUALS="*="
+        DIVIDE_EQUALS="/="
+        MODULO_EQUALS="%="
+        AND="&&"
+        OR="||"
+        NOT="!"
+        DOUBLE_EQUALS="=="
+        NOT_EQUALS="!="
+    ]
 }
 
-root ::= valid_expressions*
-private valid_expressions ::= (comments | statement | if_statement | while_statement | for_statement |
-    function_declaration | class_declaration | interface_declaration | struct_declaration | enum_declaration | namespace_statement | using_statement  | return_statement |
-    try_statement)
+root ::= items*
+
+private items ::= (
+    comments | statement | method_declaration | namespace_statement | using_statement | class_declaration
+)*
 
 comments ::=  COMMENT | DOC_COMMENT | BLOCK_COMMENT
 
-statement ::= (IDENTIFIER | STRING | NUMBER | tokens) ";"?
+variable_types ::= (
+    CHAR | UCHAR | UNICHAR | INT | UINT | LONG | ULONG | SHORT | USHORT | INT8 | INT16 | INT32 | INT64 |
+        UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | STRING
+)
 
-data_types ::= (CHAR | UCHAR | UNICHAR | INT | UINT | LONG | ULONG | SHORT | USHORT | INT8 | INT16 | INT32 | INT64 |
-    UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | VAR | CONST )
+value_types ::= (
+    CHAR | UCHAR | UNICHAR | INT | UINT | LONG | ULONG | SHORT | USHORT | INT8 | INT16 | INT32 | INT64 |
+    UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | VAR | NULL | REFERENCE | POINTER |
+    STRING
+)
 
-access_modifiers ::= (PUBLIC | PROTECTED | PRIVATE | INTERNAL | STATIC | ABSTRACT | OVERRIDE | VIRTUAL | UNOWNED | VOID | NULL | CRITICAL )
+return_types ::= (
+    VOID | [value_types]
+)
 
-private tokens ::= ( WHITE_SPACE | SEMICOLON | COMMA | DOT | LPAREN | RPAREN | LBRACE | RBRACE | PLUS | LBRACKET | RBRACKET | EQUALS | GREATER_THAN | LESS_THAN | MULTIPLY | DIVIDE | MINUS )
+class_access_modifiers ::= (
+    PUBLIC | PROTECTED | PRIVATE
+)
+
+method_access_modifiers ::= (
+    PUBLIC | PROTECTED | PRIVATE
+)
+
+variable_access_modifiers ::= (
+    PUBLIC | PROTECTED | PRIVATE
+)
+
+modifiers ::= (
+    INTERNAL | STATIC | ABSTRACT | OVERRIDE | VIRTUAL | UNOWNED
+)
+
+misc_keywords ::= (
+    CRITICAL
+)
+
+operators ::= (
+    PLUS | MULTIPLY | DIVIDE | MINUS | INCREMENT | DECREMENT | MODULO
+)
+
+assignments ::= (
+    PLUS_EQUALS | MINUS_EQUALS | MULTIPLY_EQUALS | DIVIDE_EQUALS | MODULO_EQUALS
+)
+
+checks ::= (
+    AND | OR | NOT | EQUALS | GREATER_THAN | LESS_THAN | GREATER_THAN_EQUALS | LESS_THAN_EQUALS |
+    DOUBLE_EQUALS | NOT_EQUALS
+)
+
+bitwise ::= (
+    BITWISE_AND | BITWISE_OR | BITWISE_XOR | BITWISE_NOT | BITWISE_SHIFT_LEFT | BITWISE_SHIFT_RIGHT |
+    BITWISE_SHIFT_LEFT_EQUALS | BITWISE_SHIFT_RIGHT_EQUALS | BITWISE_OR_EQUALS | BITWISE_AND_EQUALS |
+    BITWISE_XOR_EQUALS
+)
+
+private tokens ::= (
+    WHITE_SPACE | SEMICOLON | COMMA | DOT | LPAREN | RPAREN | LBRACE | RBRACE | LBRACKET | RBRACKET |
+    AT | QUESTION_MARK | COLON
+)
+
+// Data Structures
+data_structures ::= (
+    class_declaration | interface_declaration | struct_declaration | enum_declaration
+)
+
+// Expressions
+expression ::= (
+    if_statement | while_statement | for_statement | try_statement | switch_statement | break_statement |
+    default_statement | case_statement | assert_statement | return_statement | continue_statement
+)
+
+// Standard Elements
+statement ::= (IDENTIFIER | STRING_LITERAL | NUMBER | tokens) ";"?
+statement_expression ::= expression semicolon ';'*
+private condition ::= expression
+private block_or_statement ::= block | statement
+private block ::= LBRACE statement* RBRACE
+
+// namespace declaration
+namespace_statement ::= NAMESPACE IDENTIFIER LBRACE expression* RBRACE
+
+// using statement
+using_statement ::= USING IDENTIFIER (AS IDENTIFIER)? SEMICOLON
+
+// class declaration
+class_declaration ::= class_access_modifiers? modifiers CLASS IDENTIFIER [type_parameters] [inheritance_list]
+    [COMMA interface_list] LBRACE class_member* RBRACE
+private type_parameters ::= LESS_THAN IDENTIFIER (COMMA IDENTIFIER)* GREATER_THAN
+private inheritance_list ::= COLON IDENTIFIER type_arguments*
+private interface_list ::= IDENTIFIER type_arguments (COMMA IDENTIFIER type_arguments)*
+private type_arguments ::= LESS_THAN (IDENTIFIER | value_types) (COMMA (IDENTIFER | value_types))* GREATER_THAN
+private class_member ::= field_declaration | method_declaration | constructor_declaration | property_declaration | class_declaration
+
+// method declaration
+method_declaration ::= [access_modifiers] [modifiers] return_types IDENTIFIER LPAREN parameter_list RPAREN [block_or_statement]
+private parameter_list ::= (parameter_declaration (COMMA parameter_declaration)*)?
+private parameter_declaration ::= variable_types IDENTIFIER
+
+// if statement
+private if_statement ::= IF_STATEMENT [WHITE_SPACE] LPAREN condition RPAREN then_branch [else_branch]
+private then_branch ::= block_or_statement
+private else_branch ::= else (if_statement|block_or_statement)
+
+// for loop
+private for_statement ::= FOR_STATEMENT [WHITE_SPACE] LPAREN (for_c_style | for_each_style) RPAREN block_or_statement
+private for_c_style ::= [init_statement] ";" [condition] ";" [iteration]
+private for_each_style ::= (IDENTIFIER | declaration) (IN | OF) expression
+private init_statement ::= declaration | statement_expression
+private iteration ::= statement_expression
