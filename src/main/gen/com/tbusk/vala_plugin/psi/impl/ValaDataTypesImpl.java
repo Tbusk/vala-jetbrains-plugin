@@ -11,32 +11,20 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaEnumMemberImpl extends ASTWrapperPsiElement implements ValaEnumMember {
+public class ValaDataTypesImpl extends ASTWrapperPsiElement implements ValaDataTypes {
 
-  public ValaEnumMemberImpl(@NotNull ASTNode node) {
+  public ValaDataTypesImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitEnumMember(this);
+    visitor.visitDataTypes(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ValaVisitor) accept((ValaVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIntegerLiteral() {
-    return findNotNullChildByType(INTEGER_LITERAL);
   }
 
 }

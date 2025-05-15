@@ -36,12 +36,12 @@ public class ValaParserDefinition implements ParserDefinition {
 
     @Override
     public @NotNull TokenSet getCommentTokens() {
-        return TokenSet.EMPTY;
+        return ValaTokenSets.COMMENTS;
     }
 
     @Override
     public @NotNull TokenSet getStringLiteralElements() {
-        return TokenSet.EMPTY;
+        return ValaTokenSets.STRINGS;
     }
 
     @Override

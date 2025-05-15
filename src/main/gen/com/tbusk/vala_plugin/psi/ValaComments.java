@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaNamespaceDeclaration extends PsiElement {
-
-  @NotNull
-  List<ValaDeclaration> getDeclarationList();
-
-  @NotNull
-  ValaQualifiedName getQualifiedName();
+public interface ValaComments extends PsiElement {
 
 }

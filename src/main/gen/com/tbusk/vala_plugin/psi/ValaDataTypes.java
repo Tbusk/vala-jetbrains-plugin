@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaParameter extends PsiElement {
-
-  @Nullable
-  ValaType getType();
-
-  @NotNull
-  PsiElement getIdentifier();
+public interface ValaDataTypes extends PsiElement {
 
 }

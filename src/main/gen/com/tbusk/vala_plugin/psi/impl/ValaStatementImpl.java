@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaFunctionBodyImpl extends ASTWrapperPsiElement implements ValaFunctionBody {
+public class ValaStatementImpl extends ASTWrapperPsiElement implements ValaStatement {
 
-  public ValaFunctionBodyImpl(@NotNull ASTNode node) {
+  public ValaStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitFunctionBody(this);
+    visitor.visitStatement(this);
   }
 
   @Override

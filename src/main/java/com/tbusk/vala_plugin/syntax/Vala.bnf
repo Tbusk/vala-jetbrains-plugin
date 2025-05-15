@@ -11,117 +11,18 @@
     elementTypeHolderClass="com.tbusk.vala_plugin.psi.ValaTypes"
     elementTypeClass="com.tbusk.vala_plugin.psi.ValaElementType"
     tokenTypeClass="com.tbusk.vala_plugin.psi.ValaTokenType"
-
-    tokens=[
-            NAMESPACE="namespace"
-            CLASS="class"
-            INTERFACE="interface"
-            STRUCT="struct"
-            ENUM="enum"
-            DELEGATE="delegate"
-            PUBLIC="public"
-            PRIVATE="private"
-            PROTECTED="protected"
-            INTERNAL="internal"
-            STATIC="static"
-            VIRTUAL="virtual"
-            ABSTRACT="abstract"
-            OVERRIDE="override"
-            ASYNC="async"
-            VOID="void"
-            NEW="new"
-            THIS="this"
-            BASE="base"
-            TRY="try"
-            CATCH="catch"
-            FINALLY="finally"
-            IF="if"
-            ELSE="else"
-            SWITCH="switch"
-            CASE="case"
-            DEFAULT="default"
-            FOR="for"
-            FOREACH="foreach"
-            WHILE="while"
-            DO="do"
-            BREAK="break"
-            CONTINUE="continue"
-            RETURN="return"
-            UNOWNED="unowned"
-
-            SEMICOLON=";"
-            COLON=":"
-            COMMA=","
-            DOT="."
-            LPAREN="("
-            RPAREN=")"
-            LBRACE="{"
-            RBRACE="}"
-            LBRACKET="["
-            RBRACKET="]"
-            EQUALS="="
-            PLUS="+"
-            MINUS="-"
-            MULTIPLY="*"
-            DIVIDE="/"
-            MODULO="%"
-            EQUALS_OP="=="
-            NOT_EQUALS="!="
-            GREATER=">"
-            LESS="<"
-            GREATER_EQUAL=">="
-            LESS_EQUAL="<="
-            AND="&&"
-            OR="||"
-            NOT="!"
-            LAMBDA_ARROW="=>"
-            NULL_COALESCE="??"
-            NULL_CONDITIONAL="?."
-
-            IDENTIFIER="regexp:[a-zA-Z_][a-zA-Z0-9_]*"
-            INTEGER_LITERAL="regexp:\d+"
-            FLOAT_LITERAL="regexp:\d+\.\d+"
-            STRING_LITERAL="regexp:\"([^\"\\\n]|\\[^\n])*\""
-            CHAR_LITERAL="regexp:'([^'\\\n]|\\[^\n])'"
-            BOOL_LITERAL="true|false"
-
-            LINE_COMMENT="regexp://[^\r\n]*"
-            BLOCK_COMMENT="regexp:/\*(.|\n)*?\*/"
-            DOC_COMMENT="regexp:///[^\r\n]*|/\*\*(.|\n)*?\*/"
-
-            WHITESPACE="WHITE_SPACE"
-    ]
 }
 
-valaFile ::= namespace_declaration*
+root ::= valid_expressions*
+private valid_expressions ::= (comments | statement | if_statement | while_statement | for_statement |
+    function_declaration | class_declaration | namespace_statement | using_statement  | return_statement |
+    try_statement)
 
-namespace_declaration ::= 'namespace' qualifiedName '{' declaration* '}'
-modifier ::= 'public' | 'private' | 'unowned' | 'protected' | 'internal' | 'static' | 'virtual' | 'abstract' | 'override'
+comments ::=  COMMENT | DOC_COMMENT | BLOCK_COMMENT
 
-declaration ::= class_declaration | interface_declaration | struct_declaration | enum_declaration | delegate_declaration
+statement ::= (IDENTIFIER | STRING | NUMBER | tokens) ";"?
 
-class_declaration ::= modifier* 'class' IDENTIFIER type_parameters? (':' base_list)? '{' class_member* '}'
+data_types ::= (CHAR | UCHAR | UNICHAR | INT | UINT | LONG | ULONG | SHORT | USHORT | INT8 | INT16 | INT32 | INT64 |
+    UINT8 | UINT16 | UINT32 | UINT64 | FLOAT | DOUBLE | BOOL | TRUE | FALSE | STRUCT | ENUM | VAR )
 
-type_parameters ::= '<' type (',' type)* '>'
-type ::= IDENTIFIER | qualifiedName | 'void' | 'int' | 'float' | 'string' | 'char' | 'bool'
-
-interface_declaration ::= modifier* 'interface' IDENTIFIER type_parameters? (':' base_list)? '{' interface_member* '}'
-struct_declaration ::= modifier* 'struct' IDENTIFIER type_parameters? (':' base_list)? '{' struct_member* '}'
-enum_declaration ::= modifier* 'enum' IDENTIFIER '{' enum_member* '}'
-delegate_declaration ::= modifier* 'delegate' IDENTIFIER '(' parameter_list ')' (':' base_list)? '{' delegate_member* '}'
-class_member ::= modifier* (function_declaration | variable_declaration | property_declaration)
-interface_member ::= modifier* (function_declaration | variable_declaration | property_declaration)
-struct_member ::= modifier* (function_declaration | variable_declaration | property_declaration)
-enum_member ::= IDENTIFIER '=' INTEGER_LITERAL
-delegate_member ::= modifier* (function_declaration | variable_declaration | property_declaration)
-function_declaration ::= modifier* IDENTIFIER '(' parameter_list ')' (':' type)? '{' function_body '}'
-variable_declaration ::= modifier* IDENTIFIER (':' type)? '=' expression ';'
-property_declaration ::= modifier* IDENTIFIER (':' type)? '=' expression ';'
-parameter_list ::= parameter (',' parameter)*
-parameter ::= IDENTIFIER (':' type)?
-base_list ::= qualifiedName (',' qualifiedName)*
-function_body ::= (statement | expression)*
-
-qualifiedName ::= IDENTIFIER ('.' IDENTIFIER)*
-
-property ::= IDENTIFIER (':' type)? '=' expression ';'
+private tokens ::= WHITE_SPACE | SEMICOLON | COMMA | DOT | LPAREN | RPAREN | LBRACE | RBRACE | PLUS | LBRACKET | RBRACKET | EQUALS | GREATER_THAN | LESS_THAN | MULTIPLY | DIVIDE | MINUS

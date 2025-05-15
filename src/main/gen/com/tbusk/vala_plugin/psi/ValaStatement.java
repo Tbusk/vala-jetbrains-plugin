@@ -5,9 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaBaseList extends PsiElement {
-
-  @NotNull
-  List<ValaQualifiedName> getQualifiedNameList();
+public interface ValaStatement extends PsiElement {
 
 }

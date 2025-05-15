@@ -19,8 +19,6 @@ class ValaLexer implements FlexLexer {
 
   /** lexical states */
   public static final int YYINITIAL = 0;
-  public static final int WAITING_VALUE = 2;
-  public static final int IN_COMMENT = 4;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -29,7 +27,7 @@ class ValaLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = {
-     0,  0,  1,  1,  2, 2
+     0, 0
   };
 
   /**
@@ -38,7 +36,7 @@ class ValaLexer implements FlexLexer {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\37\u0100\1\u0200\u10df\u0100";
+    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -66,12 +64,19 @@ class ValaLexer implements FlexLexer {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\1\3\1\4\1\5\22\0\1\1"+
-    "\11\0\1\6\4\0\1\7\125\0\1\3\u01a2\0\2\3"+
-    "\326\0";
+    "\11\0\1\1\1\2\2\3\1\2\22\0\1\1\1\0"+
+    "\1\4\5\0\1\5\1\6\1\7\1\10\1\11\1\12"+
+    "\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\15"+
+    "\1\22\1\15\1\23\1\15\1\0\1\24\1\25\1\26"+
+    "\1\27\2\0\32\30\1\31\1\32\1\33\1\0\1\34"+
+    "\1\0\1\35\1\36\1\37\1\40\1\41\1\42\1\43"+
+    "\1\44\1\45\2\30\1\46\1\47\1\50\1\51\1\52"+
+    "\1\30\1\53\1\54\1\55\1\56\1\57\2\30\1\60"+
+    "\1\30\1\61\1\0\1\62\7\0\1\3\u01a2\0\2\3"+
+    "\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[768];
+    int [] result = new int[1024];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -95,11 +100,21 @@ class ValaLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\3\0\1\1\1\2\1\1\2\3\1\0\1\4\1\0"+
-    "\1\5";
+    "\1\0\1\1\1\2\1\1\1\3\1\4\1\5\1\6"+
+    "\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16"+
+    "\1\17\1\20\1\21\1\22\15\20\1\23\1\24\1\0"+
+    "\1\25\2\0\1\26\1\13\12\20\1\27\1\30\14\20"+
+    "\2\0\12\20\1\30\1\31\6\20\1\32\6\20\1\33"+
+    "\3\0\1\34\1\35\1\20\1\36\1\20\1\27\1\20"+
+    "\1\37\7\20\1\40\1\41\4\20\1\42\1\20\1\43"+
+    "\4\20\1\34\1\44\1\20\1\45\1\20\1\46\1\20"+
+    "\1\47\1\50\1\51\2\20\1\52\1\20\1\53\3\20"+
+    "\1\54\1\55\2\20\1\56\1\57\3\20\1\60\1\61"+
+    "\1\62\1\63\1\64\1\20\1\65\1\30\1\20\1\66"+
+    "\1\20\1\67";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[12];
+    int [] result = new int[163];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -124,11 +139,30 @@ class ValaLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\10\0\20\0\30\0\40\0\50\0\60\0\40"+
-    "\0\70\0\100\0\110\0\30";
+    "\0\0\0\63\0\146\0\231\0\63\0\63\0\63\0\63"+
+    "\0\63\0\63\0\63\0\314\0\377\0\63\0\63\0\63"+
+    "\0\63\0\u0132\0\63\0\63\0\u0165\0\u0198\0\u01cb\0\u01fe"+
+    "\0\u0231\0\u0264\0\u0297\0\u02ca\0\u02fd\0\u0330\0\u0363\0\u0396"+
+    "\0\u03c9\0\63\0\63\0\231\0\63\0\u03fc\0\u042f\0\u0462"+
+    "\0\u0495\0\u04c8\0\u04fb\0\u052e\0\u0561\0\u0594\0\u05c7\0\u05fa"+
+    "\0\u062d\0\u0660\0\u0693\0\u0132\0\u06c6\0\u06f9\0\u072c\0\u075f"+
+    "\0\u0792\0\u07c5\0\u07f8\0\u082b\0\u085e\0\u0891\0\u08c4\0\u08f7"+
+    "\0\u092a\0\u095d\0\u0990\0\u09c3\0\u09f6\0\u0a29\0\u0a5c\0\u0a8f"+
+    "\0\u0ac2\0\u0af5\0\u0b28\0\u0b5b\0\u0b8e\0\u0bc1\0\u0bf4\0\u0c27"+
+    "\0\u0c5a\0\u0c8d\0\u0cc0\0\u0cf3\0\u0d26\0\u0132\0\u0d59\0\u0d8c"+
+    "\0\u0dbf\0\u0df2\0\u0e25\0\u0e58\0\u0132\0\u0e8b\0\u0ebe\0\u0ef1"+
+    "\0\u0ebe\0\u0132\0\u0f24\0\u0132\0\u0f57\0\u0ac2\0\u0f8a\0\u0132"+
+    "\0\u0fbd\0\u0ff0\0\u1023\0\u1056\0\u1089\0\u10bc\0\u10ef\0\u0132"+
+    "\0\u0132\0\u1122\0\u1155\0\u1188\0\u11bb\0\u0132\0\u11ee\0\u1221"+
+    "\0\u1254\0\u1287\0\u12ba\0\u12ed\0\63\0\63\0\u1320\0\u0132"+
+    "\0\u1353\0\u0132\0\u1386\0\u0132\0\u0132\0\u0132\0\u13b9\0\u13ec"+
+    "\0\u0132\0\u141f\0\u0132\0\u1452\0\u1485\0\u14b8\0\u0132\0\u0132"+
+    "\0\u14eb\0\u151e\0\u0132\0\u0132\0\u1551\0\u1584\0\u15b7\0\u0132"+
+    "\0\u0132\0\u0132\0\u0132\0\u0132\0\u15ea\0\u0132\0\u0132\0\u161d"+
+    "\0\u0132\0\u1650\0\u0132";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[12];
+    int [] result = new int[163];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -151,14 +185,123 @@ class ValaLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\4\5\5\1\4\1\6\1\4\1\7\1\10\1\5"+
-    "\1\10\1\5\3\4\5\5\2\4\11\0\5\5\10\0"+
-    "\1\11\1\12\1\0\2\7\1\5\1\7\1\5\2\0"+
-    "\6\11\1\13\1\11\2\12\1\0\2\12\1\0\2\12"+
-    "\6\11\1\13\1\14";
+    "\1\2\2\3\1\2\1\4\1\5\1\6\1\7\1\10"+
+    "\1\11\1\12\1\13\1\14\7\15\1\16\1\17\1\20"+
+    "\1\21\1\22\1\23\1\2\1\24\1\2\1\22\1\25"+
+    "\1\26\1\27\1\30\1\31\2\22\1\32\1\33\1\22"+
+    "\1\34\2\22\1\35\1\36\1\37\1\40\1\41\1\22"+
+    "\1\42\1\43\64\0\2\3\60\0\4\44\1\45\25\44"+
+    "\1\46\30\44\7\0\1\47\4\0\1\50\61\0\1\51"+
+    "\1\0\7\15\54\0\7\22\4\0\1\22\3\0\25\22"+
+    "\17\0\7\22\4\0\1\22\3\0\15\22\1\52\7\22"+
+    "\17\0\7\22\4\0\1\22\3\0\1\22\1\53\6\22"+
+    "\1\54\14\22\17\0\7\22\4\0\1\22\3\0\15\22"+
+    "\1\55\7\22\17\0\7\22\4\0\1\22\3\0\12\22"+
+    "\1\56\1\22\1\57\10\22\17\0\7\22\4\0\1\22"+
+    "\3\0\1\22\1\60\7\22\1\61\1\62\2\22\1\63"+
+    "\7\22\17\0\7\22\4\0\1\22\3\0\6\22\1\64"+
+    "\5\22\1\65\10\22\17\0\7\22\4\0\1\22\3\0"+
+    "\15\22\1\66\7\22\17\0\7\22\4\0\1\22\3\0"+
+    "\1\22\1\67\23\22\17\0\7\22\4\0\1\22\3\0"+
+    "\5\22\1\70\17\22\17\0\7\22\4\0\1\22\3\0"+
+    "\10\22\1\71\10\22\1\72\3\22\17\0\7\22\4\0"+
+    "\1\22\3\0\17\22\1\73\5\22\17\0\7\22\4\0"+
+    "\1\22\3\0\3\22\1\74\5\22\1\75\1\76\1\22"+
+    "\1\77\3\22\1\100\4\22\17\0\7\22\4\0\1\22"+
+    "\3\0\1\22\1\101\23\22\2\0\2\44\2\0\57\44"+
+    "\7\102\1\103\53\102\2\50\1\0\60\50\15\0\7\51"+
+    "\54\0\7\22\4\0\1\22\3\0\15\22\1\104\7\22"+
+    "\17\0\7\22\4\0\1\22\3\0\21\22\1\105\3\22"+
+    "\17\0\7\22\4\0\1\22\3\0\1\22\1\106\23\22"+
+    "\17\0\7\22\4\0\1\22\3\0\22\22\1\107\2\22"+
+    "\17\0\7\22\4\0\1\22\3\0\20\22\1\110\4\22"+
+    "\17\0\7\22\4\0\1\22\3\0\4\22\1\111\15\22"+
+    "\1\112\2\22\17\0\7\22\4\0\1\22\3\0\12\22"+
+    "\1\113\12\22\17\0\7\22\4\0\1\22\3\0\14\22"+
+    "\1\114\10\22\17\0\7\22\4\0\1\22\3\0\15\22"+
+    "\1\115\7\22\17\0\7\22\4\0\1\22\3\0\17\22"+
+    "\1\116\5\22\17\0\7\22\4\0\1\22\3\0\21\22"+
+    "\1\117\3\22\17\0\7\22\4\0\1\22\3\0\14\22"+
+    "\1\120\10\22\17\0\7\22\4\0\1\22\3\0\13\22"+
+    "\1\121\11\22\17\0\7\22\4\0\1\22\3\0\21\22"+
+    "\1\122\3\22\17\0\7\22\4\0\1\22\3\0\15\22"+
+    "\1\123\7\22\17\0\7\22\4\0\1\22\3\0\17\22"+
+    "\1\124\5\22\17\0\7\22\4\0\1\22\3\0\22\22"+
+    "\1\125\1\22\1\126\17\0\7\22\4\0\1\22\3\0"+
+    "\10\22\1\127\14\22\17\0\7\22\4\0\1\22\3\0"+
+    "\14\22\1\130\10\22\17\0\7\22\4\0\1\22\3\0"+
+    "\15\22\1\131\7\22\17\0\7\22\4\0\1\22\3\0"+
+    "\11\22\1\132\13\22\17\0\7\22\4\0\1\22\3\0"+
+    "\10\22\1\133\1\134\13\22\17\0\7\22\4\0\1\22"+
+    "\3\0\17\22\1\135\5\22\2\0\7\102\1\136\53\102"+
+    "\7\137\1\140\4\137\1\141\46\137\15\0\7\22\4\0"+
+    "\1\22\3\0\12\22\1\142\12\22\17\0\7\22\4\0"+
+    "\1\22\3\0\3\22\1\143\21\22\17\0\7\22\4\0"+
+    "\1\22\3\0\17\22\1\144\5\22\17\0\7\22\4\0"+
+    "\1\22\3\0\2\22\1\145\22\22\17\0\7\22\4\0"+
+    "\1\22\3\0\5\22\1\146\17\22\17\0\7\22\4\0"+
+    "\1\22\3\0\11\22\1\147\13\22\17\0\7\22\4\0"+
+    "\1\22\3\0\13\22\1\150\11\22\17\0\7\22\4\0"+
+    "\1\22\3\0\20\22\1\151\4\22\17\0\7\22\4\0"+
+    "\1\22\3\0\1\22\1\152\23\22\17\0\7\22\4\0"+
+    "\1\22\3\0\1\22\1\153\23\22\17\0\7\22\4\0"+
+    "\1\22\3\0\5\22\1\154\17\22\17\0\1\22\1\155"+
+    "\1\22\1\156\1\22\1\157\1\160\4\0\1\22\3\0"+
+    "\25\22\17\0\7\22\4\0\1\22\3\0\7\22\1\161"+
+    "\15\22\17\0\7\22\4\0\1\22\3\0\5\22\1\162"+
+    "\17\22\17\0\7\22\4\0\1\22\3\0\22\22\1\163"+
+    "\2\22\17\0\7\22\4\0\1\22\3\0\17\22\1\164"+
+    "\5\22\17\0\7\22\4\0\1\22\3\0\22\22\1\165"+
+    "\2\22\17\0\7\22\4\0\1\22\3\0\5\22\1\166"+
+    "\17\22\17\0\7\22\4\0\1\22\3\0\1\22\1\167"+
+    "\23\22\17\0\7\22\4\0\1\22\3\0\21\22\1\170"+
+    "\3\22\17\0\7\22\4\0\1\22\3\0\14\22\1\171"+
+    "\10\22\17\0\7\22\4\0\1\22\3\0\3\22\1\172"+
+    "\21\22\17\0\7\22\4\0\1\22\3\0\15\22\1\173"+
+    "\7\22\17\0\7\22\4\0\1\22\3\0\14\22\1\174"+
+    "\10\22\2\0\7\102\1\136\4\102\1\175\46\102\7\137"+
+    "\1\140\62\137\1\140\4\137\1\176\46\137\15\0\7\22"+
+    "\4\0\1\22\3\0\10\22\1\126\14\22\17\0\7\22"+
+    "\4\0\1\22\3\0\12\22\1\177\12\22\17\0\7\22"+
+    "\4\0\1\22\3\0\6\22\1\64\16\22\17\0\7\22"+
+    "\4\0\1\22\3\0\5\22\1\200\17\22\17\0\7\22"+
+    "\4\0\1\22\3\0\12\22\1\201\12\22\17\0\7\22"+
+    "\4\0\1\22\3\0\21\22\1\202\3\22\17\0\7\22"+
+    "\4\0\1\22\3\0\1\22\1\203\23\22\17\0\5\22"+
+    "\1\204\1\22\4\0\1\22\3\0\25\22\17\0\2\22"+
+    "\1\205\4\22\4\0\1\22\3\0\25\22\17\0\4\22"+
+    "\1\206\2\22\4\0\1\22\3\0\25\22\17\0\7\22"+
+    "\4\0\1\22\3\0\20\22\1\207\4\22\17\0\7\22"+
+    "\4\0\1\22\3\0\17\22\1\210\5\22\17\0\7\22"+
+    "\4\0\1\22\3\0\21\22\1\211\3\22\17\0\7\22"+
+    "\4\0\1\22\3\0\3\22\1\212\21\22\17\0\7\22"+
+    "\4\0\1\22\3\0\17\22\1\213\5\22\17\0\1\22"+
+    "\1\214\1\22\1\215\1\22\1\216\1\217\4\0\1\22"+
+    "\3\0\25\22\17\0\7\22\4\0\1\22\3\0\7\22"+
+    "\1\220\15\22\17\0\7\22\4\0\1\22\3\0\10\22"+
+    "\1\221\14\22\17\0\7\22\4\0\1\22\3\0\17\22"+
+    "\1\222\5\22\17\0\7\22\4\0\1\22\3\0\7\22"+
+    "\1\223\15\22\17\0\7\22\4\0\1\22\3\0\5\22"+
+    "\1\224\17\22\17\0\7\22\4\0\1\22\3\0\12\22"+
+    "\1\225\12\22\17\0\7\22\4\0\1\22\3\0\3\22"+
+    "\1\226\21\22\17\0\7\22\4\0\1\22\3\0\16\22"+
+    "\1\227\6\22\17\0\7\22\4\0\1\22\3\0\14\22"+
+    "\1\230\10\22\17\0\7\22\4\0\1\22\3\0\21\22"+
+    "\1\231\3\22\17\0\5\22\1\232\1\22\4\0\1\22"+
+    "\3\0\25\22\17\0\2\22\1\233\4\22\4\0\1\22"+
+    "\3\0\25\22\17\0\4\22\1\234\2\22\4\0\1\22"+
+    "\3\0\25\22\17\0\7\22\4\0\1\22\3\0\1\22"+
+    "\1\235\23\22\17\0\7\22\4\0\1\22\3\0\21\22"+
+    "\1\236\3\22\17\0\7\22\4\0\1\22\3\0\24\22"+
+    "\1\126\17\0\7\22\4\0\1\22\3\0\10\22\1\237"+
+    "\14\22\17\0\7\22\4\0\1\22\3\0\1\22\1\240"+
+    "\23\22\17\0\7\22\4\0\1\22\3\0\17\22\1\241"+
+    "\5\22\17\0\7\22\4\0\1\22\3\0\3\22\1\242"+
+    "\21\22\17\0\7\22\4\0\1\22\3\0\5\22\1\243"+
+    "\17\22\2\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[80];
+    int [] result = new int[5763];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -196,10 +339,12 @@ class ValaLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\3\0\1\11\4\1\1\0\1\1\1\0\1\11";
+    "\1\0\1\11\2\1\7\11\2\1\4\11\1\1\2\11"+
+    "\15\1\2\11\1\0\1\11\2\0\32\1\2\0\32\1"+
+    "\3\0\34\1\2\11\45\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[12];
+    int [] result = new int[163];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -524,27 +669,277 @@ class ValaLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             }
           // fall through
-          case 6: break;
+          case 56: break;
           case 2:
-            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
+            { return TokenType.WHITE_SPACE;
             }
           // fall through
-          case 7: break;
+          case 57: break;
           case 3:
-            { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
+            { return ValaTypes.LPAREN;
             }
           // fall through
-          case 8: break;
+          case 58: break;
           case 4:
-            { yybegin(YYINITIAL); return ValaTypes.LINE_COMMENT;
+            { return ValaTypes.RPAREN;
             }
           // fall through
-          case 9: break;
+          case 59: break;
           case 5:
-            { yybegin(YYINITIAL); return ValaTypes.DOC_COMMENT;
+            { return ValaTypes.MULTIPLY;
             }
           // fall through
-          case 10: break;
+          case 60: break;
+          case 6:
+            { return ValaTypes.PLUS;
+            }
+          // fall through
+          case 61: break;
+          case 7:
+            { return ValaTypes.COMMA;
+            }
+          // fall through
+          case 62: break;
+          case 8:
+            { return ValaTypes.MINUS;
+            }
+          // fall through
+          case 63: break;
+          case 9:
+            { return ValaTypes.DOT;
+            }
+          // fall through
+          case 64: break;
+          case 10:
+            { return ValaTypes.DIVIDE;
+            }
+          // fall through
+          case 65: break;
+          case 11:
+            { return ValaTypes.NUMBER;
+            }
+          // fall through
+          case 66: break;
+          case 12:
+            { return ValaTypes.SEMICOLON;
+            }
+          // fall through
+          case 67: break;
+          case 13:
+            { return ValaTypes.LESS_THAN;
+            }
+          // fall through
+          case 68: break;
+          case 14:
+            { return ValaTypes.EQUALS;
+            }
+          // fall through
+          case 69: break;
+          case 15:
+            { return ValaTypes.GREATER_THAN;
+            }
+          // fall through
+          case 70: break;
+          case 16:
+            { return ValaTypes.IDENTIFIER;
+            }
+          // fall through
+          case 71: break;
+          case 17:
+            { return ValaTypes.LBRACKET;
+            }
+          // fall through
+          case 72: break;
+          case 18:
+            { return ValaTypes.RBRACKET;
+            }
+          // fall through
+          case 73: break;
+          case 19:
+            { return ValaTypes.LBRACE;
+            }
+          // fall through
+          case 74: break;
+          case 20:
+            { return ValaTypes.RBRACE;
+            }
+          // fall through
+          case 75: break;
+          case 21:
+            { return ValaTypes.STRING;
+            }
+          // fall through
+          case 76: break;
+          case 22:
+            { return ValaTypes.COMMENT;
+            }
+          // fall through
+          case 77: break;
+          case 23:
+            { return ValaTypes.IF_STATEMENT;
+            }
+          // fall through
+          case 78: break;
+          case 24:
+            { return ValaTypes.FOR_STATEMENT;
+            }
+          // fall through
+          case 79: break;
+          case 25:
+            { return ValaTypes.INT;
+            }
+          // fall through
+          case 80: break;
+          case 26:
+            { return ValaTypes.TRY_STATEMENT;
+            }
+          // fall through
+          case 81: break;
+          case 27:
+            { return ValaTypes.VAR;
+            }
+          // fall through
+          case 82: break;
+          case 28:
+            { return ValaTypes.BLOCK_COMMENT;
+            }
+          // fall through
+          case 83: break;
+          case 29:
+            { return ValaTypes.BOOL;
+            }
+          // fall through
+          case 84: break;
+          case 30:
+            { return ValaTypes.CHAR;
+            }
+          // fall through
+          case 85: break;
+          case 31:
+            { return ValaTypes.ENUM;
+            }
+          // fall through
+          case 86: break;
+          case 32:
+            { return ValaTypes.INT8;
+            }
+          // fall through
+          case 87: break;
+          case 33:
+            { return ValaTypes.LONG;
+            }
+          // fall through
+          case 88: break;
+          case 34:
+            { return ValaTypes.TRUE;
+            }
+          // fall through
+          case 89: break;
+          case 35:
+            { return ValaTypes.UINT;
+            }
+          // fall through
+          case 90: break;
+          case 36:
+            { return ValaTypes.DOC_COMMENT;
+            }
+          // fall through
+          case 91: break;
+          case 37:
+            { return ValaTypes.FALSE;
+            }
+          // fall through
+          case 92: break;
+          case 38:
+            { return ValaTypes.FLOAT;
+            }
+          // fall through
+          case 93: break;
+          case 39:
+            { return ValaTypes.INT16;
+            }
+          // fall through
+          case 94: break;
+          case 40:
+            { return ValaTypes.INT32;
+            }
+          // fall through
+          case 95: break;
+          case 41:
+            { return ValaTypes.INT64;
+            }
+          // fall through
+          case 96: break;
+          case 42:
+            { return ValaTypes.SHORT;
+            }
+          // fall through
+          case 97: break;
+          case 43:
+            { return ValaTypes.UCHAR;
+            }
+          // fall through
+          case 98: break;
+          case 44:
+            { return ValaTypes.UINT8;
+            }
+          // fall through
+          case 99: break;
+          case 45:
+            { return ValaTypes.ULONG;
+            }
+          // fall through
+          case 100: break;
+          case 46:
+            { return ValaTypes.USING_STATEMENT;
+            }
+          // fall through
+          case 101: break;
+          case 47:
+            { return ValaTypes.DOUBLE;
+            }
+          // fall through
+          case 102: break;
+          case 48:
+            { return ValaTypes.RETURN_STATEMENT;
+            }
+          // fall through
+          case 103: break;
+          case 49:
+            { return ValaTypes.STRUCT;
+            }
+          // fall through
+          case 104: break;
+          case 50:
+            { return ValaTypes.UINT16;
+            }
+          // fall through
+          case 105: break;
+          case 51:
+            { return ValaTypes.UINT32;
+            }
+          // fall through
+          case 106: break;
+          case 52:
+            { return ValaTypes.UINT64;
+            }
+          // fall through
+          case 107: break;
+          case 53:
+            { return ValaTypes.USHORT;
+            }
+          // fall through
+          case 108: break;
+          case 54:
+            { return ValaTypes.UNICHAR;
+            }
+          // fall through
+          case 109: break;
+          case 55:
+            { return ValaTypes.NAMESPACE_STATEMENT;
+            }
+          // fall through
+          case 110: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

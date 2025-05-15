@@ -15,25 +15,129 @@ import com.intellij.psi.TokenType;
 %eof{ return;
 %eof}
 
-CRLF=\R
-WHITE_SPACE=[\ \n\t\f]
-SINGLE_LINE_COMMENT="//"[^\r\n]*
-MULTI_LINE_COMMENT="/*"([^*]|(\*+[^*/]))*\*+"/"
+WHITE_SPACE=[ \t\n\r]+
+IDENTIFIER=[a-zA-Z][a-zA-Z0-9_]*
+STRING=\"([^\\\"]|\\.)*\"
+NUMBER=[0-9]+(\.[0-9]*)?
+SEMICOLON=";"
+COMMA=","
+DOT="."
+LPAREN="("
+RPAREN=")"
+LBRACE="{"
+RBRACE="}"
+EQUALS="="
+LBRACKET="\["
+RBRACKET="\]"
+PLUS="\+"
+GT=">"
+LT="<"
+MINUS="-"
+MULTIPLY="\*"
+DIVIDE="/"
 
-%state WAITING_VALUE
-%state IN_COMMENT
+IF_STATEMENT="if"|"else"|"elseif"|"endif"
+FOR_STATEMENT="for"|"foreach"|"in"
+NAMESPACE_STATEMENT="namespace"
+USING_STATEMENT="using"
+TRY_STATEMENT="try"|"catch"|"finally"
+RETURN_STATEMENT="return"
+
+// Data Types
+CHAR="char"
+UCHAR="uchar"
+UNICHAR="unichar"
+INT="int"
+UINT="uint"
+LONG="long"
+ULONG="ulong"
+SHORT="short"
+USHORT="ushort"
+INT8="int8"
+INT16="int16"
+INT32="int32"
+INT64="int64"
+UINT8="uint8"
+UINT16="uint16"
+UINT32="uint32"
+UINT64="uint64"
+FLOAT="float"
+DOUBLE="double"
+BOOL="bool"
+TRUE="true"
+FALSE="false"
+STRUCT="struct"
+ENUM="enum"
+VAR="var"
+
+COMMENT="//"[^\r\n]*
+BLOCK_COMMENT="/*"([^*]|"*"+[^*/])*"*"+"/"
+DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
 
 %%
 
-<YYINITIAL> {SINGLE_LINE_COMMENT}                           { yybegin(YYINITIAL); return ValaTypes.LINE_COMMENT; }
-<YYINITIAL> {MULTI_LINE_COMMENT}                            { yybegin(YYINITIAL); return ValaTypes.DOC_COMMENT; }
+<YYINITIAL> {
+    {WHITE_SPACE}      { return TokenType.WHITE_SPACE; }
+
+    // Comments
+    {DOC_COMMENT}      { return ValaTypes.DOC_COMMENT; }
+    {BLOCK_COMMENT}    { return ValaTypes.BLOCK_COMMENT; }
+    {COMMENT}          { return ValaTypes.COMMENT; }
+
+    // Expressions
+    {IF_STATEMENT}     { return ValaTypes.IF_STATEMENT; }
+    {FOR_STATEMENT}    { return ValaTypes.FOR_STATEMENT; }
+    {NAMESPACE_STATEMENT} { return ValaTypes.NAMESPACE_STATEMENT; }
+    {USING_STATEMENT}   { return ValaTypes.USING_STATEMENT; }
+    {TRY_STATEMENT}     { return ValaTypes.TRY_STATEMENT; }
+    {RETURN_STATEMENT}  { return ValaTypes.RETURN_STATEMENT; }
+    {CHAR}        { return ValaTypes.CHAR; }
+    {UCHAR}       { return ValaTypes.UCHAR; }
+    {UNICHAR}     { return ValaTypes.UNICHAR; }
+    {INT}         { return ValaTypes.INT; }
+    {UINT}        { return ValaTypes.UINT; }
+    {LONG}        { return ValaTypes.LONG; }
+    {ULONG}       { return ValaTypes.ULONG; }
+    {SHORT}       { return ValaTypes.SHORT; }
+    {USHORT}      { return ValaTypes.USHORT; }
+    {INT8}        { return ValaTypes.INT8; }
+    {INT16}       { return ValaTypes.INT16; }
+    {INT32}       { return ValaTypes.INT32; }
+    {INT64}       { return ValaTypes.INT64; }
+    {UINT8}       { return ValaTypes.UINT8; }
+    {UINT16}      { return ValaTypes.UINT16; }
+    {UINT32}      { return ValaTypes.UINT32; }
+    {UINT64}      { return ValaTypes.UINT64; }
+    {FLOAT}       { return ValaTypes.FLOAT; }
+    {DOUBLE}      { return ValaTypes.DOUBLE; }
+    {BOOL}        { return ValaTypes.BOOL; }
+    {TRUE}        { return ValaTypes.TRUE; }
+    {FALSE}       { return ValaTypes.FALSE; }
+    {STRUCT}      { return ValaTypes.STRUCT; }
+    {ENUM}        { return ValaTypes.ENUM; }
+    {VAR}         { return ValaTypes.VAR; }
+
+    // Other tokens
+    {IDENTIFIER}       { return ValaTypes.IDENTIFIER; }
+    {STRING}           { return ValaTypes.STRING; }
+    {NUMBER}           { return ValaTypes.NUMBER; }
+    {SEMICOLON}        { return ValaTypes.SEMICOLON; }
+    {COMMA}            { return ValaTypes.COMMA; }
+    {DOT}              { return ValaTypes.DOT; }
+    {LPAREN}           { return ValaTypes.LPAREN; }
+    {RPAREN}           { return ValaTypes.RPAREN; }
+    {LBRACE}           { return ValaTypes.LBRACE; }
+    {RBRACE}           { return ValaTypes.RBRACE; }
+    {LBRACKET}         { return ValaTypes.LBRACKET; }
+    {RBRACKET}         { return ValaTypes.RBRACKET; }
+    {EQUALS}           { return ValaTypes.EQUALS; }
+    {PLUS}             { return ValaTypes.PLUS; }
+    {GT}               { return ValaTypes.GREATER_THAN; }
+    {LT}               { return ValaTypes.LESS_THAN; }
+    {MINUS}            { return ValaTypes.MINUS; }
+    {MULTIPLY}         { return ValaTypes.MULTIPLY; }
+    {DIVIDE}           { return ValaTypes.DIVIDE; }
 
 
-
-<WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
-
-<WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
-
-({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
-
-[^]                                                         { return TokenType.BAD_CHARACTER; }
+    [^]                { return TokenType.BAD_CHARACTER; }
+}
