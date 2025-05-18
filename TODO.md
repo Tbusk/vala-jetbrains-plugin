@@ -1,6 +1,21 @@
 ## To Do
 
-- [ ] Adjust lexer and parser. Add more support for syntax. fix it.
+- [ ] Add logic to require returns for non-void functions
+- [ ] Add return logic so that the return type must match what is returned
+- [ ] Add logic for static functions to not be accessed from non-static functions.
+- [ ] Add support for arrays.
+- [ ] Add support for structs.
+- [ ] Add support for switch statements.
+- [ ] Add support for if statements.
+- [ ] Add support for while statements.
+- [ ] Add support for for statements.
+- [ ] Add support for expressions.
+- [ ] Add support for operators.
+- [ ] Add support for interfaces.
+- [ ] Add support for generics.
+- [ ] Add support for types.
+- [ ] Add support for extending classes and implementing interfaces.
+- [ ] Add support for method execution.
 
 ### Links
 - https://plugins.jetbrains.com/docs/intellij/lexer-and-parser-definition.html#run-the-project
