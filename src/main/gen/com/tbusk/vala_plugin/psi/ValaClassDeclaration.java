@@ -14,12 +14,15 @@ public interface ValaClassDeclaration extends PsiElement {
   List<ValaClassDeclaration> getClassDeclarationList();
 
   @NotNull
-  List<ValaMethodDeclaration> getMethodDeclarationList();
+  PsiElement getClassDeclaration();
+
+  @Nullable
+  PsiElement getColon();
 
   @NotNull
-  ValaModifiers getModifiers();
+  PsiElement getLbrace();
 
   @NotNull
-  List<ValaValueTypes> getValueTypesList();
+  PsiElement getRbrace();
 
 }

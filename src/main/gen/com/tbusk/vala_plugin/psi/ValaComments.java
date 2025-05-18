@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaComments extends PsiElement {
 
+  @Nullable
+  PsiElement getBlockComment();
+
+  @Nullable
+  PsiElement getComment();
+
+  @Nullable
+  PsiElement getDocComment();
+
 }

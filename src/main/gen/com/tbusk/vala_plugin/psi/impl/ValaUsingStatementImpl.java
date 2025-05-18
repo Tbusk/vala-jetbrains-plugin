@@ -27,4 +27,10 @@ public class ValaUsingStatementImpl extends ASTWrapperPsiElement implements Vala
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getSemicolon() {
+    return findNotNullChildByType(SEMICOLON);
+  }
+
 }

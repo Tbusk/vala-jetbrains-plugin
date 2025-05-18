@@ -41,20 +41,26 @@ public class ValaClassDeclarationImpl extends ASTWrapperPsiElement implements Va
 
   @Override
   @NotNull
-  public List<ValaMethodDeclaration> getMethodDeclarationList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMethodDeclaration.class);
+  public PsiElement getClassDeclaration() {
+    return findNotNullChildByType(CLASS_DECLARATION);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColon() {
+    return findChildByType(COLON);
   }
 
   @Override
   @NotNull
-  public ValaModifiers getModifiers() {
-    return findNotNullChildByClass(ValaModifiers.class);
+  public PsiElement getLbrace() {
+    return findNotNullChildByType(LBRACE);
   }
 
   @Override
   @NotNull
-  public List<ValaValueTypes> getValueTypesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValueTypes.class);
+  public PsiElement getRbrace() {
+    return findNotNullChildByType(RBRACE);
   }
 
 }

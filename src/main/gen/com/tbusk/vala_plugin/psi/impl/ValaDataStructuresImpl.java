@@ -28,9 +28,9 @@ public class ValaDataStructuresImpl extends ASTWrapperPsiElement implements Vala
   }
 
   @Override
-  @Nullable
+  @NotNull
   public ValaClassDeclaration getClassDeclaration() {
-    return findChildByClass(ValaClassDeclaration.class);
+    return findNotNullChildByClass(ValaClassDeclaration.class);
   }
 
 }

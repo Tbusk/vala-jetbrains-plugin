@@ -27,22 +27,4 @@ public class ValaExpressionImpl extends ASTWrapperPsiElement implements ValaExpr
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public List<ValaExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaStatement> getStatementList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaStatement.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaStatementExpression> getStatementExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaStatementExpression.class);
-  }
-
 }

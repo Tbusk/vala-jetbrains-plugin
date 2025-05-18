@@ -27,4 +27,22 @@ public class ValaCommentsImpl extends ASTWrapperPsiElement implements ValaCommen
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBlockComment() {
+    return findChildByType(BLOCK_COMMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getComment() {
+    return findChildByType(COMMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocComment() {
+    return findChildByType(DOC_COMMENT);
+  }
+
 }

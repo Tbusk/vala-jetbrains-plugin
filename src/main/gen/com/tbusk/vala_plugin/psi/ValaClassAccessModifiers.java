@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaClassAccessModifiers extends PsiElement {
 
+  @Nullable
+  PsiElement getPrivate();
+
+  @Nullable
+  PsiElement getProtected();
+
+  @Nullable
+  PsiElement getPublic();
+
 }

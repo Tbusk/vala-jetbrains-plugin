@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaUsingStatement extends PsiElement {
 
+  @NotNull
+  PsiElement getSemicolon();
+
 }

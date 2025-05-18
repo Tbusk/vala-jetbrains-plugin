@@ -7,18 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public class ValaVisitor extends PsiElementVisitor {
 
-  public void visitAssignments(@NotNull ValaAssignments o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBitwise(@NotNull ValaBitwise o) {
-    visitPsiElement(o);
-  }
-
-  public void visitChecks(@NotNull ValaChecks o) {
-    visitPsiElement(o);
-  }
-
   public void visitClassAccessModifiers(@NotNull ValaClassAccessModifiers o) {
     visitPsiElement(o);
   }
@@ -39,31 +27,7 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitMethodAccessModifiers(@NotNull ValaMethodAccessModifiers o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMethodDeclaration(@NotNull ValaMethodDeclaration o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMiscKeywords(@NotNull ValaMiscKeywords o) {
-    visitPsiElement(o);
-  }
-
-  public void visitModifiers(@NotNull ValaModifiers o) {
-    visitPsiElement(o);
-  }
-
   public void visitNamespaceStatement(@NotNull ValaNamespaceStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitOperators(@NotNull ValaOperators o) {
-    visitPsiElement(o);
-  }
-
-  public void visitReturnTypes(@NotNull ValaReturnTypes o) {
     visitPsiElement(o);
   }
 
@@ -71,23 +35,7 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitStatementExpression(@NotNull ValaStatementExpression o) {
-    visitPsiElement(o);
-  }
-
   public void visitUsingStatement(@NotNull ValaUsingStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitValueTypes(@NotNull ValaValueTypes o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableAccessModifiers(@NotNull ValaVariableAccessModifiers o) {
-    visitPsiElement(o);
-  }
-
-  public void visitVariableTypes(@NotNull ValaVariableTypes o) {
     visitPsiElement(o);
   }
 

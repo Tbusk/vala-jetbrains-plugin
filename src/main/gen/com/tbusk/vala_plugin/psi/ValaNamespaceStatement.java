@@ -10,4 +10,10 @@ public interface ValaNamespaceStatement extends PsiElement {
   @NotNull
   List<ValaExpression> getExpressionList();
 
+  @NotNull
+  PsiElement getLbrace();
+
+  @NotNull
+  PsiElement getRbrace();
+
 }
