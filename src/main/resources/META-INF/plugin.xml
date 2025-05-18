@@ -2,7 +2,28 @@
 <idea-plugin>
     <id>com.tbusk.vala_plugin</id>
     <name>Vala</name>
-    <vendor>tbusk</vendor>
+    <version>0.01</version>
+    <vendor email="trevor@tbusk.com">tbusk</vendor>
+
+    <description>
+        <![CDATA[
+            Vala language support for Jetbrains IDEs.
+            <br/>
+            This plugin provides syntax highlighting, code completion, and other features for Vala files.
+            <br/>
+            This currently is in an early stage of development and is not feature complete.
+        ]]>
+    </description>
+
+    <change-notes>
+        <![CDATA[
+            <h2>Version 0.01</h2>
+            <ul>
+                <li>Initial release with basic syntax highlighting and file type support.</li>
+                <li>Code completion is not yet implemented.</li>
+            </ul>
+        ]]>
+    </change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 
