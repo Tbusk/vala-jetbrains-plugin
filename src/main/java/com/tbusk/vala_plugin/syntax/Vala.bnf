@@ -13,51 +13,34 @@
     tokenTypeClass="com.tbusk.vala_plugin.psi.ValaTokenType"
 
     tokens=[
-        SEMICOLON=";"
-        COMMA=","
-        DOT="."
-        LPAREN="("
-        RPAREN=")"
-        LBRACE="{"
-        RBRACE="}"
-        LBRACKET="["
-        RBRACKET="]"
-        AT="@"
-        QUESTION_MARK="?"
-        COLON=":"
-        EQUALS="="
-        PLUS="+"
-        MINUS="-"
-        MULTIPLY="*"
-        DIVIDE="/"
-        INCREMENT="++"
-        DECREMENT="--"
-        MODULO="%"
-        PLUS_EQUALS="+="
-        MINUS_EQUALS="-="
-        MULTIPLY_EQUALS="*="
-        DIVIDE_EQUALS="/="
-        MODULO_EQUALS="%="
-        AND="&&"
-        OR="||"
-        NOT="!"
-        DOUBLE_EQUALS="=="
-        NOT_EQUALS="!="
-
-        NAMESPACE="namespace"
-        COMMENT="regex://.*"
+        DOT='.'
+        IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
+        WHITESPACE='regexp:\s+'
+        STRING_LITERAL='regexp:\"([^"\\]|\\.)*\"'
+        NUMBER='regexp:\d+'
+        COMMENT='regexp://.*'
+        DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
     ]
 }
 
-root ::= items*
+Root ::= Definition*
 
-private items ::= (comments | statement | namespace_statement | WHITESPACE)*
-private items
+Definition ::= Using | Namespace | VariableDefinition | COMMENT
 
-comments ::=  COMMENT | DOC_COMMENT | BLOCK_COMMENT
+VariableType ::= (
+    char | uchar | unichar | int | uint | long | ulong | short | ushort | int8 | int16 | int32 | int64 | uint8 |
+    uint16 | uint32 | uint64 | float | double | bool | string
+)
 
-// Standard Elements
-statement ::= (IDENTIFIER | STRING_LITERAL | NUMBER | tokens) ";"?
+// variable declaration
+private VariableDefinition ::= (VariableType | var) IDENTIFIER (';' | ('=' (STRING_LITERAL | NUMBER) ';'))
 
 // namespace declaration
-namespace_statement ::= NAMESPACE_STATEMENT IDENTIFIER LBRACE expression* RBRACE
+private Namespace ::= namespace IDENTIFIER '{' Definition* '}'
+
+// qualified name
+private QualifiedName ::= IDENTIFIER ('.' IDENTIFIER)*
+
+// using declaration
+Using ::= using QualifiedName ';'
+
