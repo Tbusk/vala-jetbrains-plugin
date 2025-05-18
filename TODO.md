@@ -9,4 +9,4 @@
 - https://docs.vala.dev/tutorials/programming-language/main/02-00-basics.html
 - https://github.com/JetBrains/intellij-sdk-code-samples/tree/main/simple_language_plugin/src/main/java/org/intellij/sdk/language/psi
 - https://github.com/JetBrains/Grammar-Kit
-- 
+- https://medium.com/@shan1024/custom-language-plugin-development-for-intellij-idea-part-02-f948a078dc81
