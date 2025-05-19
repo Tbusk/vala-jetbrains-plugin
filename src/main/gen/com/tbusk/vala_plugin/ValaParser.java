@@ -47,6 +47,32 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // LBRACKET RBRACKET
+  static boolean ArrayType(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ArrayType")) return false;
+    if (!nextTokenIs(b, LBRACKET)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, LBRACKET, RBRACKET);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // assert LPAREN MethodCall RPAREN SEMICOLON
+  static boolean Assertion(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Assertion")) return false;
+    if (!nextTokenIs(b, ASSERT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, ASSERT, LPAREN);
+    r = r && MethodCall(b, l + 1);
+    r = r && consumeTokens(b, 0, RPAREN, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // true | false
   static boolean BooleanValue(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "BooleanValue")) return false;
@@ -58,7 +84,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // COLON QualifiedName (COMMA QualifiedName)*
+  // COLON QualifiedName Type? (COMMA QualifiedName Type?)*
   static boolean ClassAndOrInterfaceImplementation(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ClassAndOrInterfaceImplementation")) return false;
     if (!nextTokenIs(b, COLON)) return false;
@@ -67,34 +93,50 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, COLON);
     r = r && QualifiedName(b, l + 1);
     r = r && ClassAndOrInterfaceImplementation_2(b, l + 1);
+    r = r && ClassAndOrInterfaceImplementation_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (COMMA QualifiedName)*
+  // Type?
   private static boolean ClassAndOrInterfaceImplementation_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ClassAndOrInterfaceImplementation_2")) return false;
+    Type(b, l + 1);
+    return true;
+  }
+
+  // (COMMA QualifiedName Type?)*
+  private static boolean ClassAndOrInterfaceImplementation_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ClassAndOrInterfaceImplementation_3")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!ClassAndOrInterfaceImplementation_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "ClassAndOrInterfaceImplementation_2", c)) break;
+      if (!ClassAndOrInterfaceImplementation_3_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "ClassAndOrInterfaceImplementation_3", c)) break;
     }
     return true;
   }
 
-  // COMMA QualifiedName
-  private static boolean ClassAndOrInterfaceImplementation_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ClassAndOrInterfaceImplementation_2_0")) return false;
+  // COMMA QualifiedName Type?
+  private static boolean ClassAndOrInterfaceImplementation_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ClassAndOrInterfaceImplementation_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
     r = r && QualifiedName(b, l + 1);
+    r = r && ClassAndOrInterfaceImplementation_3_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  // Type?
+  private static boolean ClassAndOrInterfaceImplementation_3_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ClassAndOrInterfaceImplementation_3_0_2")) return false;
+    Type(b, l + 1);
+    return true;
+  }
+
   /* ********************************************************** */
-  // AccessModifier? ClassModifier class QualifiedName ClassAndOrInterfaceImplementation? LBRACE Definition* RBRACE
+  // AccessModifier? ClassModifier class QualifiedName Type? ClassAndOrInterfaceImplementation? LBRACE Definition* RBRACE
   static boolean ClassDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ClassDeclaration")) return false;
     boolean r;
@@ -104,8 +146,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, CLASS);
     r = r && QualifiedName(b, l + 1);
     r = r && ClassDeclaration_4(b, l + 1);
+    r = r && ClassDeclaration_5(b, l + 1);
     r = r && consumeToken(b, LBRACE);
-    r = r && ClassDeclaration_6(b, l + 1);
+    r = r && ClassDeclaration_7(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, null, r);
     return r;
@@ -118,20 +161,27 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // ClassAndOrInterfaceImplementation?
+  // Type?
   private static boolean ClassDeclaration_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ClassDeclaration_4")) return false;
+    Type(b, l + 1);
+    return true;
+  }
+
+  // ClassAndOrInterfaceImplementation?
+  private static boolean ClassDeclaration_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ClassDeclaration_5")) return false;
     ClassAndOrInterfaceImplementation(b, l + 1);
     return true;
   }
 
   // Definition*
-  private static boolean ClassDeclaration_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ClassDeclaration_6")) return false;
+  private static boolean ClassDeclaration_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ClassDeclaration_7")) return false;
     while (true) {
       int c = current_position_(b);
       if (!Definition(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "ClassDeclaration_6", c)) break;
+      if (!empty_element_parsed_guard_(b, "ClassDeclaration_7", c)) break;
     }
     return true;
   }
@@ -182,7 +232,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // Using | Namespace | VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | VariableReassignment | IfBlock | Comment
+  // Using | Namespace | VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | VariableReassignment | IfBlock | Comment | Assertion
   public static boolean Definition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Definition")) return false;
     boolean r;
@@ -198,6 +248,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = VariableReassignment(b, l + 1);
     if (!r) r = IfBlock(b, l + 1);
     if (!r) r = Comment(b, l + 1);
+    if (!r) r = Assertion(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -506,12 +557,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRING_LITERAL | NUMBER | BooleanValue | this | MethodCall | QualifiedName
+  // StringWithConcatenation | NumberOperation | BooleanValue | this | MethodCall | QualifiedName
   static boolean MethodArgument(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodArgument")) return false;
     boolean r;
-    r = consumeToken(b, STRING_LITERAL);
-    if (!r) r = consumeToken(b, NUMBER);
+    r = StringWithConcatenation(b, l + 1);
+    if (!r) r = NumberOperation(b, l + 1);
     if (!r) r = BooleanValue(b, l + 1);
     if (!r) r = consumeToken(b, THIS);
     if (!r) r = MethodCall(b, l + 1);
@@ -520,7 +571,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | ShorthandMethodDeclaration | return (MethodCall |(QualifiedName | STRING_LITERAL | NUMBER | BooleanValue) SEMICOLON) | VariableReassignment | IfBlock
+  // VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | ShorthandMethodDeclaration | return (MethodCall |(QualifiedName | StringWithConcatenation | NumberOperation | BooleanValue) SEMICOLON) | VariableReassignment | IfBlock | Assertion | Comment
   static boolean MethodBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodBody")) return false;
     boolean r;
@@ -535,11 +586,13 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = MethodBody_7(b, l + 1);
     if (!r) r = VariableReassignment(b, l + 1);
     if (!r) r = IfBlock(b, l + 1);
+    if (!r) r = Assertion(b, l + 1);
+    if (!r) r = Comment(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // return (MethodCall |(QualifiedName | STRING_LITERAL | NUMBER | BooleanValue) SEMICOLON)
+  // return (MethodCall |(QualifiedName | StringWithConcatenation | NumberOperation | BooleanValue) SEMICOLON)
   private static boolean MethodBody_7(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodBody_7")) return false;
     boolean r;
@@ -550,7 +603,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // MethodCall |(QualifiedName | STRING_LITERAL | NUMBER | BooleanValue) SEMICOLON
+  // MethodCall |(QualifiedName | StringWithConcatenation | NumberOperation | BooleanValue) SEMICOLON
   private static boolean MethodBody_7_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodBody_7_1")) return false;
     boolean r;
@@ -561,7 +614,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (QualifiedName | STRING_LITERAL | NUMBER | BooleanValue) SEMICOLON
+  // (QualifiedName | StringWithConcatenation | NumberOperation | BooleanValue) SEMICOLON
   private static boolean MethodBody_7_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodBody_7_1_1")) return false;
     boolean r;
@@ -572,13 +625,13 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // QualifiedName | STRING_LITERAL | NUMBER | BooleanValue
+  // QualifiedName | StringWithConcatenation | NumberOperation | BooleanValue
   private static boolean MethodBody_7_1_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodBody_7_1_1_0")) return false;
     boolean r;
     r = QualifiedName(b, l + 1);
-    if (!r) r = consumeToken(b, STRING_LITERAL);
-    if (!r) r = consumeToken(b, NUMBER);
+    if (!r) r = StringWithConcatenation(b, l + 1);
+    if (!r) r = NumberOperation(b, l + 1);
     if (!r) r = BooleanValue(b, l + 1);
     return r;
   }
@@ -654,7 +707,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AccessModifier? MethodModifier? MethodReturnType QualifiedName (LPAREN MethodParameter* RPAREN)? LBRACE MethodBody* RBRACE
+  // AccessModifier? MethodModifier? MethodReturnType Type? QualifiedName Type? (LPAREN MethodParameter* RPAREN)? LBRACE MethodBody* RBRACE
   static boolean MethodDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodDeclaration")) return false;
     boolean r;
@@ -662,10 +715,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = MethodDeclaration_0(b, l + 1);
     r = r && MethodDeclaration_1(b, l + 1);
     r = r && MethodReturnType(b, l + 1);
+    r = r && MethodDeclaration_3(b, l + 1);
     r = r && QualifiedName(b, l + 1);
-    r = r && MethodDeclaration_4(b, l + 1);
-    r = r && consumeToken(b, LBRACE);
+    r = r && MethodDeclaration_5(b, l + 1);
     r = r && MethodDeclaration_6(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
+    r = r && MethodDeclaration_8(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, null, r);
     return r;
@@ -685,43 +740,57 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // Type?
+  private static boolean MethodDeclaration_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodDeclaration_3")) return false;
+    Type(b, l + 1);
+    return true;
+  }
+
+  // Type?
+  private static boolean MethodDeclaration_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodDeclaration_5")) return false;
+    Type(b, l + 1);
+    return true;
+  }
+
   // (LPAREN MethodParameter* RPAREN)?
-  private static boolean MethodDeclaration_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodDeclaration_4")) return false;
-    MethodDeclaration_4_0(b, l + 1);
+  private static boolean MethodDeclaration_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodDeclaration_6")) return false;
+    MethodDeclaration_6_0(b, l + 1);
     return true;
   }
 
   // LPAREN MethodParameter* RPAREN
-  private static boolean MethodDeclaration_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodDeclaration_4_0")) return false;
+  private static boolean MethodDeclaration_6_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodDeclaration_6_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LPAREN);
-    r = r && MethodDeclaration_4_0_1(b, l + 1);
+    r = r && MethodDeclaration_6_0_1(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // MethodParameter*
-  private static boolean MethodDeclaration_4_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodDeclaration_4_0_1")) return false;
+  private static boolean MethodDeclaration_6_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodDeclaration_6_0_1")) return false;
     while (true) {
       int c = current_position_(b);
       if (!MethodParameter(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "MethodDeclaration_4_0_1", c)) break;
+      if (!empty_element_parsed_guard_(b, "MethodDeclaration_6_0_1", c)) break;
     }
     return true;
   }
 
   // MethodBody*
-  private static boolean MethodDeclaration_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodDeclaration_6")) return false;
+  private static boolean MethodDeclaration_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodDeclaration_8")) return false;
     while (true) {
       int c = current_position_(b);
       if (!MethodBody(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "MethodDeclaration_6", c)) break;
+      if (!empty_element_parsed_guard_(b, "MethodDeclaration_8", c)) break;
     }
     return true;
   }
@@ -834,7 +903,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | VariableReassignment | IfBlock
+  // VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | VariableReassignment | IfBlock | Assertion | Comment
   static boolean NamespaceBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "NamespaceBody")) return false;
     boolean r;
@@ -846,7 +915,88 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = MethodCall(b, l + 1);
     if (!r) r = VariableReassignment(b, l + 1);
     if (!r) r = IfBlock(b, l + 1);
+    if (!r) r = Assertion(b, l + 1);
+    if (!r) r = Comment(b, l + 1);
     return r;
+  }
+
+  /* ********************************************************** */
+  // LPAREN? NUMBER (LPAREN? (PLUS | MINUS | STAR | DIVIDE | MODULO) NUMBER RPAREN?)* RPAREN?
+  static boolean NumberOperation(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation")) return false;
+    if (!nextTokenIs(b, "", LPAREN, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = NumberOperation_0(b, l + 1);
+    r = r && consumeToken(b, NUMBER);
+    r = r && NumberOperation_2(b, l + 1);
+    r = r && NumberOperation_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LPAREN?
+  private static boolean NumberOperation_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_0")) return false;
+    consumeToken(b, LPAREN);
+    return true;
+  }
+
+  // (LPAREN? (PLUS | MINUS | STAR | DIVIDE | MODULO) NUMBER RPAREN?)*
+  private static boolean NumberOperation_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!NumberOperation_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "NumberOperation_2", c)) break;
+    }
+    return true;
+  }
+
+  // LPAREN? (PLUS | MINUS | STAR | DIVIDE | MODULO) NUMBER RPAREN?
+  private static boolean NumberOperation_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = NumberOperation_2_0_0(b, l + 1);
+    r = r && NumberOperation_2_0_1(b, l + 1);
+    r = r && consumeToken(b, NUMBER);
+    r = r && NumberOperation_2_0_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LPAREN?
+  private static boolean NumberOperation_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_2_0_0")) return false;
+    consumeToken(b, LPAREN);
+    return true;
+  }
+
+  // PLUS | MINUS | STAR | DIVIDE | MODULO
+  private static boolean NumberOperation_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_2_0_1")) return false;
+    boolean r;
+    r = consumeToken(b, PLUS);
+    if (!r) r = consumeToken(b, MINUS);
+    if (!r) r = consumeToken(b, STAR);
+    if (!r) r = consumeToken(b, DIVIDE);
+    if (!r) r = consumeToken(b, MODULO);
+    return r;
+  }
+
+  // RPAREN?
+  private static boolean NumberOperation_2_0_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_2_0_3")) return false;
+    consumeToken(b, RPAREN);
+    return true;
+  }
+
+  // RPAREN?
+  private static boolean NumberOperation_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NumberOperation_3")) return false;
+    consumeToken(b, RPAREN);
+    return true;
   }
 
   /* ********************************************************** */
@@ -926,6 +1076,77 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // STRING_LITERAL (PLUS STRING_LITERAL)*
+  static boolean StringWithConcatenation(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "StringWithConcatenation")) return false;
+    if (!nextTokenIs(b, STRING_LITERAL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, STRING_LITERAL);
+    r = r && StringWithConcatenation_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (PLUS STRING_LITERAL)*
+  private static boolean StringWithConcatenation_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "StringWithConcatenation_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!StringWithConcatenation_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "StringWithConcatenation_1", c)) break;
+    }
+    return true;
+  }
+
+  // PLUS STRING_LITERAL
+  private static boolean StringWithConcatenation_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "StringWithConcatenation_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, PLUS, STRING_LITERAL);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // LESS_THAN QualifiedName (COMMA QualifiedName)* GREATER_THAN
+  static boolean Type(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Type")) return false;
+    if (!nextTokenIs(b, LESS_THAN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LESS_THAN);
+    r = r && QualifiedName(b, l + 1);
+    r = r && Type_2(b, l + 1);
+    r = r && consumeToken(b, GREATER_THAN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA QualifiedName)*
+  private static boolean Type_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Type_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!Type_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "Type_2", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA QualifiedName
+  private static boolean Type_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Type_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && QualifiedName(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // using QualifiedName SEMICOLON
   static boolean Using(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Using")) return false;
@@ -940,7 +1161,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AccessModifier? const? (VariableType | var | QualifiedName) IDENTIFIER (SEMICOLON | (EQUALS ((STRING_LITERAL | NUMBER | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE)))
+  // AccessModifier? const? (VariableType | var | QualifiedName) IDENTIFIER (SEMICOLON | (EQUALS ((StringWithConcatenation | NumberOperation | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE)))
   static boolean VariableDefinition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition")) return false;
     boolean r;
@@ -978,7 +1199,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SEMICOLON | (EQUALS ((STRING_LITERAL | NUMBER | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE))
+  // SEMICOLON | (EQUALS ((StringWithConcatenation | NumberOperation | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE))
   private static boolean VariableDefinition_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition_4")) return false;
     boolean r;
@@ -989,7 +1210,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // EQUALS ((STRING_LITERAL | NUMBER | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE)
+  // EQUALS ((StringWithConcatenation | NumberOperation | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE)
   private static boolean VariableDefinition_4_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition_4_1")) return false;
     boolean r;
@@ -1000,7 +1221,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (STRING_LITERAL | NUMBER | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE
+  // (StringWithConcatenation | NumberOperation | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE
   private static boolean VariableDefinition_4_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition_4_1_1")) return false;
     boolean r;
@@ -1012,7 +1233,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (STRING_LITERAL | NUMBER | null) SEMICOLON
+  // (StringWithConcatenation | NumberOperation | null) SEMICOLON
   private static boolean VariableDefinition_4_1_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition_4_1_1_0")) return false;
     boolean r;
@@ -1023,12 +1244,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // STRING_LITERAL | NUMBER | null
+  // StringWithConcatenation | NumberOperation | null
   private static boolean VariableDefinition_4_1_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDefinition_4_1_1_0_0")) return false;
     boolean r;
-    r = consumeToken(b, STRING_LITERAL);
-    if (!r) r = consumeToken(b, NUMBER);
+    r = StringWithConcatenation(b, l + 1);
+    if (!r) r = NumberOperation(b, l + 1);
     if (!r) r = consumeToken(b, NULL);
     return r;
   }
@@ -1083,7 +1304,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // char | uchar | unichar | int | uint | long | ulong | short | ushort | int8 | int16 | int32 | int64 | uint8 |
-  //     uint16 | uint32 | uint64 | float | double | bool | string
+  //     uint16 | uint32 | uint64 | float | double | bool | string | ArrayType
   static boolean VariableType(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableType")) return false;
     boolean r;
@@ -1108,6 +1329,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DOUBLE);
     if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, STRING);
+    if (!r) r = ArrayType(b, l + 1);
     return r;
   }
 

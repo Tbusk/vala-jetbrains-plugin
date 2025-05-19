@@ -42,5 +42,7 @@
         <lang.syntaxHighlighterFactory
                 language="Vala"
                 implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
+
+        <colorSettingsPage implementation="com.tbusk.vala_plugin.highlighting.ValaColorSettingsPage"/>
     </extensions>
 </idea-plugin>

@@ -12,6 +12,7 @@ public interface ValaTypes {
 
   IElementType ABSTRACT = new ValaTokenType("abstract");
   IElementType AND = new ValaTokenType("&&");
+  IElementType ASSERT = new ValaTokenType("assert");
   IElementType ASYNC = new ValaTokenType("async");
   IElementType AT = new ValaTokenType("@");
   IElementType BLOCK_COMMENT = new ValaTokenType("BLOCK_COMMENT");

@@ -10,13 +10,4 @@ public interface ValaDefinition extends PsiElement {
   @NotNull
   List<ValaDefinition> getDefinitionList();
 
-  @Nullable
-  PsiElement getBlockComment();
-
-  @Nullable
-  PsiElement getComment();
-
-  @Nullable
-  PsiElement getDocComment();
-
 }

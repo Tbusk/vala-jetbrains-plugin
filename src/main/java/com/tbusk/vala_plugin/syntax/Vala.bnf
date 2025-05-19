@@ -103,9 +103,12 @@ private Using ::= using QualifiedName SEMICOLON
 // class modifiers
 private ClassModifier ::= abstract? final? virtual?
 
+// Type
+private Type ::= LESS_THAN QualifiedName (COMMA QualifiedName)* GREATER_THAN
+
 // class declaration
-private ClassAndOrInterfaceImplementation ::= COLON QualifiedName (COMMA QualifiedName)*
-private ClassDeclaration ::= AccessModifier? ClassModifier class QualifiedName ClassAndOrInterfaceImplementation? LBRACE Definition* RBRACE
+private ClassAndOrInterfaceImplementation ::= COLON QualifiedName Type? (COMMA QualifiedName Type?)*
+private ClassDeclaration ::= AccessModifier? ClassModifier class QualifiedName Type? ClassAndOrInterfaceImplementation? LBRACE Definition* RBRACE
 
 // enum declaration
 private EnumDeclaration ::= AccessModifier? enum IDENTIFIER LBRACE EnumMember* RBRACE
@@ -118,7 +121,7 @@ private MethodReturnType ::= (VariableType | void | null | BooleanValue)
 private MethodModifier ::= static? virtual? async?
 
 // Method declaration
-private MethodDeclaration ::= AccessModifier? MethodModifier? MethodReturnType QualifiedName (LPAREN MethodParameter* RPAREN)? LBRACE MethodBody* RBRACE
+private MethodDeclaration ::= AccessModifier? MethodModifier? MethodReturnType Type? QualifiedName Type? (LPAREN MethodParameter* RPAREN)? LBRACE MethodBody* RBRACE
 private ShorthandMethodDeclaration ::= AccessModifier? (get | set | init) SEMICOLON;
 private MethodParameter ::= VariableType QualifiedName (COMMA VariableType QualifiedName)*
 

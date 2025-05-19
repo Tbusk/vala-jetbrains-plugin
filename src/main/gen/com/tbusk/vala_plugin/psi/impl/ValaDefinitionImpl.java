@@ -33,22 +33,4 @@ public class ValaDefinitionImpl extends ASTWrapperPsiElement implements ValaDefi
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaDefinition.class);
   }
 
-  @Override
-  @Nullable
-  public PsiElement getBlockComment() {
-    return findChildByType(BLOCK_COMMENT);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getDocComment() {
-    return findChildByType(DOC_COMMENT);
-  }
-
 }

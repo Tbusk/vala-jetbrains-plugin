@@ -57,7 +57,9 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
 
     private static final HashMap<IElementType, TextAttributesKey[]> statementsMap = new HashMap<>(Map.ofEntries(
             Map.entry(ValaTypes.NAMESPACE, KEYWORD_KEYS),
-            Map.entry(ValaTypes.USING, KEYWORD_KEYS)
+            Map.entry(ValaTypes.USING, KEYWORD_KEYS),
+            Map.entry(ValaTypes.IF, KEYWORD_KEYS),
+            Map.entry(ValaTypes.ELSE, KEYWORD_KEYS)
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> operationsMap = new HashMap<>(Map.ofEntries(
@@ -95,6 +97,12 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
             Map.entry(ValaTypes.PROTECTED, KEYWORD_KEYS)
     ));
 
+    private static final HashMap<IElementType, TextAttributesKey[]> modifiersMap = new HashMap<>(Map.ofEntries(
+            Map.entry(ValaTypes.STATIC, KEYWORD_KEYS),
+            Map.entry(ValaTypes.VIRTUAL, KEYWORD_KEYS),
+            Map.entry(ValaTypes.ABSTRACT, KEYWORD_KEYS)
+    ));
+
     private static final HashMap<IElementType, TextAttributesKey[]> dataStructuresMap = new HashMap<>(Map.ofEntries(
             Map.entry(ValaTypes.CLASS, KEYWORD_KEYS)
     ));
@@ -104,8 +112,38 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
             Map.entry(ValaTypes.STRING_LITERAL, STRING_KEYS),
             Map.entry(ValaTypes.NUMBER, NUMBER_KEYS),
             Map.entry(ValaTypes.QUESTION_MARK, OPERATIONS_KEYS),
-            Map.entry(ValaTypes.AT, OPERATIONS_KEYS)
+            Map.entry(ValaTypes.AT, OPERATIONS_KEYS),
+            Map.entry(ValaTypes.TRUE, KEYWORD_KEYS),
+            Map.entry(ValaTypes.FALSE, KEYWORD_KEYS)
             ));
+
+    private static final HashMap<IElementType, TextAttributesKey[]> dataTypesMap = new HashMap<>(Map.ofEntries(
+            Map.entry(ValaTypes.BOOL, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UINT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.FLOAT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.DOUBLE, KEYWORD_KEYS),
+            Map.entry(ValaTypes.STRING, KEYWORD_KEYS),
+            Map.entry(ValaTypes.CHAR, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UCHAR, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UNICHAR, KEYWORD_KEYS),
+            Map.entry(ValaTypes.VOID, KEYWORD_KEYS),
+            Map.entry(ValaTypes.LONG, KEYWORD_KEYS),
+            Map.entry(ValaTypes.ULONG, KEYWORD_KEYS),
+            Map.entry(ValaTypes.SHORT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.USHORT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UINT8, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UINT16, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UINT32, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UINT64, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INT8, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INT16, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INT32, KEYWORD_KEYS),
+            Map.entry(ValaTypes.INT64, KEYWORD_KEYS),
+            Map.entry(ValaTypes.VAR, KEYWORD_KEYS)
+
+
+    ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> tokenHighlightMap = new HashMap<>(){{
         putAll(commentsMap);
@@ -116,6 +154,8 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
         putAll(accessModifiersMap);
         putAll(dataStructuresMap);
         putAll(miscKeywordsMap);
+        putAll(dataTypesMap);
+        putAll(modifiersMap);
     }};
 
     @NotNull
