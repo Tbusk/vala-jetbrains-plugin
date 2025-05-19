@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaUsingStatementImpl extends ASTWrapperPsiElement implements ValaUsingStatement {
+public class ValaDefinitionImpl extends ASTWrapperPsiElement implements ValaDefinition {
 
-  public ValaUsingStatementImpl(@NotNull ASTNode node) {
+  public ValaDefinitionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitUsingStatement(this);
+    visitor.visitDefinition(this);
   }
 
   @Override
@@ -29,8 +29,26 @@ public class ValaUsingStatementImpl extends ASTWrapperPsiElement implements Vala
 
   @Override
   @NotNull
-  public PsiElement getSemicolon() {
-    return findNotNullChildByType(SEMICOLON);
+  public List<ValaDefinition> getDefinitionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getBlockComment() {
+    return findChildByType(BLOCK_COMMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getComment() {
+    return findChildByType(COMMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocComment() {
+    return findChildByType(DOC_COMMENT);
   }
 
 }

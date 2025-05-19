@@ -8,70 +8,102 @@ import com.tbusk.vala_plugin.psi.impl.*;
 
 public interface ValaTypes {
 
-  IElementType CLASS_ACCESS_MODIFIERS = new ValaElementType("CLASS_ACCESS_MODIFIERS");
-  IElementType CLASS_DECLARATION = new ValaElementType("CLASS_DECLARATION");
-  IElementType COMMENTS = new ValaElementType("COMMENTS");
-  IElementType DATA_STRUCTURES = new ValaElementType("DATA_STRUCTURES");
-  IElementType EXPRESSION = new ValaElementType("EXPRESSION");
-  IElementType NAMESPACE_STATEMENT = new ValaElementType("NAMESPACE_STATEMENT");
-  IElementType STATEMENT = new ValaElementType("STATEMENT");
-  IElementType USING_STATEMENT = new ValaElementType("USING_STATEMENT");
+  IElementType DEFINITION = new ValaElementType("DEFINITION");
 
-  IElementType AS = new ValaTokenType("AS");
+  IElementType ABSTRACT = new ValaTokenType("abstract");
+  IElementType AND = new ValaTokenType("&&");
+  IElementType ASYNC = new ValaTokenType("async");
+  IElementType AT = new ValaTokenType("@");
   IElementType BLOCK_COMMENT = new ValaTokenType("BLOCK_COMMENT");
-  IElementType CLASS_DECLARATION = new ValaTokenType("CLASS_DECLARATION");
-  IElementType COLON = new ValaTokenType("COLON");
-  IElementType COMMA = new ValaTokenType("COMMA");
+  IElementType BOOL = new ValaTokenType("bool");
+  IElementType CHAR = new ValaTokenType("char");
+  IElementType CHAR_LITERAL = new ValaTokenType("CHAR_LITERAL");
+  IElementType CLASS = new ValaTokenType("class");
+  IElementType COLON = new ValaTokenType(":");
+  IElementType COMMA = new ValaTokenType(",");
   IElementType COMMENT = new ValaTokenType("COMMENT");
-  IElementType CONSTRUCTOR_DECLARATION = new ValaTokenType("constructor_declaration");
+  IElementType CONST = new ValaTokenType("const");
+  IElementType DECREMENT = new ValaTokenType("--");
+  IElementType DIVIDE = new ValaTokenType("/");
+  IElementType DIVIDE_EQUALS = new ValaTokenType("/=");
   IElementType DOC_COMMENT = new ValaTokenType("DOC_COMMENT");
-  IElementType FIELD_DECLARATION = new ValaTokenType("field_declaration");
-  IElementType GREATER_THAN = new ValaTokenType("GREATER_THAN");
-  IElementType IDENTIFER = new ValaTokenType("IDENTIFER");
+  IElementType DOT = new ValaTokenType(".");
+  IElementType DOUBLE = new ValaTokenType("double");
+  IElementType ELSE = new ValaTokenType("else");
+  IElementType ENUM = new ValaTokenType("enum");
+  IElementType EQUALS = new ValaTokenType("=");
+  IElementType EQUALS_EQUALS = new ValaTokenType("==");
+  IElementType FALSE = new ValaTokenType("false");
+  IElementType FINAL = new ValaTokenType("final");
+  IElementType FLOAT = new ValaTokenType("float");
+  IElementType GET = new ValaTokenType("get");
+  IElementType GREATER_THAN = new ValaTokenType(">");
+  IElementType GREATER_THAN_EQUALS = new ValaTokenType(">=");
   IElementType IDENTIFIER = new ValaTokenType("IDENTIFIER");
-  IElementType LBRACE = new ValaTokenType("LBRACE");
-  IElementType LESS_THAN = new ValaTokenType("LESS_THAN");
-  IElementType METHOD_DECLARATION = new ValaTokenType("method_declaration");
-  IElementType NAMESPACE = new ValaTokenType("NAMESPACE");
+  IElementType IF = new ValaTokenType("if");
+  IElementType INCREMENT = new ValaTokenType("++");
+  IElementType INIT = new ValaTokenType("init");
+  IElementType INT = new ValaTokenType("int");
+  IElementType INT16 = new ValaTokenType("int16");
+  IElementType INT32 = new ValaTokenType("int32");
+  IElementType INT64 = new ValaTokenType("int64");
+  IElementType INT8 = new ValaTokenType("int8");
+  IElementType INTERFACE = new ValaTokenType("interface");
+  IElementType LBRACE = new ValaTokenType("{");
+  IElementType LBRACKET = new ValaTokenType("[");
+  IElementType LESS_THAN = new ValaTokenType("<");
+  IElementType LESS_THAN_EQUALS = new ValaTokenType("<=");
+  IElementType LONG = new ValaTokenType("long");
+  IElementType LPAREN = new ValaTokenType("(");
+  IElementType MINUS = new ValaTokenType("-");
+  IElementType MINUS_EQUALS = new ValaTokenType("-=");
+  IElementType MODULO = new ValaTokenType("%");
+  IElementType MODULO_EQUALS = new ValaTokenType("%=");
+  IElementType MULTIPLY_EQUALS = new ValaTokenType("*=");
+  IElementType NAMESPACE = new ValaTokenType("namespace");
+  IElementType NOT = new ValaTokenType("!");
+  IElementType NOT_EQUALS = new ValaTokenType("!=");
+  IElementType NULL = new ValaTokenType("null");
   IElementType NUMBER = new ValaTokenType("NUMBER");
-  IElementType PRIVATE = new ValaTokenType("PRIVATE");
-  IElementType PROPERTY_DECLARATION = new ValaTokenType("property_declaration");
-  IElementType PROTECTED = new ValaTokenType("PROTECTED");
-  IElementType PUBLIC = new ValaTokenType("PUBLIC");
-  IElementType RBRACE = new ValaTokenType("RBRACE");
-  IElementType SEMICOLON = new ValaTokenType("SEMICOLON");
+  IElementType OR = new ValaTokenType("||");
+  IElementType PLUS = new ValaTokenType("+");
+  IElementType PLUS_EQUALS = new ValaTokenType("+=");
+  IElementType PRIVATE = new ValaTokenType("private");
+  IElementType PROTECTED = new ValaTokenType("protected");
+  IElementType PUBLIC = new ValaTokenType("public");
+  IElementType QUESTION_MARK = new ValaTokenType("?");
+  IElementType RBRACE = new ValaTokenType("}");
+  IElementType RBRACKET = new ValaTokenType("]");
+  IElementType RETURN = new ValaTokenType("return");
+  IElementType RPAREN = new ValaTokenType(")");
+  IElementType SEMICOLON = new ValaTokenType(";");
+  IElementType SET = new ValaTokenType("set");
+  IElementType SHORT = new ValaTokenType("short");
+  IElementType STAR = new ValaTokenType("*");
+  IElementType STATIC = new ValaTokenType("static");
+  IElementType STRING = new ValaTokenType("string");
   IElementType STRING_LITERAL = new ValaTokenType("STRING_LITERAL");
-  IElementType TOKENS = new ValaTokenType("tokens");
-  IElementType USING = new ValaTokenType("USING");
-  IElementType VALUE_TYPES = new ValaTokenType("value_types");
-  IElementType WHITESPACE = new ValaTokenType("WHITESPACE");
+  IElementType THIS = new ValaTokenType("this");
+  IElementType TRUE = new ValaTokenType("true");
+  IElementType UCHAR = new ValaTokenType("uchar");
+  IElementType UINT = new ValaTokenType("uint");
+  IElementType UINT16 = new ValaTokenType("uint16");
+  IElementType UINT32 = new ValaTokenType("uint32");
+  IElementType UINT64 = new ValaTokenType("uint64");
+  IElementType UINT8 = new ValaTokenType("uint8");
+  IElementType ULONG = new ValaTokenType("ulong");
+  IElementType UNICHAR = new ValaTokenType("unichar");
+  IElementType USHORT = new ValaTokenType("ushort");
+  IElementType USING = new ValaTokenType("using");
+  IElementType VAR = new ValaTokenType("var");
+  IElementType VIRTUAL = new ValaTokenType("virtual");
+  IElementType VOID = new ValaTokenType("void");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == CLASS_ACCESS_MODIFIERS) {
-        return new ValaClassAccessModifiersImpl(node);
-      }
-      else if (type == CLASS_DECLARATION) {
-        return new ValaClassDeclarationImpl(node);
-      }
-      else if (type == COMMENTS) {
-        return new ValaCommentsImpl(node);
-      }
-      else if (type == DATA_STRUCTURES) {
-        return new ValaDataStructuresImpl(node);
-      }
-      else if (type == EXPRESSION) {
-        return new ValaExpressionImpl(node);
-      }
-      else if (type == NAMESPACE_STATEMENT) {
-        return new ValaNamespaceStatementImpl(node);
-      }
-      else if (type == STATEMENT) {
-        return new ValaStatementImpl(node);
-      }
-      else if (type == USING_STATEMENT) {
-        return new ValaUsingStatementImpl(node);
+      if (type == DEFINITION) {
+        return new ValaDefinitionImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

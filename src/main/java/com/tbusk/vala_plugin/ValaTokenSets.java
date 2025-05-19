@@ -7,6 +7,6 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 public interface ValaTokenSets {
 
     // Token Sets
-    TokenSet COMMENTS = TokenSet.create(COMMENT, BLOCK_COMMENT, DOC_COMMENT);
+    TokenSet COMMENTS = TokenSet.create(COMMENT, DOC_COMMENT);
     TokenSet STRINGS = TokenSet.create(STRING_LITERAL);
 }

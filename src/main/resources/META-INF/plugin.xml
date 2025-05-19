@@ -28,15 +28,19 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Vala File"
-                  implementationClass="com.tbusk.vala_plugin.language.ValaFileType"
-                  fieldName="INSTANCE"
-                  language="Vala"
-                  extensions="vala"/>
-        <lang.parserDefinition language="Vala"
-                               implementationClass="com.tbusk.vala_plugin.ValaParserDefinition"/>
+        <fileType
+                name="Vala File"
+                implementationClass="com.tbusk.vala_plugin.language.ValaFileType"
+                fieldName="INSTANCE"
+                language="Vala"
+                extensions="vala"/>
 
-        <lang.syntaxHighlighterFactory language="Vala"
-                                       implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
+        <lang.parserDefinition
+                language="Vala"
+                implementationClass="com.tbusk.vala_plugin.ValaParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="Vala"
+                implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
     </extensions>
 </idea-plugin>

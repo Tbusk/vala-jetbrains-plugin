@@ -56,8 +56,8 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> statementsMap = new HashMap<>(Map.ofEntries(
-            Map.entry(ValaTypes.NAMESPACE_STATEMENT, KEYWORD_KEYS),
-            Map.entry(ValaTypes.USING_STATEMENT, KEYWORD_KEYS)
+            Map.entry(ValaTypes.NAMESPACE, KEYWORD_KEYS),
+            Map.entry(ValaTypes.USING, KEYWORD_KEYS)
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> operationsMap = new HashMap<>(Map.ofEntries(
@@ -65,7 +65,7 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
             Map.entry(ValaTypes.LESS_THAN, OPERATIONS_KEYS),
             Map.entry(ValaTypes.PLUS, OPERATIONS_KEYS),
             Map.entry(ValaTypes.MINUS, OPERATIONS_KEYS),
-            Map.entry(ValaTypes.MULTIPLY, OPERATIONS_KEYS),
+            Map.entry(ValaTypes.STAR, OPERATIONS_KEYS),
             Map.entry(ValaTypes.DIVIDE, OPERATIONS_KEYS),
             Map.entry(ValaTypes.EQUALS, OPERATIONS_KEYS),
             Map.entry(ValaTypes.PLUS_EQUALS, OPERATIONS_KEYS),
@@ -79,7 +79,7 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> conditionalMap = new HashMap<>(Map.ofEntries(
-            Map.entry(ValaTypes.DOUBLE_EQUALS, OPERATIONS_KEYS),
+            Map.entry(ValaTypes.EQUALS_EQUALS, OPERATIONS_KEYS),
             Map.entry(ValaTypes.GREATER_THAN_EQUALS, OPERATIONS_KEYS),
             Map.entry(ValaTypes.LESS_THAN_EQUALS, OPERATIONS_KEYS),
             Map.entry(ValaTypes.NOT_EQUALS, OPERATIONS_KEYS),
@@ -96,12 +96,11 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> dataStructuresMap = new HashMap<>(Map.ofEntries(
-            Map.entry(ValaTypes.CLASS_DECLARATION, KEYWORD_KEYS)
+            Map.entry(ValaTypes.CLASS, KEYWORD_KEYS)
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> miscKeywordsMap = new HashMap<>(Map.ofEntries(
             Map.entry(ValaTypes.IDENTIFIER, IDENTIFIER_KEYS),
-
             Map.entry(ValaTypes.STRING_LITERAL, STRING_KEYS),
             Map.entry(ValaTypes.NUMBER, NUMBER_KEYS),
             Map.entry(ValaTypes.QUESTION_MARK, OPERATIONS_KEYS),

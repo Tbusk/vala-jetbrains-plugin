@@ -5,7 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaComments extends PsiElement {
+public interface ValaDefinition extends PsiElement {
+
+  @NotNull
+  List<ValaDefinition> getDefinitionList();
 
   @Nullable
   PsiElement getBlockComment();
