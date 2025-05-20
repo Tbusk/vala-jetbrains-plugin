@@ -100,7 +100,9 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final HashMap<IElementType, TextAttributesKey[]> modifiersMap = new HashMap<>(Map.ofEntries(
             Map.entry(ValaTypes.STATIC, KEYWORD_KEYS),
             Map.entry(ValaTypes.VIRTUAL, KEYWORD_KEYS),
-            Map.entry(ValaTypes.ABSTRACT, KEYWORD_KEYS)
+            Map.entry(ValaTypes.ABSTRACT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.UNOWNED, KEYWORD_KEYS),
+            Map.entry(ValaTypes.OVERRIDE, KEYWORD_KEYS)
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> dataStructuresMap = new HashMap<>(Map.ofEntries(
@@ -114,8 +116,10 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
             Map.entry(ValaTypes.QUESTION_MARK, OPERATIONS_KEYS),
             Map.entry(ValaTypes.AT, OPERATIONS_KEYS),
             Map.entry(ValaTypes.TRUE, KEYWORD_KEYS),
-            Map.entry(ValaTypes.FALSE, KEYWORD_KEYS)
-            ));
+            Map.entry(ValaTypes.FALSE, KEYWORD_KEYS),
+            Map.entry(ValaTypes.ASSERT, KEYWORD_KEYS),
+            Map.entry(ValaTypes.RETURN, KEYWORD_KEYS)
+    ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> dataTypesMap = new HashMap<>(Map.ofEntries(
             Map.entry(ValaTypes.BOOL, KEYWORD_KEYS),
@@ -141,8 +145,6 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
             Map.entry(ValaTypes.INT32, KEYWORD_KEYS),
             Map.entry(ValaTypes.INT64, KEYWORD_KEYS),
             Map.entry(ValaTypes.VAR, KEYWORD_KEYS)
-
-
     ));
 
     private static final HashMap<IElementType, TextAttributesKey[]> tokenHighlightMap = new HashMap<>(){{

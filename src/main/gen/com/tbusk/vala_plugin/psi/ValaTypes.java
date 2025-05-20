@@ -67,6 +67,7 @@ public interface ValaTypes {
   IElementType NULL = new ValaTokenType("null");
   IElementType NUMBER = new ValaTokenType("NUMBER");
   IElementType OR = new ValaTokenType("||");
+  IElementType OVERRIDE = new ValaTokenType("override");
   IElementType PLUS = new ValaTokenType("+");
   IElementType PLUS_EQUALS = new ValaTokenType("+=");
   IElementType PRIVATE = new ValaTokenType("private");
@@ -94,6 +95,7 @@ public interface ValaTypes {
   IElementType UINT8 = new ValaTokenType("uint8");
   IElementType ULONG = new ValaTokenType("ulong");
   IElementType UNICHAR = new ValaTokenType("unichar");
+  IElementType UNOWNED = new ValaTokenType("unowned");
   IElementType USHORT = new ValaTokenType("ushort");
   IElementType USING = new ValaTokenType("using");
   IElementType VAR = new ValaTokenType("var");

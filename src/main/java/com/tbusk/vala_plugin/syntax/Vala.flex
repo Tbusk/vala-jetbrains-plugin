@@ -56,6 +56,8 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
         "abstract"    { return ValaTypes.ABSTRACT; }
         "virtual"     { return ValaTypes.VIRTUAL; }
         "static"      { return ValaTypes.STATIC; }
+        "override"    { return ValaTypes.OVERRIDE; }
+        "unowned"    { return ValaTypes.UNOWNED; }
 
         // Data Types
         "const"       { return ValaTypes.CONST; }
@@ -129,6 +131,12 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
         "&&"                  { return ValaTypes.AND; }
         "||"                   { return ValaTypes.OR; }
         "!"                  { return ValaTypes.NOT; }
+
+        // Testing
+        "assert"             { return ValaTypes.ASSERT; }
+
+        // Misc Keywords
+        "return"             { return ValaTypes.RETURN; }
 
         // Error Fallback
         [^]                { return TokenType.BAD_CHARACTER; }

@@ -47,18 +47,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACKET RBRACKET
-  static boolean ArrayType(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ArrayType")) return false;
-    if (!nextTokenIs(b, LBRACKET)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, LBRACKET, RBRACKET);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  /* ********************************************************** */
   // assert LPAREN MethodCall RPAREN SEMICOLON
   static boolean Assertion(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Assertion")) return false;
@@ -796,7 +784,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // static? virtual? async?
+  // static? virtual? async? unowned? override?
   static boolean MethodModifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodModifier")) return false;
     boolean r;
@@ -804,6 +792,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = MethodModifier_0(b, l + 1);
     r = r && MethodModifier_1(b, l + 1);
     r = r && MethodModifier_2(b, l + 1);
+    r = r && MethodModifier_3(b, l + 1);
+    r = r && MethodModifier_4(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -826,6 +816,20 @@ public class ValaParser implements PsiParser, LightPsiParser {
   private static boolean MethodModifier_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodModifier_2")) return false;
     consumeToken(b, ASYNC);
+    return true;
+  }
+
+  // unowned?
+  private static boolean MethodModifier_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodModifier_3")) return false;
+    consumeToken(b, UNOWNED);
+    return true;
+  }
+
+  // override?
+  private static boolean MethodModifier_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodModifier_4")) return false;
+    consumeToken(b, OVERRIDE);
     return true;
   }
 
@@ -1304,7 +1308,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // char | uchar | unichar | int | uint | long | ulong | short | ushort | int8 | int16 | int32 | int64 | uint8 |
-  //     uint16 | uint32 | uint64 | float | double | bool | string | ArrayType
+  //     uint16 | uint32 | uint64 | float | double | bool | string
   static boolean VariableType(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableType")) return false;
     boolean r;
@@ -1329,7 +1333,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DOUBLE);
     if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, STRING);
-    if (!r) r = ArrayType(b, l + 1);
     return r;
   }
 

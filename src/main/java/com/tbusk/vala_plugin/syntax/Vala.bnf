@@ -118,7 +118,7 @@ private EnumMember ::= IDENTIFIER (COMMA IDENTIFIER)* SEMICOLON
 private MethodReturnType ::= (VariableType | void | null | BooleanValue)
 
 // Method modifiers
-private MethodModifier ::= static? virtual? async?
+private MethodModifier ::= static? virtual? async? unowned? override?
 
 // Method declaration
 private MethodDeclaration ::= AccessModifier? MethodModifier? MethodReturnType Type? QualifiedName Type? (LPAREN MethodParameter* RPAREN)? LBRACE MethodBody* RBRACE
