@@ -5,16 +5,6 @@
     <version>0.01</version>
     <vendor email="trevor@tbusk.com">tbusk</vendor>
 
-    <change-notes>
-        <![CDATA[
-            <h2>Version 0.01</h2>
-            <ul>
-                <li>Initial release with basic syntax highlighting and file type support.</li>
-                <li>Code completion is not yet implemented.</li>
-            </ul>
-        ]]>
-    </change-notes>
-
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
