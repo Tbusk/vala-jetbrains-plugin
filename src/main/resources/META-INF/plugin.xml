@@ -5,16 +5,6 @@
     <version>0.01</version>
     <vendor email="trevor@tbusk.com">tbusk</vendor>
 
-    <description>
-        <![CDATA[
-            Vala language support for Jetbrains IDEs.
-            <br/>
-            This plugin provides syntax highlighting, code completion, and other features for Vala files.
-            <br/>
-            This currently is in an early stage of development and is not feature complete.
-        ]]>
-    </description>
-
     <change-notes>
         <![CDATA[
             <h2>Version 0.01</h2>
