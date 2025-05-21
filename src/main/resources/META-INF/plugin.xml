@@ -23,6 +23,8 @@
                 language="Vala"
                 implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
 
+        <spellchecker.support language="Vala" implementationClass="com.tbusk.vala_plugin.spell_checker.ValaSpellCheckingStrategy"/>
+
         <typedHandler implementation="com.tbusk.vala_plugin.editing.CharacterAutoCloser"/>
 
         <colorSettingsPage implementation="com.tbusk.vala_plugin.highlighting.ValaColorSettingsPage"/>
