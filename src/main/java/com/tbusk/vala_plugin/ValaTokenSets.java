@@ -11,9 +11,12 @@ public interface ValaTokenSets {
     TokenSet COMMENTS = TokenSet.create(
             ValaTypes.COMMENT,
             ValaTypes.DOC_COMMENT,
-            ValaTypes.BLOCK_COMMENT);
+            ValaTypes.BLOCK_COMMENT
+    );
 
-    TokenSet STRINGS = TokenSet.create(STRING_LITERAL);
+    TokenSet STRINGS = TokenSet.create(
+            STRING_LITERAL
+    );
 
     TokenSet KEYWORDS = TokenSet.create(
             ValaTypes.BOOL,
