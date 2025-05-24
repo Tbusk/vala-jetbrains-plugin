@@ -28,7 +28,7 @@ public final class ValaFileType extends LanguageFileType {
 
     @Override
     public @NlsSafe @NotNull String getDefaultExtension() {
-        return "vala";
+        return "vala;vapi";
     }
 
     @Override

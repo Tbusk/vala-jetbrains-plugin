@@ -30,7 +30,7 @@
                 implementationClass="com.tbusk.vala_plugin.language.ValaFileType"
                 fieldName="INSTANCE"
                 language="Vala"
-                extensions="vala"/>
+                extensions="vala;vapi"/>
 
         <lang.parserDefinition
                 language="Vala"
