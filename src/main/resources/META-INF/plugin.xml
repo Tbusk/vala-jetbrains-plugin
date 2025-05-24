@@ -46,4 +46,10 @@
 
         <colorSettingsPage implementation="com.tbusk.vala_plugin.highlighting.ValaColorSettingsPage"/>
     </extensions>
+
+    <actions >
+        <action id="CreateValaFile" class="com.tbusk.vala_plugin.actions.ValaCreateFileAction" text="Create Vala File" description="Create a new Vala file">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+        </action>
+    </actions>
 </idea-plugin>
