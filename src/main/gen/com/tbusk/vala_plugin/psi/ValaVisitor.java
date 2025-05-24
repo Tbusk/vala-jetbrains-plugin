@@ -7,7 +7,23 @@ import com.intellij.psi.PsiElement;
 
 public class ValaVisitor extends PsiElementVisitor {
 
-  public void visitDefinition(@NotNull ValaDefinition o) {
+  public void visitComments(@NotNull ValaComments o) {
+    visitPsiElement(o);
+  }
+
+  public void visitIdentifiers(@NotNull ValaIdentifiers o) {
+    visitPsiElement(o);
+  }
+
+  public void visitItems(@NotNull ValaItems o) {
+    visitPsiElement(o);
+  }
+
+  public void visitKeywords(@NotNull ValaKeywords o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSymbols(@NotNull ValaSymbols o) {
     visitPsiElement(o);
   }
 

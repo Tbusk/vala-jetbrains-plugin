@@ -20,6 +20,7 @@ import com.tbusk.vala_plugin.psi.ValaTypes;
 WHITE_SPACE=[ \t\n\r]+
 IDENTIFIER=[a-zA-Z][a-zA-Z0-9_]*
 STRING_LITERAL=\"([^\\\"]|\\.)*\"
+CHAR_LITERAL=\'([^\\\']|\\.)*\'
 NUMBER=[0-9]+(\.[0-9]*)?
 
 // Comments
@@ -31,6 +32,31 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
 
 <YYINITIAL> {
 
+        // Misc Keywords
+        "return"             { return ValaTypes.RETURN; }
+        "do" { return ValaTypes.DO; }
+        "break" { return ValaTypes.BREAK; }
+        "continue" { return ValaTypes.CONTINUE; }
+        "case" { return ValaTypes.CASE; }
+        "default" { return ValaTypes.DEFAULT; }
+        "throw" { return ValaTypes.THROW; }
+        "try" { return ValaTypes.TRY; }
+        "catch" { return ValaTypes.CATCH; }
+        "in" { return ValaTypes.IN; }
+        "namespace" { return ValaTypes.NAMESPACE; }
+        "using" { return ValaTypes.USING; }
+        "if"             { return ValaTypes.IF; }
+        "else" { return ValaTypes.ELSE; }
+        "switch" { return ValaTypes.SWITCH; }
+        "while" { return ValaTypes.WHILE; }
+        "for" { return ValaTypes.FOR; }
+        "foreach" { return ValaTypes.FOREACH; }
+        "owned" { return ValaTypes.OWNED; }
+        "unowned" { return ValaTypes.UNOWNED; }
+        "yield" {return ValaTypes.YIELD; }
+        "new" {return ValaTypes.NEW; }
+        "async" {return ValaTypes.ASYNC; }
+
         // Comments
         {DOC_COMMENT}      { return ValaTypes.DOC_COMMENT; }
         {BLOCK_COMMENT}    { return ValaTypes.BLOCK_COMMENT; }
@@ -41,10 +67,10 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
          // Data Structures
         "class" { return ValaTypes.CLASS; }
         "interface" { return ValaTypes.INTERFACE; }
-        "namespace" { return ValaTypes.NAMESPACE; }
-        "using" { return ValaTypes.USING; }
-        "if" { return ValaTypes.IF; }
-        "else" { return ValaTypes.ELSE; }
+        "struct" { return ValaTypes.STRUCT; }
+        "enum" { return ValaTypes.ENUM; }
+        "construct" { return ValaTypes.CONSTRUCT; }
+
 
 
         // Access Modifiers
@@ -91,6 +117,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
         // Other tokens
         {IDENTIFIER}       { return ValaTypes.IDENTIFIER; }
         {STRING_LITERAL}   { return ValaTypes.STRING_LITERAL; }
+        {CHAR_LITERAL}     { return ValaTypes.CHAR_LITERAL; }
         {NUMBER}           { return ValaTypes.NUMBER; }
         ";"        { return ValaTypes.SEMICOLON; }
         ":"          { return ValaTypes.COLON; }
@@ -104,39 +131,28 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
         "]"         { return ValaTypes.RBRACKET; }
         "@"               { return ValaTypes.AT; }
         "?"    { return ValaTypes.QUESTION_MARK; }
+        "_"        { return ValaTypes.UNDERSCORE; }
+        "|"        { return ValaTypes.PIPE; }
+        "&"        { return ValaTypes.AND; }
+        "^"        { return ValaTypes.CARET; }
+        "~"        { return ValaTypes.TILDE; }
         {WHITE_SPACE}      { return TokenType.WHITE_SPACE; }
-
-        // Operators
-        "++"        { return ValaTypes.INCREMENT; }
-        "--"        { return ValaTypes.DECREMENT; }
         "="           { return ValaTypes.EQUALS; }
         "+"             { return ValaTypes.PLUS; }
         ">"               { return ValaTypes.GREATER_THAN; }
         "<"              { return ValaTypes.LESS_THAN; }
         "-"            { return ValaTypes.MINUS; }
         "*"         { return ValaTypes.STAR; }
-        "/"           { return ValaTypes.DIVIDE; }
-        "+="      { return ValaTypes.PLUS_EQUALS; }
-        "-="     { return ValaTypes.MINUS_EQUALS; }
-        "*="  { return ValaTypes.MULTIPLY_EQUALS; }
-        "/="    { return ValaTypes.DIVIDE_EQUALS; }
-        "%="    { return ValaTypes.MODULO_EQUALS; }
-        "%"           { return ValaTypes.MODULO; }
+        "/"           { return ValaTypes.FORWARD_SLASH; }
+        "%"           { return ValaTypes.PERCENT; }
 
         // Comparison Operators
-        "=="        { return ValaTypes.EQUALS_EQUALS; }
-        ">="  { return ValaTypes.GREATER_THAN_EQUALS; }
-        "<="     { return ValaTypes.LESS_THAN_EQUALS; }
-        "!="           { return ValaTypes.NOT_EQUALS; }
         "&&"                  { return ValaTypes.AND; }
-        "||"                   { return ValaTypes.OR; }
-        "!"                  { return ValaTypes.NOT; }
+        "!"                  { return ValaTypes.EXCLAMATION; }
 
         // Testing
         "assert"             { return ValaTypes.ASSERT; }
 
-        // Misc Keywords
-        "return"             { return ValaTypes.RETURN; }
 
         // Error Fallback
         [^]                { return TokenType.BAD_CHARACTER; }

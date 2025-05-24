@@ -26,30 +26,21 @@
         RBRACKET=']'
         QUESTION_MARK='?'
         AT='@'
-
+        UNDERSCORE='_'
         GREATER_THAN='>'
-        GREATER_THAN_OR_EQUAL='>='
         LESS_THAN='<'
-        LESS_THAN_OR_EQUAL='<='
         PLUS='+'
         MINUS='-'
         STAR='*'
-        DIVIDE='/'
-        MODULO='%'
-        AND='&&'
-        OR='||'
-        NOT='!'
-        INCREMENT='++'
-        DECREMENT='--'
-        EQUALS_EQUALS='=='
-        NOT_EQUALS='!='
-        LESS_THAN_EQUALS='<='
-        GREATER_THAN_EQUALS='>='
-        PLUS_EQUALS='+='
-        MINUS_EQUALS='-='
-        MULTIPLY_EQUALS='*='
-        DIVIDE_EQUALS='/='
-        MODULO_EQUALS='%='
+        FORWARD_SLASH='/'
+        PERCENT='%'
+        AND='&'
+        PIPE='|'
+        EXCLAMATION='!'
+        TILDE='~'
+        CARET='^'
+        BACKTICK='`'
+        DOLLAR='$'
 
         IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
         WHITESPACE='regexp:\s+'
@@ -63,89 +54,124 @@
     ]
 }
 
-Root ::= Definition*
+Root ::= Items*
 
-Definition ::= Using | Namespace | VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | VariableReassignment | IfBlock | Comment | Assertion
+Items ::= Keywords | Comments | Identifiers | Symbols
 
-// comments
-private Comment ::= COMMENT | BLOCK_COMMENT | DOC_COMMENT
+Symbols ::= DOT
+         | COMMA
+         | SEMICOLON
+         | EQUALS
+         | LBRACE
+         | RBRACE
+         | COLON
+         | LPAREN
+         | RPAREN
+         | LBRACKET
+         | RBRACKET
+         | QUESTION_MARK
+         | AT
+         | UNDERSCORE
+         | GREATER_THAN
+         | LESS_THAN
+         | PLUS
+         | MINUS
+         | STAR
+         | FORWARD_SLASH
+         | PERCENT
+         | AND
+         | PIPE
+         | EXCLAMATION
+         | TILDE
+         | CARET
+         | BACKTICK
+         | DOLLAR
 
-// access modifiers
-private AccessModifier ::= public | private | protected
 
-// variable types
-private VariableType ::= (
-    char | uchar | unichar | int | uint | long | ulong | short | ushort | int8 | int16 | int32 | int64 | uint8 |
-    uint16 | uint32 | uint64 | float | double | bool | string
-)
 
-// boolean values
-private BooleanValue ::= true | false
+Comments ::= COMMENT
+          | BLOCK_COMMENT
+          | DOC_COMMENT
 
-// variable declaration
-private VariableDefinition ::= AccessModifier? const? (VariableType | var | QualifiedName) IDENTIFIER (SEMICOLON | (EQUALS ((StringWithConcatenation | NumberOperation | null) SEMICOLON | MethodCall | LBRACE MethodBody* RBRACE)))
+Identifiers ::= IDENTIFIER
+             | STRING_LITERAL
+             | CHAR_LITERAL
+             | NUMBER
+             | WHITESPACE
+             | EMPTY
 
-// variable reassignment
-private VariableReassignment ::= IDENTIFIER EQUALS (STRING_LITERAL | NUMBER | BooleanValue | null) SEMICOLON
-
-// namespace declaration
-private Namespace ::= namespace IDENTIFIER LBRACE NamespaceBody* RBRACE
-
-// what's permitted in a namespace body
-private NamespaceBody ::= VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | VariableReassignment | IfBlock | Assertion | Comment
-
-// qualified name
-private QualifiedName ::= IDENTIFIER (DOT IDENTIFIER)*
-
-// using declaration
-private Using ::= using QualifiedName SEMICOLON
-
-// class modifiers
-private ClassModifier ::= abstract? final? virtual?
-
-// Type
-private Type ::= LESS_THAN QualifiedName (COMMA QualifiedName)* GREATER_THAN
-
-// class declaration
-private ClassAndOrInterfaceImplementation ::= COLON QualifiedName Type? (COMMA QualifiedName Type?)*
-private ClassDeclaration ::= AccessModifier? ClassModifier class QualifiedName Type? ClassAndOrInterfaceImplementation? LBRACE Definition* RBRACE
-
-// enum declaration
-private EnumDeclaration ::= AccessModifier? enum IDENTIFIER LBRACE EnumMember* RBRACE
-private EnumMember ::= IDENTIFIER (COMMA IDENTIFIER)* SEMICOLON
-
-// Method return type
-private MethodReturnType ::= (VariableType | void | null | BooleanValue)
-
-// Method modifiers
-private MethodModifier ::= static? virtual? async? unowned? override?
-
-// Method declaration
-private MethodDeclaration ::= AccessModifier? MethodModifier? MethodReturnType Type? QualifiedName Type? (LPAREN MethodParameter* RPAREN)? LBRACE MethodBody* RBRACE
-private ShorthandMethodDeclaration ::= AccessModifier? (get | set | init) SEMICOLON;
-private MethodParameter ::= VariableType QualifiedName (COMMA VariableType QualifiedName)*
-
-// Method
-private MethodBody ::= VariableDefinition | ClassDeclaration | EnumDeclaration | MethodDeclaration | InterfaceDeclaration | MethodCall | ShorthandMethodDeclaration | return (MethodCall |(QualifiedName | StringWithConcatenation | NumberOperation | BooleanValue) SEMICOLON) | VariableReassignment | IfBlock | Assertion | Comment
-private MethodCall ::= QualifiedName (LPAREN RPAREN | LPAREN (MethodArgument (COMMA MethodArgument)*) RPAREN) SEMICOLON
-private MethodArgument ::= (StringWithConcatenation | NumberOperation | BooleanValue | this | MethodCall | QualifiedName)
-
-// interface
-private InterfaceMethodDeclaration ::= AccessModifier? abstract virtual? MethodReturnType IDENTIFIER LPAREN MethodParameter* RPAREN (SEMICOLON | LBRACE MethodBody* RBRACE)
-private InterfaceBody ::= InterfaceMethodDeclaration
-private InterfaceDeclaration ::= AccessModifier? interface QualifiedName ClassAndOrInterfaceImplementation? LBRACE InterfaceBody* RBRACE
-
-// if statement
-private IfBlock ::= IfStatement ElseIfStatement* ElseStatement?
-private IfStatement ::= if LPAREN MethodCall RPAREN LBRACE MethodBody* RBRACE
-private ElseIfStatement ::= else if LPAREN MethodCall RPAREN LBRACE MethodBody* RBRACE
-private ElseStatement ::= else LBRACE MethodBody* RBRACE
-
-// string concatenation
-private StringWithConcatenation ::= STRING_LITERAL (PLUS STRING_LITERAL)*
-
-// numeric operations
-private NumberOperation ::= LPAREN? NUMBER (LPAREN? (PLUS | MINUS | STAR | DIVIDE | MODULO) NUMBER RPAREN?)* RPAREN?
-
-// assertion
-private Assertion ::= assert LPAREN MethodCall RPAREN SEMICOLON
+Keywords ::= if
+            | else
+            | while
+            | for
+            | do
+            | switch
+            | case
+            | default
+            | break
+            | continue
+            | return
+            | goto
+            | sizeof
+            | typedef
+            | struct
+            | union
+            | enum
+            | class
+            | interface
+            | public
+            | private
+            | protected
+            | static
+            | final
+            | abstract
+            | virtual
+            | override
+            | namespace
+            | internal
+            | foreach
+            | in
+            | try
+            | catch
+            | finally
+            | throw
+            | throws
+            | new
+            | delete
+            | this
+            | super
+            | null
+            | true
+            | false
+            | const
+            | volatile
+            | assert
+            | string
+            | char
+            | uchar
+            | unichar
+            | int
+            | uint
+            | long
+            | ulong
+            | short
+            | ushort
+            | int8
+            | int16
+            | int32
+            | int64
+            | uint8
+            | uint16
+            | uint32
+            | uint64
+            | float
+            | double
+            | bool
+            | var
+            | void
+            | owned
+            | unowned
+            | using
+            | construct
+            | yield
+            | async

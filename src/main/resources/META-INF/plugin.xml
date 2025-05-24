@@ -5,7 +5,24 @@
     <version>0.01</version>
     <vendor email="trevor@tbusk.com">tbusk</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.platform </depends>
+    <depends>com.redhat.devtools.lsp4ij</depends>
+
+    <extensions defaultExtensionNs="com.redhat.devtools.lsp4ij">
+        <server id="vala"
+                name="Vala Language Server"
+                factoryClass="com.tbusk.vala_plugin.lsp.ValaLanguageServerFactory">
+            <description><![CDATA[
+        Vala Language Server
+        ]]>
+            </description>
+        </server>
+
+        <languageMapping language="Vala" serverId="vala"/>
+        <fileTypeMapping fileType="vala" serverId="vala"/>
+        <fileNamePatternMapping patterns="*.vala;*.vapi" serverId="vala"/>
+
+    </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
