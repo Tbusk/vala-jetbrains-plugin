@@ -33,6 +33,7 @@ public interface ValaTypes {
   IElementType COMMA = new ValaTokenType(",");
   IElementType COMMENT = new ValaTokenType("COMMENT");
   IElementType CONST = new ValaTokenType("const");
+  IElementType CONSTANT = new ValaTokenType("CONSTANT");
   IElementType CONSTRUCT = new ValaTokenType("construct");
   IElementType CONTINUE = new ValaTokenType("continue");
   IElementType DEFAULT = new ValaTokenType("default");
@@ -72,6 +73,7 @@ public interface ValaTypes {
   IElementType LESS_THAN = new ValaTokenType("<");
   IElementType LONG = new ValaTokenType("long");
   IElementType LPAREN = new ValaTokenType("(");
+  IElementType METHOD_CALL = new ValaTokenType("METHOD_CALL");
   IElementType MINUS = new ValaTokenType("-");
   IElementType NAMESPACE = new ValaTokenType("namespace");
   IElementType NEW = new ValaTokenType("new");

@@ -11,10 +11,16 @@ public interface ValaIdentifiers extends PsiElement {
   PsiElement getCharLiteral();
 
   @Nullable
+  PsiElement getConstant();
+
+  @Nullable
   PsiElement getEmpty();
 
   @Nullable
   PsiElement getIdentifier();
+
+  @Nullable
+  PsiElement getMethodCall();
 
   @Nullable
   PsiElement getNumber();

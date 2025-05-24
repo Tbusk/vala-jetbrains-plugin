@@ -35,6 +35,12 @@ public class ValaIdentifiersImpl extends ASTWrapperPsiElement implements ValaIde
 
   @Override
   @Nullable
+  public PsiElement getConstant() {
+    return findChildByType(CONSTANT);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getEmpty() {
     return findChildByType(EMPTY);
   }
@@ -43,6 +49,12 @@ public class ValaIdentifiersImpl extends ASTWrapperPsiElement implements ValaIde
   @Nullable
   public PsiElement getIdentifier() {
     return findChildByType(IDENTIFIER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getMethodCall() {
+    return findChildByType(METHOD_CALL);
   }
 
   @Override

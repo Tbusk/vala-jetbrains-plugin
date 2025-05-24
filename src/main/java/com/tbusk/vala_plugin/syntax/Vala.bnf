@@ -44,6 +44,7 @@
         POUND='#'
 
         IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
+        CONSTANT='regexp:[A-Z_][A-Z0-9_]*'
         WHITESPACE='regexp:\s+'
         STRING_LITERAL='regexp:\"([^"\\]|\\.)*\"'
         CHAR_LITERAL="regexp:'([^'\\]|\\.)'"
@@ -52,6 +53,7 @@
         BLOCK_COMMENT='regexp:/[^*]\*+([^/*][^*]*\*+)*/'
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
+        METHOD_CALL='regexp:[a-zA-Z_][a-zA-Z0-9_]* (\s+)*\('
     ]
 }
 
@@ -101,6 +103,8 @@ Identifiers ::= IDENTIFIER
              | NUMBER
              | WHITESPACE
              | EMPTY
+             | CONSTANT
+             | METHOD_CALL
 
 Keywords ::= if
             | endif

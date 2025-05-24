@@ -20,14 +20,12 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Line comment", ValaSyntaxHighlighter.LINE_COMMENT),
             new AttributesDescriptor("Block comment", ValaSyntaxHighlighter.BLOCK_COMMENT),
             new AttributesDescriptor("Doc comment", ValaSyntaxHighlighter.DOC_COMMENT),
-            new AttributesDescriptor("Semicolon", ValaSyntaxHighlighter.SEMICOLON),
-            new AttributesDescriptor("Parenthesis", ValaSyntaxHighlighter.PARENTHESIS),
             new AttributesDescriptor("Identifier", ValaSyntaxHighlighter.IDENTIFIER),
             new AttributesDescriptor("Keyword", ValaSyntaxHighlighter.KEYWORD),
-            new AttributesDescriptor("Operation sign", ValaSyntaxHighlighter.OPERATIONS),
-            new AttributesDescriptor("Brackets", ValaSyntaxHighlighter.BRACKETS),
             new AttributesDescriptor("String", ValaSyntaxHighlighter.STRING),
-            new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER)
+            new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER),
+            new AttributesDescriptor("Constant", ValaSyntaxHighlighter.CONSTANT),
+            new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL),
     };
 
     @Override
@@ -47,12 +45,15 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
                 
                 namespace Example {
                     public virtual class Test : Example {
-                        int a;
-                        uchar b;
+                        int a = 0;
+                        uchar b = 'c';
+                        string c = "Hello world";
                 
                         public int get_a() {
                             return a;
                         }
+                
+                        var myint = get_a();
                     }
                 }
                 """;

@@ -57,6 +57,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //              | NUMBER
   //              | WHITESPACE
   //              | EMPTY
+  //              | CONSTANT
+  //              | METHOD_CALL
   public static boolean Identifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Identifiers")) return false;
     boolean r;
@@ -67,6 +69,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, NUMBER);
     if (!r) r = consumeToken(b, WHITESPACE);
     if (!r) r = consumeToken(b, EMPTY);
+    if (!r) r = consumeToken(b, CONSTANT);
+    if (!r) r = consumeToken(b, METHOD_CALL);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
