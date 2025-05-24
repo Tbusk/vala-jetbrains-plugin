@@ -145,6 +145,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
         "*"         { return ValaTypes.STAR; }
         "/"           { return ValaTypes.FORWARD_SLASH; }
         "%"           { return ValaTypes.PERCENT; }
+        "#"           { return ValaTypes.POUND; }
 
         // Comparison Operators
         "&&"                  { return ValaTypes.AND; }

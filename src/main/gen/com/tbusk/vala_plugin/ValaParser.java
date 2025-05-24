@@ -285,6 +285,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //          | CARET
   //          | BACKTICK
   //          | DOLLAR
+  //          | POUND
   public static boolean Symbols(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Symbols")) return false;
     boolean r;
@@ -317,6 +318,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, CARET);
     if (!r) r = consumeToken(b, BACKTICK);
     if (!r) r = consumeToken(b, DOLLAR);
+    if (!r) r = consumeToken(b, POUND);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

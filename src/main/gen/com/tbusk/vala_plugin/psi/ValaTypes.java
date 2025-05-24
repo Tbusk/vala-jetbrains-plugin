@@ -81,6 +81,7 @@ public interface ValaTypes {
   IElementType PERCENT = new ValaTokenType("%");
   IElementType PIPE = new ValaTokenType("|");
   IElementType PLUS = new ValaTokenType("+");
+  IElementType POUND = new ValaTokenType("#");
   IElementType PRIVATE = new ValaTokenType("private");
   IElementType PROTECTED = new ValaTokenType("protected");
   IElementType PUBLIC = new ValaTokenType("public");

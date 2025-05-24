@@ -41,6 +41,7 @@
         CARET='^'
         BACKTICK='`'
         DOLLAR='$'
+        POUND='#'
 
         IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
         WHITESPACE='regexp:\s+'
@@ -86,6 +87,7 @@ Symbols ::= DOT
          | CARET
          | BACKTICK
          | DOLLAR
+         | POUND
 
 
 
