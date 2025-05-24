@@ -103,6 +103,7 @@ Identifiers ::= IDENTIFIER
              | EMPTY
 
 Keywords ::= if
+            | endif
             | else
             | while
             | for

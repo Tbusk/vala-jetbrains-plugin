@@ -44,6 +44,7 @@ public interface ValaTypes {
   IElementType DOUBLE = new ValaTokenType("double");
   IElementType ELSE = new ValaTokenType("else");
   IElementType EMPTY = new ValaTokenType("EMPTY");
+  IElementType ENDIF = new ValaTokenType("endif");
   IElementType ENUM = new ValaTokenType("enum");
   IElementType EQUALS = new ValaTokenType("=");
   IElementType EXCLAMATION = new ValaTokenType("!");

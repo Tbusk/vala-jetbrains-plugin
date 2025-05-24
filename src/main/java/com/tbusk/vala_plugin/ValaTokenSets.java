@@ -44,6 +44,7 @@ public interface ValaTokenSets {
             ValaTypes.VAR,
             ValaTypes.NULL,
             ValaTypes.IF,
+            ValaTypes.ENDIF,
             ValaTypes.ELSE,
             ValaTypes.WHILE,
             ValaTypes.FOR,

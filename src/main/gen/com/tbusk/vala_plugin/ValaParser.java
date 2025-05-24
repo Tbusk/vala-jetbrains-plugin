@@ -87,6 +87,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // if
+  //             | endif
   //             | else
   //             | while
   //             | for
@@ -166,6 +167,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, KEYWORDS, "<keywords>");
     r = consumeToken(b, IF);
+    if (!r) r = consumeToken(b, ENDIF);
     if (!r) r = consumeToken(b, ELSE);
     if (!r) r = consumeToken(b, WHILE);
     if (!r) r = consumeToken(b, FOR);

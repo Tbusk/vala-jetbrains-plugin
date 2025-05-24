@@ -46,6 +46,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
         "namespace" { return ValaTypes.NAMESPACE; }
         "using" { return ValaTypes.USING; }
         "if"             { return ValaTypes.IF; }
+        "endif" { return ValaTypes.ENDIF; }
         "else" { return ValaTypes.ELSE; }
         "switch" { return ValaTypes.SWITCH; }
         "while" { return ValaTypes.WHILE; }
