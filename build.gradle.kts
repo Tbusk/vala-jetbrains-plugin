@@ -32,10 +32,6 @@ sourceSets {
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url = uri("https://raw.githubusercontent.com/redhat-developer/quarkus-ls/maven/") }
-    maven { url = uri("https://repository.jboss.org/nexus/content/groups/public") }
-    maven { url = uri("https://repo.eclipse.org/content/repositories/lsp4mp-snapshots") }
-    maven { url = uri("https://repo.eclipse.org/content/repositories/lsp4mp-releases") }
     // IntelliJ Platform Gradle Plugin Repositories Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-repositories-extension.html
     intellijPlatform {
         defaultRepositories()
@@ -47,10 +43,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
     compileOnly("org.jetbrains:grammar-kit:2023.3")
-
-    implementation("com.redhat.microprofile:com.redhat.qute.ls:0.17.0") {
-        exclude("org.eclipse.lsp4j")
-    }
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
@@ -62,6 +54,8 @@ dependencies {
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
         testFramework(TestFrameworkType.Platform)
+
+        pluginVerifier(version="1.384")
     }
 }
 
