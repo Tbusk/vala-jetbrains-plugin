@@ -8,9 +8,19 @@
 
 Vala language support for Jetbrains IDEs.
             
-This plugin provides syntax highlighting, code completion, and other features for Vala files.
+This plugin provides syntax highlighting, code completion, and other features for development with Vala.
             
-This currently is in an early stage of development and is not feature complete.
+This currently is in an early stage of development. Most luxuries of JetBrain IDEs are not implemented yet or are limited.
+
+A Language Server Protocol (LSP) is used to provide many features, including documentation, code completion, error checking, etc.
+That is required to be installed separately. 
+
+The one that is supported can be found [here](https://github.com/vala-lang/vala-language-server).
+
+Largely, it can be installed in a command or two.  It likely is already installed if you are using other IDEs like VSCode or Neovim with the appropriate plugins.
+
+If you want to support this project or encounter any problems, please consider opening issues (features requests, bug fixes, etc.) or pull requests on our GitHub repository [here](https://github.com/Tbusk/vala-jetbrains-plugin).
+
 
 <!-- Plugin description end -->
 
