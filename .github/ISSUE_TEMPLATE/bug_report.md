@@ -22,7 +22,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. Ubuntu, WIndows 11]
-- IDE [e.g. CLion]
+ - IDE [e.g. CLion]
  - IDE Version [e.g. 2025.1.1.1]
 
 **Additional context**
