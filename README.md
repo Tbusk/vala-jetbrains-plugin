@@ -42,3 +42,9 @@ If you want to support this project or encounter any problems, please consider o
 
   Download the [latest release](https://github.com/Tbusk/vala-jetbrains-plugin/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+
+## Contributions
+Thank you for your interest in contributing to this project. 
+We welcome any and all contributions from the community and appreciate your help in making the project better.
+
+Please refer to the [contributions](CONTRIBUTIONS.md) file for guidelines on how to contribute, including how to report issues, submit pull requests, and adhere to our coding standards.
