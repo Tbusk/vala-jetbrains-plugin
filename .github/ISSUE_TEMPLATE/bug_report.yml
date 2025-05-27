@@ -22,10 +22,12 @@ body:
     attributes:
       label: Steps to Reproduce
       description: Please list the steps that are needed to reproduce the issue if possible.
-      placeholder: |
+      value: |
         1. type public partial class ...
         2. 
         3. 
+        ...
+      render: bash
     validations:
       required: false
   - type: dropdown
