@@ -5,7 +5,7 @@ labels: ["Feature Request"]
 assignees:
   - tbusk
 projects:
-  - "11"
+  - "Tbusk/11"
 
 body:
   - type: markdown
