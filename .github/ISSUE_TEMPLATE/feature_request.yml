@@ -5,7 +5,7 @@ labels: ["Feature Request"]
 assignees:
   - tbusk
 projects:
-  - Vala JetBrains Plugin Project
+  - https://github.com/users/Tbusk/projects/11/
 
 body:
   - type: markdown
