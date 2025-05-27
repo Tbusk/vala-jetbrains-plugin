@@ -1,5 +1,5 @@
 name: Bug report
-about: Create a report to help us improve
+description: Create a report to help us improve
 title: "[BUG]: "
 labels: ["Bug"]
 assignees:
@@ -17,16 +17,15 @@ body:
       placeholder: It does not recognize the valid keyword 'partial', which is permitted to be used in classes.
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: steps-to-reproduce
     attributes:
       label: Steps to Reproduce
       description: Please list the steps that are needed to reproduce the issue if possible.
-      placeholder: 1. type public partial class ...
-      value: |
-        1.
-        2.
-        3.
+      placeholder: |
+        1. type public partial class ...
+        2. 
+        3. 
     validations:
       required: false
   - type: dropdown
@@ -46,7 +45,7 @@ body:
       placeholder: Ubuntu 24.0.2
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: additional-info
     attributes:
       label: Additional Information
