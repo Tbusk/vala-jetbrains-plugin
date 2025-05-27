@@ -1,0 +1,37 @@
+
+name: Feature request
+description: Suggest an idea for this project
+title: "[FEATURE]: "
+labels: ["Feature Request"]
+assignees:
+  - tbusk
+projects:
+  - Vala JetBrains Plugin Project
+
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to give us new ideas!
+  - type:
+    id: feature-description
+    attributes:
+      label: Description
+      description: Please describe what you want added.
+      placeholder: Syntax highlighting of keyword `optional`
+    validations:
+      required: true
+  - type: textarea
+    id: potential-solutions
+    attributes:
+      label: Possible Solutions
+      description: What might be some possible solutions to this problem?
+      placeholder: The following article shows one solution https:// ...
+    validations:
+      required: false
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Info
+      description: Please provide anything else that might be helpful, including screenshots, article links, link to existing implementations, etc.
+    validations:
+      required: false
