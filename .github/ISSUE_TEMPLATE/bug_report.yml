@@ -4,6 +4,8 @@ title: "[BUG]: "
 labels: ["Bug"]
 assignees:
   - tbusk
+projects:
+  - "Tbusk/11"
 
 body:
   - type: markdown
