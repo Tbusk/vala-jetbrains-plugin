@@ -1,0 +1,55 @@
+name: Bug report
+about: Create a report to help us improve
+title: "[BUG]: "
+labels: ["Bug"]
+assignees:
+  - tbusk
+
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What Happened?
+      description: Please provide a clear and concise description of what the bug is.
+      placeholder: It does not recognize the valid keyword 'partial', which is permitted to be used in classes.
+    validations:
+      required: true
+  - type: markdown
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Please list the steps that are needed to reproduce the issue if possible.
+      placeholder: 1. type public partial class ...
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: false
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of the plugin are you using?
+      options:
+        - 1.0.0-ALPHA
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating System / Version
+      description: What operating system and version are you using?
+      placeholder: Ubuntu 24.0.2
+    validations:
+      required: true
+  - type: markdown
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Anything else that may be helpful, including logs, error messages, article links, etc.
+    validations:
+      required: false
