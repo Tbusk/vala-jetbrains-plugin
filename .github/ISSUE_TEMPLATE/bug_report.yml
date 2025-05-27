@@ -23,7 +23,7 @@ body:
       label: Steps to Reproduce
       description: Please list the steps that are needed to reproduce the issue if possible.
       value: |
-        1. type public partial class ...
+        1. 
         2. 
         3. 
         ...
