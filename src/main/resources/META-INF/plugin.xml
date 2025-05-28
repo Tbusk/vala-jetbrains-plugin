@@ -44,6 +44,15 @@
         <typedHandler implementation="com.tbusk.vala_plugin.editing.CharacterAutoCloser"/>
 
         <colorSettingsPage implementation="com.tbusk.vala_plugin.highlighting.ValaColorSettingsPage"/>
+
+        <applicationService
+            serviceImplementation="com.tbusk.vala_plugin.settings.PluginSettings" />
+
+        <applicationConfigurable
+            parentId="tools"
+            instance="com.tbusk.vala_plugin.settings.PluginSettingsConfigurable"
+            id="com.tbusk.vala_plugin.settings.PluginSettingsConfigurable"
+            displayName="Vala Plugin Settings" />
     </extensions>
 
     <actions >
