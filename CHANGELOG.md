@@ -3,7 +3,8 @@
 # vala-jetbrains-plugin Changelog
 ## [Unreleased]
 ### What's Changed
-- tbd
+- Removed unused documentation.
+- Created a new docs file with resources to help development.
 
 ## [1.1.0-ALPHA]
 ### What's Changed
