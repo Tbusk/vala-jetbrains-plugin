@@ -2,7 +2,6 @@
 <idea-plugin>
     <id>com.tbusk.vala_plugin</id>
     <name>Vala</name>
-    <version>0.01</version>
     <vendor email="trevor@tbusk.com" url="https://github.com/Tbusk/vala-jetbrains-plugin">tbusk</vendor>
 
     <depends>com.intellij.modules.platform </depends>
