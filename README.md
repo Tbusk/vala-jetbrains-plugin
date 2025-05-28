@@ -13,22 +13,16 @@ This plugin provides syntax highlighting, code completion, and other features fo
 This currently is in an early stage of development. Most luxuries of JetBrain IDEs are not implemented yet or are limited.
 
 A Language Server Protocol (LSP) is used to provide many features, including documentation, code completion, syntax checking, etc.
-The supported LSP is required to be installed separately, and is found [here](https://github.com/vala-lang/vala-language-server).
 
-Currently, the project expects the download location to be in `/usr/bin/vala-language-server` and is ran with `vala-language-server`. 
-The path and command to run can be configured in `src/main/java/com/tbusk/vala_plugin/lsp/ValaLanguageServer.java`. 
-Support for in-settings configuration is planned.
-
-Largely, the LSP can be installed in a command or two.  It likely is already installed if you are using other IDEs like VSCode or Neovim with the Vala plugin.
+The supported LSP is required to be installed separately for now. More details for the LSP are available [here](https://github.com/Tbusk/vala-jetbrains-plugin/blob/main/docs/LanguageServer.md).
 
 If you want to support this project or encounter any problems, please consider opening issues (features requests, bug fixes, etc.) or pull requests on our GitHub repository [here](https://github.com/Tbusk/vala-jetbrains-plugin).
 
 <!-- Plugin description end -->
 
 ## Project Development Phases
-
-1. Improve syntax highlighting and enhance compatability with themes and color customization with the language.
-2. Add support for LSP to be at default download positions based on OS, and then further customized in settings.
+1. Add support for LSP to be at default download positions based on OS, and then further customized in settings.
+2. Improve syntax highlighting and enhance compatability with themes and color customization with the language.
 3. Add additional feature support, including most refactor methods to improve development experience.
 4. Add runnability support to make files executable.
 5. Add installation capabilities if the LSP is not found so it can be installed and downloaded.
