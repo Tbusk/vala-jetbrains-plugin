@@ -1,7 +1,11 @@
 package com.tbusk.vala_plugin.lsp;
 
 import com.intellij.execution.configurations.GeneralCommandLine;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.ex.ApplicationEx;
+import com.intellij.openapi.ui.Messages;
 import com.redhat.devtools.lsp4ij.server.OSProcessStreamConnectionProvider;
+import com.tbusk.vala_plugin.settings.PluginSettings;
 
 /**
  * ValaLanguageServer is a class that extends OSProcessStreamConnectionProvider.
@@ -10,35 +14,80 @@ import com.redhat.devtools.lsp4ij.server.OSProcessStreamConnectionProvider;
  * <br/>
  * The command line is set in the constructor and can be used to start the language server process.
  */
-public class ValaLanguageServer extends OSProcessStreamConnectionProvider {
+public final class ValaLanguageServer extends OSProcessStreamConnectionProvider {
 
-    // Default command paths for different operating systems
-    private static final String DEFAULT_WINDOWS_COMMAND_PATH = "vala-language-server";
-    private static final String DEFAULT_MAC_COMMAND_PATH = "/usr/local/bin/vala-language-server";
-    private static final String DEFAULT_LINUX_COMMAND_PATH = "/usr/bin/vala-language-server";
+    private static ValaLanguageServer INSTANCE;
 
-    public ValaLanguageServer() {
-        super.setCommandLine(getCommandLineOSConfiguration());
+    /**
+     * Private constructor to ensure singleton instance.
+     * Initializes the command line with the path to the Vala Language Server.
+     */
+    private ValaLanguageServer() {
+
+        String path = PluginSettings.getInstance().getState().lspServerPath;
+
+        super.setCommandLine(new GeneralCommandLine(path));
     }
 
     /**
-     * Returns a command line based on the operating system.
-     * This method checks the OS name and returns the appropriate command line for the Vala Language Server.
+     * Returns the singleton instance of the ValaLanguageServer.
+     * <br/>
+     * If the instance is null, it creates a new instance lazily.
      *
-     * @return GeneralCommandLine configured for the current OS
+     * @return ValaLanguageServer - the singleton instance of the ValaLanguageServer
      */
-    public GeneralCommandLine getCommandLineOSConfiguration() {
-        String osName = System.getProperty("os.name").toLowerCase();
-
-        if(osName.contains("windows")) {
-            return new GeneralCommandLine(DEFAULT_WINDOWS_COMMAND_PATH);
-        } else if (osName.contains("mac")) {
-            return new GeneralCommandLine(DEFAULT_MAC_COMMAND_PATH);
-        } else if (osName.contains("linux")) {
-            return new GeneralCommandLine(DEFAULT_LINUX_COMMAND_PATH);
+    public static ValaLanguageServer getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ValaLanguageServer();
         }
 
-        throw new UnsupportedOperationException("Unsupported operating system: " + System.getProperty("os.name"));
+        return INSTANCE;
+    }
 
+    /**
+     * Updates the command line configuration for the Vala Language Server.
+     * <br/>
+     * This method sets a new command path for the language server and prompts the user to restart the IDE.
+     * The restart is necessary because LSP4IJ doesn't provide any way to reliably restart the language server
+     * outside the UI.
+     * @param commandPath - the new command path to set for the language server
+     */
+    public void updateCommandLineConfiguration(String commandPath) {
+
+        setCommandLine(new GeneralCommandLine(commandPath));
+
+        int userChoice = showRestartPopup();
+
+        if(userChoice == Messages.YES) {
+            restartIDE();
+        }
+    }
+
+    /**
+     * Displays a popup dialog to the user asking if they want to restart the IDE.
+     * <br/>
+     * This dialog is shown when the language server configuration is changed and a restart is required.
+     *
+     * @return int - the user's choice (YES or NO)
+     */
+    public int showRestartPopup() {
+        return Messages.showYesNoDialog(
+                "A restart is required for the changes to take affect. Do you want to restart now?",
+                "Restart Required",
+                Messages.getQuestionIcon()
+        );
+    }
+
+    /**
+     * Restarts the IDE.
+     * <br/>
+     * This method uses the ApplicationEx class to restart the IDE with the current state.
+     * <br/>
+     * <a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/206105709-How-do-you-make-a-plugin-setting-change-require-a-restart">view forum q/a...</a>
+     */
+    public void restartIDE() {
+        ApplicationEx app = (ApplicationEx)ApplicationManager.getApplication();
+
+        app.restart(true);
     }
 }
