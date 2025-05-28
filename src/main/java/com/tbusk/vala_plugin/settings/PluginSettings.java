@@ -4,7 +4,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.tbusk.vala_plugin.lsp.LanguageServerPathProvider;
+import com.tbusk.vala_plugin.lsp.DefaultLanguageServerPathProvider;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * It is used to store and retrieve persistent data for the plugin.
  * Currently only the path to the Vala Language Server is stored.
  * <br/>
- * https://plugins.jetbrains.com/docs/intellij/settings-tutorial.html#the-appsettings-class
+ * <a href="https://plugins.jetbrains.com/docs/intellij/settings-tutorial.html#the-appsettings-class">view plugin docs...</a>
  */
 @State(
         name = "com.tbusk.vala_plugin.settings.PluginSettings",
@@ -27,9 +27,9 @@ public final class PluginSettings implements PersistentStateComponent<PluginSett
      * It contains the path to the Vala Language Server.
      */
     public static class State {
-        private LanguageServerPathProvider languageServerPathProvider = LanguageServerPathProvider.getInstance();
+        private DefaultLanguageServerPathProvider defaultLanguageServerPathProvider = DefaultLanguageServerPathProvider.getInstance();
         @NonNls
-        public String lspServerPath = languageServerPathProvider.getCommandLineOSConfiguration();
+        public String lspServerPath = defaultLanguageServerPathProvider.getCommandLineOSConfiguration();
     }
 
     private State pluginState = new State();
