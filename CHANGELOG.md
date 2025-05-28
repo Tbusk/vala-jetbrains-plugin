@@ -2,13 +2,19 @@
 
 # vala-jetbrains-plugin Changelog
 ## [Unreleased]
-### Added
+### What's Changed
 - tbd
 
+## [1.1.0-ALPHA]
+### What's Changed
+- Added plugin settings page.
+- Added configuration option for Language Server executable path.
+- Documentation for the Language Server configuration.
+
 ## [1.0.1-ALPHA]
-### Added
+### What's Changed
 - Support for MacOS and Windows platforms with the LSP server.
 
 ## 1.0.0-ALPHA
-### Added
+### What's Changed
 - Initial version with basic features: lsp support, syntax highlighting, file creation.
