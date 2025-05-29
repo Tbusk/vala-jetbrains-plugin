@@ -16,6 +16,7 @@ public interface ValaTypes {
   IElementType ASSERT = new ValaTokenType("assert");
   IElementType ASYNC = new ValaTokenType("async");
   IElementType AT = new ValaTokenType("@");
+  IElementType BACKSLASH = new ValaTokenType("\\\\");
   IElementType BACKTICK = new ValaTokenType("`");
   IElementType BASE = new ValaTokenType("base");
   IElementType BLOCK_COMMENT = new ValaTokenType("BLOCK_COMMENT");

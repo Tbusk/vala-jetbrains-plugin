@@ -174,9 +174,12 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "-"            { return ValaTypes.MINUS; }
     "*"         { return ValaTypes.STAR; }
     "/"           { return ValaTypes.FORWARD_SLASH; }
+    "\\"          { return ValaTypes.BACKSLASH; }
     "%"           { return ValaTypes.PERCENT; }
     "#"           { return ValaTypes.POUND; }
     "!"                  { return ValaTypes.EXCLAMATION; }
+    "`"                { return ValaTypes.BACKTICK; }
+    "$"               { return ValaTypes.DOLLAR; }
 
     // Testing
     "assert"             { return ValaTypes.ASSERT; }

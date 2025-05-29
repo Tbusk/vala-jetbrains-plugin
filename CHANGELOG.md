@@ -3,7 +3,8 @@
 # vala-jetbrains-plugin Changelog
 ## [Unreleased]
 ### What's Changed
-- tbd
+- Added additional keywords for syntax highlighting and to parser/lexer.
+- Added additional configurability for color customization.
 
 ## [1.1.0-ALPHA]
 ### What's Changed

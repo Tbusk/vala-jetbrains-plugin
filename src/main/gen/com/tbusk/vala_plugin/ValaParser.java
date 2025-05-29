@@ -36,9 +36,37 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // public
+  //                          | private
+  //                          | protected
+  //                          | internal
+  static boolean AccessModifiers(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AccessModifiers")) return false;
+    boolean r;
+    r = consumeToken(b, PUBLIC);
+    if (!r) r = consumeToken(b, PRIVATE);
+    if (!r) r = consumeToken(b, PROTECTED);
+    if (!r) r = consumeToken(b, INTERNAL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // CCode
+  //                         | Version
+  //                         | DBus
+  static boolean CInstructions(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CInstructions")) return false;
+    boolean r;
+    r = consumeToken(b, CCODE);
+    if (!r) r = consumeToken(b, VERSION);
+    if (!r) r = consumeToken(b, DBUS);
+    return r;
+  }
+
+  /* ********************************************************** */
   // COMMENT
-  //           | BLOCK_COMMENT
-  //           | DOC_COMMENT
+  //                   | BLOCK_COMMENT
+  //                   | DOC_COMMENT
   static boolean Comments(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Comments")) return false;
     boolean r;
@@ -49,14 +77,26 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // HashMap
+  //                   | Object
+  static boolean GObjects(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "GObjects")) return false;
+    if (!nextTokenIs(b, "", HASHMAP, OBJECT)) return false;
+    boolean r;
+    r = consumeToken(b, HASHMAP);
+    if (!r) r = consumeToken(b, OBJECT);
+    return r;
+  }
+
+  /* ********************************************************** */
   // IDENTIFIER
-  //              | STRING_LITERAL
-  //              | CHAR_LITERAL
-  //              | NUMBER
-  //              | WHITESPACE
-  //              | EMPTY
-  //              | CONSTANT
-  //              | METHOD_CALL
+  //                      | STRING_LITERAL
+  //                      | CHAR_LITERAL
+  //                      | NUMBER
+  //                      | WHITESPACE
+  //                      | EMPTY
+  //                      | CONSTANT
+  //                      | METHOD_CALL
   static boolean Identifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Identifiers")) return false;
     boolean r;
@@ -68,6 +108,21 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, EMPTY);
     if (!r) r = consumeToken(b, CONSTANT);
     if (!r) r = consumeToken(b, METHOD_CALL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // if
+  //                      | endif
+  //                      | elif
+  //                      | else
+  static boolean IfStatement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfStatement")) return false;
+    boolean r;
+    r = consumeToken(b, IF);
+    if (!r) r = consumeToken(b, ENDIF);
+    if (!r) r = consumeToken(b, ELIF);
+    if (!r) r = consumeToken(b, ELSE);
     return r;
   }
 
@@ -87,85 +142,76 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // Types
-  //             |if
-  //             | endif
-  //             | elif
-  //             | else
-  //             | while
-  //             | for
-  //             | do
-  //             | switch
-  //             | case
-  //             | default
-  //             | break
-  //             | continue
-  //             | return
-  //             | goto
-  //             | sizeof
-  //             | typedef
-  //             | struct
-  //             | union
-  //             | enum
-  //             | class
-  //             | interface
-  //             | public
-  //             | private
-  //             | protected
-  //             | static
-  //             | abstract
-  //             | virtual
-  //             | override
-  //             | namespace
-  //             | internal
-  //             | foreach
-  //             | in
-  //             | try
-  //             | catch
-  //             | finally
-  //             | throw
-  //             | throws
-  //             | new
-  //             | delete
-  //             | this
-  //             | null
-  //             | true
-  //             | false
-  //             | const
-  //             | volatile
-  //             | assert
-  //             | var
-  //             | void
-  //             | owned
-  //             | unowned
-  //             | using
-  //             | construct
-  //             | yield
-  //             | async
-  //             | HashMap
-  //             | Object
-  //             | base
-  //             | is
-  //             | as
-  //             | typeof
-  //             | CCode
-  //             | delegate
-  //             | signal
-  //             | errordomain
-  //             | requires
-  //             | ensures
-  //             | lock
-  //             | weak
-  //             | extern
-  //             | Version
-  //             | DBus
+  //                   | IfStatement
+  //                   | CInstructions
+  //                   | GObjects
+  //                   | AccessModifiers
+  //                   | while
+  //                   | for
+  //                   | do
+  //                   | switch
+  //                   | case
+  //                   | default
+  //                   | break
+  //                   | continue
+  //                   | return
+  //                   | goto
+  //                   | sizeof
+  //                   | typedef
+  //                   | struct
+  //                   | union
+  //                   | enum
+  //                   | class
+  //                   | interface
+  //                   | static
+  //                   | abstract
+  //                   | virtual
+  //                   | override
+  //                   | namespace
+  //                   | foreach
+  //                   | in
+  //                   | try
+  //                   | catch
+  //                   | finally
+  //                   | throw
+  //                   | throws
+  //                   | new
+  //                   | delete
+  //                   | this
+  //                   | null
+  //                   | true
+  //                   | false
+  //                   | const
+  //                   | volatile
+  //                   | assert
+  //                   | var
+  //                   | void
+  //                   | owned
+  //                   | unowned
+  //                   | using
+  //                   | construct
+  //                   | yield
+  //                   | async
+  //                   | base
+  //                   | is
+  //                   | as
+  //                   | typeof
+  //                   | delegate
+  //                   | signal
+  //                   | errordomain
+  //                   | requires
+  //                   | ensures
+  //                   | lock
+  //                   | weak
+  //                   | extern
   static boolean Keywords(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Keywords")) return false;
     boolean r;
     r = Types(b, l + 1);
-    if (!r) r = consumeToken(b, IF);
-    if (!r) r = consumeToken(b, ENDIF);
-    if (!r) r = consumeToken(b, ELIF);
-    if (!r) r = consumeToken(b, ELSE);
+    if (!r) r = IfStatement(b, l + 1);
+    if (!r) r = CInstructions(b, l + 1);
+    if (!r) r = GObjects(b, l + 1);
+    if (!r) r = AccessModifiers(b, l + 1);
     if (!r) r = consumeToken(b, WHILE);
     if (!r) r = consumeToken(b, FOR);
     if (!r) r = consumeToken(b, DO);
@@ -183,15 +229,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, ENUM);
     if (!r) r = consumeToken(b, CLASS);
     if (!r) r = consumeToken(b, INTERFACE);
-    if (!r) r = consumeToken(b, PUBLIC);
-    if (!r) r = consumeToken(b, PRIVATE);
-    if (!r) r = consumeToken(b, PROTECTED);
     if (!r) r = consumeToken(b, STATIC);
     if (!r) r = consumeToken(b, ABSTRACT);
     if (!r) r = consumeToken(b, VIRTUAL);
     if (!r) r = consumeToken(b, OVERRIDE);
     if (!r) r = consumeToken(b, NAMESPACE);
-    if (!r) r = consumeToken(b, INTERNAL);
     if (!r) r = consumeToken(b, FOREACH);
     if (!r) r = consumeToken(b, IN);
     if (!r) r = consumeToken(b, TRY);
@@ -216,13 +258,10 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, CONSTRUCT);
     if (!r) r = consumeToken(b, YIELD);
     if (!r) r = consumeToken(b, ASYNC);
-    if (!r) r = consumeToken(b, HASHMAP);
-    if (!r) r = consumeToken(b, OBJECT);
     if (!r) r = consumeToken(b, BASE);
     if (!r) r = consumeToken(b, IS);
     if (!r) r = consumeToken(b, AS);
     if (!r) r = consumeToken(b, TYPEOF);
-    if (!r) r = consumeToken(b, CCODE);
     if (!r) r = consumeToken(b, DELEGATE);
     if (!r) r = consumeToken(b, SIGNAL);
     if (!r) r = consumeToken(b, ERRORDOMAIN);
@@ -231,8 +270,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, LOCK);
     if (!r) r = consumeToken(b, WEAK);
     if (!r) r = consumeToken(b, EXTERN);
-    if (!r) r = consumeToken(b, VERSION);
-    if (!r) r = consumeToken(b, DBUS);
     return r;
   }
 
@@ -250,34 +287,35 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // DOT
-  //          | COMMA
-  //          | SEMICOLON
-  //          | EQUALS
-  //          | LBRACE
-  //          | RBRACE
-  //          | COLON
-  //          | LPAREN
-  //          | RPAREN
-  //          | LBRACKET
-  //          | RBRACKET
-  //          | QUESTION_MARK
-  //          | AT
-  //          | UNDERSCORE
-  //          | GREATER_THAN
-  //          | LESS_THAN
-  //          | PLUS
-  //          | MINUS
-  //          | STAR
-  //          | FORWARD_SLASH
-  //          | PERCENT
-  //          | AND
-  //          | PIPE
-  //          | EXCLAMATION
-  //          | TILDE
-  //          | CARET
-  //          | BACKTICK
-  //          | DOLLAR
-  //          | POUND
+  //                  | COMMA
+  //                  | SEMICOLON
+  //                  | EQUALS
+  //                  | LBRACE
+  //                  | RBRACE
+  //                  | COLON
+  //                  | LPAREN
+  //                  | RPAREN
+  //                  | LBRACKET
+  //                  | RBRACKET
+  //                  | QUESTION_MARK
+  //                  | AT
+  //                  | UNDERSCORE
+  //                  | GREATER_THAN
+  //                  | LESS_THAN
+  //                  | PLUS
+  //                  | MINUS
+  //                  | STAR
+  //                  | FORWARD_SLASH
+  //                  | PERCENT
+  //                  | AND
+  //                  | PIPE
+  //                  | EXCLAMATION
+  //                  | TILDE
+  //                  | CARET
+  //                  | BACKTICK
+  //                  | DOLLAR
+  //                  | POUND
+  //                  | BACKSLASH
   static boolean Symbols(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Symbols")) return false;
     boolean r;
@@ -310,33 +348,34 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, BACKTICK);
     if (!r) r = consumeToken(b, DOLLAR);
     if (!r) r = consumeToken(b, POUND);
+    if (!r) r = consumeToken(b, BACKSLASH);
     return r;
   }
 
   /* ********************************************************** */
   // string
-  //             | char
-  //             | uchar
-  //             | unichar
-  //             | int
-  //             | uint
-  //             | long
-  //             | ulong
-  //             | short
-  //             | ushort
-  //             | int8
-  //             | int16
-  //             | int32
-  //             | int64
-  //             | uint8
-  //             | uint16
-  //             | uint32
-  //             | uint64
-  //             | float
-  //             | double
-  //             | bool
-  //             | size_t
-  //             | ssize_t
+  //                | char
+  //                | uchar
+  //                | unichar
+  //                | int
+  //                | uint
+  //                | long
+  //                | ulong
+  //                | short
+  //                | ushort
+  //                | int8
+  //                | int16
+  //                | int32
+  //                | int64
+  //                | uint8
+  //                | uint16
+  //                | uint32
+  //                | uint64
+  //                | float
+  //                | double
+  //                | bool
+  //                | size_t
+  //                | ssize_t
   static boolean Types(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Types")) return false;
     boolean r;
