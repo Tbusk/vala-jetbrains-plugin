@@ -92,6 +92,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // if
   //             | endif
+  //             | elif
   //             | else
   //             | while
   //             | for
@@ -114,7 +115,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //             | private
   //             | protected
   //             | static
-  //             | final
   //             | abstract
   //             | virtual
   //             | override
@@ -130,7 +130,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //             | new
   //             | delete
   //             | this
-  //             | super
   //             | null
   //             | true
   //             | false
@@ -166,12 +165,28 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //             | construct
   //             | yield
   //             | async
+  //             | HashMap
+  //             | Object
+  //             | base
+  //             | is
+  //             | as
+  //             | typeof
+  //             | CCode
+  //             | delegate
+  //             | signal
+  //             | errordomain
+  //             | requires
+  //             | ensures
+  //             | lock
+  //             | weak
+  //             | extern
   public static boolean Keywords(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Keywords")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, KEYWORDS, "<keywords>");
     r = consumeToken(b, IF);
     if (!r) r = consumeToken(b, ENDIF);
+    if (!r) r = consumeToken(b, ELIF);
     if (!r) r = consumeToken(b, ELSE);
     if (!r) r = consumeToken(b, WHILE);
     if (!r) r = consumeToken(b, FOR);
@@ -194,7 +209,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, PRIVATE);
     if (!r) r = consumeToken(b, PROTECTED);
     if (!r) r = consumeToken(b, STATIC);
-    if (!r) r = consumeToken(b, FINAL);
     if (!r) r = consumeToken(b, ABSTRACT);
     if (!r) r = consumeToken(b, VIRTUAL);
     if (!r) r = consumeToken(b, OVERRIDE);
@@ -210,7 +224,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, NEW);
     if (!r) r = consumeToken(b, DELETE);
     if (!r) r = consumeToken(b, THIS);
-    if (!r) r = consumeToken(b, SUPER);
     if (!r) r = consumeToken(b, NULL);
     if (!r) r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
@@ -246,6 +259,21 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, CONSTRUCT);
     if (!r) r = consumeToken(b, YIELD);
     if (!r) r = consumeToken(b, ASYNC);
+    if (!r) r = consumeToken(b, HASHMAP);
+    if (!r) r = consumeToken(b, OBJECT);
+    if (!r) r = consumeToken(b, BASE);
+    if (!r) r = consumeToken(b, IS);
+    if (!r) r = consumeToken(b, AS);
+    if (!r) r = consumeToken(b, TYPEOF);
+    if (!r) r = consumeToken(b, CCODE);
+    if (!r) r = consumeToken(b, DELEGATE);
+    if (!r) r = consumeToken(b, SIGNAL);
+    if (!r) r = consumeToken(b, ERRORDOMAIN);
+    if (!r) r = consumeToken(b, REQUIRES);
+    if (!r) r = consumeToken(b, ENSURES);
+    if (!r) r = consumeToken(b, LOCK);
+    if (!r) r = consumeToken(b, WEAK);
+    if (!r) r = consumeToken(b, EXTERN);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
