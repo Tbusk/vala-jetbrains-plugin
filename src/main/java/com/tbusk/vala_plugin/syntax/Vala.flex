@@ -48,13 +48,16 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "continue" { return ValaTypes.CONTINUE; }
     "case" { return ValaTypes.CASE; }
     "default" { return ValaTypes.DEFAULT; }
+    "finally" { return ValaTypes.FINALLY; }
     "throw" { return ValaTypes.THROW; }
+    "throws" { return ValaTypes.THROWS; }
     "try" { return ValaTypes.TRY; }
     "catch" { return ValaTypes.CATCH; }
     "in" { return ValaTypes.IN; }
     "namespace" { return ValaTypes.NAMESPACE; }
     "using" { return ValaTypes.USING; }
     "if"             { return ValaTypes.IF; }
+    "elif" { return ValaTypes.ELIF; }
     "endif" { return ValaTypes.ENDIF; }
     "else" { return ValaTypes.ELSE; }
     "switch" { return ValaTypes.SWITCH; }
@@ -67,6 +70,21 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "new" {return ValaTypes.NEW; }
     "async" {return ValaTypes.ASYNC; }
     "this" {return ValaTypes.THIS; }
+    "is" {return ValaTypes.IS; }
+    "base" {return ValaTypes.BASE; }
+    "as" {return ValaTypes.AS; }
+    "typeof" {return ValaTypes.TYPEOF; }
+    "CCode" {return ValaTypes.CCODE; }
+    "Version" {return ValaTypes.VERSION; }
+    "DBus" {return ValaTypes.DBUS; }
+    "delegate" {return ValaTypes.DELEGATE; }
+    "signal" {return ValaTypes.SIGNAL; }
+    "errordomain" {return ValaTypes.ERRORDOMAIN; }
+    "requires" {return ValaTypes.REQUIRES; }
+    "ensures" {return ValaTypes.ENSURES; }
+    "lock" {return ValaTypes.LOCK; }
+    "weak" {return ValaTypes.WEAK; }
+    "extern" {return ValaTypes.EXTERN; }
 
     // Comments
     {DOC_COMMENT}      { return ValaTypes.DOC_COMMENT; }
@@ -81,6 +99,8 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "struct" { return ValaTypes.STRUCT; }
     "enum" { return ValaTypes.ENUM; }
     "construct" { return ValaTypes.CONSTRUCT; }
+    "HashMap" { return ValaTypes.HASHMAP; }
+    "Object" { return ValaTypes.OBJECT; }
 
 
 
@@ -88,6 +108,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "public"      { return ValaTypes.PUBLIC; }
     "private"    { return ValaTypes.PRIVATE; }
     "protected"   { return ValaTypes.PROTECTED; }
+    "internal"    { return ValaTypes.INTERNAL; }
 
     // Other Modifiers
     "abstract"    { return ValaTypes.ABSTRACT; }
@@ -121,6 +142,8 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "bool"       { return ValaTypes.BOOL; }
     "var"        { return ValaTypes.VAR; }
     "void"       { return ValaTypes.VOID; }
+    "size_t"    { return ValaTypes.SIZE_T; }
+    "ssize_t"   { return ValaTypes.SSIZE_T; }
 
     // Values
     "true"       { return ValaTypes.TRUE; }
@@ -151,9 +174,12 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "-"            { return ValaTypes.MINUS; }
     "*"         { return ValaTypes.STAR; }
     "/"           { return ValaTypes.FORWARD_SLASH; }
+    "\\"          { return ValaTypes.BACKSLASH; }
     "%"           { return ValaTypes.PERCENT; }
     "#"           { return ValaTypes.POUND; }
     "!"                  { return ValaTypes.EXCLAMATION; }
+    "`"                { return ValaTypes.BACKTICK; }
+    "$"               { return ValaTypes.DOLLAR; }
 
     // Testing
     "assert"             { return ValaTypes.ASSERT; }

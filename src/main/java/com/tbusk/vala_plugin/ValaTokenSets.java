@@ -46,6 +46,8 @@ public interface ValaTokenSets {
             ValaTypes.INT16,
             ValaTypes.INT32,
             ValaTypes.INT64,
+            ValaTypes.SIZE_T,
+            ValaTypes.SSIZE_T,
             ValaTypes.VAR,
             ValaTypes.VOID,
 
@@ -54,8 +56,9 @@ public interface ValaTokenSets {
             ValaTypes.TRUE,
             ValaTypes.FALSE,
 
-            // If, Else, Endif
+            // If, Elif, Else, Endif
             ValaTypes.IF,
+            ValaTypes.ELIF,
             ValaTypes.ENDIF,
             ValaTypes.ELSE,
 
@@ -72,11 +75,14 @@ public interface ValaTokenSets {
             ValaTypes.STRUCT,
             ValaTypes.ENUM,
             ValaTypes.INTERFACE,
+            ValaTypes.HASHMAP,
+            ValaTypes.OBJECT,
 
-            // Switch, Case, Default
+            // Switch, Case, Default, Finally
             ValaTypes.SWITCH,
             ValaTypes.CASE,
             ValaTypes.DEFAULT,
+            ValaTypes.FINALLY,
 
             // Modifiers
             ValaTypes.CONST,
@@ -93,10 +99,13 @@ public interface ValaTokenSets {
             ValaTypes.PUBLIC,
             ValaTypes.PRIVATE,
             ValaTypes.PROTECTED,
+            ValaTypes.INTERNAL,
 
-            // Try, Catch
+            // Try, Catch, Throw, Throws
             ValaTypes.TRY,
             ValaTypes.CATCH,
+            ValaTypes.THROW,
+            ValaTypes.THROWS,
 
             // Misc Keywords
             ValaTypes.RETURN,
@@ -109,7 +118,22 @@ public interface ValaTokenSets {
             ValaTypes.THIS,
             ValaTypes.DELETE,
             ValaTypes.IN,
-            ValaTypes.YIELD
+            ValaTypes.YIELD,
+            ValaTypes.BASE,
+            ValaTypes.IS,
+            ValaTypes.AS,
+            ValaTypes.TYPEOF,
+            ValaTypes.CCODE,
+            ValaTypes.VERSION,
+            ValaTypes.DBUS,
+            ValaTypes.DELEGATE,
+            ValaTypes.SIGNAL,
+            ValaTypes.ERRORDOMAIN,
+            ValaTypes.REQUIRES,
+            ValaTypes.ENSURES,
+            ValaTypes.LOCK,
+            ValaTypes.WEAK,
+            ValaTypes.EXTERN
     );
 
     Set<String> KEYWORDS_STRINGS = new HashSet<>(
@@ -134,14 +158,17 @@ public interface ValaTokenSets {
                     "int16",
                     "int32",
                     "int64",
+                    "size_t",
+                    "ssize_t",
 
                     // Values
                     "null",
                     "true",
                     "false",
 
-                    // If, Else, Endif
+                    // If, Elif, Else, Endif
                     "if",
+                    "elif",
                     "endif",
                     "else",
 
@@ -158,11 +185,14 @@ public interface ValaTokenSets {
                     "struct",
                     "enum",
                     "interface",
+                    "HashMap",
+                    "Object",
 
-                    // Switch, Case, Default
+                    // Switch, Case, Default, Finally
                     "switch",
                     "case",
                     "default",
+                    "finally",
 
                     // Modifiers
                     "const",
@@ -178,10 +208,13 @@ public interface ValaTokenSets {
                     "public",
                     "private",
                     "protected",
+                    "internal",
 
-                    // Try, Catch
+                    // Try, Catch, Throw, Throws
                     "try",
                     "catch",
+                    "throw",
+                    "throws",
 
                     // Misc Keywords
                     "async",
@@ -195,7 +228,22 @@ public interface ValaTokenSets {
                     "this",
                     "delete",
                     "in",
-                    "yield"
+                    "yield",
+                    "base",
+                    "is",
+                    "as",
+                    "typeof",
+                    "CCode",
+                    "Version",
+                    "DBus",
+                    "delegate",
+                    "signal",
+                    "errordomain",
+                    "requires",
+                    "ensures",
+                    "lock",
+                    "weak",
+                    "extern"
             )
     );
 }

@@ -29,26 +29,68 @@ public class ValaItemsImpl extends ASTWrapperPsiElement implements ValaItems {
 
   @Override
   @Nullable
-  public ValaComments getComments() {
-    return findChildByClass(ValaComments.class);
+  public PsiElement getBlockComment() {
+    return findChildByType(BLOCK_COMMENT);
   }
 
   @Override
   @Nullable
-  public ValaIdentifiers getIdentifiers() {
-    return findChildByClass(ValaIdentifiers.class);
+  public PsiElement getCharLiteral() {
+    return findChildByType(CHAR_LITERAL);
   }
 
   @Override
   @Nullable
-  public ValaKeywords getKeywords() {
-    return findChildByClass(ValaKeywords.class);
+  public PsiElement getComment() {
+    return findChildByType(COMMENT);
   }
 
   @Override
   @Nullable
-  public ValaSymbols getSymbols() {
-    return findChildByClass(ValaSymbols.class);
+  public PsiElement getConstant() {
+    return findChildByType(CONSTANT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocComment() {
+    return findChildByType(DOC_COMMENT);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEmpty() {
+    return findChildByType(EMPTY);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdentifier() {
+    return findChildByType(IDENTIFIER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getMethodCall() {
+    return findChildByType(METHOD_CALL);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNumber() {
+    return findChildByType(NUMBER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringLiteral() {
+    return findChildByType(STRING_LITERAL);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getWhitespace() {
+    return findChildByType(WHITESPACE);
   }
 
 }

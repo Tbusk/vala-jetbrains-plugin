@@ -33,6 +33,7 @@
         MINUS='-'
         STAR='*'
         FORWARD_SLASH='/'
+        BACKSLASH='\\'
         PERCENT='%'
         AND='&'
         PIPE='|'
@@ -61,124 +62,154 @@ Root ::= Items*
 
 Items ::= Keywords | Comments | Identifiers | Symbols
 
-Symbols ::= DOT
-         | COMMA
-         | SEMICOLON
-         | EQUALS
-         | LBRACE
-         | RBRACE
-         | COLON
-         | LPAREN
-         | RPAREN
-         | LBRACKET
-         | RBRACKET
-         | QUESTION_MARK
-         | AT
-         | UNDERSCORE
-         | GREATER_THAN
-         | LESS_THAN
-         | PLUS
-         | MINUS
-         | STAR
-         | FORWARD_SLASH
-         | PERCENT
-         | AND
-         | PIPE
-         | EXCLAMATION
-         | TILDE
-         | CARET
-         | BACKTICK
-         | DOLLAR
-         | POUND
+private Symbols ::= DOT
+                 | COMMA
+                 | SEMICOLON
+                 | EQUALS
+                 | LBRACE
+                 | RBRACE
+                 | COLON
+                 | LPAREN
+                 | RPAREN
+                 | LBRACKET
+                 | RBRACKET
+                 | QUESTION_MARK
+                 | AT
+                 | UNDERSCORE
+                 | GREATER_THAN
+                 | LESS_THAN
+                 | PLUS
+                 | MINUS
+                 | STAR
+                 | FORWARD_SLASH
+                 | PERCENT
+                 | AND
+                 | PIPE
+                 | EXCLAMATION
+                 | TILDE
+                 | CARET
+                 | BACKTICK
+                 | DOLLAR
+                 | POUND
+                 | BACKSLASH
 
 
 
-Comments ::= COMMENT
-          | BLOCK_COMMENT
-          | DOC_COMMENT
+private Comments ::= COMMENT
+                  | BLOCK_COMMENT
+                  | DOC_COMMENT
 
-Identifiers ::= IDENTIFIER
-             | STRING_LITERAL
-             | CHAR_LITERAL
-             | NUMBER
-             | WHITESPACE
-             | EMPTY
-             | CONSTANT
-             | METHOD_CALL
+private Identifiers ::= IDENTIFIER
+                     | STRING_LITERAL
+                     | CHAR_LITERAL
+                     | NUMBER
+                     | WHITESPACE
+                     | EMPTY
+                     | CONSTANT
+                     | METHOD_CALL
 
-Keywords ::= if
-            | endif
-            | else
-            | while
-            | for
-            | do
-            | switch
-            | case
-            | default
-            | break
-            | continue
-            | return
-            | goto
-            | sizeof
-            | typedef
-            | struct
-            | union
-            | enum
-            | class
-            | interface
-            | public
-            | private
-            | protected
-            | static
-            | final
-            | abstract
-            | virtual
-            | override
-            | namespace
-            | internal
-            | foreach
-            | in
-            | try
-            | catch
-            | finally
-            | throw
-            | throws
-            | new
-            | delete
-            | this
-            | super
-            | null
-            | true
-            | false
-            | const
-            | volatile
-            | assert
-            | string
-            | char
-            | uchar
-            | unichar
-            | int
-            | uint
-            | long
-            | ulong
-            | short
-            | ushort
-            | int8
-            | int16
-            | int32
-            | int64
-            | uint8
-            | uint16
-            | uint32
-            | uint64
-            | float
-            | double
-            | bool
-            | var
-            | void
-            | owned
-            | unowned
-            | using
-            | construct
-            | yield
-            | async
+private Keywords ::= Types
+                  | IfStatement
+                  | CInstructions
+                  | GObjects
+                  | AccessModifiers
+                  | while
+                  | for
+                  | do
+                  | switch
+                  | case
+                  | default
+                  | break
+                  | continue
+                  | return
+                  | goto
+                  | sizeof
+                  | typedef
+                  | struct
+                  | union
+                  | enum
+                  | class
+                  | interface
+                  | static
+                  | abstract
+                  | virtual
+                  | override
+                  | namespace
+                  | foreach
+                  | in
+                  | try
+                  | catch
+                  | finally
+                  | throw
+                  | throws
+                  | new
+                  | delete
+                  | this
+                  | null
+                  | true
+                  | false
+                  | const
+                  | volatile
+                  | assert
+                  | var
+                  | void
+                  | owned
+                  | unowned
+                  | using
+                  | construct
+                  | yield
+                  | async
+                  | base
+                  | is
+                  | as
+                  | typeof
+                  | delegate
+                  | signal
+                  | errordomain
+                  | requires
+                  | ensures
+                  | lock
+                  | weak
+                  | extern
+
+private AccessModifiers ::= public
+                         | private
+                         | protected
+                         | internal
+
+private CInstructions ::= CCode
+                        | Version
+                        | DBus
+
+private GObjects ::= HashMap
+                  | Object
+
+
+private IfStatement ::= if
+                     | endif
+                     | elif
+                     | else
+
+private Types ::= string
+               | char
+               | uchar
+               | unichar
+               | int
+               | uint
+               | long
+               | ulong
+               | short
+               | ushort
+               | int8
+               | int16
+               | int32
+               | int64
+               | uint8
+               | uint16
+               | uint32
+               | uint64
+               | float
+               | double
+               | bool
+               | size_t
+               | ssize_t
