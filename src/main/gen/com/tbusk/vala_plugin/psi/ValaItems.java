@@ -8,15 +8,36 @@ import com.intellij.psi.PsiElement;
 public interface ValaItems extends PsiElement {
 
   @Nullable
-  ValaComments getComments();
+  PsiElement getBlockComment();
 
   @Nullable
-  ValaIdentifiers getIdentifiers();
+  PsiElement getCharLiteral();
 
   @Nullable
-  ValaKeywords getKeywords();
+  PsiElement getComment();
 
   @Nullable
-  ValaSymbols getSymbols();
+  PsiElement getConstant();
+
+  @Nullable
+  PsiElement getDocComment();
+
+  @Nullable
+  PsiElement getEmpty();
+
+  @Nullable
+  PsiElement getIdentifier();
+
+  @Nullable
+  PsiElement getMethodCall();
+
+  @Nullable
+  PsiElement getNumber();
+
+  @Nullable
+  PsiElement getStringLiteral();
+
+  @Nullable
+  PsiElement getWhitespace();
 
 }

@@ -46,6 +46,8 @@ public interface ValaTokenSets {
             ValaTypes.INT16,
             ValaTypes.INT32,
             ValaTypes.INT64,
+            ValaTypes.SIZE_T,
+            ValaTypes.SSIZE_T,
             ValaTypes.VAR,
             ValaTypes.VOID,
 
@@ -76,10 +78,11 @@ public interface ValaTokenSets {
             ValaTypes.HASHMAP,
             ValaTypes.OBJECT,
 
-            // Switch, Case, Default
+            // Switch, Case, Default, Finally
             ValaTypes.SWITCH,
             ValaTypes.CASE,
             ValaTypes.DEFAULT,
+            ValaTypes.FINALLY,
 
             // Modifiers
             ValaTypes.CONST,
@@ -121,6 +124,8 @@ public interface ValaTokenSets {
             ValaTypes.AS,
             ValaTypes.TYPEOF,
             ValaTypes.CCODE,
+            ValaTypes.VERSION,
+            ValaTypes.DBUS,
             ValaTypes.DELEGATE,
             ValaTypes.SIGNAL,
             ValaTypes.ERRORDOMAIN,
@@ -153,6 +158,8 @@ public interface ValaTokenSets {
                     "int16",
                     "int32",
                     "int64",
+                    "size_t",
+                    "ssize_t",
 
                     // Values
                     "null",
@@ -181,10 +188,11 @@ public interface ValaTokenSets {
                     "HashMap",
                     "Object",
 
-                    // Switch, Case, Default
+                    // Switch, Case, Default, Finally
                     "switch",
                     "case",
                     "default",
+                    "finally",
 
                     // Modifiers
                     "const",
@@ -226,6 +234,8 @@ public interface ValaTokenSets {
                     "as",
                     "typeof",
                     "CCode",
+                    "Version",
+                    "DBus",
                     "delegate",
                     "signal",
                     "errordomain",

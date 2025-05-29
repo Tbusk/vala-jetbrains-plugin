@@ -8,11 +8,7 @@ import com.tbusk.vala_plugin.psi.impl.*;
 
 public interface ValaTypes {
 
-  IElementType COMMENTS = new ValaElementType("COMMENTS");
-  IElementType IDENTIFIERS = new ValaElementType("IDENTIFIERS");
   IElementType ITEMS = new ValaElementType("ITEMS");
-  IElementType KEYWORDS = new ValaElementType("KEYWORDS");
-  IElementType SYMBOLS = new ValaElementType("SYMBOLS");
 
   IElementType ABSTRACT = new ValaTokenType("abstract");
   IElementType AND = new ValaTokenType("&");
@@ -39,6 +35,7 @@ public interface ValaTypes {
   IElementType CONSTANT = new ValaTokenType("CONSTANT");
   IElementType CONSTRUCT = new ValaTokenType("construct");
   IElementType CONTINUE = new ValaTokenType("continue");
+  IElementType DBUS = new ValaTokenType("DBus");
   IElementType DEFAULT = new ValaTokenType("default");
   IElementType DELEGATE = new ValaTokenType("delegate");
   IElementType DELETE = new ValaTokenType("delete");
@@ -109,6 +106,8 @@ public interface ValaTypes {
   IElementType SHORT = new ValaTokenType("short");
   IElementType SIGNAL = new ValaTokenType("signal");
   IElementType SIZEOF = new ValaTokenType("sizeof");
+  IElementType SIZE_T = new ValaTokenType("size_t");
+  IElementType SSIZE_T = new ValaTokenType("ssize_t");
   IElementType STAR = new ValaTokenType("*");
   IElementType STATIC = new ValaTokenType("static");
   IElementType STRING = new ValaTokenType("string");
@@ -137,6 +136,7 @@ public interface ValaTypes {
   IElementType USHORT = new ValaTokenType("ushort");
   IElementType USING = new ValaTokenType("using");
   IElementType VAR = new ValaTokenType("var");
+  IElementType VERSION = new ValaTokenType("Version");
   IElementType VIRTUAL = new ValaTokenType("virtual");
   IElementType VOID = new ValaTokenType("void");
   IElementType VOLATILE = new ValaTokenType("volatile");
@@ -148,20 +148,8 @@ public interface ValaTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == COMMENTS) {
-        return new ValaCommentsImpl(node);
-      }
-      else if (type == IDENTIFIERS) {
-        return new ValaIdentifiersImpl(node);
-      }
-      else if (type == ITEMS) {
+      if (type == ITEMS) {
         return new ValaItemsImpl(node);
-      }
-      else if (type == KEYWORDS) {
-        return new ValaKeywordsImpl(node);
-      }
-      else if (type == SYMBOLS) {
-        return new ValaSymbolsImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

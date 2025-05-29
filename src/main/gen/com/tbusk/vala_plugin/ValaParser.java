@@ -39,14 +39,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // COMMENT
   //           | BLOCK_COMMENT
   //           | DOC_COMMENT
-  public static boolean Comments(PsiBuilder b, int l) {
+  static boolean Comments(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Comments")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, COMMENTS, "<comments>");
     r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, BLOCK_COMMENT);
     if (!r) r = consumeToken(b, DOC_COMMENT);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -59,10 +57,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //              | EMPTY
   //              | CONSTANT
   //              | METHOD_CALL
-  public static boolean Identifiers(PsiBuilder b, int l) {
+  static boolean Identifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Identifiers")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, IDENTIFIERS, "<identifiers>");
     r = consumeToken(b, IDENTIFIER);
     if (!r) r = consumeToken(b, STRING_LITERAL);
     if (!r) r = consumeToken(b, CHAR_LITERAL);
@@ -71,7 +68,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, EMPTY);
     if (!r) r = consumeToken(b, CONSTANT);
     if (!r) r = consumeToken(b, METHOD_CALL);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -90,7 +86,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // if
+  // Types
+  //             |if
   //             | endif
   //             | elif
   //             | else
@@ -136,27 +133,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //             | const
   //             | volatile
   //             | assert
-  //             | string
-  //             | char
-  //             | uchar
-  //             | unichar
-  //             | int
-  //             | uint
-  //             | long
-  //             | ulong
-  //             | short
-  //             | ushort
-  //             | int8
-  //             | int16
-  //             | int32
-  //             | int64
-  //             | uint8
-  //             | uint16
-  //             | uint32
-  //             | uint64
-  //             | float
-  //             | double
-  //             | bool
   //             | var
   //             | void
   //             | owned
@@ -180,11 +156,13 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //             | lock
   //             | weak
   //             | extern
-  public static boolean Keywords(PsiBuilder b, int l) {
+  //             | Version
+  //             | DBus
+  static boolean Keywords(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Keywords")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, KEYWORDS, "<keywords>");
-    r = consumeToken(b, IF);
+    r = Types(b, l + 1);
+    if (!r) r = consumeToken(b, IF);
     if (!r) r = consumeToken(b, ENDIF);
     if (!r) r = consumeToken(b, ELIF);
     if (!r) r = consumeToken(b, ELSE);
@@ -230,27 +208,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, CONST);
     if (!r) r = consumeToken(b, VOLATILE);
     if (!r) r = consumeToken(b, ASSERT);
-    if (!r) r = consumeToken(b, STRING);
-    if (!r) r = consumeToken(b, CHAR);
-    if (!r) r = consumeToken(b, UCHAR);
-    if (!r) r = consumeToken(b, UNICHAR);
-    if (!r) r = consumeToken(b, INT);
-    if (!r) r = consumeToken(b, UINT);
-    if (!r) r = consumeToken(b, LONG);
-    if (!r) r = consumeToken(b, ULONG);
-    if (!r) r = consumeToken(b, SHORT);
-    if (!r) r = consumeToken(b, USHORT);
-    if (!r) r = consumeToken(b, INT8);
-    if (!r) r = consumeToken(b, INT16);
-    if (!r) r = consumeToken(b, INT32);
-    if (!r) r = consumeToken(b, INT64);
-    if (!r) r = consumeToken(b, UINT8);
-    if (!r) r = consumeToken(b, UINT16);
-    if (!r) r = consumeToken(b, UINT32);
-    if (!r) r = consumeToken(b, UINT64);
-    if (!r) r = consumeToken(b, FLOAT);
-    if (!r) r = consumeToken(b, DOUBLE);
-    if (!r) r = consumeToken(b, BOOL);
     if (!r) r = consumeToken(b, VAR);
     if (!r) r = consumeToken(b, VOID);
     if (!r) r = consumeToken(b, OWNED);
@@ -274,7 +231,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, LOCK);
     if (!r) r = consumeToken(b, WEAK);
     if (!r) r = consumeToken(b, EXTERN);
-    exit_section_(b, l, m, r, false, null);
+    if (!r) r = consumeToken(b, VERSION);
+    if (!r) r = consumeToken(b, DBUS);
     return r;
   }
 
@@ -320,10 +278,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //          | BACKTICK
   //          | DOLLAR
   //          | POUND
-  public static boolean Symbols(PsiBuilder b, int l) {
+  static boolean Symbols(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Symbols")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, SYMBOLS, "<symbols>");
     r = consumeToken(b, DOT);
     if (!r) r = consumeToken(b, COMMA);
     if (!r) r = consumeToken(b, SEMICOLON);
@@ -353,7 +310,59 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, BACKTICK);
     if (!r) r = consumeToken(b, DOLLAR);
     if (!r) r = consumeToken(b, POUND);
-    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // string
+  //             | char
+  //             | uchar
+  //             | unichar
+  //             | int
+  //             | uint
+  //             | long
+  //             | ulong
+  //             | short
+  //             | ushort
+  //             | int8
+  //             | int16
+  //             | int32
+  //             | int64
+  //             | uint8
+  //             | uint16
+  //             | uint32
+  //             | uint64
+  //             | float
+  //             | double
+  //             | bool
+  //             | size_t
+  //             | ssize_t
+  static boolean Types(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Types")) return false;
+    boolean r;
+    r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, CHAR);
+    if (!r) r = consumeToken(b, UCHAR);
+    if (!r) r = consumeToken(b, UNICHAR);
+    if (!r) r = consumeToken(b, INT);
+    if (!r) r = consumeToken(b, UINT);
+    if (!r) r = consumeToken(b, LONG);
+    if (!r) r = consumeToken(b, ULONG);
+    if (!r) r = consumeToken(b, SHORT);
+    if (!r) r = consumeToken(b, USHORT);
+    if (!r) r = consumeToken(b, INT8);
+    if (!r) r = consumeToken(b, INT16);
+    if (!r) r = consumeToken(b, INT32);
+    if (!r) r = consumeToken(b, INT64);
+    if (!r) r = consumeToken(b, UINT8);
+    if (!r) r = consumeToken(b, UINT16);
+    if (!r) r = consumeToken(b, UINT32);
+    if (!r) r = consumeToken(b, UINT64);
+    if (!r) r = consumeToken(b, FLOAT);
+    if (!r) r = consumeToken(b, DOUBLE);
+    if (!r) r = consumeToken(b, BOOL);
+    if (!r) r = consumeToken(b, SIZE_T);
+    if (!r) r = consumeToken(b, SSIZE_T);
     return r;
   }
 
