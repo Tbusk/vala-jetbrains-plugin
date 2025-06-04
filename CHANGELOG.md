@@ -3,6 +3,10 @@
 # vala-jetbrains-plugin Changelog
 ## [Unreleased]
 ### What's Changed
+- Adding semantic token colorization support from the language server.
+
+## [1.1.1-ALPHA]
+### What's Changed
 - Added additional keywords for syntax highlighting and to parser/lexer.
 - Added additional configurability for color customization.
 
