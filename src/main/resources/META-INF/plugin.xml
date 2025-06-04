@@ -20,6 +20,9 @@
         <languageMapping language="Vala" serverId="vala"/>
         <fileTypeMapping fileType="vala" serverId="vala"/>
         <fileNamePatternMapping patterns="*.vala;*.vapi" serverId="vala"/>
+        <semanticTokensColorsProvider serverId="vala"
+                                      class="com.redhat.devtools.lsp4ij.features.semanticTokens.DefaultSemanticTokensColorsProvider"/>
+
 
     </extensions>
 
