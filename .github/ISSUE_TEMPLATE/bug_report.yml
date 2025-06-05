@@ -38,6 +38,9 @@ body:
       label: Version
       description: What version of the plugin are you using?
       options:
+        - 1.1.1-ALPHA
+        - 1.1.0-ALPHA
+        - 1.0.1-ALPHA
         - 1.0.0-ALPHA
     validations:
       required: true
