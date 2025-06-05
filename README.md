@@ -8,7 +8,9 @@
 
 Vala language support for Jetbrains IDEs.
             
-This plugin provides syntax highlighting, code completion, and other features for development with the Vala programming language.
+This plugin provides syntax highlighting, code completion, integrated documentation, and other features for development with the Vala programming language.
+
+The IDE most compatible currently is CLion because Meson is supported. If you wish to use another IDE, note you must run meson builds via command line every now and then if your project uses meson.
             
 This currently is in an early stage of development. Most luxuries of JetBrain IDEs are not implemented yet or are limited.
 
@@ -21,14 +23,13 @@ If you want to support this project or encounter any problems, please consider o
 <!-- Plugin description end -->
 
 ## Project Development Phases
-1. Add support for LSP to be at default download positions based on OS, and then further customized in settings.
-2. Improve syntax highlighting and enhance compatability with themes and color customization with the language.
-3. Add additional feature support, including most refactor methods to improve development experience.
-4. Add runnability support to make files executable.
-5. Add installation capabilities if the LSP is not found so it can be installed and downloaded.
-6. Create a new project template.
-7. Additional new file templates, including enums, structs, classes, etc.
-8. Add non-lsp syntax checking to provide immediate rather than delayed syntax checks.
+1. Improve syntax highlighting and enhance compatability with themes and color customization with the language.
+2. Add additional feature support, including most refactor methods to improve development experience.
+3. Add runnability support to make files executable.
+4. Add installation capabilities if the LSP is not found so it can be installed and downloaded.
+5. Create a new project template.
+6. Additional new file templates, including enums, structs, classes, etc.
+7. Add non-lsp syntax checking to provide immediate rather than delayed syntax checks.
 
 ## Installation
 
