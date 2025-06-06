@@ -79,6 +79,9 @@
             instance="com.tbusk.vala_plugin.settings.PluginSettingsConfigurable"
             id="com.tbusk.vala_plugin.settings.PluginSettingsConfigurable"
             displayName="Vala Plugin Settings" />
+
+        <lang.commenter language="Vala"
+                        implementationClass="com.tbusk.vala_plugin.comment_out.ValaCommenter"/>
     </extensions>
 
     <actions >
