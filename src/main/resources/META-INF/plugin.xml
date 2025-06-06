@@ -2,25 +2,36 @@
 <idea-plugin>
     <id>com.tbusk.vala_plugin</id>
     <name>Vala</name>
-    <vendor email="trevor@tbusk.com" url="https://github.com/Tbusk/vala-jetbrains-plugin">tbusk</vendor>
+    <vendor email="trevor@tbusk.com"
+            url="https://github.com/Tbusk/vala-jetbrains-plugin">
+        tbusk
+    </vendor>
 
     <depends>com.intellij.modules.platform </depends>
     <depends>com.redhat.devtools.lsp4ij</depends>
 
     <extensions defaultExtensionNs="com.redhat.devtools.lsp4ij">
-        <server id="vala"
+        <server id="vala-server"
                 name="Vala Language Server"
                 factoryClass="com.tbusk.vala_plugin.lsp.ValaLanguageServerFactory">
-            <description><![CDATA[
-        Vala Language Server
-        ]]>
+            <description>
+                <![CDATA[Vala Language Server]]>
             </description>
         </server>
 
-        <languageMapping language="Vala" serverId="vala"/>
-        <fileTypeMapping fileType="vala" serverId="vala"/>
-        <fileNamePatternMapping patterns="*.vala;*.vapi" serverId="vala"/>
-        <semanticTokensColorsProvider serverId="vala"
+        <languageMapping language="Vala"
+                         serverId="vala-server"
+                         languageId="vala"/>
+
+        <fileTypeMapping fileType="vala;vapi;vala.in"
+                         serverId="vala-server"
+                         languageId="vala"/>
+
+        <fileNamePatternMapping patterns="*.vala;*.vapi;*.in"
+                                serverId="vala-server"
+                                languageId="vala"/>
+
+        <semanticTokensColorsProvider serverId="vala-server"
                                       class="com.redhat.devtools.lsp4ij.features.semanticTokens.DefaultSemanticTokensColorsProvider"/>
 
 
@@ -32,7 +43,7 @@
                 implementationClass="com.tbusk.vala_plugin.language.ValaFileType"
                 fieldName="INSTANCE"
                 language="Vala"
-                extensions="vala;vapi"/>
+                extensions="vala;vapi;in"/>
 
         <lang.parserDefinition
                 language="Vala"
@@ -42,7 +53,19 @@
                 language="Vala"
                 implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
 
-        <spellchecker.support language="Vala" implementationClass="com.tbusk.vala_plugin.spell_checker.ValaSpellCheckingStrategy"/>
+        <lang.foldingBuilder language="Vala"
+                             implementationClass="com.redhat.devtools.lsp4ij.features.foldingRange.LSPFoldingRangeBuilder"
+                             order="first"/>
+
+        <lang.psiStructureViewFactory language="Vala"
+                                      implementationClass="com.redhat.devtools.lsp4ij.features.documentSymbol.LSPDocumentSymbolStructureViewFactory"/>
+
+        <codeInsight.parameterInfo language="Vala"
+                                   implementationClass="com.redhat.devtools.lsp4ij.features.signatureHelp.LSPParameterInfoHandler"/>
+
+
+        <spellchecker.support language="Vala"
+                              implementationClass="com.tbusk.vala_plugin.spell_checker.ValaSpellCheckingStrategy"/>
 
         <typedHandler implementation="com.tbusk.vala_plugin.editing.CharacterAutoCloser"/>
 
@@ -59,8 +82,14 @@
     </extensions>
 
     <actions >
-        <action id="CreateValaFile" class="com.tbusk.vala_plugin.actions.ValaCreateFileAction" text="Create Vala File" description="Create a new Vala file">
-            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+        <action id="CreateValaFile"
+                class="com.tbusk.vala_plugin.actions.ValaCreateFileAction"
+                text="Create Vala File"
+                description="Create a new Vala file">
+
+            <add-to-group group-id="NewGroup"
+                          anchor="before"
+                          relative-to-action="NewFile"/>
         </action>
     </actions>
 </idea-plugin>
