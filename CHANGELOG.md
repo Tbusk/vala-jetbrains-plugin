@@ -8,6 +8,7 @@
   info.
 - Adding syntax highlighting for .in files.
 - Adding comment out and uncomment functionality.
+- Adding single, double quotation, and backtick escape functionality.
 
 ## [1.1.1-ALPHA]
 ### What's Changed
