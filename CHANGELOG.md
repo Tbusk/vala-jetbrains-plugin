@@ -7,6 +7,7 @@
 - Adding Lsp4ij configuration for code insight, spell checker, folding builder, psi structure viewer, and parameter
   info.
 - Adding syntax highlighting for .in files.
+- Adding comment out and uncomment functionality.
 
 ## [1.1.1-ALPHA]
 ### What's Changed
