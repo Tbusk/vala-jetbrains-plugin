@@ -10,3 +10,12 @@ exclude:
   - name: All
     paths:
       - .qodana
+      - src/main/gen/
+      - docs/
+      - .idea/
+      - .gradle/
+      - .run/
+      - jflex/
+      - gradle/
+      - build/
+      - .intellijPlatform/
