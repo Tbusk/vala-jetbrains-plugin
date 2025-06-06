@@ -4,6 +4,9 @@
 ## [Unreleased]
 ### What's Changed
 - Adding semantic token colorization support from the language server.
+- Adding Lsp4ij configuration for code insight, spell checker, folding builder, psi structure viewer, and parameter
+  info.
+- Adding syntax highlighting for .in files.
 
 ## [1.1.1-ALPHA]
 ### What's Changed
