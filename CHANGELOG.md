@@ -4,11 +4,13 @@
 ## [Unreleased]
 ### What's Changed
 - Adding semantic token colorization support from the language server.
-- Adding Lsp4ij configuration for code insight, spell checker, folding builder, psi structure viewer, and parameter
+- Adding LSP4IJ configuration for code insight, spell checker, folding builder, psi structure viewer, and parameter
   info.
 - Adding syntax highlighting for .in files.
 - Adding comment out and uncomment functionality.
 - Adding single, double quotation, and backtick escape functionality.
+- Updated plugin logo and added a different dark mode icon.
+- Updated source file icon to be more consistent with the JetBrains theme.
 
 ## [1.1.1-ALPHA]
 ### What's Changed
