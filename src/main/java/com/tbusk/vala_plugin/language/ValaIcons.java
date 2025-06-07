@@ -6,5 +6,5 @@ import javax.swing.*;
 
 public class ValaIcons {
 
-    public static final Icon FILE = IconLoader.getIcon("Vala_Logo.svg", ValaIcons.class);
+    public static final Icon FILE = IconLoader.getIcon("images/pluginIconNoBackground.svg", ValaIcons.class);
 }
