@@ -27,4 +27,10 @@ public class ValaItemsImpl extends ASTWrapperPsiElement implements ValaItems {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public ValaItems getItems() {
+    return findChildByClass(ValaItems.class);
+  }
+
 }

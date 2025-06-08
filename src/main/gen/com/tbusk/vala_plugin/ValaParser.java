@@ -51,19 +51,58 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // CastExpression? WHITESPACE? (true
+  //                           | false
+  //                           | null
+  //                           | STRING_LITERAL
+  //                           | CHAR_LITERAL
+  //                           | NUMBER
+  //                           | new WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN
+  //                           | QualifiedPointerableIdentifier WHITESPACE? LBRACKET WHITESPACE? (QualifiedPointerableIdentifier | NUMBER) WHITESPACE? RBRACKET
+  //                           | MethodCall
+  //                           | LBRACE RBRACE
+  //                           | LBRACKET (QualifiedPointerableIdentifier | NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*) RBRACKET
+  //                           | QualifiedPointerableIdentifier) ((WHITESPACE? (VariableAssignmentOperations | (INCREMENT | DECREMENT)) WHITESPACE? AssignmentValues)*)?
+  static boolean AssignmentValues(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = AssignmentValues_0(b, l + 1);
+    r = r && AssignmentValues_1(b, l + 1);
+    r = r && AssignmentValues_2(b, l + 1);
+    r = r && AssignmentValues_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // CastExpression?
+  private static boolean AssignmentValues_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_0")) return false;
+    CastExpression(b, l + 1);
+    return true;
+  }
+
+  // WHITESPACE?
+  private static boolean AssignmentValues_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_1")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
   // true
   //                           | false
   //                           | null
   //                           | STRING_LITERAL
   //                           | CHAR_LITERAL
   //                           | NUMBER
-  //                           | new? WHITESPACE? QualifiedIdentifier WHITESPACE? (LPAREN MethodArguments? RPAREN)?
+  //                           | new WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN
+  //                           | QualifiedPointerableIdentifier WHITESPACE? LBRACKET WHITESPACE? (QualifiedPointerableIdentifier | NUMBER) WHITESPACE? RBRACKET
   //                           | MethodCall
-  //                           | ConditionalExpression
-  //                           | (INCREMENT | DECREMENT)? AssignmentValues ((VariableAssignmentOperations | INCREMENT | DECREMENT) WHITESPACE? AssignmentValues)* (INCREMENT | DECREMENT)?
   //                           | LBRACE RBRACE
-  static boolean AssignmentValues(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues")) return false;
+  //                           | LBRACKET (QualifiedPointerableIdentifier | NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*) RBRACKET
+  //                           | QualifiedPointerableIdentifier
+  private static boolean AssignmentValues_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, TRUE);
@@ -72,165 +111,252 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, STRING_LITERAL);
     if (!r) r = consumeToken(b, CHAR_LITERAL);
     if (!r) r = consumeToken(b, NUMBER);
-    if (!r) r = AssignmentValues_6(b, l + 1);
+    if (!r) r = AssignmentValues_2_6(b, l + 1);
+    if (!r) r = AssignmentValues_2_7(b, l + 1);
     if (!r) r = MethodCall(b, l + 1);
-    if (!r) r = ConditionalExpression(b, l + 1);
-    if (!r) r = AssignmentValues_9(b, l + 1);
     if (!r) r = parseTokens(b, 0, LBRACE, RBRACE);
+    if (!r) r = AssignmentValues_2_10(b, l + 1);
+    if (!r) r = QualifiedPointerableIdentifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // new? WHITESPACE? QualifiedIdentifier WHITESPACE? (LPAREN MethodArguments? RPAREN)?
-  private static boolean AssignmentValues_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6")) return false;
+  // new WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN
+  private static boolean AssignmentValues_2_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_6")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = AssignmentValues_6_0(b, l + 1);
-    r = r && AssignmentValues_6_1(b, l + 1);
+    r = consumeToken(b, NEW);
+    r = r && AssignmentValues_2_6_1(b, l + 1);
     r = r && QualifiedIdentifier(b, l + 1);
-    r = r && AssignmentValues_6_3(b, l + 1);
-    r = r && AssignmentValues_6_4(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // new?
-  private static boolean AssignmentValues_6_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6_0")) return false;
-    consumeToken(b, NEW);
-    return true;
-  }
-
-  // WHITESPACE?
-  private static boolean AssignmentValues_6_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6_1")) return false;
-    consumeToken(b, WHITESPACE);
-    return true;
-  }
-
-  // WHITESPACE?
-  private static boolean AssignmentValues_6_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6_3")) return false;
-    consumeToken(b, WHITESPACE);
-    return true;
-  }
-
-  // (LPAREN MethodArguments? RPAREN)?
-  private static boolean AssignmentValues_6_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6_4")) return false;
-    AssignmentValues_6_4_0(b, l + 1);
-    return true;
-  }
-
-  // LPAREN MethodArguments? RPAREN
-  private static boolean AssignmentValues_6_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6_4_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LPAREN);
-    r = r && AssignmentValues_6_4_0_1(b, l + 1);
+    r = r && AssignmentValues_2_6_3(b, l + 1);
+    r = r && consumeToken(b, LPAREN);
+    r = r && AssignmentValues_2_6_5(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_6_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_6_1")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_6_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_6_3")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
   // MethodArguments?
-  private static boolean AssignmentValues_6_4_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_6_4_0_1")) return false;
+  private static boolean AssignmentValues_2_6_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_6_5")) return false;
     MethodArguments(b, l + 1);
     return true;
   }
 
-  // (INCREMENT | DECREMENT)? AssignmentValues ((VariableAssignmentOperations | INCREMENT | DECREMENT) WHITESPACE? AssignmentValues)* (INCREMENT | DECREMENT)?
-  private static boolean AssignmentValues_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9")) return false;
+  // QualifiedPointerableIdentifier WHITESPACE? LBRACKET WHITESPACE? (QualifiedPointerableIdentifier | NUMBER) WHITESPACE? RBRACKET
+  private static boolean AssignmentValues_2_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_7")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = AssignmentValues_9_0(b, l + 1);
-    r = r && AssignmentValues(b, l + 1);
-    r = r && AssignmentValues_9_2(b, l + 1);
-    r = r && AssignmentValues_9_3(b, l + 1);
+    r = QualifiedPointerableIdentifier(b, l + 1);
+    r = r && AssignmentValues_2_7_1(b, l + 1);
+    r = r && consumeToken(b, LBRACKET);
+    r = r && AssignmentValues_2_7_3(b, l + 1);
+    r = r && AssignmentValues_2_7_4(b, l + 1);
+    r = r && AssignmentValues_2_7_5(b, l + 1);
+    r = r && consumeToken(b, RBRACKET);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (INCREMENT | DECREMENT)?
-  private static boolean AssignmentValues_9_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_0")) return false;
-    AssignmentValues_9_0_0(b, l + 1);
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_7_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_7_1")) return false;
+    consumeToken(b, WHITESPACE);
     return true;
   }
 
-  // INCREMENT | DECREMENT
-  private static boolean AssignmentValues_9_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_0_0")) return false;
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_7_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_7_3")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // QualifiedPointerableIdentifier | NUMBER
+  private static boolean AssignmentValues_2_7_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_7_4")) return false;
     boolean r;
-    r = consumeToken(b, INCREMENT);
-    if (!r) r = consumeToken(b, DECREMENT);
+    r = QualifiedPointerableIdentifier(b, l + 1);
+    if (!r) r = consumeToken(b, NUMBER);
     return r;
   }
 
-  // ((VariableAssignmentOperations | INCREMENT | DECREMENT) WHITESPACE? AssignmentValues)*
-  private static boolean AssignmentValues_9_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_2")) return false;
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_7_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_7_5")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // LBRACKET (QualifiedPointerableIdentifier | NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*) RBRACKET
+  private static boolean AssignmentValues_2_10(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LBRACKET);
+    r = r && AssignmentValues_2_10_1(b, l + 1);
+    r = r && consumeToken(b, RBRACKET);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // QualifiedPointerableIdentifier | NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*
+  private static boolean AssignmentValues_2_10_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = QualifiedPointerableIdentifier(b, l + 1);
+    if (!r) r = AssignmentValues_2_10_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*
+  private static boolean AssignmentValues_2_10_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    r = r && AssignmentValues_2_10_1_1_1(b, l + 1);
+    r = r && AssignmentValues_2_10_1_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_10_1_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10_1_1_1")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // (COMMA WHITESPACE? NUMBER)*
+  private static boolean AssignmentValues_2_10_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10_1_1_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!AssignmentValues_9_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "AssignmentValues_9_2", c)) break;
+      if (!AssignmentValues_2_10_1_1_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AssignmentValues_2_10_1_1_2", c)) break;
     }
     return true;
   }
 
-  // (VariableAssignmentOperations | INCREMENT | DECREMENT) WHITESPACE? AssignmentValues
-  private static boolean AssignmentValues_9_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_2_0")) return false;
+  // COMMA WHITESPACE? NUMBER
+  private static boolean AssignmentValues_2_10_1_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10_1_1_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = AssignmentValues_9_2_0_0(b, l + 1);
-    r = r && AssignmentValues_9_2_0_1(b, l + 1);
+    r = consumeToken(b, COMMA);
+    r = r && AssignmentValues_2_10_1_1_2_0_1(b, l + 1);
+    r = r && consumeToken(b, NUMBER);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean AssignmentValues_2_10_1_1_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_2_10_1_1_2_0_1")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // ((WHITESPACE? (VariableAssignmentOperations | (INCREMENT | DECREMENT)) WHITESPACE? AssignmentValues)*)?
+  private static boolean AssignmentValues_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3")) return false;
+    AssignmentValues_3_0(b, l + 1);
+    return true;
+  }
+
+  // (WHITESPACE? (VariableAssignmentOperations | (INCREMENT | DECREMENT)) WHITESPACE? AssignmentValues)*
+  private static boolean AssignmentValues_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!AssignmentValues_3_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "AssignmentValues_3_0", c)) break;
+    }
+    return true;
+  }
+
+  // WHITESPACE? (VariableAssignmentOperations | (INCREMENT | DECREMENT)) WHITESPACE? AssignmentValues
+  private static boolean AssignmentValues_3_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = AssignmentValues_3_0_0_0(b, l + 1);
+    r = r && AssignmentValues_3_0_0_1(b, l + 1);
+    r = r && AssignmentValues_3_0_0_2(b, l + 1);
     r = r && AssignmentValues(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // VariableAssignmentOperations | INCREMENT | DECREMENT
-  private static boolean AssignmentValues_9_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_2_0_0")) return false;
+  // WHITESPACE?
+  private static boolean AssignmentValues_3_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3_0_0_0")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // VariableAssignmentOperations | (INCREMENT | DECREMENT)
+  private static boolean AssignmentValues_3_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3_0_0_1")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = VariableAssignmentOperations(b, l + 1);
-    if (!r) r = consumeToken(b, INCREMENT);
+    if (!r) r = AssignmentValues_3_0_0_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // INCREMENT | DECREMENT
+  private static boolean AssignmentValues_3_0_0_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3_0_0_1_1")) return false;
+    boolean r;
+    r = consumeToken(b, INCREMENT);
     if (!r) r = consumeToken(b, DECREMENT);
     return r;
   }
 
   // WHITESPACE?
-  private static boolean AssignmentValues_9_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_2_0_1")) return false;
+  private static boolean AssignmentValues_3_0_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "AssignmentValues_3_0_0_2")) return false;
     consumeToken(b, WHITESPACE);
     return true;
-  }
-
-  // (INCREMENT | DECREMENT)?
-  private static boolean AssignmentValues_9_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_3")) return false;
-    AssignmentValues_9_3_0(b, l + 1);
-    return true;
-  }
-
-  // INCREMENT | DECREMENT
-  private static boolean AssignmentValues_9_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "AssignmentValues_9_3_0")) return false;
-    boolean r;
-    r = consumeToken(b, INCREMENT);
-    if (!r) r = consumeToken(b, DECREMENT);
-    return r;
   }
 
   /* ********************************************************** */
   // MethodCall
   static boolean BooleanReturningMethodCall(PsiBuilder b, int l) {
     return MethodCall(b, l + 1);
+  }
+
+  /* ********************************************************** */
+  // true
+  //                                 | false
+  static boolean BooleanReturningValues(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "BooleanReturningValues")) return false;
+    if (!nextTokenIs(b, "", FALSE, TRUE)) return false;
+    boolean r;
+    r = consumeToken(b, TRUE);
+    if (!r) r = consumeToken(b, FALSE);
+    return r;
   }
 
   /* ********************************************************** */
@@ -244,6 +370,52 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, VERSION);
     if (!r) r = consumeToken(b, DBUS);
     return r;
+  }
+
+  /* ********************************************************** */
+  // LPAREN WHITESPACE? NullableInstantiationTypes (STAR)? WHITESPACE? RPAREN WHITESPACE?
+  static boolean CastExpression(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CastExpression")) return false;
+    if (!nextTokenIs(b, LPAREN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && CastExpression_1(b, l + 1);
+    r = r && NullableInstantiationTypes(b, l + 1);
+    r = r && CastExpression_3(b, l + 1);
+    r = r && CastExpression_4(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    r = r && CastExpression_6(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean CastExpression_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CastExpression_1")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // (STAR)?
+  private static boolean CastExpression_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CastExpression_3")) return false;
+    consumeToken(b, STAR);
+    return true;
+  }
+
+  // WHITESPACE?
+  private static boolean CastExpression_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CastExpression_4")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // WHITESPACE?
+  private static boolean CastExpression_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CastExpression_6")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
   }
 
   /* ********************************************************** */
@@ -392,9 +564,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                     | IfStatement
   //                     | WhileStatement
   //                     | DoWhileFinallyStatement
+  //                     | LPAREN ClassItems RPAREN
   static boolean ClassItems(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ClassItems")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = Comments(b, l + 1);
     if (!r) r = ClassDeclaration(b, l + 1);
     if (!r) r = StructDeclaration(b, l + 1);
@@ -415,11 +589,27 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = WhileStatement(b, l + 1);
     if (!r) r = DoWhileFinallyStatement(b, l + 1);
+    if (!r) r = ClassItems_20(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LPAREN ClassItems RPAREN
+  private static boolean ClassItems_20(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ClassItems_20")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && ClassItems(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // abstract? const? virtual?
+  // abstract?
+  //                            const?
+  //                            virtual?
   static boolean ClassModifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ClassModifiers")) return false;
     boolean r;
@@ -466,7 +656,10 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (EXCLAMATION)? WHITESPACE? ((INCREMENT | DECREMENT)? (QualifiedPointerableIdentifier (LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT))? | MethodCall (INCREMENT | DECREMENT)?)  WHITESPACE? (ConditionalOperations) WHITESPACE? (AssignmentValues) | BooleanReturningMethodCall)
+  // (EXCLAMATION)? (BooleanReturningValues | MethodCall |
+  //                                                  ((INCREMENT | DECREMENT)? AssignmentValues (INCREMENT | DECREMENT)?)
+  //                                                  WHITESPACE? (ConditionalOperations) WHITESPACE? (BooleanReturningMethodCall | AssignmentValues))
+  //                                                  (WHITESPACE? QUESTION_MARK WHITESPACE? AssignmentValues WHITESPACE? COLON WHITESPACE? AssignmentValues)?
   static boolean ConditionalExpression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConditionalExpression")) return false;
     boolean r;
@@ -485,129 +678,141 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // WHITESPACE?
+  // BooleanReturningValues | MethodCall |
+  //                                                  ((INCREMENT | DECREMENT)? AssignmentValues (INCREMENT | DECREMENT)?)
+  //                                                  WHITESPACE? (ConditionalOperations) WHITESPACE? (BooleanReturningMethodCall | AssignmentValues)
   private static boolean ConditionalExpression_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConditionalExpression_1")) return false;
-    consumeToken(b, WHITESPACE);
-    return true;
-  }
-
-  // (INCREMENT | DECREMENT)? (QualifiedPointerableIdentifier (LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT))? | MethodCall (INCREMENT | DECREMENT)?)  WHITESPACE? (ConditionalOperations) WHITESPACE? (AssignmentValues) | BooleanReturningMethodCall
-  private static boolean ConditionalExpression_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ConditionalExpression_2_0(b, l + 1);
-    if (!r) r = BooleanReturningMethodCall(b, l + 1);
+    r = BooleanReturningValues(b, l + 1);
+    if (!r) r = MethodCall(b, l + 1);
+    if (!r) r = ConditionalExpression_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (INCREMENT | DECREMENT)? (QualifiedPointerableIdentifier (LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT))? | MethodCall (INCREMENT | DECREMENT)?)  WHITESPACE? (ConditionalOperations) WHITESPACE? (AssignmentValues)
+  // ((INCREMENT | DECREMENT)? AssignmentValues (INCREMENT | DECREMENT)?)
+  //                                                  WHITESPACE? (ConditionalOperations) WHITESPACE? (BooleanReturningMethodCall | AssignmentValues)
+  private static boolean ConditionalExpression_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ConditionalExpression_1_2_0(b, l + 1);
+    r = r && ConditionalExpression_1_2_1(b, l + 1);
+    r = r && ConditionalExpression_1_2_2(b, l + 1);
+    r = r && ConditionalExpression_1_2_3(b, l + 1);
+    r = r && ConditionalExpression_1_2_4(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (INCREMENT | DECREMENT)? AssignmentValues (INCREMENT | DECREMENT)?
+  private static boolean ConditionalExpression_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ConditionalExpression_1_2_0_0(b, l + 1);
+    r = r && AssignmentValues(b, l + 1);
+    r = r && ConditionalExpression_1_2_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (INCREMENT | DECREMENT)?
+  private static boolean ConditionalExpression_1_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_0_0")) return false;
+    ConditionalExpression_1_2_0_0_0(b, l + 1);
+    return true;
+  }
+
+  // INCREMENT | DECREMENT
+  private static boolean ConditionalExpression_1_2_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_0_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, INCREMENT);
+    if (!r) r = consumeToken(b, DECREMENT);
+    return r;
+  }
+
+  // (INCREMENT | DECREMENT)?
+  private static boolean ConditionalExpression_1_2_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_0_2")) return false;
+    ConditionalExpression_1_2_0_2_0(b, l + 1);
+    return true;
+  }
+
+  // INCREMENT | DECREMENT
+  private static boolean ConditionalExpression_1_2_0_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_0_2_0")) return false;
+    boolean r;
+    r = consumeToken(b, INCREMENT);
+    if (!r) r = consumeToken(b, DECREMENT);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean ConditionalExpression_1_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_1")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // (ConditionalOperations)
+  private static boolean ConditionalExpression_1_2_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ConditionalOperations(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean ConditionalExpression_1_2_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_3")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // BooleanReturningMethodCall | AssignmentValues
+  private static boolean ConditionalExpression_1_2_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_1_2_4")) return false;
+    boolean r;
+    r = BooleanReturningMethodCall(b, l + 1);
+    if (!r) r = AssignmentValues(b, l + 1);
+    return r;
+  }
+
+  // (WHITESPACE? QUESTION_MARK WHITESPACE? AssignmentValues WHITESPACE? COLON WHITESPACE? AssignmentValues)?
+  private static boolean ConditionalExpression_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_2")) return false;
+    ConditionalExpression_2_0(b, l + 1);
+    return true;
+  }
+
+  // WHITESPACE? QUESTION_MARK WHITESPACE? AssignmentValues WHITESPACE? COLON WHITESPACE? AssignmentValues
   private static boolean ConditionalExpression_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConditionalExpression_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = ConditionalExpression_2_0_0(b, l + 1);
-    r = r && ConditionalExpression_2_0_1(b, l + 1);
+    r = r && consumeToken(b, QUESTION_MARK);
     r = r && ConditionalExpression_2_0_2(b, l + 1);
-    r = r && ConditionalExpression_2_0_3(b, l + 1);
+    r = r && AssignmentValues(b, l + 1);
     r = r && ConditionalExpression_2_0_4(b, l + 1);
-    r = r && ConditionalExpression_2_0_5(b, l + 1);
+    r = r && consumeToken(b, COLON);
+    r = r && ConditionalExpression_2_0_6(b, l + 1);
+    r = r && AssignmentValues(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (INCREMENT | DECREMENT)?
+  // WHITESPACE?
   private static boolean ConditionalExpression_2_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConditionalExpression_2_0_0")) return false;
-    ConditionalExpression_2_0_0_0(b, l + 1);
+    consumeToken(b, WHITESPACE);
     return true;
-  }
-
-  // INCREMENT | DECREMENT
-  private static boolean ConditionalExpression_2_0_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, INCREMENT);
-    if (!r) r = consumeToken(b, DECREMENT);
-    return r;
-  }
-
-  // QualifiedPointerableIdentifier (LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT))? | MethodCall (INCREMENT | DECREMENT)?
-  private static boolean ConditionalExpression_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = ConditionalExpression_2_0_1_0(b, l + 1);
-    if (!r) r = ConditionalExpression_2_0_1_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // QualifiedPointerableIdentifier (LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT))?
-  private static boolean ConditionalExpression_2_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = QualifiedPointerableIdentifier(b, l + 1);
-    r = r && ConditionalExpression_2_0_1_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT))?
-  private static boolean ConditionalExpression_2_0_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_0_1")) return false;
-    ConditionalExpression_2_0_1_0_1_0(b, l + 1);
-    return true;
-  }
-
-  // LBRACKET NUMBER RBRACKET | (INCREMENT | DECREMENT)
-  private static boolean ConditionalExpression_2_0_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = parseTokens(b, 0, LBRACKET, NUMBER, RBRACKET);
-    if (!r) r = ConditionalExpression_2_0_1_0_1_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // INCREMENT | DECREMENT
-  private static boolean ConditionalExpression_2_0_1_0_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_0_1_0_1")) return false;
-    boolean r;
-    r = consumeToken(b, INCREMENT);
-    if (!r) r = consumeToken(b, DECREMENT);
-    return r;
-  }
-
-  // MethodCall (INCREMENT | DECREMENT)?
-  private static boolean ConditionalExpression_2_0_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = MethodCall(b, l + 1);
-    r = r && ConditionalExpression_2_0_1_1_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (INCREMENT | DECREMENT)?
-  private static boolean ConditionalExpression_2_0_1_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_1_1")) return false;
-    ConditionalExpression_2_0_1_1_1_0(b, l + 1);
-    return true;
-  }
-
-  // INCREMENT | DECREMENT
-  private static boolean ConditionalExpression_2_0_1_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_1_1_1_0")) return false;
-    boolean r;
-    r = consumeToken(b, INCREMENT);
-    if (!r) r = consumeToken(b, DECREMENT);
-    return r;
   }
 
   // WHITESPACE?
@@ -617,16 +822,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (ConditionalOperations)
-  private static boolean ConditionalExpression_2_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = ConditionalOperations(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
   // WHITESPACE?
   private static boolean ConditionalExpression_2_0_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConditionalExpression_2_0_4")) return false;
@@ -634,14 +829,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (AssignmentValues)
-  private static boolean ConditionalExpression_2_0_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_5")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = AssignmentValues(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+  // WHITESPACE?
+  private static boolean ConditionalExpression_2_0_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ConditionalExpression_2_0_6")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
   }
 
   /* ********************************************************** */
@@ -704,7 +896,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // EQUALS_EQUALS | LESS_THAN_EQUALS | GREATER_THAN_EQUALS | LESS_THAN | GREATER_THAN | NOT_EQUALS
+  // EQUALS_EQUALS
+  //                                | LESS_THAN_EQUALS
+  //                                | GREATER_THAN_EQUALS
+  //                                | LESS_THAN
+  //                                | GREATER_THAN
+  //                                | NOT_EQUALS
   static boolean ConditionalOperations(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConditionalOperations")) return false;
     boolean r;
@@ -905,7 +1102,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // else if WHITESPACE? LPAREN WHITESPACE? ConditionalExpressions (COMMA WHITESPACE? ConditionalExpressions)* RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
+  // else if WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
   static boolean ElseIfStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ElseIfStatement")) return false;
     if (!nextTokenIs(b, ELSE)) return false;
@@ -915,11 +1112,10 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && ElseIfStatement_2(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     r = r && ElseIfStatement_4(b, l + 1);
-    r = r && ConditionalExpressions(b, l + 1);
-    r = r && ElseIfStatement_6(b, l + 1);
+    r = r && ElseIfStatement_5(b, l + 1);
     r = r && consumeToken(b, RPAREN);
+    r = r && ElseIfStatement_7(b, l + 1);
     r = r && ElseIfStatement_8(b, l + 1);
-    r = r && ElseIfStatement_9(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -938,102 +1134,82 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (COMMA WHITESPACE? ConditionalExpressions)*
-  private static boolean ElseIfStatement_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_6")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!ElseIfStatement_6_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "ElseIfStatement_6", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA WHITESPACE? ConditionalExpressions
-  private static boolean ElseIfStatement_6_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_6_0")) return false;
+  // (ConditionalExpressions)
+  private static boolean ElseIfStatement_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_5")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && ElseIfStatement_6_0_1(b, l + 1);
-    r = r && ConditionalExpressions(b, l + 1);
+    r = ConditionalExpressions(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // WHITESPACE?
-  private static boolean ElseIfStatement_6_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_6_0_1")) return false;
-    consumeToken(b, WHITESPACE);
-    return true;
-  }
-
-  // WHITESPACE?
-  private static boolean ElseIfStatement_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_8")) return false;
+  private static boolean ElseIfStatement_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_7")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
 
   // LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?
-  private static boolean ElseIfStatement_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_9")) return false;
+  private static boolean ElseIfStatement_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_8")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ElseIfStatement_9_0(b, l + 1);
-    if (!r) r = ElseIfStatement_9_1(b, l + 1);
+    r = ElseIfStatement_8_0(b, l + 1);
+    if (!r) r = ElseIfStatement_8_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // LBRACE IfBody* RBRACE
-  private static boolean ElseIfStatement_9_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_9_0")) return false;
+  private static boolean ElseIfStatement_8_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_8_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LBRACE);
-    r = r && ElseIfStatement_9_0_1(b, l + 1);
+    r = r && ElseIfStatement_8_0_1(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // IfBody*
-  private static boolean ElseIfStatement_9_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_9_0_1")) return false;
+  private static boolean ElseIfStatement_8_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_8_0_1")) return false;
     while (true) {
       int c = current_position_(b);
       if (!IfBody(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "ElseIfStatement_9_0_1", c)) break;
+      if (!empty_element_parsed_guard_(b, "ElseIfStatement_8_0_1", c)) break;
     }
     return true;
   }
 
   // IfOneLinerBody* SEMICOLON?
-  private static boolean ElseIfStatement_9_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_9_1")) return false;
+  private static boolean ElseIfStatement_8_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_8_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = ElseIfStatement_9_1_0(b, l + 1);
-    r = r && ElseIfStatement_9_1_1(b, l + 1);
+    r = ElseIfStatement_8_1_0(b, l + 1);
+    r = r && ElseIfStatement_8_1_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // IfOneLinerBody*
-  private static boolean ElseIfStatement_9_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_9_1_0")) return false;
+  private static boolean ElseIfStatement_8_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_8_1_0")) return false;
     while (true) {
       int c = current_position_(b);
       if (!IfOneLinerBody(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "ElseIfStatement_9_1_0", c)) break;
+      if (!empty_element_parsed_guard_(b, "ElseIfStatement_8_1_0", c)) break;
     }
     return true;
   }
 
   // SEMICOLON?
-  private static boolean ElseIfStatement_9_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "ElseIfStatement_9_1_1")) return false;
+  private static boolean ElseIfStatement_8_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ElseIfStatement_8_1_1")) return false;
     consumeToken(b, SEMICOLON);
     return true;
   }
@@ -1184,12 +1360,28 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // Comments
   //                    | StandardMethodDeclaration
   //                    | WHITESPACE
+  //                    | LPAREN EnumItems RPAREN
   static boolean EnumItems(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "EnumItems")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = Comments(b, l + 1);
     if (!r) r = StandardMethodDeclaration(b, l + 1);
     if (!r) r = consumeToken(b, WHITESPACE);
+    if (!r) r = EnumItems_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LPAREN EnumItems RPAREN
+  private static boolean EnumItems_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "EnumItems_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && EnumItems(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1228,7 +1420,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // for WHITESPACE? LPAREN WHITESPACE? ForLoopInitialization? WHITESPACE? ConditionalExpressions? WHITESPACE? SEMICOLON WHITESPACE? ForLoopUpdate? RPAREN WHITESPACE? LBRACE ForLoopBody* RBRACE
+  // for WHITESPACE? LPAREN WHITESPACE? ForLoopInitialization? WHITESPACE? (ConditionalExpressions)? WHITESPACE? SEMICOLON? WHITESPACE? ForLoopUpdate? RPAREN WHITESPACE? LBRACE ForLoopBody* RBRACE
   static boolean ForLoop(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForLoop")) return false;
     if (!nextTokenIs(b, FOR)) return false;
@@ -1242,7 +1434,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && ForLoop_5(b, l + 1);
     r = r && ForLoop_6(b, l + 1);
     r = r && ForLoop_7(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
+    r = r && ForLoop_8(b, l + 1);
     r = r && ForLoop_9(b, l + 1);
     r = r && ForLoop_10(b, l + 1);
     r = r && consumeToken(b, RPAREN);
@@ -1282,17 +1474,34 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // ConditionalExpressions?
+  // (ConditionalExpressions)?
   private static boolean ForLoop_6(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForLoop_6")) return false;
-    ConditionalExpressions(b, l + 1);
+    ForLoop_6_0(b, l + 1);
     return true;
+  }
+
+  // (ConditionalExpressions)
+  private static boolean ForLoop_6_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForLoop_6_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ConditionalExpressions(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   // WHITESPACE?
   private static boolean ForLoop_7(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ForLoop_7")) return false;
     consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // SEMICOLON?
+  private static boolean ForLoop_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ForLoop_8")) return false;
+    consumeToken(b, SEMICOLON);
     return true;
   }
 
@@ -1497,9 +1706,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                         | Comments
   //                         | break
   //                         | continue
+  //                         | LPAREN IfOneLinerBody* RPAREN
   static boolean IfOneLinerBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IfOneLinerBody")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = VariableAssignment(b, l + 1);
     if (!r) r = MethodCall(b, l + 1);
     if (!r) r = ReturnStatement(b, l + 1);
@@ -1510,11 +1721,36 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = Comments(b, l + 1);
     if (!r) r = consumeToken(b, BREAK);
     if (!r) r = consumeToken(b, CONTINUE);
+    if (!r) r = IfOneLinerBody_10(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
+  // LPAREN IfOneLinerBody* RPAREN
+  private static boolean IfOneLinerBody_10(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfOneLinerBody_10")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && IfOneLinerBody_10_1(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // IfOneLinerBody*
+  private static boolean IfOneLinerBody_10_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfOneLinerBody_10_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!IfOneLinerBody(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "IfOneLinerBody_10_1", c)) break;
+    }
+    return true;
+  }
+
   /* ********************************************************** */
-  // if WHITESPACE? LPAREN WHITESPACE? ConditionalExpressions (COMMA WHITESPACE? ConditionalExpressions)* RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?) SEMICOLON? WHITESPACE? ElseIfStatement* WHITESPACE? ElseStatement?
+  // if WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) WHITESPACE? RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?) SEMICOLON? WHITESPACE? ElseIfStatement* WHITESPACE? ElseStatement?
   static boolean IfStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "IfStatement")) return false;
     if (!nextTokenIs(b, IF)) return false;
@@ -1524,7 +1760,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && IfStatement_1(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     r = r && IfStatement_3(b, l + 1);
-    r = r && ConditionalExpressions(b, l + 1);
+    r = r && IfStatement_4(b, l + 1);
     r = r && IfStatement_5(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     r = r && IfStatement_7(b, l + 1);
@@ -1552,32 +1788,19 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (COMMA WHITESPACE? ConditionalExpressions)*
-  private static boolean IfStatement_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfStatement_5")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!IfStatement_5_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "IfStatement_5", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA WHITESPACE? ConditionalExpressions
-  private static boolean IfStatement_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfStatement_5_0")) return false;
+  // (ConditionalExpressions)
+  private static boolean IfStatement_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfStatement_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && IfStatement_5_0_1(b, l + 1);
-    r = r && ConditionalExpressions(b, l + 1);
+    r = ConditionalExpressions(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // WHITESPACE?
-  private static boolean IfStatement_5_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "IfStatement_5_0_1")) return false;
+  private static boolean IfStatement_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "IfStatement_5")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
@@ -1925,13 +2148,40 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // Comments
   //                         | MethodSignatureDeclaration
   //                         | WHITESPACE
+  //                         | LPAREN InterfaceItems* RPAREN
   static boolean InterfaceItems(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "InterfaceItems")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = Comments(b, l + 1);
     if (!r) r = MethodSignatureDeclaration(b, l + 1);
     if (!r) r = consumeToken(b, WHITESPACE);
+    if (!r) r = InterfaceItems_3(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // LPAREN InterfaceItems* RPAREN
+  private static boolean InterfaceItems_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "InterfaceItems_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && InterfaceItems_3_1(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // InterfaceItems*
+  private static boolean InterfaceItems_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "InterfaceItems_3_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!InterfaceItems(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "InterfaceItems_3_1", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -1953,6 +2203,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                | VariableAssignment
   //                | IfStatement
   //                | WhileStatement
+  //                | DoWhileFinallyStatement
+  //                | LPAREN Items RPAREN
   public static boolean Items(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Items")) return false;
     boolean r;
@@ -1975,7 +2227,21 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = VariableAssignment(b, l + 1);
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = WhileStatement(b, l + 1);
+    if (!r) r = DoWhileFinallyStatement(b, l + 1);
+    if (!r) r = Items_19(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // LPAREN Items RPAREN
+  private static boolean Items_19(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Items_19")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && Items(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1984,12 +2250,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                   | IfStatement
   //                   | CInstructions
   //                   | AccessModifiers
-  //                   | while
-  //                   | do
   //                   | switch
   //                   | case
   //                   | default
-  //                   | return
   //                   | goto
   //                   | sizeof
   //                   | typedef
@@ -2005,20 +2268,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                   | catch
   //                   | finally
   //                   | throw
-  //                   | throws
-  //                   | new
   //                   | delete
   //                   | this
-  //                   | null
-  //                   | true
-  //                   | false
   //                   | const
   //                   | volatile
   //                   | assert
-  //                   | var
-  //                   | void
-  //                   | owned
-  //                   | unowned
   //                   | construct
   //                   | yield
   //                   | async
@@ -2033,8 +2287,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                   | lock
   //                   | weak
   //                   | extern
-  //                   | out
-  //                   | ref
   static boolean Keywords(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Keywords")) return false;
     boolean r;
@@ -2042,12 +2294,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = CInstructions(b, l + 1);
     if (!r) r = AccessModifiers(b, l + 1);
-    if (!r) r = consumeToken(b, WHILE);
-    if (!r) r = consumeToken(b, DO);
     if (!r) r = consumeToken(b, SWITCH);
     if (!r) r = consumeToken(b, CASE);
     if (!r) r = consumeToken(b, DEFAULT);
-    if (!r) r = consumeToken(b, RETURN);
     if (!r) r = consumeToken(b, GOTO);
     if (!r) r = consumeToken(b, SIZEOF);
     if (!r) r = consumeToken(b, TYPEDEF);
@@ -2063,20 +2312,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, CATCH);
     if (!r) r = consumeToken(b, FINALLY);
     if (!r) r = consumeToken(b, THROW);
-    if (!r) r = consumeToken(b, THROWS);
-    if (!r) r = consumeToken(b, NEW);
     if (!r) r = consumeToken(b, DELETE);
     if (!r) r = consumeToken(b, THIS);
-    if (!r) r = consumeToken(b, NULL);
-    if (!r) r = consumeToken(b, TRUE);
-    if (!r) r = consumeToken(b, FALSE);
     if (!r) r = consumeToken(b, CONST);
     if (!r) r = consumeToken(b, VOLATILE);
     if (!r) r = consumeToken(b, ASSERT);
-    if (!r) r = consumeToken(b, VAR);
-    if (!r) r = consumeToken(b, VOID);
-    if (!r) r = consumeToken(b, OWNED);
-    if (!r) r = consumeToken(b, UNOWNED);
     if (!r) r = consumeToken(b, CONSTRUCT);
     if (!r) r = consumeToken(b, YIELD);
     if (!r) r = consumeToken(b, ASYNC);
@@ -2091,8 +2331,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, LOCK);
     if (!r) r = consumeToken(b, WEAK);
     if (!r) r = consumeToken(b, EXTERN);
-    if (!r) r = consumeToken(b, OUT);
-    if (!r) r = consumeToken(b, REF);
     return r;
   }
 
@@ -2208,7 +2446,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (out)? WHITESPACE? (MethodCall | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier) | AssignmentValues | Lambda | QualifiedPointerableIdentifier)
+  // (out)? WHITESPACE? (MethodCall
+  //                                               | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier)
+  //                                               | AssignmentValues
+  //                                               | Lambda
+  //                                               | QualifiedPointerableIdentifier | LPAREN MethodArgument RPAREN)
   static boolean MethodArgument(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodArgument")) return false;
     boolean r;
@@ -2234,7 +2476,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // MethodCall | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier) | AssignmentValues | Lambda | QualifiedPointerableIdentifier
+  // MethodCall
+  //                                               | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier)
+  //                                               | AssignmentValues
+  //                                               | Lambda
+  //                                               | QualifiedPointerableIdentifier | LPAREN MethodArgument RPAREN
   private static boolean MethodArgument_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodArgument_2")) return false;
     boolean r;
@@ -2244,6 +2490,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = AssignmentValues(b, l + 1);
     if (!r) r = Lambda(b, l + 1);
     if (!r) r = QualifiedPointerableIdentifier(b, l + 1);
+    if (!r) r = MethodArgument_2_5(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2265,6 +2512,18 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "MethodArgument_2_1_1")) return false;
     consumeToken(b, WHITESPACE);
     return true;
+  }
+
+  // LPAREN MethodArgument RPAREN
+  private static boolean MethodArgument_2_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodArgument_2_5")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && MethodArgument(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -2319,12 +2578,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // Comments
+  //                     | ReturnStatement
   //                     | MethodCall
   //                     | WHITESPACE
   //                     | ThisExpression
   //                     | VariableDeclaration
   //                     | ShortVariableDeclaration
-  //                     | ReturnStatement
   //                     | ForLoop
   //                     | VariableAssignment
   //                     | IfStatement
@@ -2332,17 +2591,18 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                     | continue SEMICOLON
   //                     | DoWhileFinallyStatement
   //                     | WhileStatement
+  //                     | LPAREN MethodBody RPAREN
   static boolean MethodBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodBody")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = Comments(b, l + 1);
+    if (!r) r = ReturnStatement(b, l + 1);
     if (!r) r = MethodCall(b, l + 1);
     if (!r) r = consumeToken(b, WHITESPACE);
     if (!r) r = ThisExpression(b, l + 1);
     if (!r) r = VariableDeclaration(b, l + 1);
     if (!r) r = ShortVariableDeclaration(b, l + 1);
-    if (!r) r = ReturnStatement(b, l + 1);
     if (!r) r = ForLoop(b, l + 1);
     if (!r) r = VariableAssignment(b, l + 1);
     if (!r) r = IfStatement(b, l + 1);
@@ -2350,66 +2610,74 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = parseTokens(b, 0, CONTINUE, SEMICOLON);
     if (!r) r = DoWhileFinallyStatement(b, l + 1);
     if (!r) r = WhileStatement(b, l + 1);
+    if (!r) r = MethodBody_14(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LPAREN MethodBody RPAREN
+  private static boolean MethodBody_14(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodBody_14")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && MethodBody(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // (REGULAR_EXPRESSION DOT QualifiedIdentifier | QualifiedIdentifier) WHITESPACE? LPAREN MethodArguments? RPAREN SEMICOLON?
+  // CastExpression? (QualifiedIdentifier) WHITESPACE? LPAREN MethodArguments? RPAREN SEMICOLON?
   static boolean MethodCall(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodCall")) return false;
-    if (!nextTokenIs(b, "", IDENTIFIER, REGULAR_EXPRESSION)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = MethodCall_0(b, l + 1);
     r = r && MethodCall_1(b, l + 1);
+    r = r && MethodCall_2(b, l + 1);
     r = r && consumeToken(b, LPAREN);
-    r = r && MethodCall_3(b, l + 1);
+    r = r && MethodCall_4(b, l + 1);
     r = r && consumeToken(b, RPAREN);
-    r = r && MethodCall_5(b, l + 1);
+    r = r && MethodCall_6(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // REGULAR_EXPRESSION DOT QualifiedIdentifier | QualifiedIdentifier
+  // CastExpression?
   private static boolean MethodCall_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "MethodCall_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = MethodCall_0_0(b, l + 1);
-    if (!r) r = QualifiedIdentifier(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    CastExpression(b, l + 1);
+    return true;
   }
 
-  // REGULAR_EXPRESSION DOT QualifiedIdentifier
-  private static boolean MethodCall_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodCall_0_0")) return false;
+  // (QualifiedIdentifier)
+  private static boolean MethodCall_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodCall_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, REGULAR_EXPRESSION, DOT);
-    r = r && QualifiedIdentifier(b, l + 1);
+    r = QualifiedIdentifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // WHITESPACE?
-  private static boolean MethodCall_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodCall_1")) return false;
+  private static boolean MethodCall_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodCall_2")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
 
   // MethodArguments?
-  private static boolean MethodCall_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodCall_3")) return false;
+  private static boolean MethodCall_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodCall_4")) return false;
     MethodArguments(b, l + 1);
     return true;
   }
 
   // SEMICOLON?
-  private static boolean MethodCall_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "MethodCall_5")) return false;
+  private static boolean MethodCall_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "MethodCall_6")) return false;
     consumeToken(b, SEMICOLON);
     return true;
   }
@@ -2503,7 +2771,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // static? abstract? virtual? override? const? owned? unowned?
+  // static?
+  //                       abstract?
+  //                       virtual?
+  //                       override?
+  //                       const?
+  //                       owned?
+  //                       unowned?
+  //                       weak?
   static boolean Modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Modifiers")) return false;
     boolean r;
@@ -2515,6 +2790,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && Modifiers_4(b, l + 1);
     r = r && Modifiers_5(b, l + 1);
     r = r && Modifiers_6(b, l + 1);
+    r = r && Modifiers_7(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2565,6 +2841,13 @@ public class ValaParser implements PsiParser, LightPsiParser {
   private static boolean Modifiers_6(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Modifiers_6")) return false;
     consumeToken(b, UNOWNED);
+    return true;
+  }
+
+  // weak?
+  private static boolean Modifiers_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Modifiers_7")) return false;
+    consumeToken(b, WEAK);
     return true;
   }
 
@@ -2630,9 +2913,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                         | IfStatement
   //                         | WhileStatement
   //                         | DoWhileFinallyStatement
+  //                         | LPAREN NamespaceItems RPAREN
   static boolean NamespaceItems(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "NamespaceItems")) return false;
     boolean r;
+    Marker m = enter_section_(b);
     r = Comments(b, l + 1);
     if (!r) r = ClassDeclaration(b, l + 1);
     if (!r) r = StructDeclaration(b, l + 1);
@@ -2651,6 +2936,20 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = IfStatement(b, l + 1);
     if (!r) r = WhileStatement(b, l + 1);
     if (!r) r = DoWhileFinallyStatement(b, l + 1);
+    if (!r) r = NamespaceItems_18(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LPAREN NamespaceItems RPAREN
+  private static boolean NamespaceItems_18(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "NamespaceItems_18")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && NamespaceItems(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2674,7 +2973,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ParameterModifiers WHITESPACE? NullableInstantiationTypes WHITESPACE? IDENTIFIER
+  // ParameterModifiers WHITESPACE? NullableInstantiationTypes WHITESPACE? IDENTIFIER (WHITESPACE? EQUALS WHITESPACE? AssignmentValues)?
   static boolean Parameter(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Parameter")) return false;
     boolean r;
@@ -2684,6 +2983,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && NullableInstantiationTypes(b, l + 1);
     r = r && Parameter_3(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
+    r = r && Parameter_5(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2698,6 +2998,40 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // WHITESPACE?
   private static boolean Parameter_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Parameter_3")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // (WHITESPACE? EQUALS WHITESPACE? AssignmentValues)?
+  private static boolean Parameter_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Parameter_5")) return false;
+    Parameter_5_0(b, l + 1);
+    return true;
+  }
+
+  // WHITESPACE? EQUALS WHITESPACE? AssignmentValues
+  private static boolean Parameter_5_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Parameter_5_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = Parameter_5_0_0(b, l + 1);
+    r = r && consumeToken(b, EQUALS);
+    r = r && Parameter_5_0_2(b, l + 1);
+    r = r && AssignmentValues(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean Parameter_5_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Parameter_5_0_0")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // WHITESPACE?
+  private static boolean Parameter_5_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Parameter_5_0_2")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
@@ -2779,17 +3113,54 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
-  static boolean QualifiedIdentifier(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "QualifiedIdentifier")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
+  // LPAREN AssignmentValues RPAREN
+  static boolean ParenthesizedAssignmentValues(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParenthesizedAssignmentValues")) return false;
+    if (!nextTokenIs(b, LPAREN)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = consumeToken(b, LPAREN);
+    r = r && AssignmentValues(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // LPAREN ConditionalExpressions RPAREN
+  static boolean ParenthesizedConditionalExpressions(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ParenthesizedConditionalExpressions")) return false;
+    if (!nextTokenIs(b, LPAREN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && ConditionalExpressions(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // (IDENTIFIER | REGULAR_EXPRESSION) WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
+  static boolean QualifiedIdentifier(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedIdentifier")) return false;
+    if (!nextTokenIs(b, "", IDENTIFIER, REGULAR_EXPRESSION)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = QualifiedIdentifier_0(b, l + 1);
     r = r && QualifiedIdentifier_1(b, l + 1);
     r = r && QualifiedIdentifier_2(b, l + 1);
     r = r && QualifiedIdentifier_3(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // IDENTIFIER | REGULAR_EXPRESSION
+  private static boolean QualifiedIdentifier_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedIdentifier_0")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, REGULAR_EXPRESSION);
     return r;
   }
 
@@ -2829,7 +3200,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (STAR)? (IDENTIFIER) WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
+  // (STAR)? (IDENTIFIER) (STAR)? WHITESPACE? (DOT IDENTIFIER)* (STAR)? TypeArguments?
   static boolean QualifiedPointerableIdentifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier")) return false;
     if (!nextTokenIs(b, "", IDENTIFIER, STAR)) return false;
@@ -2840,6 +3211,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && QualifiedPointerableIdentifier_2(b, l + 1);
     r = r && QualifiedPointerableIdentifier_3(b, l + 1);
     r = r && QualifiedPointerableIdentifier_4(b, l + 1);
+    r = r && QualifiedPointerableIdentifier_5(b, l + 1);
+    r = r && QualifiedPointerableIdentifier_6(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2851,27 +3224,34 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // WHITESPACE?
+  // (STAR)?
   private static boolean QualifiedPointerableIdentifier_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_2")) return false;
+    consumeToken(b, STAR);
+    return true;
+  }
+
+  // WHITESPACE?
+  private static boolean QualifiedPointerableIdentifier_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_3")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
 
   // (DOT IDENTIFIER)*
-  private static boolean QualifiedPointerableIdentifier_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_3")) return false;
+  private static boolean QualifiedPointerableIdentifier_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_4")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!QualifiedPointerableIdentifier_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "QualifiedPointerableIdentifier_3", c)) break;
+      if (!QualifiedPointerableIdentifier_4_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "QualifiedPointerableIdentifier_4", c)) break;
     }
     return true;
   }
 
   // DOT IDENTIFIER
-  private static boolean QualifiedPointerableIdentifier_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_3_0")) return false;
+  private static boolean QualifiedPointerableIdentifier_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, DOT, IDENTIFIER);
@@ -2879,15 +3259,22 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // (STAR)?
+  private static boolean QualifiedPointerableIdentifier_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_5")) return false;
+    consumeToken(b, STAR);
+    return true;
+  }
+
   // TypeArguments?
-  private static boolean QualifiedPointerableIdentifier_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_4")) return false;
+  private static boolean QualifiedPointerableIdentifier_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "QualifiedPointerableIdentifier_6")) return false;
     TypeArguments(b, l + 1);
     return true;
   }
 
   /* ********************************************************** */
-  // return WHITESPACE? (AssignmentValues (WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION | ) AssignmentValues)*)? SEMICOLON?
+  // return WHITESPACE? (AssignmentValues ( WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues)*)? SEMICOLON?
   static boolean ReturnStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement")) return false;
     if (!nextTokenIs(b, RETURN)) return false;
@@ -2908,14 +3295,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (AssignmentValues (WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION | ) AssignmentValues)*)?
+  // (AssignmentValues ( WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues)*)?
   private static boolean ReturnStatement_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement_2")) return false;
     ReturnStatement_2_0(b, l + 1);
     return true;
   }
 
-  // AssignmentValues (WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION | ) AssignmentValues)*
+  // AssignmentValues ( WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues)*
   private static boolean ReturnStatement_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement_2_0")) return false;
     boolean r;
@@ -2926,7 +3313,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION | ) AssignmentValues)*
+  // ( WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues)*
   private static boolean ReturnStatement_2_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement_2_0_1")) return false;
     while (true) {
@@ -2937,13 +3324,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION | ) AssignmentValues
+  // WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues
   private static boolean ReturnStatement_2_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement_2_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = ReturnStatement_2_0_1_0_0(b, l + 1);
     r = r && ReturnStatement_2_0_1_0_1(b, l + 1);
+    r = r && ReturnStatement_2_0_1_0_2(b, l + 1);
     r = r && AssignmentValues(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -2956,18 +3344,22 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // PLUS | MINUS | NOT_EQUALS | EXCLAMATION | 
+  // PLUS | MINUS | NOT_EQUALS | EXCLAMATION
   private static boolean ReturnStatement_2_0_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ReturnStatement_2_0_1_0_1")) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = consumeToken(b, PLUS);
     if (!r) r = consumeToken(b, MINUS);
     if (!r) r = consumeToken(b, NOT_EQUALS);
     if (!r) r = consumeToken(b, EXCLAMATION);
-    if (!r) r = consumeToken(b, RETURNSTATEMENT_2_0_1_0_1_4_0);
-    exit_section_(b, m, null, r);
     return r;
+  }
+
+  // WHITESPACE?
+  private static boolean ReturnStatement_2_0_1_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ReturnStatement_2_0_1_0_2")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
   }
 
   // SEMICOLON?
@@ -3002,10 +3394,11 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // get WHITESPACE? SEMICOLON
-  //                             | set WHITESPACE? SEMICOLON
-  //                             | Comments
-  //                             | default WHITESPACE? EQUALS WHITESPACE? (STRING_LITERAL | CHAR_LITERAL | NUMBER | QualifiedIdentifier SEMICOLON)
-  //                             | ThisExpression
+  //                          | set WHITESPACE? SEMICOLON
+  //                          | Comments
+  //                          | default WHITESPACE? EQUALS WHITESPACE? (STRING_LITERAL | CHAR_LITERAL | NUMBER | QualifiedIdentifier SEMICOLON)
+  //                          | ThisExpression
+  //                          | LPAREN ShortMethodBody* RPAREN
   static boolean ShortMethodBody(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ShortMethodBody")) return false;
     boolean r;
@@ -3015,6 +3408,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = Comments(b, l + 1);
     if (!r) r = ShortMethodBody_3(b, l + 1);
     if (!r) r = ThisExpression(b, l + 1);
+    if (!r) r = ShortMethodBody_5(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -3109,6 +3503,29 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  // LPAREN ShortMethodBody* RPAREN
+  private static boolean ShortMethodBody_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ShortMethodBody_5")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && ShortMethodBody_5_1(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ShortMethodBody*
+  private static boolean ShortMethodBody_5_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ShortMethodBody_5_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!ShortMethodBody(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "ShortMethodBody_5_1", c)) break;
+    }
+    return true;
+  }
+
   /* ********************************************************** */
   // AccessModifiers? WHITESPACE? WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? ThrowsExpression? WHITESPACE? LBRACE ShortMethodBody* RBRACE
   static boolean ShortMethodDeclaration(PsiBuilder b, int l) {
@@ -3192,7 +3609,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? SEMICOLON
+  // AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? SEMICOLON?
   static boolean ShortVariableDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ShortVariableDeclaration")) return false;
     boolean r;
@@ -3205,7 +3622,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && ShortVariableDeclaration_5(b, l + 1);
     r = r && QualifiedPointerableIdentifier(b, l + 1);
     r = r && ShortVariableDeclaration_7(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
+    r = r && ShortVariableDeclaration_8(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -3251,6 +3668,13 @@ public class ValaParser implements PsiParser, LightPsiParser {
   private static boolean ShortVariableDeclaration_7(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ShortVariableDeclaration_7")) return false;
     consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // SEMICOLON?
+  private static boolean ShortVariableDeclaration_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "ShortVariableDeclaration_8")) return false;
+    consumeToken(b, SEMICOLON);
     return true;
   }
 
@@ -3865,7 +4289,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                           | Identifiers
   //                           | Keywords
   //                           | CInstructions
-  //                           | IfStatement
   //                           | InstantiationTypes
   //                           | ReturnTypes
   static boolean UnimplementedTokens(PsiBuilder b, int l) {
@@ -3875,7 +4298,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = Identifiers(b, l + 1);
     if (!r) r = Keywords(b, l + 1);
     if (!r) r = CInstructions(b, l + 1);
-    if (!r) r = IfStatement(b, l + 1);
     if (!r) r = InstantiationTypes(b, l + 1);
     if (!r) r = ReturnTypes(b, l + 1);
     return r;
@@ -3912,54 +4334,69 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // QualifiedIdentifier WHITESPACE? (((VariableAssignmentOperations) WHITESPACE? AssignmentValues) | (INCREMENT | DECREMENT)) WHITESPACE? SEMICOLON
+  // (INCREMENT | DECREMENT)? QualifiedIdentifier WHITESPACE? (((VariableAssignmentOperations) WHITESPACE? (ParenthesizedConditionalExpressions | ConditionalExpressions | ParenthesizedAssignmentValues | AssignmentValues)) | (INCREMENT | DECREMENT)) SEMICOLON?
   static boolean VariableAssignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableAssignment")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = QualifiedIdentifier(b, l + 1);
-    r = r && VariableAssignment_1(b, l + 1);
+    r = VariableAssignment_0(b, l + 1);
+    r = r && QualifiedIdentifier(b, l + 1);
     r = r && VariableAssignment_2(b, l + 1);
     r = r && VariableAssignment_3(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
+    r = r && VariableAssignment_4(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (INCREMENT | DECREMENT)?
+  private static boolean VariableAssignment_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_0")) return false;
+    VariableAssignment_0_0(b, l + 1);
+    return true;
+  }
+
+  // INCREMENT | DECREMENT
+  private static boolean VariableAssignment_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, INCREMENT);
+    if (!r) r = consumeToken(b, DECREMENT);
     return r;
   }
 
   // WHITESPACE?
-  private static boolean VariableAssignment_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_1")) return false;
+  private static boolean VariableAssignment_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_2")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
 
-  // ((VariableAssignmentOperations) WHITESPACE? AssignmentValues) | (INCREMENT | DECREMENT)
-  private static boolean VariableAssignment_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_2")) return false;
+  // ((VariableAssignmentOperations) WHITESPACE? (ParenthesizedConditionalExpressions | ConditionalExpressions | ParenthesizedAssignmentValues | AssignmentValues)) | (INCREMENT | DECREMENT)
+  private static boolean VariableAssignment_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_3")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = VariableAssignment_2_0(b, l + 1);
-    if (!r) r = VariableAssignment_2_1(b, l + 1);
+    r = VariableAssignment_3_0(b, l + 1);
+    if (!r) r = VariableAssignment_3_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (VariableAssignmentOperations) WHITESPACE? AssignmentValues
-  private static boolean VariableAssignment_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_2_0")) return false;
+  // (VariableAssignmentOperations) WHITESPACE? (ParenthesizedConditionalExpressions | ConditionalExpressions | ParenthesizedAssignmentValues | AssignmentValues)
+  private static boolean VariableAssignment_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = VariableAssignment_2_0_0(b, l + 1);
-    r = r && VariableAssignment_2_0_1(b, l + 1);
-    r = r && AssignmentValues(b, l + 1);
+    r = VariableAssignment_3_0_0(b, l + 1);
+    r = r && VariableAssignment_3_0_1(b, l + 1);
+    r = r && VariableAssignment_3_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (VariableAssignmentOperations)
-  private static boolean VariableAssignment_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_2_0_0")) return false;
+  private static boolean VariableAssignment_3_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_3_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = VariableAssignmentOperations(b, l + 1);
@@ -3968,30 +4405,51 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   // WHITESPACE?
-  private static boolean VariableAssignment_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_2_0_1")) return false;
+  private static boolean VariableAssignment_3_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_3_0_1")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
 
+  // ParenthesizedConditionalExpressions | ConditionalExpressions | ParenthesizedAssignmentValues | AssignmentValues
+  private static boolean VariableAssignment_3_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_3_0_2")) return false;
+    boolean r;
+    r = ParenthesizedConditionalExpressions(b, l + 1);
+    if (!r) r = ConditionalExpressions(b, l + 1);
+    if (!r) r = ParenthesizedAssignmentValues(b, l + 1);
+    if (!r) r = AssignmentValues(b, l + 1);
+    return r;
+  }
+
   // INCREMENT | DECREMENT
-  private static boolean VariableAssignment_2_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_2_1")) return false;
+  private static boolean VariableAssignment_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_3_1")) return false;
     boolean r;
     r = consumeToken(b, INCREMENT);
     if (!r) r = consumeToken(b, DECREMENT);
     return r;
   }
 
-  // WHITESPACE?
-  private static boolean VariableAssignment_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableAssignment_3")) return false;
-    consumeToken(b, WHITESPACE);
+  // SEMICOLON?
+  private static boolean VariableAssignment_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableAssignment_4")) return false;
+    consumeToken(b, SEMICOLON);
     return true;
   }
 
   /* ********************************************************** */
-  // EQUALS | PLUS_EQUALS | MINUS_EQUALS | DIVIDE_EQUALS | MODULO_EQUALS | MULTIPLY_EQUALS | PLUS | MINUS | FORWARD_SLASH | STAR | PERCENT
+  // EQUALS
+  //                                       | PLUS_EQUALS
+  //                                       | MINUS_EQUALS
+  //                                       | DIVIDE_EQUALS
+  //                                       | MODULO_EQUALS
+  //                                       | MULTIPLY_EQUALS
+  //                                       | PLUS
+  //                                       | MINUS
+  //                                       | FORWARD_SLASH
+  //                                       | STAR
+  //                                       | PERCENT
   static boolean VariableAssignmentOperations(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableAssignmentOperations")) return false;
     boolean r;
@@ -4010,7 +4468,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? (QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? AssignmentValues)? WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? (EQUALS AssignmentValues))*) SEMICOLON
+  // AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE?
+  //         (QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions))?
+  //         WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier (WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)))*) SEMICOLON?
   static boolean VariableDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration")) return false;
     boolean r;
@@ -4022,7 +4482,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && VariableDeclaration_4(b, l + 1);
     r = r && VariableDeclaration_5(b, l + 1);
     r = r && VariableDeclaration_6(b, l + 1);
-    r = r && consumeToken(b, SEMICOLON);
+    r = r && VariableDeclaration_7(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4064,7 +4524,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? AssignmentValues)? WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? (EQUALS AssignmentValues))*
+  // QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions))?
+  //         WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier (WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)))*
   private static boolean VariableDeclaration_6(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6")) return false;
     boolean r;
@@ -4085,21 +4546,21 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (EQUALS WHITESPACE? AssignmentValues)?
+  // (EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions))?
   private static boolean VariableDeclaration_6_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6_2")) return false;
     VariableDeclaration_6_2_0(b, l + 1);
     return true;
   }
 
-  // EQUALS WHITESPACE? AssignmentValues
+  // EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)
   private static boolean VariableDeclaration_6_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EQUALS);
     r = r && VariableDeclaration_6_2_0_1(b, l + 1);
-    r = r && AssignmentValues(b, l + 1);
+    r = r && VariableDeclaration_6_2_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4111,6 +4572,15 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // AssignmentValues | ConditionalExpressions
+  private static boolean VariableDeclaration_6_2_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDeclaration_6_2_0_2")) return false;
+    boolean r;
+    r = AssignmentValues(b, l + 1);
+    if (!r) r = ConditionalExpressions(b, l + 1);
+    return r;
+  }
+
   // WHITESPACE?
   private static boolean VariableDeclaration_6_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6_3")) return false;
@@ -4118,7 +4588,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (COMMA WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? (EQUALS AssignmentValues))*
+  // (COMMA WHITESPACE? QualifiedPointerableIdentifier (WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)))*
   private static boolean VariableDeclaration_6_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6_4")) return false;
     while (true) {
@@ -4129,7 +4599,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // COMMA WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? (EQUALS AssignmentValues)
+  // COMMA WHITESPACE? QualifiedPointerableIdentifier (WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions))
   private static boolean VariableDeclaration_6_4_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6_4_0")) return false;
     boolean r;
@@ -4138,7 +4608,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && VariableDeclaration_6_4_0_1(b, l + 1);
     r = r && QualifiedPointerableIdentifier(b, l + 1);
     r = r && VariableDeclaration_6_4_0_3(b, l + 1);
-    r = r && VariableDeclaration_6_4_0_4(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4150,22 +4619,47 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // WHITESPACE?
+  // WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)
   private static boolean VariableDeclaration_6_4_0_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "VariableDeclaration_6_4_0_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = VariableDeclaration_6_4_0_3_0(b, l + 1);
+    r = r && consumeToken(b, EQUALS);
+    r = r && VariableDeclaration_6_4_0_3_2(b, l + 1);
+    r = r && VariableDeclaration_6_4_0_3_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // WHITESPACE?
+  private static boolean VariableDeclaration_6_4_0_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDeclaration_6_4_0_3_0")) return false;
     consumeToken(b, WHITESPACE);
     return true;
   }
 
-  // EQUALS AssignmentValues
-  private static boolean VariableDeclaration_6_4_0_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "VariableDeclaration_6_4_0_4")) return false;
+  // WHITESPACE?
+  private static boolean VariableDeclaration_6_4_0_3_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDeclaration_6_4_0_3_2")) return false;
+    consumeToken(b, WHITESPACE);
+    return true;
+  }
+
+  // AssignmentValues | ConditionalExpressions
+  private static boolean VariableDeclaration_6_4_0_3_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDeclaration_6_4_0_3_3")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, EQUALS);
-    r = r && AssignmentValues(b, l + 1);
-    exit_section_(b, m, null, r);
+    r = AssignmentValues(b, l + 1);
+    if (!r) r = ConditionalExpressions(b, l + 1);
     return r;
+  }
+
+  // SEMICOLON?
+  private static boolean VariableDeclaration_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "VariableDeclaration_7")) return false;
+    consumeToken(b, SEMICOLON);
+    return true;
   }
 
   /* ********************************************************** */
@@ -4175,7 +4669,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // while WHITESPACE? LPAREN WHITESPACE? ConditionalExpressions RPAREN WHITESPACE? LBRACE WhileBody* RBRACE
+  // while WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) RPAREN WHITESPACE? (LBRACE WhileBody* RBRACE | SEMICOLON)
   static boolean WhileStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "WhileStatement")) return false;
     if (!nextTokenIs(b, WHILE)) return false;
@@ -4185,12 +4679,10 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && WhileStatement_1(b, l + 1);
     r = r && consumeToken(b, LPAREN);
     r = r && WhileStatement_3(b, l + 1);
-    r = r && ConditionalExpressions(b, l + 1);
+    r = r && WhileStatement_4(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     r = r && WhileStatement_6(b, l + 1);
-    r = r && consumeToken(b, LBRACE);
-    r = r && WhileStatement_8(b, l + 1);
-    r = r && consumeToken(b, RBRACE);
+    r = r && WhileStatement_7(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4209,6 +4701,16 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // (ConditionalExpressions)
+  private static boolean WhileStatement_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileStatement_4")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = ConditionalExpressions(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // WHITESPACE?
   private static boolean WhileStatement_6(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "WhileStatement_6")) return false;
@@ -4216,13 +4718,36 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // LBRACE WhileBody* RBRACE | SEMICOLON
+  private static boolean WhileStatement_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileStatement_7")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = WhileStatement_7_0(b, l + 1);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // LBRACE WhileBody* RBRACE
+  private static boolean WhileStatement_7_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileStatement_7_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LBRACE);
+    r = r && WhileStatement_7_0_1(b, l + 1);
+    r = r && consumeToken(b, RBRACE);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
   // WhileBody*
-  private static boolean WhileStatement_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "WhileStatement_8")) return false;
+  private static boolean WhileStatement_7_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "WhileStatement_7_0_1")) return false;
     while (true) {
       int c = current_position_(b);
       if (!WhileBody(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "WhileStatement_8", c)) break;
+      if (!empty_element_parsed_guard_(b, "WhileStatement_7_0_1", c)) break;
     }
     return true;
   }

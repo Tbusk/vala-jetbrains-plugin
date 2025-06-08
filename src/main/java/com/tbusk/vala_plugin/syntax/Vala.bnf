@@ -59,19 +59,20 @@
         LESS_THAN_EQUALS='<='
         GREATER_THAN_EQUALS='>='
         AND_AND='&&'
+        OR_OR='||'
 
 
         WHITESPACE='regexp:\s+'
         IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
         CONSTANT='regexp:[A-Z_][A-Z0-9_]*'
-        STRING_LITERAL='regexp:\"([^"\\]|\\.)*\"'
+        STRING_LITERAL='regexp:@?\"([^\\\"]|\\.)*\"'
         CHAR_LITERAL="regexp:'([^'\\]|\\.)'"
         NUMBER='regexp:(-?[0-9]+[.]?[0-9]*)'
         COMMENT='regexp://.*'
         BLOCK_COMMENT='regexp:/[^*]\*+([^/*][^*]*\*+)*/'
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
-        REGULAR_EXPRESSION='regexp:\/([^\\\/]|\\.)*\/'
+        REGULAR_EXPRESSION='regexp:/([^\\/]|\\.)*/'
     ]
 }
 
@@ -95,6 +96,8 @@ Items ::= NamespaceDeclaration
                | VariableAssignment
                | IfStatement
                | WhileStatement
+               | DoWhileFinallyStatement
+               | LPAREN Items RPAREN
 
 private Comments ::= COMMENT
                   | BLOCK_COMMENT
@@ -102,9 +105,9 @@ private Comments ::= COMMENT
 
 private TypeArguments ::= LESS_THAN WHITESPACE? InstantiationTypes (COMMA WHITESPACE? InstantiationTypes)* WHITESPACE? GREATER_THAN
 
-private QualifiedIdentifier ::= IDENTIFIER WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
+private QualifiedIdentifier ::= (IDENTIFIER | REGULAR_EXPRESSION) WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
 
-private QualifiedPointerableIdentifier ::= (STAR)? (IDENTIFIER) WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
+private QualifiedPointerableIdentifier ::= (STAR)? (IDENTIFIER) (STAR)? WHITESPACE? (DOT IDENTIFIER)* (STAR)? TypeArguments?
 
 private UsingDeclaration ::= using WHITESPACE? QualifiedIdentifier WHITESPACE? SEMICOLON
 
@@ -128,8 +131,11 @@ private NamespaceItems ::= Comments
                         | IfStatement
                         | WhileStatement
                         | DoWhileFinallyStatement
+                        | LPAREN NamespaceItems RPAREN
 
-private ClassModifiers ::= abstract? const? virtual?
+private ClassModifiers ::= abstract?
+                           const?
+                           virtual?
 
 private ClassDeclaration ::= AccessModifiers? WHITESPACE? ClassModifiers WHITESPACE? class WHITESPACE QualifiedIdentifier WHITESPACE? (COLON WHITESPACE? QualifiedIdentifier (COMMA WHITESPACE? QualifiedIdentifier)*)? WHITESPACE? LBRACE ClassItems* RBRACE
 
@@ -153,6 +159,7 @@ private ClassItems ::= Comments
                     | IfStatement
                     | WhileStatement
                     | DoWhileFinallyStatement
+                    | LPAREN ClassItems RPAREN
 
 private ConstructorDeclaration ::= AccessModifiers? WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? LBRACE MethodBody* RBRACE
 
@@ -170,6 +177,7 @@ private EnumDeclaration ::= AccessModifiers? WHITESPACE? enum WHITESPACE? Qualif
 private EnumItems ::= Comments
                    | StandardMethodDeclaration
                    | WHITESPACE
+                   | LPAREN EnumItems RPAREN
 
 private InterfaceDeclaration ::= AccessModifiers? WHITESPACE? interface WHITESPACE? QualifiedIdentifier WHITESPACE? (COLON WHITESPACE? QualifiedIdentifier (COMMA WHITESPACE? QualifiedIdentifier)*)? WHITESPACE? LBRACE InterfaceItems* RBRACE
 
@@ -177,6 +185,7 @@ private InterfaceDeclaration ::= AccessModifiers? WHITESPACE? interface WHITESPA
 private InterfaceItems ::= Comments
                         | MethodSignatureDeclaration
                         | WHITESPACE
+                        | LPAREN InterfaceItems* RPAREN
 
 private StandardMethodDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? ThrowsExpression? WHITESPACE? ((LBRACE MethodBody* RBRACE) | SEMICOLON )
 private MethodSignatureDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? ThrowsExpression? WHITESPACE? (SEMICOLON )
@@ -187,18 +196,19 @@ private ShortMethodDeclaration ::= AccessModifiers? WHITESPACE? WHITESPACE? Retu
 private ThrowsExpression ::= throws WHITESPACE? (QualifiedIdentifier WHITESPACE? (COMMA WHITESPACE? QualifiedIdentifier)*)?
 
 private ShortMethodBody ::= get WHITESPACE? SEMICOLON
-                            | set WHITESPACE? SEMICOLON
-                            | Comments
-                            | default WHITESPACE? EQUALS WHITESPACE? (STRING_LITERAL | CHAR_LITERAL | NUMBER | QualifiedIdentifier SEMICOLON)
-                            | ThisExpression
+                         | set WHITESPACE? SEMICOLON
+                         | Comments
+                         | default WHITESPACE? EQUALS WHITESPACE? (STRING_LITERAL | CHAR_LITERAL | NUMBER | QualifiedIdentifier SEMICOLON)
+                         | ThisExpression
+                         | LPAREN ShortMethodBody* RPAREN
 
 private MethodBody ::= Comments
+                    | ReturnStatement
                     | MethodCall
                     | WHITESPACE
                     | ThisExpression
                     | VariableDeclaration
                     | ShortVariableDeclaration
-                    | ReturnStatement
                     | ForLoop
                     | VariableAssignment
                     | IfStatement
@@ -206,37 +216,78 @@ private MethodBody ::= Comments
                     | continue SEMICOLON
                     | DoWhileFinallyStatement
                     | WhileStatement
+                    | LPAREN MethodBody RPAREN
 
 private ParameterList ::= Parameter WHITESPACE?(COMMA WHITESPACE? Parameter)*
 
-private Parameter ::= (ParameterModifiers WHITESPACE? NullableInstantiationTypes WHITESPACE? IDENTIFIER)
+private Parameter ::= (ParameterModifiers WHITESPACE? NullableInstantiationTypes WHITESPACE? IDENTIFIER (WHITESPACE? EQUALS WHITESPACE? AssignmentValues)?)
 
 private ParameterModifiers ::= out? ref?
 
-private MethodCall ::= (REGULAR_EXPRESSION DOT QualifiedIdentifier | QualifiedIdentifier) WHITESPACE? LPAREN MethodArguments? RPAREN SEMICOLON?
+private MethodCall ::= CastExpression? (QualifiedIdentifier) WHITESPACE? LPAREN MethodArguments? RPAREN SEMICOLON?
 
 private MethodArguments ::= MethodArgument WHITESPACE?(COMMA WHITESPACE? MethodArgument)*
 
-private MethodArgument ::= (out)? WHITESPACE? (MethodCall | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier) | AssignmentValues | Lambda | QualifiedPointerableIdentifier)
+private MethodArgument ::= (out)? WHITESPACE? (MethodCall
+                                              | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier)
+                                              | AssignmentValues
+                                              | Lambda
+                                              | QualifiedPointerableIdentifier | LPAREN MethodArgument RPAREN)
 
 private Lambda ::= LPAREN (IDENTIFIER WHITESPACE? (COMMA WHITESPACE? IDENTIFIER)*)? RPAREN WHITESPACE? (EQUALS GREATER_THAN) WHITESPACE? LBRACE MethodBody* RBRACE
 
-private Modifiers ::= static? abstract? virtual? override? const? owned? unowned?
+private Modifiers ::= static?
+                      abstract?
+                      virtual?
+                      override?
+                      const?
+                      owned?
+                      unowned?
+                      weak?
 
-private VariableDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? (QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? AssignmentValues)? WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? (EQUALS AssignmentValues))*) SEMICOLON
-private ShortVariableDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? SEMICOLON
+private VariableDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE?
+        (QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions))?
+        WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier (WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)))*) SEMICOLON?
+
+private ShortVariableDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? SEMICOLON?
 
 private ThisExpression ::= this WHITESPACE? ((DOT QualifiedIdentifier)*)? ((LPAREN ParameterList? RPAREN) | (EQUALS WHITESPACE? AssignmentValues)) WHITESPACE? SEMICOLON?
 
 private DestructionMethodCall ::= TILDE WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN WHITESPACE? LBRACE MethodBody* RBRACE
 
-private ReturnStatement ::= return WHITESPACE? (AssignmentValues (WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION | ) AssignmentValues)*)? SEMICOLON?
+private ReturnStatement ::= return WHITESPACE? (AssignmentValues ( WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues)*)? SEMICOLON?
 
-private VariableAssignment ::= QualifiedIdentifier WHITESPACE? (((VariableAssignmentOperations) WHITESPACE? AssignmentValues) | (INCREMENT | DECREMENT)) WHITESPACE? SEMICOLON
+private VariableAssignment ::= (INCREMENT | DECREMENT)? QualifiedIdentifier WHITESPACE? (((VariableAssignmentOperations) WHITESPACE? (ParenthesizedConditionalExpressions | ConditionalExpressions | ParenthesizedAssignmentValues | AssignmentValues)) | (INCREMENT | DECREMENT)) SEMICOLON?
 
-private VariableAssignmentOperations ::= (EQUALS | PLUS_EQUALS | MINUS_EQUALS | DIVIDE_EQUALS | MODULO_EQUALS | MULTIPLY_EQUALS | PLUS | MINUS | FORWARD_SLASH | STAR | PERCENT)
+private VariableAssignmentOperations ::= EQUALS
+                                      | PLUS_EQUALS
+                                      | MINUS_EQUALS
+                                      | DIVIDE_EQUALS
+                                      | MODULO_EQUALS
+                                      | MULTIPLY_EQUALS
+                                      | PLUS
+                                      | MINUS
+                                      | FORWARD_SLASH
+                                      | STAR
+                                      | PERCENT
 
-private ForLoop ::= for WHITESPACE? LPAREN WHITESPACE? ForLoopInitialization? WHITESPACE? ConditionalExpressions? WHITESPACE? SEMICOLON WHITESPACE? ForLoopUpdate? RPAREN WHITESPACE? LBRACE ForLoopBody* RBRACE
+private ParenthesizedAssignmentValues ::= LPAREN AssignmentValues RPAREN
+
+private AssignmentValues ::= CastExpression? WHITESPACE? (true
+                          | false
+                          | null
+                          | STRING_LITERAL
+                          | CHAR_LITERAL
+                          | NUMBER
+                          | new WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN
+                          | QualifiedPointerableIdentifier WHITESPACE? LBRACKET WHITESPACE? (QualifiedPointerableIdentifier | NUMBER) WHITESPACE? RBRACKET
+                          | MethodCall
+                          | LBRACE RBRACE
+                          | LBRACKET (QualifiedPointerableIdentifier | NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*) RBRACKET
+                          | QualifiedPointerableIdentifier
+                          | LPAREN AssignmentValues RPAREN) ((WHITESPACE? (VariableAssignmentOperations | (INCREMENT | DECREMENT)) WHITESPACE? AssignmentValues)*)?
+
+private ForLoop ::= for WHITESPACE? LPAREN WHITESPACE? ForLoopInitialization? WHITESPACE? (ConditionalExpressions)? WHITESPACE? SEMICOLON? WHITESPACE? ForLoopUpdate? RPAREN WHITESPACE? LBRACE ForLoopBody* RBRACE
 
 private ForLoopBody ::= MethodBody
                      | break SEMICOLON?
@@ -246,24 +297,44 @@ private ForLoopInitialization ::= VariableDeclaration
                                | ShortVariableDeclaration
                                | VariableAssignment SEMICOLON?
 
-private ConditionalExpressions ::= ConditionalExpression (WHITESPACE? (AND_AND | OR_OR) WHITESPACE? ConditionalExpression)*
-private ConditionalExpression ::= (EXCLAMATION)? WHITESPACE? ((INCREMENT | DECREMENT)? (QualifiedPointerableIdentifier (LBRACKET (NUMBER | QualifiedPointerableIdentifier)  RBRACKET | (INCREMENT | DECREMENT))? | MethodCall (INCREMENT | DECREMENT)?)  WHITESPACE? (ConditionalOperations) WHITESPACE? (AssignmentValues) | BooleanReturningMethodCall)
+private ParenthesizedConditionalExpressions ::= LPAREN ConditionalExpressions RPAREN
+
+private ConditionalExpressions ::= (ConditionalExpression | ParenthesizedConditionalExpression) (WHITESPACE? (AND_AND | OR_OR) WHITESPACE? (ConditionalExpression | ParenthesizedConditionalExpression))*
+
+private ParenthesizedConditionalExpression ::= LPAREN ConditionalExpression RPAREN
+private ConditionalExpression ::= (EXCLAMATION)? (BooleanReturningValues | MethodCall |
+                                                 ((INCREMENT | DECREMENT)? AssignmentValues (INCREMENT | DECREMENT)?)
+                                                 WHITESPACE? (ConditionalOperations) WHITESPACE? (BooleanReturningMethodCall | AssignmentValues))
+                                                 (WHITESPACE? QUESTION_MARK WHITESPACE? AssignmentValues WHITESPACE? COLON WHITESPACE? AssignmentValues)?
+
+private ConditionalOperations ::= EQUALS_EQUALS
+                               | LESS_THAN_EQUALS
+                               | GREATER_THAN_EQUALS
+                               | LESS_THAN
+                               | GREATER_THAN
+                               | NOT_EQUALS
+
+private BooleanReturningValues ::= true
+                                | false
+
 private BooleanReturningMethodCall ::= MethodCall
-private ConditionalOperations ::= (EQUALS_EQUALS | LESS_THAN_EQUALS | GREATER_THAN_EQUALS | LESS_THAN | GREATER_THAN | NOT_EQUALS )
 
 private ForLoopUpdate ::= (INCREMENT | DECREMENT)? QualifiedPointerableIdentifier (INCREMENT | DECREMENT)?
 
-private IfStatement ::= if WHITESPACE? LPAREN WHITESPACE? ConditionalExpressions (COMMA WHITESPACE? ConditionalExpressions)* RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?) SEMICOLON? WHITESPACE? ElseIfStatement* WHITESPACE? ElseStatement?
-private ElseIfStatement ::= else if WHITESPACE? LPAREN WHITESPACE? ConditionalExpressions (COMMA WHITESPACE? ConditionalExpressions)* RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
+private IfStatement ::= if WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) WHITESPACE? RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?) SEMICOLON? WHITESPACE? ElseIfStatement* WHITESPACE? ElseStatement?
+private ElseIfStatement ::= else if WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
 private ElseStatement ::= else WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
 
 private IfBody ::= MethodBody
+                | LPAREN IfBody RPAREN
 
 private DoWhileFinallyStatement ::= do WHITESPACE? LBRACE WhileBody* RBRACE WHITESPACE? WhileStatement WHITESPACE? FinallyStatement?
-private WhileStatement ::= while WHITESPACE? LPAREN WHITESPACE? ConditionalExpressions RPAREN WHITESPACE? LBRACE WhileBody* RBRACE
+private WhileStatement ::= while WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) RPAREN WHITESPACE? (LBRACE WhileBody* RBRACE | SEMICOLON)
 private FinallyStatement ::= finally WHITESPACE? LBRACE WhileBody* RBRACE
 
 private WhileBody ::= MethodBody
+
+private CastExpression ::= LPAREN WHITESPACE? NullableInstantiationTypes (STAR)? WHITESPACE? RPAREN WHITESPACE?
 
 private IfOneLinerBody ::= VariableAssignment
                         | MethodCall
@@ -275,25 +346,12 @@ private IfOneLinerBody ::= VariableAssignment
                         | Comments
                         | break
                         | continue
-
-private AssignmentValues ::= true
-                          | false
-                          | null
-                          | STRING_LITERAL
-                          | CHAR_LITERAL
-                          | NUMBER
-                          | new? WHITESPACE? QualifiedIdentifier WHITESPACE? (LPAREN MethodArguments? RPAREN)?
-                          | MethodCall
-                          | ConditionalExpression
-                          | (INCREMENT | DECREMENT)? (AssignmentValues | QualifiedPointerableIdentifier) ((VariableAssignmentOperations | INCREMENT | DECREMENT) WHITESPACE? AssignmentValues (INCREMENT | DECREMENT)?)* (INCREMENT | DECREMENT)?
-                          | LBRACE RBRACE
-                          | LBRACKET RBRACKET
+                        | LPAREN IfOneLinerBody* RPAREN
 
 private UnimplementedTokens ::= Symbols
                           | Identifiers
                           | Keywords
                           | CInstructions
-                          | IfStatement
                           | InstantiationTypes
                           | ReturnTypes
 
@@ -342,12 +400,9 @@ private Keywords ::= InstantiationTypes
                   | IfStatement
                   | CInstructions
                   | AccessModifiers
-                  | while
-                  | do
                   | switch
                   | case
                   | default
-                  | return
                   | goto
                   | sizeof
                   | typedef
@@ -363,20 +418,11 @@ private Keywords ::= InstantiationTypes
                   | catch
                   | finally
                   | throw
-                  | throws
-                  | new
                   | delete
                   | this
-                  | null
-                  | true
-                  | false
                   | const
                   | volatile
                   | assert
-                  | var
-                  | void
-                  | owned
-                  | unowned
                   | construct
                   | yield
                   | async
@@ -391,8 +437,6 @@ private Keywords ::= InstantiationTypes
                   | lock
                   | weak
                   | extern
-                  | out
-                  | ref
 
 private AccessModifiers ::= public
                          | private
@@ -402,12 +446,6 @@ private AccessModifiers ::= public
 private CInstructions ::= CCode
                        | Version
                        | DBus
-
-
-private IfStatement ::= if
-                     | endif
-                     | elif
-                     | else
 
 private NullableInstantiationTypes ::= InstantiationTypes QUESTION_MARK?
 

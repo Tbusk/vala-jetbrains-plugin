@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaItems extends PsiElement {
 
+  @Nullable
+  ValaItems getItems();
+
 }

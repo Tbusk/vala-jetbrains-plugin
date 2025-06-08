@@ -193,6 +193,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "/="           { return ValaTypes.DIVIDE_EQUALS; }
     "%="           { return ValaTypes.MODULO_EQUALS; }
     "&&"           { return ValaTypes.AND_AND; }
+    "||"           { return ValaTypes.OR_OR; }
     ";"        { return ValaTypes.SEMICOLON; }
     ":"          { return ValaTypes.COLON; }
     ","            { return ValaTypes.COMMA; }

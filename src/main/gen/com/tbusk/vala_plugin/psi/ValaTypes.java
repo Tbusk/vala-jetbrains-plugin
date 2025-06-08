@@ -96,7 +96,7 @@ public interface ValaTypes {
   IElementType NOT_EQUALS = new ValaTokenType("!=");
   IElementType NULL = new ValaTokenType("null");
   IElementType NUMBER = new ValaTokenType("NUMBER");
-  IElementType OR_OR = new ValaTokenType("OR_OR");
+  IElementType OR_OR = new ValaTokenType("||");
   IElementType OUT = new ValaTokenType("out");
   IElementType OVERRIDE = new ValaTokenType("override");
   IElementType OWNED = new ValaTokenType("owned");
@@ -115,7 +115,6 @@ public interface ValaTypes {
   IElementType REGULAR_EXPRESSION = new ValaTokenType("REGULAR_EXPRESSION");
   IElementType REQUIRES = new ValaTokenType("requires");
   IElementType RETURN = new ValaTokenType("return");
-  IElementType RETURNSTATEMENT_2_0_1_0_1_4_0 = new ValaTokenType("ReturnStatement_2_0_1_0_1_4_0");
   IElementType RPAREN = new ValaTokenType(")");
   IElementType SEMICOLON = new ValaTokenType(";");
   IElementType SET = new ValaTokenType("set");
