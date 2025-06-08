@@ -14,8 +14,15 @@ import java.util.Map;
 
 import static com.tbusk.vala_plugin.ValaTokenSets.KEYWORDS;
 
+/**
+ * ValaSyntaxHighlighter is responsible for providing syntax highlighting for Vala files.
+ * It maps Vala token types to text attributes keys that define how they should be displayed in the editor.
+ * <br/><br/>
+ * <a href="https://plugins.jetbrains.com/docs/intellij/syntax-highlighter-and-color-settings-page.html#define-a-syntax-highlighter">view documentation</a>
+ */
 public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
 
+    // Text attribute keys added to key arrays that are used to highlight tokens.
     public static final TextAttributesKey LINE_COMMENT = TextAttributesKey.createTextAttributesKey("VALA_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     public static final TextAttributesKey BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey("VALA_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
     public static final TextAttributesKey DOC_COMMENT = TextAttributesKey.createTextAttributesKey("VALA_DOC_COMMENT", DefaultLanguageHighlighterColors.DOC_COMMENT);
@@ -34,6 +41,7 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey CONSTANT = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
     public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.STATIC_FIELD);
 
+    // Text attributes key arrays used to highlight tokens of specific types.
     private static final TextAttributesKey[] LINE_COMMENT_KEYS = new TextAttributesKey[]{LINE_COMMENT};
     private static final TextAttributesKey[] BLOCK_COMMENT_KEYS = new TextAttributesKey[]{BLOCK_COMMENT};
     private static final TextAttributesKey[] DOC_COMMENT_KEYS = new TextAttributesKey[]{DOC_COMMENT};
@@ -52,6 +60,7 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] PARENTHESES_KEYS = new TextAttributesKey[]{PARENTHESES};
 
 
+    // Map of a vala token type to the text attribute key array used to highlight it.
     private static final Map<IElementType, TextAttributesKey[]> keyMap = new HashMap<>(
              Map.ofEntries(
                     Map.entry(ValaTypes.COMMENT, LINE_COMMENT_KEYS),
@@ -75,12 +84,24 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
              )
     );
 
+    /**
+     * Returns the highlighting lexer for Vala.
+     *
+     * @return the lexer used for syntax highlighting in Vala files.
+     */
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
         return new ValaLexerAdapter();
     }
 
+    /**
+     * Returns the text attributes keys used to highlight tokens of a specific type. Uses a map to associate token types
+     * with their corresponding text attributes keys and checks against keywords stored in ValaTokenSets.
+     *
+     * @param tokenType the type of the token to highlight.
+     * @return an array of text attributes keys used to highlight the token.
+     */
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
         if(KEYWORDS.contains(tokenType)) {
