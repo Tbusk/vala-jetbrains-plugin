@@ -19,20 +19,20 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey LINE_COMMENT = TextAttributesKey.createTextAttributesKey("VALA_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     public static final TextAttributesKey BLOCK_COMMENT = TextAttributesKey.createTextAttributesKey("VALA_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
     public static final TextAttributesKey DOC_COMMENT = TextAttributesKey.createTextAttributesKey("VALA_DOC_COMMENT", DefaultLanguageHighlighterColors.DOC_COMMENT);
-    public static final TextAttributesKey IDENTIFIER = TextAttributesKey.createTextAttributesKey("IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
-    public static final TextAttributesKey KEYWORD = TextAttributesKey.createTextAttributesKey("KEYWORDS", DefaultLanguageHighlighterColors.KEYWORD);
-    public static final TextAttributesKey OPERATIONS = TextAttributesKey.createTextAttributesKey("OPERATIONS", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-    public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey("STRING", DefaultLanguageHighlighterColors.STRING);
-    public static final TextAttributesKey SEMICOLON = TextAttributesKey.createTextAttributesKey("SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
-    public static final TextAttributesKey BRACKETS = TextAttributesKey.createTextAttributesKey("BRACKETS", DefaultLanguageHighlighterColors.BRACKETS);
-    public static final TextAttributesKey BRACES = TextAttributesKey.createTextAttributesKey("BRACES", DefaultLanguageHighlighterColors.BRACES);
-    public static final TextAttributesKey COMMA = TextAttributesKey.createTextAttributesKey("COMMA", DefaultLanguageHighlighterColors.COMMA);
-    public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("DOT", DefaultLanguageHighlighterColors.DOT);
-    public static final TextAttributesKey PARENTHESES = TextAttributesKey.createTextAttributesKey("PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
+    public static final TextAttributesKey IDENTIFIER = TextAttributesKey.createTextAttributesKey("VALA_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey KEYWORD = TextAttributesKey.createTextAttributesKey("VALA_KEYWORDS", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey OPERATIONS = TextAttributesKey.createTextAttributesKey("VALA_OPERATIONS", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey STRING = TextAttributesKey.createTextAttributesKey("VALA_STRING", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey SEMICOLON = TextAttributesKey.createTextAttributesKey("VALA_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
+    public static final TextAttributesKey BRACKETS = TextAttributesKey.createTextAttributesKey("VALA_BRACKETS", DefaultLanguageHighlighterColors.BRACKETS);
+    public static final TextAttributesKey BRACES = TextAttributesKey.createTextAttributesKey("VALA_BRACES", DefaultLanguageHighlighterColors.BRACES);
+    public static final TextAttributesKey COMMA = TextAttributesKey.createTextAttributesKey("VALA_COMMA", DefaultLanguageHighlighterColors.COMMA);
+    public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("VALA_DOT", DefaultLanguageHighlighterColors.DOT);
+    public static final TextAttributesKey PARENTHESES = TextAttributesKey.createTextAttributesKey("VALA_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
 
-    public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-    public static final TextAttributesKey CONSTANT = TextAttributesKey.createTextAttributesKey("CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
-    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("METHOD_CALL", DefaultLanguageHighlighterColors.STATIC_FIELD);
+    public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("VALA_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
+    public static final TextAttributesKey CONSTANT = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
+    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.STATIC_FIELD);
 
     private static final TextAttributesKey[] LINE_COMMENT_KEYS = new TextAttributesKey[]{LINE_COMMENT};
     private static final TextAttributesKey[] BLOCK_COMMENT_KEYS = new TextAttributesKey[]{BLOCK_COMMENT};
