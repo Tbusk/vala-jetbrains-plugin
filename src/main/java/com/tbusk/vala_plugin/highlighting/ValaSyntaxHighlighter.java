@@ -30,10 +30,9 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("DOT", DefaultLanguageHighlighterColors.DOT);
     public static final TextAttributesKey PARENTHESES = TextAttributesKey.createTextAttributesKey("PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
 
-
     public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("NUMBER", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey CONSTANT = TextAttributesKey.createTextAttributesKey("CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
-    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("METHOD_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL);
+    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("METHOD_CALL", DefaultLanguageHighlighterColors.STATIC_FIELD);
 
     private static final TextAttributesKey[] LINE_COMMENT_KEYS = new TextAttributesKey[]{LINE_COMMENT};
     private static final TextAttributesKey[] BLOCK_COMMENT_KEYS = new TextAttributesKey[]{BLOCK_COMMENT};
@@ -64,7 +63,7 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
                     Map.entry(ValaTypes.NUMBER, NUMBER_KEYS),
                     Map.entry(ValaTypes.CONSTANT, CONSTANT_KEYS),
                     Map.entry(ValaTypes.SEMICOLON, SEMICOLON_KEYS),
-                    Map.entry(ValaTypes.METHOD_CALL, METHOD_CALL_KEYS),
+                     Map.entry(ValaTypes.METHOD_CALL_NAME, METHOD_CALL_KEYS),
                     Map.entry(ValaTypes.LBRACKET, BRACKETS_KEYS),
                     Map.entry(ValaTypes.RBRACKET, BRACKETS_KEYS),
                     Map.entry(ValaTypes.LBRACE, BRACES_KEYS),

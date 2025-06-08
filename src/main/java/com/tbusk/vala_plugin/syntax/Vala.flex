@@ -7,24 +7,56 @@ import com.intellij.psi.TokenType;
 import com.tbusk.vala_plugin.ValaTokenSets;
 import com.tbusk.vala_plugin.psi.ValaTokenType;
 
-%%
+/**
+ * Lexer generator used is JFlex.
+ * Documentation can be found at: https://jflex.de/manual.html
+ */
+%% // text above %% is copied verbatim to the generated lexer class before the class declaration
 
+%public // The lexer class will be public, so it can be used by the parser and other components
+
+// generated lexer class name. Results in ValaLexer.java
 %class ValaLexer
+
+// An intellij lexer interface with some convenient methods
 %implements FlexLexer
+
+/**
+ * %unicode is the set of characters that the scanner will work on. Unicode should always be used for text files.
+ * Versioning is supported, but if none is provided, the most recent version will be used (12.1 with JFlex 1.9.2).
+ */
 %unicode
+
+/**
+ * The function in which the lexer will be called to advance to the next token or until the end of the file / an I/O
+ * error occurs.
+ * Largely, all the items will go into a switch statement, which will return the parser token type.
+ */
 %function advance
+
+/**
+ * The type of the token that is used. Varies based on the parser implementation, but in this case, it is IElementType
+ * provided by Intellij.
+ */
 %type IElementType
+
+/**
+ * What to do when the end of the file is reached. In this case, it will do a return.
+ */
 %eof{ return;
 %eof}
 
+// Enable or disable debugging
+// %debug
+
 // Tokens
 WHITE_SPACE=[ \t\n\r]+
-CONSTANT=[A-Z]([A-Z0-9_]*[A-Z0-9]|[A-Z0-9_]*[A-Z][A-Z0-9_]*)
-IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
-STRING_LITERAL=\"([^\\\"]|\\.)*\"
+CONSTANT=([A-Z_]){1}([A-Z0-9_])+
+IDENTIFIER=[a-zA-Z_][a-zA-Z0-9$_]*
+STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
-NUMBER=[0-9]+(\.[0-9]*)?
-METHOD_CALL={IDENTIFIER}
+NUMBER=(-?[0-9]+[.]?[0-9]*)
+REGULAR_EXPRESSION=\/([^\\\/]|\\.)*\/
 
 // Comments
 COMMENT="//"[^\r\n]*
@@ -57,8 +89,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "namespace" { return ValaTypes.NAMESPACE; }
     "using" { return ValaTypes.USING; }
     "if"             { return ValaTypes.IF; }
-    "elif" { return ValaTypes.ELIF; }
-    "endif" { return ValaTypes.ENDIF; }
     "else" { return ValaTypes.ELSE; }
     "switch" { return ValaTypes.SWITCH; }
     "while" { return ValaTypes.WHILE; }
@@ -73,7 +103,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "is" {return ValaTypes.IS; }
     "base" {return ValaTypes.BASE; }
     "as" {return ValaTypes.AS; }
-    "typeof" {return ValaTypes.TYPEOF; }
     "CCode" {return ValaTypes.CCODE; }
     "Version" {return ValaTypes.VERSION; }
     "DBus" {return ValaTypes.DBUS; }
@@ -99,8 +128,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "struct" { return ValaTypes.STRUCT; }
     "enum" { return ValaTypes.ENUM; }
     "construct" { return ValaTypes.CONSTRUCT; }
-    "HashMap" { return ValaTypes.HASHMAP; }
-    "Object" { return ValaTypes.OBJECT; }
 
 
 
@@ -116,6 +143,9 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "static"      { return ValaTypes.STATIC; }
     "override"    { return ValaTypes.OVERRIDE; }
     "unowned"    { return ValaTypes.UNOWNED; }
+    "ref"    { return ValaTypes.REF; }
+    "out"    { return ValaTypes.OUT; }
+
 
     // Data Types
     "const"       { return ValaTypes.CONST; }
@@ -150,6 +180,19 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "false"      { return ValaTypes.FALSE; }
     "null"       { return ValaTypes.NULL; }
 
+    // Characters
+    "++"             { return ValaTypes.INCREMENT; }
+    "--"             { return ValaTypes.DECREMENT; }
+    "=="            { return ValaTypes.EQUALS_EQUALS; }
+    "!="            { return ValaTypes.NOT_EQUALS; }
+    ">="            { return ValaTypes.GREATER_THAN_EQUALS; }
+    "<="            { return ValaTypes.LESS_THAN_EQUALS; }
+    "+="           { return ValaTypes.PLUS_EQUALS; }
+    "-="           { return ValaTypes.MINUS_EQUALS; }
+    "*="           { return ValaTypes.MULTIPLY_EQUALS; }
+    "/="           { return ValaTypes.DIVIDE_EQUALS; }
+    "%="           { return ValaTypes.MODULO_EQUALS; }
+    "&&"           { return ValaTypes.AND_AND; }
     ";"        { return ValaTypes.SEMICOLON; }
     ":"          { return ValaTypes.COLON; }
     ","            { return ValaTypes.COMMA; }
@@ -181,20 +224,11 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "`"                { return ValaTypes.BACKTICK; }
     "$"               { return ValaTypes.DOLLAR; }
 
-    // Testing
-    "assert"             { return ValaTypes.ASSERT; }
-
     // Lastly
     {CONSTANT}         { return ValaTypes.CONSTANT; }
-    {METHOD_CALL}/[ \t]*"("[^)]*")"[ \t]*(("=>"[ \t]*"{")|[;])      {
-              String text = yytext().toString();
-
-              if(!ValaTokenSets.KEYWORDS_STRINGS.contains(text)) {
-                  return ValaTypes.METHOD_CALL;
-              }
-          }
-
+    {REGULAR_EXPRESSION}       { return ValaTypes.REGULAR_EXPRESSION; }
     {IDENTIFIER}       { return ValaTypes.IDENTIFIER; }
+
     // Error Fallback
     [^]                { return TokenType.BAD_CHARACTER; }
 }
