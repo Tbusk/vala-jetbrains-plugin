@@ -18,6 +18,8 @@ import java.util.Map;
  * ValaColorSettingsPage is a class that implements the ColorSettingsPage interface for Vala language support in an IDE.
  * It provides syntax highlighting attributes, demo text, and other settings related to the appearance of Vala code.
  * This class is used to define how Vala code should be highlighted and displayed in the editor in the settings page.
+ * <br/><br/>
+ * <a href="https://plugins.jetbrains.com/docs/intellij/syntax-highlighter-and-color-settings-page.html#define-a-color-settings-page">view documentation</a>
  */
 public class ValaColorSettingsPage implements ColorSettingsPage {
 
