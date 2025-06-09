@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaItems extends PsiElement {
+public interface ValaConditionalOrExpression extends PsiElement {
 
-  @Nullable
-  ValaItems getItems();
+  @NotNull
+  List<ValaConditionalAndExpression> getConditionalAndExpressionList();
 
 }

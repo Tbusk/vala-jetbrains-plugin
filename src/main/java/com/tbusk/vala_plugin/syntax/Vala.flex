@@ -55,7 +55,8 @@ CONSTANT=([A-Z_]){1}([A-Z0-9_])+
 IDENTIFIER=[a-zA-Z_][a-zA-Z0-9$_]*
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
-NUMBER=(-?[0-9]+[.]?[0-9]*)
+DECIMAL_LITERAL=(-?[0-9]+[.]?[0-9]*)
+INTEGER_LITERAL=(-?[0-9]+)
 REGULAR_EXPRESSION=\/([^\\\/]|\\.)*\/
 
 // Comments
@@ -70,7 +71,8 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     // Other tokens
     {STRING_LITERAL}   { return ValaTypes.STRING_LITERAL; }
     {CHAR_LITERAL}     { return ValaTypes.CHAR_LITERAL; }
-    {NUMBER}           { return ValaTypes.NUMBER; }
+    {INTEGER_LITERAL}           { return ValaTypes.INTEGER_LITERAL; }
+    {DECIMAL_LITERAL}           { return ValaTypes.DECIMAL_LITERAL; }
     {WHITE_SPACE}      { return TokenType.WHITE_SPACE; }
 
     // Misc Keywords
@@ -88,7 +90,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "in" { return ValaTypes.IN; }
     "namespace" { return ValaTypes.NAMESPACE; }
     "using" { return ValaTypes.USING; }
-    "if"             { return ValaTypes.IF; }
+    "if"    { return ValaTypes.IF; }
     "else" { return ValaTypes.ELSE; }
     "switch" { return ValaTypes.SWITCH; }
     "while" { return ValaTypes.WHILE; }
@@ -103,10 +105,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "is" {return ValaTypes.IS; }
     "base" {return ValaTypes.BASE; }
     "as" {return ValaTypes.AS; }
-    "CCode" {return ValaTypes.CCODE; }
-    "Version" {return ValaTypes.VERSION; }
-    "DBus" {return ValaTypes.DBUS; }
-    "delegate" {return ValaTypes.DELEGATE; }
     "signal" {return ValaTypes.SIGNAL; }
     "errordomain" {return ValaTypes.ERRORDOMAIN; }
     "requires" {return ValaTypes.REQUIRES; }
@@ -219,7 +217,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "*"         { return ValaTypes.STAR; }
     "/"           { return ValaTypes.FORWARD_SLASH; }
     "\\"          { return ValaTypes.BACKSLASH; }
-    "%"           { return ValaTypes.PERCENT; }
+    "%"           { return ValaTypes.MODULO; }
     "#"           { return ValaTypes.POUND; }
     "!"                  { return ValaTypes.EXCLAMATION; }
     "`"                { return ValaTypes.BACKTICK; }

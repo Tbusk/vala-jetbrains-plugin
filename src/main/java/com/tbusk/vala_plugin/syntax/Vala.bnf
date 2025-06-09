@@ -13,10 +13,36 @@
     tokenTypeClass="com.tbusk.vala_plugin.psi.ValaTokenType"
 
     tokens=[
+        // Exclusively Operations
+
+        PLUS_EQUALS='+='
+        MINUS_EQUALS='-='
+        DIVIDE_EQUALS='/='
+        MULTIPLY_EQUALS='*='
+        MODULO_EQUALS='%='
+        INCREMENT='++'
+        DECREMENT='--'
+
+        // Comparisons
+        EQUALS_EQUALS='=='
+        NOT_EQUALS='!='
+        LESS_THAN_EQUALS='<='
+        GREATER_THAN_EQUALS='>='
+        AND_AND='&&'
+        OR_OR='||'
+        PIPE_EQUALS='|='
+        AND_EQUALS='&='
+        XOR_EQUALS='^='
+        SHIFT_LEFT='<<'
+        SHIFT_RIGHT='>>'
+        SHIFT_LEFT_EQUALS='<<='
+        SHIFT_RIGHT_EQUALS='>>='
+        DOT_DOT_DOT='...'
+        MODULO='%'
         DOT='.'
         COMMA=','
         SEMICOLON=';'
-        EQUALS="="
+        EQUALS='='
         LBRACE='{'
         RBRACE='}'
         COLON=':'
@@ -34,7 +60,6 @@
         STAR='*'
         FORWARD_SLASH='/'
         BACKSLASH='\\'
-        PERCENT='%'
         AND='&'
         PIPE='|'
         EXCLAMATION='!'
@@ -44,30 +69,16 @@
         DOLLAR='$'
         POUND='#'
 
-        // Exclusively Operations
-        PLUS_EQUALS='+='
-        MINUS_EQUALS='-='
-        DIVIDE_EQUALS='/='
-        MULTIPLY_EQUALS='*='
-        MODULO_EQUALS='%='
-        INCREMENT='++'
-        DECREMENT='--'
-
-        // Comparisons
-        EQUALS_EQUALS='=='
-        NOT_EQUALS='!='
-        LESS_THAN_EQUALS='<='
-        GREATER_THAN_EQUALS='>='
-        AND_AND='&&'
-        OR_OR='||'
-
+        AS='as'
+        IS='is'
 
         WHITESPACE='regexp:\s+'
-        IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*'
+        IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_])*'
         CONSTANT='regexp:[A-Z_][A-Z0-9_]*'
         STRING_LITERAL='regexp:@?\"([^\\\"]|\\.)*\"'
         CHAR_LITERAL="regexp:'([^'\\]|\\.)'"
-        NUMBER='regexp:(-?[0-9]+[.]?[0-9]*)'
+        INTEGER_LITERAL='regexp:(-?[0-9]+)'
+        DECIMAL_LITERAL='regexp:(-?[0-9]+[.]?[0-9]*)'
         COMMENT='regexp://.*'
         BLOCK_COMMENT='regexp:/[^*]\*+([^/*][^*]*\*+)*/'
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
@@ -76,402 +87,362 @@
     ]
 }
 
-Root ::= Items*
-
-Items ::= NamespaceDeclaration
-               | Comments
-               | ClassDeclaration
-               | StructDeclaration
-               | EnumDeclaration
-               | InterfaceDeclaration
-               | UsingDeclaration
-               | MethodCall
-               | StandardMethodDeclaration
-               | ShortMethodDeclaration
-               | VariableDeclaration
-               | ShortVariableDeclaration
-               | DestructionMethodCall
-               | WHITESPACE
-               | ForLoop
-               | VariableAssignment
-               | IfStatement
-               | WhileStatement
-               | DoWhileFinallyStatement
-               | LPAREN Items RPAREN
-
-private Comments ::= COMMENT
-                  | BLOCK_COMMENT
-                  | DOC_COMMENT
-
-private TypeArguments ::= LESS_THAN WHITESPACE? InstantiationTypes (COMMA WHITESPACE? InstantiationTypes)* WHITESPACE? GREATER_THAN
-
-private QualifiedIdentifier ::= (IDENTIFIER | REGULAR_EXPRESSION) WHITESPACE? (DOT IDENTIFIER)* TypeArguments?
-
-private QualifiedPointerableIdentifier ::= (STAR)? (IDENTIFIER) (STAR)? WHITESPACE? (DOT IDENTIFIER)* (STAR)? TypeArguments?
-
-private UsingDeclaration ::= using WHITESPACE? QualifiedIdentifier WHITESPACE? SEMICOLON
-
-private NamespaceDeclaration ::= namespace WHITESPACE? QualifiedIdentifier WHITESPACE? LBRACE NamespaceItems* RBRACE
-
-private NamespaceItems ::= Comments
-                        | ClassDeclaration
-                        | StructDeclaration
-                        | EnumDeclaration
-                        | InterfaceDeclaration
-                        | MethodCall
-                        | WHITESPACE
-                        | ShortMethodDeclaration
-                        | StandardMethodDeclaration
-                        | VariableDeclaration
-                        | ShortVariableDeclaration
-                        | NamespaceDeclaration
-                        | DestructionMethodCall
-                        | ForLoop
-                        | VariableAssignment
-                        | IfStatement
-                        | WhileStatement
-                        | DoWhileFinallyStatement
-                        | LPAREN NamespaceItems RPAREN
-
-private ClassModifiers ::= abstract?
-                           const?
-                           virtual?
-
-private ClassDeclaration ::= AccessModifiers? WHITESPACE? ClassModifiers WHITESPACE? class WHITESPACE QualifiedIdentifier WHITESPACE? (COLON WHITESPACE? QualifiedIdentifier (COMMA WHITESPACE? QualifiedIdentifier)*)? WHITESPACE? LBRACE ClassItems* RBRACE
-
-private ClassItems ::= Comments
-                    | ClassDeclaration
-                    | StructDeclaration
-                    | EnumDeclaration
-                    | InterfaceDeclaration
-                    | MethodCall
-                    | WHITESPACE
-                    | ShortMethodDeclaration
-                    | StandardMethodDeclaration
-                    | VariableDeclaration
-                    | ShortVariableDeclaration
-                    | ConstructorDeclaration
-                    | ThisExpression
-                    | DestructionMethodCall
-                    | SpecialMethodSignatureDeclaration
-                    | ForLoop
-                    | VariableAssignment
-                    | IfStatement
-                    | WhileStatement
-                    | DoWhileFinallyStatement
-                    | LPAREN ClassItems RPAREN
-
-private ConstructorDeclaration ::= AccessModifiers? WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? LBRACE MethodBody* RBRACE
-
-private StructDeclaration ::= AccessModifiers? WHITESPACE? struct WHITESPACE? QualifiedIdentifier WHITESPACE? LBRACE StructItems* RBRACE
-
-//TODO: Visit Struct Docs and Add
-private StructItems ::= Comments
-                     | WHITESPACE
-                     | ShortVariableDeclaration
-                     | ConstructorDeclaration
-
-private EnumDeclaration ::= AccessModifiers? WHITESPACE? enum WHITESPACE? QualifiedIdentifier WHITESPACE? LBRACE EnumItems* RBRACE
-
-//TODO: Visit Enum Docs and Add
-private EnumItems ::= Comments
-                   | StandardMethodDeclaration
-                   | WHITESPACE
-                   | LPAREN EnumItems RPAREN
-
-private InterfaceDeclaration ::= AccessModifiers? WHITESPACE? interface WHITESPACE? QualifiedIdentifier WHITESPACE? (COLON WHITESPACE? QualifiedIdentifier (COMMA WHITESPACE? QualifiedIdentifier)*)? WHITESPACE? LBRACE InterfaceItems* RBRACE
-
-//TODO: Visit Interface Docs and Add
-private InterfaceItems ::= Comments
-                        | MethodSignatureDeclaration
-                        | WHITESPACE
-                        | LPAREN InterfaceItems* RPAREN
-
-private StandardMethodDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? ThrowsExpression? WHITESPACE? ((LBRACE MethodBody* RBRACE) | SEMICOLON )
-private MethodSignatureDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? ThrowsExpression? WHITESPACE? (SEMICOLON )
-private SpecialMethodSignatureDeclaration ::= AccessModifiers? WHITESPACE? signal? Modifiers WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN ParameterList? RPAREN WHITESPACE? (SEMICOLON )
-
-private ShortMethodDeclaration ::= AccessModifiers? WHITESPACE? WHITESPACE? ReturnTypes WHITESPACE? QualifiedIdentifier WHITESPACE? ThrowsExpression? WHITESPACE? LBRACE ShortMethodBody* RBRACE
-
-private ThrowsExpression ::= throws WHITESPACE? (QualifiedIdentifier WHITESPACE? (COMMA WHITESPACE? QualifiedIdentifier)*)?
-
-private ShortMethodBody ::= get WHITESPACE? SEMICOLON
-                         | set WHITESPACE? SEMICOLON
-                         | Comments
-                         | default WHITESPACE? EQUALS WHITESPACE? (STRING_LITERAL | CHAR_LITERAL | NUMBER | QualifiedIdentifier SEMICOLON)
-                         | ThisExpression
-                         | LPAREN ShortMethodBody* RPAREN
-
-private MethodBody ::= Comments
-                    | ReturnStatement
-                    | MethodCall
-                    | WHITESPACE
-                    | ThisExpression
-                    | VariableDeclaration
-                    | ShortVariableDeclaration
-                    | ForLoop
-                    | VariableAssignment
-                    | IfStatement
-                    | break SEMICOLON
-                    | continue SEMICOLON
-                    | DoWhileFinallyStatement
-                    | WhileStatement
-                    | LPAREN MethodBody RPAREN
-
-private ParameterList ::= Parameter WHITESPACE?(COMMA WHITESPACE? Parameter)*
-
-private Parameter ::= (ParameterModifiers WHITESPACE? NullableInstantiationTypes WHITESPACE? IDENTIFIER (WHITESPACE? EQUALS WHITESPACE? AssignmentValues)?)
-
-private ParameterModifiers ::= out? ref?
-
-private MethodCall ::= CastExpression? (QualifiedIdentifier) WHITESPACE? LPAREN MethodArguments? RPAREN SEMICOLON?
-
-private MethodArguments ::= MethodArgument WHITESPACE?(COMMA WHITESPACE? MethodArgument)*
-
-private MethodArgument ::= (out)? WHITESPACE? (MethodCall
-                                              | (NullableInstantiationTypes WHITESPACE? QualifiedPointerableIdentifier)
-                                              | AssignmentValues
-                                              | Lambda
-                                              | QualifiedPointerableIdentifier | LPAREN MethodArgument RPAREN)
-
-private Lambda ::= LPAREN (IDENTIFIER WHITESPACE? (COMMA WHITESPACE? IDENTIFIER)*)? RPAREN WHITESPACE? (EQUALS GREATER_THAN) WHITESPACE? LBRACE MethodBody* RBRACE
-
-private Modifiers ::= static?
-                      abstract?
-                      virtual?
-                      override?
-                      const?
-                      owned?
-                      unowned?
-                      weak?
-
-private VariableDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE?
-        (QualifiedPointerableIdentifier WHITESPACE? (EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions))?
-        WHITESPACE? (COMMA WHITESPACE? QualifiedPointerableIdentifier (WHITESPACE? EQUALS WHITESPACE? (AssignmentValues | ConditionalExpressions)))*) SEMICOLON?
-
-private ShortVariableDeclaration ::= AccessModifiers? WHITESPACE? Modifiers WHITESPACE? (NullableInstantiationTypes | var) WHITESPACE? QualifiedPointerableIdentifier WHITESPACE? SEMICOLON?
-
-private ThisExpression ::= this WHITESPACE? ((DOT QualifiedIdentifier)*)? ((LPAREN ParameterList? RPAREN) | (EQUALS WHITESPACE? AssignmentValues)) WHITESPACE? SEMICOLON?
-
-private DestructionMethodCall ::= TILDE WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN WHITESPACE? LBRACE MethodBody* RBRACE
-
-private ReturnStatement ::= return WHITESPACE? (AssignmentValues ( WHITESPACE? (PLUS | MINUS | NOT_EQUALS | EXCLAMATION ) WHITESPACE? AssignmentValues)*)? SEMICOLON?
-
-private VariableAssignment ::= (INCREMENT | DECREMENT)? QualifiedIdentifier WHITESPACE? (((VariableAssignmentOperations) WHITESPACE? (ParenthesizedConditionalExpressions | ConditionalExpressions | ParenthesizedAssignmentValues | AssignmentValues)) | (INCREMENT | DECREMENT)) SEMICOLON?
-
-private VariableAssignmentOperations ::= EQUALS
-                                      | PLUS_EQUALS
-                                      | MINUS_EQUALS
-                                      | DIVIDE_EQUALS
-                                      | MODULO_EQUALS
-                                      | MULTIPLY_EQUALS
-                                      | PLUS
-                                      | MINUS
-                                      | FORWARD_SLASH
-                                      | STAR
-                                      | PERCENT
-
-private ParenthesizedAssignmentValues ::= LPAREN AssignmentValues RPAREN
-
-private AssignmentValues ::= CastExpression? WHITESPACE? (true
-                          | false
-                          | null
-                          | STRING_LITERAL
-                          | CHAR_LITERAL
-                          | NUMBER
-                          | new WHITESPACE? QualifiedIdentifier WHITESPACE? LPAREN MethodArguments? RPAREN
-                          | QualifiedPointerableIdentifier WHITESPACE? LBRACKET WHITESPACE? (QualifiedPointerableIdentifier | NUMBER) WHITESPACE? RBRACKET
-                          | MethodCall
-                          | LBRACE RBRACE
-                          | LBRACKET (QualifiedPointerableIdentifier | NUMBER WHITESPACE? (COMMA WHITESPACE? NUMBER)*) RBRACKET
-                          | QualifiedPointerableIdentifier
-                          | LPAREN AssignmentValues RPAREN) ((WHITESPACE? (VariableAssignmentOperations | (INCREMENT | DECREMENT)) WHITESPACE? AssignmentValues)*)?
-
-private ForLoop ::= for WHITESPACE? LPAREN WHITESPACE? ForLoopInitialization? WHITESPACE? (ConditionalExpressions)? WHITESPACE? SEMICOLON? WHITESPACE? ForLoopUpdate? RPAREN WHITESPACE? LBRACE ForLoopBody* RBRACE
-
-private ForLoopBody ::= MethodBody
-                     | break SEMICOLON?
-                     | continue SEMICOLON?
-
-private ForLoopInitialization ::= VariableDeclaration
-                               | ShortVariableDeclaration
-                               | VariableAssignment SEMICOLON?
-
-private ParenthesizedConditionalExpressions ::= LPAREN ConditionalExpressions RPAREN
-
-private ConditionalExpressions ::= (ConditionalExpression | ParenthesizedConditionalExpression) (WHITESPACE? (AND_AND | OR_OR) WHITESPACE? (ConditionalExpression | ParenthesizedConditionalExpression))*
-
-private ParenthesizedConditionalExpression ::= LPAREN ConditionalExpression RPAREN
-private ConditionalExpression ::= (EXCLAMATION)? (BooleanReturningValues | MethodCall |
-                                                 ((INCREMENT | DECREMENT)? AssignmentValues (INCREMENT | DECREMENT)?)
-                                                 WHITESPACE? (ConditionalOperations) WHITESPACE? (BooleanReturningMethodCall | AssignmentValues))
-                                                 (WHITESPACE? QUESTION_MARK WHITESPACE? AssignmentValues WHITESPACE? COLON WHITESPACE? AssignmentValues)?
-
-private ConditionalOperations ::= EQUALS_EQUALS
-                               | LESS_THAN_EQUALS
-                               | GREATER_THAN_EQUALS
-                               | LESS_THAN
-                               | GREATER_THAN
-                               | NOT_EQUALS
-
-private BooleanReturningValues ::= true
-                                | false
-
-private BooleanReturningMethodCall ::= MethodCall
-
-private ForLoopUpdate ::= (INCREMENT | DECREMENT)? QualifiedPointerableIdentifier (INCREMENT | DECREMENT)?
-
-private IfStatement ::= if WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) WHITESPACE? RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?) SEMICOLON? WHITESPACE? ElseIfStatement* WHITESPACE? ElseStatement?
-private ElseIfStatement ::= else if WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) RPAREN WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
-private ElseStatement ::= else WHITESPACE? (LBRACE IfBody* RBRACE | IfOneLinerBody* SEMICOLON?)
-
-private IfBody ::= MethodBody
-                | LPAREN IfBody RPAREN
-
-private DoWhileFinallyStatement ::= do WHITESPACE? LBRACE WhileBody* RBRACE WHITESPACE? WhileStatement WHITESPACE? FinallyStatement?
-private WhileStatement ::= while WHITESPACE? LPAREN WHITESPACE? (ConditionalExpressions) RPAREN WHITESPACE? (LBRACE WhileBody* RBRACE | SEMICOLON)
-private FinallyStatement ::= finally WHITESPACE? LBRACE WhileBody* RBRACE
-
-private WhileBody ::= MethodBody
-
-private CastExpression ::= LPAREN WHITESPACE? NullableInstantiationTypes (STAR)? WHITESPACE? RPAREN WHITESPACE?
-
-private IfOneLinerBody ::= VariableAssignment
-                        | MethodCall
-                        | ReturnStatement
-                        | IfStatement
-                        | ForLoop
-                        | DestructionMethodCall
-                        | ThisExpression
-                        | Comments
-                        | break
-                        | continue
-                        | LPAREN IfOneLinerBody* RPAREN
-
-private UnimplementedTokens ::= Symbols
-                          | Identifiers
-                          | Keywords
-                          | CInstructions
-                          | InstantiationTypes
-                          | ReturnTypes
-
-private Symbols ::= DOT
-                 | COMMA
-                 | SEMICOLON
-                 | EQUALS
-                 | LBRACE
-                 | RBRACE
-                 | COLON
-                 | LPAREN
-                 | RPAREN
-                 | LBRACKET
-                 | RBRACKET
-                 | QUESTION_MARK
-                 | AT
-                 | UNDERSCORE
-                 | GREATER_THAN
-                 | LESS_THAN
-                 | PLUS
-                 | MINUS
-                 | STAR
-                 | FORWARD_SLASH
-                 | PERCENT
-                 | AND
-                 | PIPE
-                 | EXCLAMATION
-                 | TILDE
-                 | CARET
-                 | BACKTICK
-                 | DOLLAR
-                 | POUND
-                 | BACKSLASH
-                 | REGULAR_EXPRESSION
-
-private Identifiers ::= IDENTIFIER
-                     | STRING_LITERAL
-                     | CHAR_LITERAL
-                     | NUMBER
-                     | WHITESPACE
-                     | EMPTY
-                     | CONSTANT
-                     | METHOD_CALL_NAME
-
-private Keywords ::= InstantiationTypes
-                  | IfStatement
-                  | CInstructions
-                  | AccessModifiers
-                  | switch
-                  | case
-                  | default
-                  | goto
-                  | sizeof
-                  | typedef
-                  | struct
-                  | union
-                  | static
-                  | abstract
-                  | virtual
-                  | override
-                  | foreach
-                  | in
-                  | try
-                  | catch
-                  | finally
-                  | throw
-                  | delete
-                  | this
-                  | const
-                  | volatile
-                  | assert
-                  | construct
-                  | yield
-                  | async
-                  | base
-                  | is
-                  | as
-                  | delegate
-                  | signal
-                  | errordomain
-                  | requires
-                  | ensures
-                  | lock
-                  | weak
-                  | extern
-
-private AccessModifiers ::= public
-                         | private
-                         | protected
-                         | internal
-
-private CInstructions ::= CCode
-                       | Version
-                       | DBus
-
-private NullableInstantiationTypes ::= InstantiationTypes QUESTION_MARK?
-
-private InstantiationTypes ::= (string
-                            | char
-                            | uchar
-                            | unichar
-                            | int
-                            | uint
-                            | long
-                            | ulong
-                            | short
-                            | ushort
-                            | int8
-                            | int16
-                            | int32
-                            | int64
-                            | uint8
-                            | uint16
-                            | uint32
-                            | uint64
-                            | float
-                            | double
-                            | bool
-                            | size_t
-                            | ssize_t
-                            | QualifiedIdentifier ) (LBRACKET RBRACKET)?
-
-private ReturnTypes ::= void | NullableInstantiationTypes | null
+
+input ::= using_directive* namespace_member*
+
+// parse_using_directives
+using_directive ::= using symbol [ (COMMA symbol)* ] SEMICOLON
+
+// parse_symbol_name
+symbol ::= symbol_part [ (DOT symbol_part)* ]
+
+symbol_part ::= ( "global::" IDENTIFIER ) | IDENTIFIER
+
+namespace_member ::= [ attributes ]
+                     ( namespace_declaration |
+                       class_declaration |
+                       interface_declaration |
+                       struct_declaration |
+                       enum_declaration |
+                       errordomain_declaration |
+                       method_declaration |
+                       field_declaration |
+                       constant_declaration )
+
+attributes ::= attribute*
+
+attribute ::= LBRACKET IDENTIFIER [ attribute_arguments ] RBRACKET
+
+attribute_arguments ::= LPAREN attribute_argument [ (COMMA attribute_argument)* ] RPAREN
+
+attribute_argument ::= IDENTIFIER EQUALS expression
+
+expression ::= lambda_expression | ( conditional_expression [ assignment_operator expression ] )
+
+// get_assignment_operator plus >>=
+assignment_operator ::= EQUALS | PIPE_EQUALS | PLUS_EQUALS | MINUS_EQUALS | AND_EQUALS | XOR_EQUALS | DIVIDE_EQUALS | MULTIPLY_EQUALS | MODULO_EQUALS | SHIFT_LEFT_EQUALS | SHIFT_RIGHT_EQUALS
+
+conditional_expression ::= coalescing_expression [ (QUESTION_MARK expression COLON expression)* ]
+
+coalescing_expression ::= conditional_or_expression [ ('?' '?' coalescing_expression)* ]
+
+conditional_or_expression ::= conditional_and_expression [ (OR_OR conditional_and_expression)* ]
+
+conditional_and_expression ::= in_expression [ (AND_AND in_expression)* ]
+
+in_expression ::= inclusive_or_expression [ in inclusive_or_expression ]
+
+inclusive_or_expression ::= exclusive_or_expression [ PIPE exclusive_or_expression ]
+
+exclusive_or_expression ::= and_expression [ CARET and_expression ]
+
+and_expression ::= equality_expression [ AND equality_expression ]
+
+equality_expression ::= relational_expression [( ( EQUALS_EQUALS | NOT_EQUALS ) relational_expression)* ]
+
+relational_expression ::= shift_expression [ ((( LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS ) shift_expression ) | ( IS type ) | ( AS type ) )*]
+
+// parse_type
+type ::= ( void [ (STAR)* ] ) | ( [ dynamic ] [ unowned ] (symbol | primitive_type) [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type* )
+
+primitive_type ::= ( char
+                     | uchar
+                     | unichar
+                     | int
+                     | uint
+                     | long
+                     | ulong
+                     | short
+                     | ushort
+                     | int8
+                     | int16
+                     | int32
+                     | int64
+                     | uint8
+                     | uint16
+                     | uint32
+                     | uint64
+                     | float
+                     | double
+                     | bool
+                     | size_t
+                     | ssize_t
+                     | string )
+
+// parse_type can_weak
+type_weak ::= ( void [ STAR ] ) | ( [ dynamic ] [ unowned | weak | owned ] (symbol | primitive_type) [ type_arguments ] [ STAR ] [ QUESTION_MARK ] array_type* )
+
+array_type ::= LBRACKET [array_size] RBRACKET [ QUESTION_MARK ]
+
+shift_expression ::= additive_expression [ ( ( SHIFT_LEFT | SHIFT_RIGHT ) additive_expression)* ]
+
+additive_expression ::= multiplicative_expression [ (( PLUS | MINUS ) multiplicative_expression)* ]
+
+multiplicative_expression ::= unary_expression [ (( STAR | FORWARD_SLASH | MODULO ) unary_expression)* ]
+
+unary_expression ::= ( unary_operator unary_expression ) |
+                     ( LPAREN ( owned | void | dynamic | EXCLAMATION | type ) RPAREN unary_expression ) |
+                     primary_expression
+
+// get_unary_operator
+unary_operator ::= PLUS | MINUS | EXCLAMATION | TILDE | INCREMENT | DECREMENT | STAR | AND | "(owned)" | "(void)" | "(dynamic)" | "(!)"
+
+primary_expression ::= ( literal | initializer | tuple | template | this_access | base_access |
+                       object_or_array_creation_expression | yield_expression | sizeof_expression | typeof_expression |
+                       simple_name | primitive_type )
+                       [ (member_access | pointer_member_access | method_call | element_access |
+                         post_increment_expression | post_decrement_expression)* ]
+
+member_access ::= DOT [AT] member
+
+pointer_member_access ::= (STAR member) | (member STAR)
+
+element_access ::= LBRACKET [expression] RBRACKET
+
+post_increment_expression ::= INCREMENT
+
+post_decrement_expression ::= DECREMENT
+
+literal ::= true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL | CHAR_LITERAL | open_regex_literal | regex_literal |
+            STRING_LITERAL
+
+initializer ::= LBRACE [argument [ (COMMA argument)* ]] RBRACE
+
+// parse_argument_list
+arguments ::= argument [ (COMMA argument)* ]
+
+argument ::= ref expression | out expression | expression | IDENTIFIER [ COLON expression ]
+
+tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
+
+template ::= '@"' [ (expression COMMA)* ] '"'
+
+open_regex_literal ::= FORWARD_SLASH literal
+
+regex_literal ::= REGULAR_EXPRESSION
+
+this_access ::= this
+
+base_access ::= base
+
+object_or_array_creation_expression ::= new member ( object_creation_expression | array_creation_expression )
+
+object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer ]
+
+object_initializer ::= LBRACE member_initializer [ (COMMA member_initializer)* [ COMMA ] ] RBRACE
+
+member_initializer ::= IDENTIFIER EQUALS expression
+
+array_creation_expression ::= [ (LBRACKET RBRACKET)* ] [ LBRACKET [ array_size ] RBRACKET ] [ initializer ]
+
+array_size ::= expression [ (COMMA expression)* ]
+
+// parse_member_name
+member ::= member_part [ (DOT member_part)* ]
+
+member_part ::= [ AT ] ( "global::" IDENTIFIER | IDENTIFIER | primitive_type | CONSTANT ) [ type_arguments ]
+
+// parse_type_argument_list
+type_arguments ::= LESS_THAN type [ (COMMA type)* ] GREATER_THAN
+
+yield_expression ::= yield [ base_access DOT ] member method_call
+
+method_call ::= LPAREN [ arguments ] RPAREN [ object_initializer ]
+
+sizeof_expression ::= sizeof LPAREN type RPAREN
+
+typeof_expression ::= typeof LPAREN type RPAREN
+
+simple_name ::= ( "global::" IDENTIFIER | IDENTIFIER ) [ type_arguments ]
+
+lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
+
+lambda_expression_params ::= IDENTIFIER | ( LPAREN [ IDENTIFIER [ (COMMA IDENTIFIER)* ] ] RPAREN )
+
+lambda_expression_body ::= expression | block
+
+member_declaration_modifiers ::= member_declaration_modifier [ (" " member_declaration_modifier)* ]
+member_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override | new
+
+constructor_declaration ::= [ constructor_declaration_modifiers ] construct block
+
+constructor_declaration_modifiers ::= constructor_declaration_modifier [ (" " constructor_declaration_modifier)* ]
+constructor_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override
+
+destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE LPAREN RPAREN block
+
+class_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] class symbol [ type_arguments ]
+                      [ COLON base_types ] LBRACE class_member* RBRACE
+
+base_types ::= type [ (COMMA type)* ]
+
+class_member ::= [ attributes ]
+                 ( class_declaration |
+                   struct_declaration |
+                   enum_declaration |
+                   method_declaration |
+                   property_declaration |
+                   delegate_declaration |
+                   creation_method_declaration |
+                   signal_declaration |
+                   field_declaration |
+                   constant_declaration |
+                   constructor_declaration |
+                   destructor_declaration
+                   )
+
+access_modifier ::= private | protected | internal | public
+
+type_declaration_modifiers ::= type_declaration_modifier [ (" " type_declaration_modifier)* ]
+type_declaration_modifier ::= abstract | extern | static
+
+enum_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] enum symbol
+                     LBRACE enumvalues [ SEMICOLON [ (method_declaration | constant_declaration)* ] ] RBRACE
+
+enumvalues ::= enumvalue [ (COMMA enumvalue)* ] [ COMMA ]
+enumvalue ::= [ attributes ] (IDENTIFIER | CONSTANT) [ EQUALS expression ]
+
+errordomain_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] errordomain symbol
+                            LBRACE errorcodes [ SEMICOLON method_declaration* ] RBRACE
+
+errorcodes ::= errorcode [ (COMMA errorcode)* ]
+errorcode ::= [ attributes ] IDENTIFIER [ EQUALS expression ]
+
+interface_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] interface symbol [ type_parameters ]
+                          [ COLON base_types ] LBRACE interface_member* RBRACE
+
+// parse_type_parameter_list
+type_parameters ::= LESS_THAN IDENTIFIER [ (COMMA IDENTIFIER)* ] GREATER_THAN
+
+interface_member ::= [ attributes ]
+                     ( class_declaration |
+                       struct_declaration |
+                       enum_declaration |
+                       delegate_declaration |
+                       method_declaration |
+                       signal_declaration |
+                       field_declaration |
+                       constant_declaration |
+                       property_declaration )
+
+namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE
+
+struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct symbol
+                       [ COLON base_types ] LBRACE struct_member* RBRACE
+
+struct_member ::= [ attributes ] ( method_declaration | field_declaration | constant_declaration | property_declaration )
+
+creation_method_declaration ::= [ access_modifier ] [ constructor_declaration_modifiers ] symbol
+                                LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
+
+parameters ::= parameter [ (COMMA parameter)* ]
+
+parameter ::= [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref ] type IDENTIFIER [ EQUALS expression ] ) )
+
+throws ::= 'throws' type [ (COMMA type)* ]
+
+requires ::= 'requires' LPAREN expression RPAREN [ requires ]
+
+ensures ::= 'ensures' LPAREN expression RPAREN [ ensures ]
+
+delegate_declaration ::= [ access_modifier ] [ delegate_declaration_modifiers ] type symbol [ type_parameters ]
+                         LPAREN [ parameters ] RPAREN [ throws ] SEMICOLON
+
+delegate_declaration_modifiers ::= delegate_declaration_modifier [ (" " delegate_declaration_modifier)* ]
+delegate_declaration_modifier ::= async | class | extern | inline | abstract | virtual | override
+
+signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal type IDENTIFIER
+                       LPAREN [ parameters ] RPAREN ( SEMICOLON | block )
+
+signal_declaration_modifiers ::= signal_declaration_modifier [ (" " signal_declaration_modifier)* ]
+signal_declaration_modifier ::= async | extern | inline | abstract | virtual | override | new
+
+method_declaration ::= [ access_modifier ] [ member_declaration_modifier ] type IDENTIFIER [(DOT IDENTIFIER)*] [ type_parameters ]
+                       LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
+
+constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const type IDENTIFIER [ inline_array_type ]
+                         [ EQUALS expression ] SEMICOLON
+
+inline_array_type ::= LBRACKET INTEGER_LITERAL RBRACKET
+
+field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] type_weak IDENTIFIER [ EQUALS expression ] SEMICOLON
+
+property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] type_weak IDENTIFIER
+                         LBRACE property_declaration_part* RBRACE
+
+property_declaration_part ::= ( default EQUALS expression SEMICOLON ) | property_accessor
+
+property_accessor ::= [ attributes ] [ access_modifier ] [owned | unowned] ( property_get_accessor | property_set_accessor | property_construct_accessor )
+
+property_get_accessor ::= 'get' ( SEMICOLON | block )
+
+property_set_accessor ::= 'set' ( SEMICOLON | block )
+
+property_construct_accessor ::= 'construct' ( SEMICOLON | block )
+
+property_declaration_modifiers ::= property_declaration_modifier [ (" " property_declaration_modifier)* ]
+property_declaration_modifier ::= class | static | extern | inline | abstract | virtual | override | new
+
+block ::= LBRACE statement* RBRACE
+
+// parse_statements
+statement ::= block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
+              break_statement | continue_statement | return_statement | yield_statement | throw_statement |
+              try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement
+
+if_statement ::= if LPAREN expression RPAREN embedded_statement [ else embedded_statement ]
+
+embedded_statement ::= block | embedded_statement_without_block
+
+embedded_statement_without_block ::= SEMICOLON | if_statement | switch_statement | while_statement | for_statement |
+                                     foreach_statement | break_statement | continue_statement | return_statement |
+                                     yield_statement | throw_statement | try_statement | lock_statement | delete_statement |
+                                     expression_statement
+
+switch_statement ::= switch LPAREN expression RPAREN LBRACE switch_section* RBRACE
+
+switch_section ::= ( case | default ) expression COLON
+
+while_statement ::= while LPAREN expression RPAREN embedded_statement
+
+do_statement ::= do embedded_statement while LPAREN expression RPAREN SEMICOLON
+
+for_statement ::= for LPAREN [ for_initializer ] SEMICOLON [ expression ] SEMICOLON [ for_iterator ] RPAREN embedded_statement
+
+for_initializer ::= local_variable_declarations | ( statement_expression [ (COMMA statement_expression)* ] )
+
+for_iterator ::= statement_expression [ (COMMA statement_expression)* ]
+
+statement_expression ::= expression
+
+foreach_statement ::= foreach LPAREN ( var | type ) IDENTIFIER in expression RPAREN embedded_statement
+
+break_statement ::= break SEMICOLON
+
+continue_statement ::= continue SEMICOLON
+
+return_statement ::= return [ expression ] SEMICOLON
+
+yield_statement ::= yield [ expression_statement | return expression ] SEMICOLON
+
+throw_statement ::= throw expression SEMICOLON
+
+try_statement ::= try block catch_clause* [ finally_clause ]
+
+catch_clause ::= catch [ LPAREN type_weak IDENTIFIER RPAREN ] block
+
+finally_clause ::= finally block
+
+lock_statement ::= lock LPAREN expression RPAREN embedded_statement
+
+delete_statement ::= delete expression SEMICOLON
+
+local_variable_declarations ::= [ weak ] ( var | type ) local_variable_declaration [ (COMMA local_variable_declaration)* ]
+
+local_variable_declaration ::= local_tuple_declaration | local_variable
+
+local_tuple_declaration ::= LPAREN IDENTIFIER [ (COMMA IDENTIFIER)* ] RPAREN EQUALS expression
+
+local_variable ::= IDENTIFIER [ inline_array_type ] [ EQUALS expression ]
+
+expression_statement ::= statement_expression SEMICOLON
