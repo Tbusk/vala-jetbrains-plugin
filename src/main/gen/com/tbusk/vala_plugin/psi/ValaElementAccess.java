@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaElementAccess extends PsiElement {
 
-  @Nullable
-  ValaExpression getExpression();
+  @NotNull
+  List<ValaExpression> getExpressionList();
 
 }

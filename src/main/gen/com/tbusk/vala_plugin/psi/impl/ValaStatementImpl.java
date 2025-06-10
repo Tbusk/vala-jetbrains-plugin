@@ -95,12 +95,6 @@ public class ValaStatementImpl extends ASTWrapperPsiElement implements ValaState
 
   @Override
   @Nullable
-  public ValaPreprocessorStatement getPreprocessorStatement() {
-    return findChildByClass(ValaPreprocessorStatement.class);
-  }
-
-  @Override
-  @Nullable
   public ValaReturnStatement getReturnStatement() {
     return findChildByClass(ValaReturnStatement.class);
   }

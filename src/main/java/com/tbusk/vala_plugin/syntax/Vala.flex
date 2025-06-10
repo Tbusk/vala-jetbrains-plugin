@@ -75,6 +75,10 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     {WHITE_SPACE}      { return TokenType.WHITE_SPACE; }
 
     // Misc Keywords
+    "#if" { return ValaTypes.POUND_IF; }
+    "#else" { return ValaTypes.POUND_ELSE; }
+    "#elif" { return ValaTypes.POUND_ELIF; }
+    "#endif" { return ValaTypes.POUND_ENDIF; }
     "return"             { return ValaTypes.RETURN; }
     "do" { return ValaTypes.DO; }
     "break" { return ValaTypes.BREAK; }
@@ -95,8 +99,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "while" { return ValaTypes.WHILE; }
     "for" { return ValaTypes.FOR; }
     "foreach" { return ValaTypes.FOREACH; }
-    "owned" { return ValaTypes.OWNED; }
-    "unowned" { return ValaTypes.UNOWNED; }
     "yield" {return ValaTypes.YIELD; }
     "new" {return ValaTypes.NEW; }
     "async" {return ValaTypes.ASYNC; }
@@ -111,6 +113,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "lock" {return ValaTypes.LOCK; }
     "weak" {return ValaTypes.WEAK; }
     "extern" {return ValaTypes.EXTERN; }
+    "delegate" {return ValaTypes.DELEGATE; }
 
     // Comments
     {DOC_COMMENT}      { return ValaTypes.DOC_COMMENT; }
@@ -140,6 +143,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "static"      { return ValaTypes.STATIC; }
     "override"    { return ValaTypes.OVERRIDE; }
     "unowned"    { return ValaTypes.UNOWNED; }
+    "owned"    { return ValaTypes.OWNED; }
     "ref"    { return ValaTypes.REF; }
     "out"    { return ValaTypes.OUT; }
 
@@ -190,6 +194,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "/="           { return ValaTypes.DIVIDE_EQUALS; }
     "%="           { return ValaTypes.MODULO_EQUALS; }
     "&&"           { return ValaTypes.AND_AND; }
+    "|="           { return ValaTypes.PIPE_EQUALS; }
     "||"           { return ValaTypes.OR_OR; }
     ";"        { return ValaTypes.SEMICOLON; }
     ":"          { return ValaTypes.COLON; }

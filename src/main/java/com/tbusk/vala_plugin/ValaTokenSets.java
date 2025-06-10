@@ -124,7 +124,11 @@ public interface ValaTokenSets {
             ValaTypes.ENSURES,
             ValaTypes.LOCK,
             ValaTypes.WEAK,
-            ValaTypes.EXTERN
+            ValaTypes.EXTERN,
+            ValaTypes.POUND_IF,
+            ValaTypes.POUND_ELSE,
+            ValaTypes.POUND_ENDIF,
+            ValaTypes.POUND_ELIF
     );
 
     Set<String> KEYWORDS_STRINGS = new HashSet<>(

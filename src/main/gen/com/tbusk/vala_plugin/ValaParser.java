@@ -699,9 +699,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                  ( class_declaration |
   //                    struct_declaration |
   //                    enum_declaration |
+  //                    delegate_declaration |
   //                    method_declaration |
   //                    property_declaration |
-  //                    delegate_declaration |
   //                    creation_method_declaration |
   //                    signal_declaration |
   //                    field_declaration |
@@ -730,9 +730,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // class_declaration |
   //                    struct_declaration |
   //                    enum_declaration |
+  //                    delegate_declaration |
   //                    method_declaration |
   //                    property_declaration |
-  //                    delegate_declaration |
   //                    creation_method_declaration |
   //                    signal_declaration |
   //                    field_declaration |
@@ -746,9 +746,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = class_declaration(b, l + 1);
     if (!r) r = struct_declaration(b, l + 1);
     if (!r) r = enum_declaration(b, l + 1);
+    if (!r) r = delegate_declaration(b, l + 1);
     if (!r) r = method_declaration(b, l + 1);
     if (!r) r = property_declaration(b, l + 1);
-    if (!r) r = delegate_declaration(b, l + 1);
     if (!r) r = creation_method_declaration(b, l + 1);
     if (!r) r = signal_declaration(b, l + 1);
     if (!r) r = field_declaration(b, l + 1);
@@ -1147,7 +1147,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ access_modifier ] [ delegate_declaration_modifiers ] type symbol [ type_parameters ]
+  // [ access_modifier ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
   //                          LPAREN [ parameters ] RPAREN [ throws ] SEMICOLON
   public static boolean delegate_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration")) return false;
@@ -1155,13 +1155,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b, l, _NONE_, DELEGATE_DECLARATION, "<delegate declaration>");
     r = delegate_declaration_0(b, l + 1);
     r = r && delegate_declaration_1(b, l + 1);
+    r = r && consumeToken(b, DELEGATE);
     r = r && type(b, l + 1);
     r = r && symbol(b, l + 1);
-    r = r && delegate_declaration_4(b, l + 1);
+    r = r && delegate_declaration_5(b, l + 1);
     r = r && consumeToken(b, LPAREN);
-    r = r && delegate_declaration_6(b, l + 1);
+    r = r && delegate_declaration_7(b, l + 1);
     r = r && consumeToken(b, RPAREN);
-    r = r && delegate_declaration_8(b, l + 1);
+    r = r && delegate_declaration_9(b, l + 1);
     r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -1182,22 +1183,22 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   // [ type_parameters ]
-  private static boolean delegate_declaration_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "delegate_declaration_4")) return false;
+  private static boolean delegate_declaration_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "delegate_declaration_5")) return false;
     type_parameters(b, l + 1);
     return true;
   }
 
   // [ parameters ]
-  private static boolean delegate_declaration_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "delegate_declaration_6")) return false;
+  private static boolean delegate_declaration_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "delegate_declaration_7")) return false;
     parameters(b, l + 1);
     return true;
   }
 
   // [ throws ]
-  private static boolean delegate_declaration_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "delegate_declaration_8")) return false;
+  private static boolean delegate_declaration_9(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "delegate_declaration_9")) return false;
     throws_$(b, l + 1);
     return true;
   }
@@ -1311,7 +1312,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACKET [expression] RBRACKET
+  // LBRACKET [expression (COLON expression)*] RBRACKET
   public static boolean element_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "element_access")) return false;
     if (!nextTokenIs(b, LBRACKET)) return false;
@@ -1324,11 +1325,44 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [expression]
+  // [expression (COLON expression)*]
   private static boolean element_access_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "element_access_1")) return false;
-    expression(b, l + 1);
+    element_access_1_0(b, l + 1);
     return true;
+  }
+
+  // expression (COLON expression)*
+  private static boolean element_access_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "element_access_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = expression(b, l + 1);
+    r = r && element_access_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COLON expression)*
+  private static boolean element_access_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "element_access_1_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!element_access_1_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "element_access_1_0_1", c)) break;
+    }
+    return true;
+  }
+
+  // COLON expression
+  private static boolean element_access_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "element_access_1_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COLON);
+    r = r && expression(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -2504,8 +2538,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL | CHAR_LITERAL | open_regex_literal | regex_literal |
-  //             STRING_LITERAL
+  // true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL | CHAR_LITERAL | open_regex_literal |
+  //             STRING_LITERAL | regex_literal
   public static boolean literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal")) return false;
     boolean r;
@@ -2517,8 +2551,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, DECIMAL_LITERAL);
     if (!r) r = consumeToken(b, CHAR_LITERAL);
     if (!r) r = open_regex_literal(b, l + 1);
-    if (!r) r = regex_literal(b, l + 1);
     if (!r) r = consumeToken(b, STRING_LITERAL);
+    if (!r) r = regex_literal(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -2828,7 +2862,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type ) [ type_arguments ]
+  // ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach ) [ type_arguments ]
   public static boolean member_part(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_part")) return false;
     boolean r;
@@ -2839,7 +2873,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type
+  // "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach
   private static boolean member_part_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_part_0")) return false;
     boolean r;
@@ -2847,6 +2881,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = member_part_0_0(b, l + 1);
     if (!r) r = member_part_0_1(b, l + 1);
     if (!r) r = primitive_type(b, l + 1);
+    if (!r) r = consumeToken(b, FOREACH);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -3201,7 +3236,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACE member_initializer [ (COMMA member_initializer)* [ COMMA ] ] RBRACE
+  // LBRACE member_initializer [ (COMMA member_initializer)* ] RBRACE
   public static boolean object_initializer(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_initializer")) return false;
     if (!nextTokenIs(b, LBRACE)) return false;
@@ -3215,51 +3250,33 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (COMMA member_initializer)* [ COMMA ] ]
+  // [ (COMMA member_initializer)* ]
   private static boolean object_initializer_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_initializer_2")) return false;
     object_initializer_2_0(b, l + 1);
     return true;
   }
 
-  // (COMMA member_initializer)* [ COMMA ]
+  // (COMMA member_initializer)*
   private static boolean object_initializer_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_initializer_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = object_initializer_2_0_0(b, l + 1);
-    r = r && object_initializer_2_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA member_initializer)*
-  private static boolean object_initializer_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "object_initializer_2_0_0")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!object_initializer_2_0_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "object_initializer_2_0_0", c)) break;
+      if (!object_initializer_2_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "object_initializer_2_0", c)) break;
     }
     return true;
   }
 
   // COMMA member_initializer
-  private static boolean object_initializer_2_0_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "object_initializer_2_0_0_0")) return false;
+  private static boolean object_initializer_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_initializer_2_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
     r = r && member_initializer(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // [ COMMA ]
-  private static boolean object_initializer_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "object_initializer_2_0_1")) return false;
-    consumeToken(b, COMMA);
-    return true;
   }
 
   /* ********************************************************** */
@@ -3299,7 +3316,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] ) )
+  // [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref | owned | unowned ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] ) )
   public static boolean parameter(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter")) return false;
     boolean r;
@@ -3317,7 +3334,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // DOT_DOT_DOT | ( [ params ] [ out | ref ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] )
+  // DOT_DOT_DOT | ( [ params ] [ out | ref | owned | unowned ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] )
   private static boolean parameter_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter_1")) return false;
     boolean r;
@@ -3328,7 +3345,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ params ] [ out | ref ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ]
+  // [ params ] [ out | ref | owned | unowned ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ]
   private static boolean parameter_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter_1_1")) return false;
     boolean r;
@@ -3349,19 +3366,21 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ out | ref ]
+  // [ out | ref | owned | unowned ]
   private static boolean parameter_1_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter_1_1_1")) return false;
     parameter_1_1_1_0(b, l + 1);
     return true;
   }
 
-  // out | ref
+  // out | ref | owned | unowned
   private static boolean parameter_1_1_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameter_1_1_1_0")) return false;
     boolean r;
     r = consumeToken(b, OUT);
     if (!r) r = consumeToken(b, REF);
+    if (!r) r = consumeToken(b, OWNED);
+    if (!r) r = consumeToken(b, UNOWNED);
     return r;
   }
 
@@ -3402,7 +3421,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // parameter [ (COMMA parameter)* ]
+  // parameter [ (COMMA parameter)* [ COMMA ] ]
   public static boolean parameters(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameters")) return false;
     boolean r;
@@ -3413,33 +3432,51 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (COMMA parameter)* ]
+  // [ (COMMA parameter)* [ COMMA ] ]
   private static boolean parameters_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameters_1")) return false;
     parameters_1_0(b, l + 1);
     return true;
   }
 
-  // (COMMA parameter)*
+  // (COMMA parameter)* [ COMMA ]
   private static boolean parameters_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parameters_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = parameters_1_0_0(b, l + 1);
+    r = r && parameters_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA parameter)*
+  private static boolean parameters_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "parameters_1_0_0")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!parameters_1_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "parameters_1_0", c)) break;
+      if (!parameters_1_0_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "parameters_1_0_0", c)) break;
     }
     return true;
   }
 
   // COMMA parameter
-  private static boolean parameters_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "parameters_1_0_0")) return false;
+  private static boolean parameters_1_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "parameters_1_0_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
     r = r && parameter(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // [ COMMA ]
+  private static boolean parameters_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "parameters_1_0_1")) return false;
+    consumeToken(b, COMMA);
+    return true;
   }
 
   /* ********************************************************** */
@@ -3501,57 +3538,37 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('#if' expression) | ('#elif' expression) | ('#else') | ('#endif')
+  // POUND_IF expression | POUND_ELIF expression | POUND_ELSE  | POUND_ENDIF
   public static boolean preprocessor_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "preprocessor_statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PREPROCESSOR_STATEMENT, "<preprocessor statement>");
     r = preprocessor_statement_0(b, l + 1);
     if (!r) r = preprocessor_statement_1(b, l + 1);
-    if (!r) r = preprocessor_statement_2(b, l + 1);
-    if (!r) r = preprocessor_statement_3(b, l + 1);
+    if (!r) r = consumeToken(b, POUND_ELSE);
+    if (!r) r = consumeToken(b, POUND_ENDIF);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // '#if' expression
+  // POUND_IF expression
   private static boolean preprocessor_statement_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "preprocessor_statement_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "#if");
+    r = consumeToken(b, POUND_IF);
     r = r && expression(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // '#elif' expression
+  // POUND_ELIF expression
   private static boolean preprocessor_statement_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "preprocessor_statement_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, "#elif");
+    r = consumeToken(b, POUND_ELIF);
     r = r && expression(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ('#else')
-  private static boolean preprocessor_statement_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "preprocessor_statement_2")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, "#else");
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ('#endif')
-  private static boolean preprocessor_statement_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "preprocessor_statement_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, "#endif");
     exit_section_(b, m, null, r);
     return r;
   }
@@ -3928,15 +3945,43 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // REGULAR_EXPRESSION
+  // REGULAR_EXPRESSION [ m | i | x | o | s ] [member]
   public static boolean regex_literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "regex_literal")) return false;
     if (!nextTokenIs(b, REGULAR_EXPRESSION)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, REGULAR_EXPRESSION);
+    r = r && regex_literal_1(b, l + 1);
+    r = r && regex_literal_2(b, l + 1);
     exit_section_(b, m, REGEX_LITERAL, r);
     return r;
+  }
+
+  // [ m | i | x | o | s ]
+  private static boolean regex_literal_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "regex_literal_1")) return false;
+    regex_literal_1_0(b, l + 1);
+    return true;
+  }
+
+  // m | i | x | o | s
+  private static boolean regex_literal_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "regex_literal_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, M);
+    if (!r) r = consumeToken(b, I);
+    if (!r) r = consumeToken(b, X);
+    if (!r) r = consumeToken(b, O);
+    if (!r) r = consumeToken(b, S);
+    return r;
+  }
+
+  // [member]
+  private static boolean regex_literal_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "regex_literal_2")) return false;
+    member(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -4301,7 +4346,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
   //               break_statement | continue_statement | return_statement | yield_statement | throw_statement |
-  //               try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement | preprocessor_statement
+  //               try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement
   public static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
@@ -4324,7 +4369,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = delete_statement(b, l + 1);
     if (!r) r = local_variable_declarations(b, l + 1);
     if (!r) r = expression_statement(b, l + 1);
-    if (!r) r = preprocessor_statement(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

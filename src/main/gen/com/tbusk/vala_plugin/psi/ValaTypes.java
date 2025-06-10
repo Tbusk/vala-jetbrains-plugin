@@ -177,6 +177,7 @@ public interface ValaTypes {
   IElementType DECIMAL_LITERAL = new ValaTokenType("DECIMAL_LITERAL");
   IElementType DECREMENT = new ValaTokenType("--");
   IElementType DEFAULT = new ValaTokenType("default");
+  IElementType DELEGATE = new ValaTokenType("delegate");
   IElementType DELETE = new ValaTokenType("delete");
   IElementType DIVIDE_EQUALS = new ValaTokenType("/=");
   IElementType DO = new ValaTokenType("do");
@@ -201,6 +202,7 @@ public interface ValaTypes {
   IElementType FORWARD_SLASH = new ValaTokenType("/");
   IElementType GREATER_THAN = new ValaTokenType(">");
   IElementType GREATER_THAN_EQUALS = new ValaTokenType(">=");
+  IElementType I = new ValaTokenType("i");
   IElementType IDENTIFIER = new ValaTokenType("IDENTIFIER");
   IElementType IF = new ValaTokenType("if");
   IElementType IN = new ValaTokenType("in");
@@ -222,6 +224,7 @@ public interface ValaTypes {
   IElementType LOCK = new ValaTokenType("lock");
   IElementType LONG = new ValaTokenType("long");
   IElementType LPAREN = new ValaTokenType("(");
+  IElementType M = new ValaTokenType("m");
   IElementType MINUS = new ValaTokenType("-");
   IElementType MINUS_EQUALS = new ValaTokenType("-=");
   IElementType MODULO = new ValaTokenType("%");
@@ -231,6 +234,7 @@ public interface ValaTypes {
   IElementType NEW = new ValaTokenType("new");
   IElementType NOT_EQUALS = new ValaTokenType("!=");
   IElementType NULL = new ValaTokenType("null");
+  IElementType O = new ValaTokenType("o");
   IElementType OR_OR = new ValaTokenType("||");
   IElementType OUT = new ValaTokenType("out");
   IElementType OVERRIDE = new ValaTokenType("override");
@@ -241,6 +245,10 @@ public interface ValaTypes {
   IElementType PLUS = new ValaTokenType("+");
   IElementType PLUS_EQUALS = new ValaTokenType("+=");
   IElementType POUND = new ValaTokenType("#");
+  IElementType POUND_ELIF = new ValaTokenType("#elif");
+  IElementType POUND_ELSE = new ValaTokenType("#else");
+  IElementType POUND_ENDIF = new ValaTokenType("#endif");
+  IElementType POUND_IF = new ValaTokenType("#if");
   IElementType PRIVATE = new ValaTokenType("private");
   IElementType PROTECTED = new ValaTokenType("protected");
   IElementType PUBLIC = new ValaTokenType("public");
@@ -251,6 +259,7 @@ public interface ValaTypes {
   IElementType REGULAR_EXPRESSION = new ValaTokenType("REGULAR_EXPRESSION");
   IElementType RETURN = new ValaTokenType("return");
   IElementType RPAREN = new ValaTokenType(")");
+  IElementType S = new ValaTokenType("s");
   IElementType SEMICOLON = new ValaTokenType(";");
   IElementType SHIFT_LEFT = new ValaTokenType("<<");
   IElementType SHIFT_LEFT_EQUALS = new ValaTokenType("<<=");
@@ -290,6 +299,7 @@ public interface ValaTypes {
   IElementType VOID = new ValaTokenType("void");
   IElementType WEAK = new ValaTokenType("weak");
   IElementType WHILE = new ValaTokenType("while");
+  IElementType X = new ValaTokenType("x");
   IElementType XOR_EQUALS = new ValaTokenType("^=");
   IElementType YIELD = new ValaTokenType("yield");
 

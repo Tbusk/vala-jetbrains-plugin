@@ -69,6 +69,11 @@
         DOLLAR='$'
         POUND='#'
 
+        POUND_IF='#if'
+        POUND_ELIF='#elif'
+        POUND_ELSE='#else'
+        POUND_ENDIF='#endif'
+
         AS='as'
         IS='is'
 
@@ -198,14 +203,14 @@ member_access ::= DOT [AT] member
 
 pointer_member_access ::= (STAR member) | (member STAR)
 
-element_access ::= LBRACKET [expression] RBRACKET
+element_access ::= LBRACKET [expression (COLON expression)*] RBRACKET
 
 post_increment_expression ::= INCREMENT
 
 post_decrement_expression ::= DECREMENT
 
-literal ::= true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL | CHAR_LITERAL | open_regex_literal | regex_literal |
-            STRING_LITERAL
+literal ::= true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL | CHAR_LITERAL | open_regex_literal |
+            STRING_LITERAL | regex_literal
 
 initializer ::= LBRACE [argument [ (COMMA argument)* ]] RBRACE
 
@@ -220,7 +225,7 @@ template ::= '@"' [ (expression COMMA)* ] '"'
 
 open_regex_literal ::= FORWARD_SLASH literal
 
-regex_literal ::= REGULAR_EXPRESSION
+regex_literal ::= REGULAR_EXPRESSION [ m | i | x | o | s ] [member]
 
 this_access ::= this
 
@@ -230,7 +235,7 @@ object_or_array_creation_expression ::= new member ( object_creation_expression 
 
 object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer ]
 
-object_initializer ::= LBRACE member_initializer [ (COMMA member_initializer)* [ COMMA ] ] RBRACE
+object_initializer ::= LBRACE member_initializer [ (COMMA member_initializer)* ] RBRACE
 
 member_initializer ::= IDENTIFIER EQUALS expression
 
@@ -241,7 +246,7 @@ array_size ::= expression [ (COMMA expression)* ]
 // parse_member_name
 member ::= member_part [ (DOT member_part)* ]
 
-member_part ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type ) [ type_arguments ]
+member_part ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach ) [ type_arguments ]
 
 // parse_type_argument_list
 type_arguments ::= LESS_THAN type [ (COMMA type)* ] GREATER_THAN
@@ -281,9 +286,9 @@ class_member ::= [ attributes ]
                  ( class_declaration |
                    struct_declaration |
                    enum_declaration |
+                   delegate_declaration |
                    method_declaration |
                    property_declaration |
-                   delegate_declaration |
                    creation_method_declaration |
                    signal_declaration |
                    field_declaration |
@@ -338,9 +343,9 @@ struct_member ::= [ attributes ] ( method_declaration | field_declaration | cons
 creation_method_declaration ::= [ access_modifier ] [ constructor_declaration_modifiers ] symbol
                                 LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
 
-parameters ::= parameter [ (COMMA parameter)* ]
+parameters ::= parameter [ (COMMA parameter)* [ COMMA ] ]
 
-parameter ::= [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] ) )
+parameter ::= [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref | owned | unowned ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] ) )
 
 throws ::= 'throws' type [ (COMMA type)* ]
 
@@ -348,7 +353,7 @@ requires ::= 'requires' LPAREN expression RPAREN [ requires ]
 
 ensures ::= 'ensures' LPAREN expression RPAREN [ ensures ]
 
-delegate_declaration ::= [ access_modifier ] [ delegate_declaration_modifiers ] type symbol [ type_parameters ]
+delegate_declaration ::= [ access_modifier ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
                          LPAREN [ parameters ] RPAREN [ throws ] SEMICOLON
 
 delegate_declaration_modifiers ::= delegate_declaration_modifier [ (" " delegate_declaration_modifier)* ]
@@ -391,11 +396,11 @@ block ::= LBRACE statement* RBRACE
 // parse_statements
 statement ::= block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
               break_statement | continue_statement | return_statement | yield_statement | throw_statement |
-              try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement | preprocessor_statement
+              try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement
 
 if_statement ::= if LPAREN expression RPAREN embedded_statement [ else embedded_statement ]
 
-preprocessor_statement ::= ('#if' expression) | ('#elif' expression) | ('#else') | ('#endif')
+preprocessor_statement ::= POUND_IF expression | POUND_ELIF expression | POUND_ELSE  | POUND_ENDIF
 
 embedded_statement ::= block | embedded_statement_without_block
 

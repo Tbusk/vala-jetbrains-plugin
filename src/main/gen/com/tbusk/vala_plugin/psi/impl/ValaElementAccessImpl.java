@@ -28,9 +28,9 @@ public class ValaElementAccessImpl extends ASTWrapperPsiElement implements ValaE
   }
 
   @Override
-  @Nullable
-  public ValaExpression getExpression() {
-    return findChildByClass(ValaExpression.class);
+  @NotNull
+  public List<ValaExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
   }
 
 }
