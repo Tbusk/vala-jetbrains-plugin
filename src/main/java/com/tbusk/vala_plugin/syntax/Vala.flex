@@ -51,7 +51,6 @@ import com.tbusk.vala_plugin.psi.ValaTokenType;
 
 // Tokens
 WHITE_SPACE=[ \t\n\r]+
-CONSTANT=([A-Z_]){1}([A-Z0-9_])+
 IDENTIFIER=[a-zA-Z_][a-zA-Z0-9$_]*
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
@@ -195,6 +194,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     ";"        { return ValaTypes.SEMICOLON; }
     ":"          { return ValaTypes.COLON; }
     ","            { return ValaTypes.COMMA; }
+    "..."          { return ValaTypes.DOT_DOT_DOT; }
     "."              { return ValaTypes.DOT; }
     "("           { return ValaTypes.LPAREN; }
     ")"          { return ValaTypes.RPAREN; }
@@ -224,7 +224,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     "$"               { return ValaTypes.DOLLAR; }
 
     // Lastly
-    {CONSTANT}         { return ValaTypes.CONSTANT; }
     {REGULAR_EXPRESSION}       { return ValaTypes.REGULAR_EXPRESSION; }
     {IDENTIFIER}       { return ValaTypes.IDENTIFIER; }
 

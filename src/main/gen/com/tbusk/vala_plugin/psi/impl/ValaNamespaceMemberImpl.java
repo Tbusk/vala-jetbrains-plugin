@@ -83,6 +83,12 @@ public class ValaNamespaceMemberImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @Nullable
+  public ValaPreprocessorStatement getPreprocessorStatement() {
+    return findChildByClass(ValaPreprocessorStatement.class);
+  }
+
+  @Override
+  @Nullable
   public ValaStructDeclaration getStructDeclaration() {
     return findChildByClass(ValaStructDeclaration.class);
   }

@@ -71,7 +71,6 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
                     Map.entry(ValaTypes.CHAR_LITERAL, STRING_KEYS),
                      Map.entry(ValaTypes.INTEGER_LITERAL, NUMBER_KEYS),
                      Map.entry(ValaTypes.DECIMAL_LITERAL, NUMBER_KEYS),
-                    Map.entry(ValaTypes.CONSTANT, CONSTANT_KEYS),
                     Map.entry(ValaTypes.SEMICOLON, SEMICOLON_KEYS),
                     Map.entry(ValaTypes.LBRACKET, BRACKETS_KEYS),
                     Map.entry(ValaTypes.RBRACKET, BRACKETS_KEYS),

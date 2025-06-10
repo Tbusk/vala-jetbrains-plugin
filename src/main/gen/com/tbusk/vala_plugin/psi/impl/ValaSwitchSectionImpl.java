@@ -29,8 +29,14 @@ public class ValaSwitchSectionImpl extends ASTWrapperPsiElement implements ValaS
 
   @Override
   @NotNull
+  public List<ValaEmbeddedStatementWithoutBlock> getEmbeddedStatementWithoutBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaEmbeddedStatementWithoutBlock.class);
+  }
+
+  @Override
+  @Nullable
   public ValaExpression getExpression() {
-    return findNotNullChildByClass(ValaExpression.class);
+    return findChildByClass(ValaExpression.class);
   }
 
 }

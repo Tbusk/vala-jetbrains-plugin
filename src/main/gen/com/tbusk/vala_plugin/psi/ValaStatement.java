@@ -41,6 +41,9 @@ public interface ValaStatement extends PsiElement {
   ValaLockStatement getLockStatement();
 
   @Nullable
+  ValaPreprocessorStatement getPreprocessorStatement();
+
+  @Nullable
   ValaReturnStatement getReturnStatement();
 
   @Nullable

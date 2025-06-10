@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ValaSwitchSection extends PsiElement {
 
   @NotNull
+  List<ValaEmbeddedStatementWithoutBlock> getEmbeddedStatementWithoutBlockList();
+
+  @Nullable
   ValaExpression getExpression();
 
 }

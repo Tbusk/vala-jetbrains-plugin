@@ -74,7 +74,6 @@
 
         WHITESPACE='regexp:\s+'
         IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_])*'
-        CONSTANT='regexp:[A-Z_][A-Z0-9_]*'
         STRING_LITERAL='regexp:@?\"([^\\\"]|\\.)*\"'
         CHAR_LITERAL="regexp:'([^'\\]|\\.)'"
         INTEGER_LITERAL='regexp:(-?[0-9]+)'
@@ -96,7 +95,7 @@ using_directive ::= using symbol [ (COMMA symbol)* ] SEMICOLON
 // parse_symbol_name
 symbol ::= symbol_part [ (DOT symbol_part)* ]
 
-symbol_part ::= ( "global::" IDENTIFIER ) | IDENTIFIER
+symbol_part ::= ( "global::" IDENTIFIER ) | [AT] IDENTIFIER
 
 namespace_member ::= [ attributes ]
                      ( namespace_declaration |
@@ -107,7 +106,8 @@ namespace_member ::= [ attributes ]
                        errordomain_declaration |
                        method_declaration |
                        field_declaration |
-                       constant_declaration )
+                       constant_declaration |
+                       preprocessor_statement)
 
 attributes ::= attribute*
 
@@ -124,7 +124,7 @@ assignment_operator ::= EQUALS | PIPE_EQUALS | PLUS_EQUALS | MINUS_EQUALS | AND_
 
 conditional_expression ::= coalescing_expression [ (QUESTION_MARK expression COLON expression)* ]
 
-coalescing_expression ::= conditional_or_expression [ ('?' '?' coalescing_expression)* ]
+coalescing_expression ::= conditional_or_expression [ ('??' coalescing_expression)* ]
 
 conditional_or_expression ::= conditional_and_expression [ (OR_OR conditional_and_expression)* ]
 
@@ -167,7 +167,8 @@ primitive_type ::= ( char
                      | bool
                      | size_t
                      | ssize_t
-                     | string )
+                     | string
+                     | signal )
 
 // parse_type can_weak
 type_weak ::= ( void [ STAR ] ) | ( [ dynamic ] [ unowned | weak | owned ] (symbol | primitive_type) [ type_arguments ] [ STAR ] [ QUESTION_MARK ] array_type* )
@@ -189,7 +190,7 @@ unary_operator ::= PLUS | MINUS | EXCLAMATION | TILDE | INCREMENT | DECREMENT | 
 
 primary_expression ::= ( literal | initializer | tuple | template | this_access | base_access |
                        object_or_array_creation_expression | yield_expression | sizeof_expression | typeof_expression |
-                       simple_name | primitive_type )
+                       simple_name | primitive_type | preprocessor_statement )
                        [ (member_access | pointer_member_access | method_call | element_access |
                          post_increment_expression | post_decrement_expression)* ]
 
@@ -211,7 +212,7 @@ initializer ::= LBRACE [argument [ (COMMA argument)* ]] RBRACE
 // parse_argument_list
 arguments ::= argument [ (COMMA argument)* ]
 
-argument ::= ref expression | out expression | expression | IDENTIFIER [ COLON expression ]
+argument ::= ref expression | out expression | [ AT ] IDENTIFIER COLON expression | expression | [ AT ] IDENTIFIER
 
 tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
 
@@ -240,7 +241,7 @@ array_size ::= expression [ (COMMA expression)* ]
 // parse_member_name
 member ::= member_part [ (DOT member_part)* ]
 
-member_part ::= [ AT ] ( "global::" IDENTIFIER | IDENTIFIER | primitive_type | CONSTANT ) [ type_arguments ]
+member_part ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type ) [ type_arguments ]
 
 // parse_type_argument_list
 type_arguments ::= LESS_THAN type [ (COMMA type)* ] GREATER_THAN
@@ -253,11 +254,11 @@ sizeof_expression ::= sizeof LPAREN type RPAREN
 
 typeof_expression ::= typeof LPAREN type RPAREN
 
-simple_name ::= ( "global::" IDENTIFIER | IDENTIFIER ) [ type_arguments ]
+simple_name ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER ) [ type_arguments ]
 
 lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
 
-lambda_expression_params ::= IDENTIFIER | ( LPAREN [ IDENTIFIER [ (COMMA IDENTIFIER)* ] ] RPAREN )
+lambda_expression_params ::= [ AT ] IDENTIFIER | ( LPAREN [ IDENTIFIER [ (COMMA IDENTIFIER)* ] ] RPAREN )
 
 lambda_expression_body ::= expression | block
 
@@ -288,7 +289,8 @@ class_member ::= [ attributes ]
                    field_declaration |
                    constant_declaration |
                    constructor_declaration |
-                   destructor_declaration
+                   destructor_declaration |
+                   preprocessor_statement
                    )
 
 access_modifier ::= private | protected | internal | public
@@ -300,7 +302,7 @@ enum_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] enum sym
                      LBRACE enumvalues [ SEMICOLON [ (method_declaration | constant_declaration)* ] ] RBRACE
 
 enumvalues ::= enumvalue [ (COMMA enumvalue)* ] [ COMMA ]
-enumvalue ::= [ attributes ] (IDENTIFIER | CONSTANT) [ EQUALS expression ]
+enumvalue ::= [ attributes ] (IDENTIFIER) [ EQUALS expression ]
 
 errordomain_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] errordomain symbol
                             LBRACE errorcodes [ SEMICOLON method_declaration* ] RBRACE
@@ -323,7 +325,8 @@ interface_member ::= [ attributes ]
                        signal_declaration |
                        field_declaration |
                        constant_declaration |
-                       property_declaration )
+                       property_declaration |
+                       preprocessor_statement)
 
 namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE
 
@@ -337,7 +340,7 @@ creation_method_declaration ::= [ access_modifier ] [ constructor_declaration_mo
 
 parameters ::= parameter [ (COMMA parameter)* ]
 
-parameter ::= [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref ] type IDENTIFIER [ EQUALS expression ] ) )
+parameter ::= [ attributes ] ( DOT_DOT_DOT | ( [ params ] [ out | ref ] type ( [ AT ] IDENTIFIER) [ EQUALS expression ] ) )
 
 throws ::= 'throws' type [ (COMMA type)* ]
 
@@ -360,7 +363,7 @@ signal_declaration_modifier ::= async | extern | inline | abstract | virtual | o
 method_declaration ::= [ access_modifier ] [ member_declaration_modifier ] type IDENTIFIER [(DOT IDENTIFIER)*] [ type_parameters ]
                        LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
 
-constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const type IDENTIFIER [ inline_array_type ]
+constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const type (IDENTIFIER) [ inline_array_type ]
                          [ EQUALS expression ] SEMICOLON
 
 inline_array_type ::= LBRACKET INTEGER_LITERAL RBRACKET
@@ -388,9 +391,11 @@ block ::= LBRACE statement* RBRACE
 // parse_statements
 statement ::= block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
               break_statement | continue_statement | return_statement | yield_statement | throw_statement |
-              try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement
+              try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement | preprocessor_statement
 
 if_statement ::= if LPAREN expression RPAREN embedded_statement [ else embedded_statement ]
+
+preprocessor_statement ::= ('#if' expression) | ('#elif' expression) | ('#else') | ('#endif')
 
 embedded_statement ::= block | embedded_statement_without_block
 
@@ -401,7 +406,7 @@ embedded_statement_without_block ::= SEMICOLON | if_statement | switch_statement
 
 switch_statement ::= switch LPAREN expression RPAREN LBRACE switch_section* RBRACE
 
-switch_section ::= ( case | default ) expression COLON
+switch_section ::= ( case | default ) [expression] COLON embedded_statement_without_block*
 
 while_statement ::= while LPAREN expression RPAREN embedded_statement
 
