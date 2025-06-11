@@ -13,4 +13,7 @@ public interface ValaDestructorDeclaration extends PsiElement {
   @Nullable
   ValaConstructorDeclarationModifiers getConstructorDeclarationModifiers();
 
+  @NotNull
+  PsiElement getIdentifier();
+
 }

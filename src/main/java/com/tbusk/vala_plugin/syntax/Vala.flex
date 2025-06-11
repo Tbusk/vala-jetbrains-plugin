@@ -62,6 +62,7 @@ REGULAR_EXPRESSION=\/([^\\\/]|\\.)*\/
 COMMENT="//"[^\r\n]*
 BLOCK_COMMENT="/*"([^*]|\*[^/])*"\*/"
 DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
+PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\n")
 
 %%
 
@@ -75,10 +76,6 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     {WHITE_SPACE}      { return TokenType.WHITE_SPACE; }
 
     // Misc Keywords
-    "#if" { return ValaTypes.POUND_IF; }
-    "#else" { return ValaTypes.POUND_ELSE; }
-    "#elif" { return ValaTypes.POUND_ELIF; }
-    "#endif" { return ValaTypes.POUND_ENDIF; }
     "return"             { return ValaTypes.RETURN; }
     "do" { return ValaTypes.DO; }
     "break" { return ValaTypes.BREAK; }
@@ -231,6 +228,7 @@ DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
     // Lastly
     {REGULAR_EXPRESSION}       { return ValaTypes.REGULAR_EXPRESSION; }
     {IDENTIFIER}       { return ValaTypes.IDENTIFIER; }
+    {PREPROCESSOR_DIRECTIVE} { return ValaTypes.PREPROCESSOR_DIRECTIVE; }
 
     // Error Fallback
     [^]                { return TokenType.BAD_CHARACTER; }

@@ -38,9 +38,6 @@ public interface ValaPrimaryExpression extends PsiElement {
   List<ValaPostIncrementExpression> getPostIncrementExpressionList();
 
   @Nullable
-  ValaPreprocessorStatement getPreprocessorStatement();
-
-  @Nullable
   ValaPrimitiveType getPrimitiveType();
 
   @Nullable

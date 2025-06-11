@@ -35,9 +35,6 @@ public interface ValaNamespaceMember extends PsiElement {
   ValaNamespaceDeclaration getNamespaceDeclaration();
 
   @Nullable
-  ValaPreprocessorStatement getPreprocessorStatement();
-
-  @Nullable
   ValaStructDeclaration getStructDeclaration();
 
 }

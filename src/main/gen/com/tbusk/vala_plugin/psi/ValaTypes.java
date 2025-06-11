@@ -100,7 +100,6 @@ public interface ValaTypes {
   IElementType POINTER_MEMBER_ACCESS = new ValaElementType("POINTER_MEMBER_ACCESS");
   IElementType POST_DECREMENT_EXPRESSION = new ValaElementType("POST_DECREMENT_EXPRESSION");
   IElementType POST_INCREMENT_EXPRESSION = new ValaElementType("POST_INCREMENT_EXPRESSION");
-  IElementType PREPROCESSOR_STATEMENT = new ValaElementType("PREPROCESSOR_STATEMENT");
   IElementType PRIMARY_EXPRESSION = new ValaElementType("PRIMARY_EXPRESSION");
   IElementType PRIMITIVE_TYPE = new ValaElementType("PRIMITIVE_TYPE");
   IElementType PROPERTY_ACCESSOR = new ValaElementType("PROPERTY_ACCESSOR");
@@ -245,10 +244,11 @@ public interface ValaTypes {
   IElementType PLUS = new ValaTokenType("+");
   IElementType PLUS_EQUALS = new ValaTokenType("+=");
   IElementType POUND = new ValaTokenType("#");
-  IElementType POUND_ELIF = new ValaTokenType("#elif");
-  IElementType POUND_ELSE = new ValaTokenType("#else");
-  IElementType POUND_ENDIF = new ValaTokenType("#endif");
-  IElementType POUND_IF = new ValaTokenType("#if");
+  IElementType PREPROCESSOR_DIRECTIVE = new ValaTokenType("PREPROCESSOR_DIRECTIVE");
+  IElementType PREPROCESSOR_ELIF = new ValaTokenType("#elif");
+  IElementType PREPROCESSOR_ELSE = new ValaTokenType("#else");
+  IElementType PREPROCESSOR_ENDIF = new ValaTokenType("#endif");
+  IElementType PREPROCESSOR_IF = new ValaTokenType("#if");
   IElementType PRIVATE = new ValaTokenType("private");
   IElementType PROTECTED = new ValaTokenType("protected");
   IElementType PUBLIC = new ValaTokenType("public");
@@ -581,9 +581,6 @@ public interface ValaTypes {
       }
       else if (type == POST_INCREMENT_EXPRESSION) {
         return new ValaPostIncrementExpressionImpl(node);
-      }
-      else if (type == PREPROCESSOR_STATEMENT) {
-        return new ValaPreprocessorStatementImpl(node);
       }
       else if (type == PRIMARY_EXPRESSION) {
         return new ValaPrimaryExpressionImpl(node);

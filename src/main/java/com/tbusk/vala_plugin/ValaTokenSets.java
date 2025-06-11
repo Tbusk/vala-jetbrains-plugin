@@ -16,7 +16,8 @@ public interface ValaTokenSets {
     TokenSet COMMENTS = TokenSet.create(
             ValaTypes.COMMENT,
             ValaTypes.DOC_COMMENT,
-            ValaTypes.BLOCK_COMMENT
+            ValaTypes.BLOCK_COMMENT,
+            ValaTypes.PREPROCESSOR_DIRECTIVE
     );
 
     TokenSet STRINGS = TokenSet.create(
@@ -125,10 +126,10 @@ public interface ValaTokenSets {
             ValaTypes.LOCK,
             ValaTypes.WEAK,
             ValaTypes.EXTERN,
-            ValaTypes.POUND_IF,
-            ValaTypes.POUND_ELSE,
-            ValaTypes.POUND_ENDIF,
-            ValaTypes.POUND_ELIF
+            ValaTypes.PREPROCESSOR_IF,
+            ValaTypes.PREPROCESSOR_ELIF,
+            ValaTypes.PREPROCESSOR_ELSE,
+            ValaTypes.PREPROCESSOR_ENDIF
     );
 
     Set<String> KEYWORDS_STRINGS = new HashSet<>(

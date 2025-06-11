@@ -71,12 +71,6 @@ public class ValaInterfaceMemberImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @Nullable
-  public ValaPreprocessorStatement getPreprocessorStatement() {
-    return findChildByClass(ValaPreprocessorStatement.class);
-  }
-
-  @Override
-  @Nullable
   public ValaPropertyDeclaration getPropertyDeclaration() {
     return findChildByClass(ValaPropertyDeclaration.class);
   }

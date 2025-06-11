@@ -39,4 +39,10 @@ public class ValaDestructorDeclarationImpl extends ASTWrapperPsiElement implemen
     return findChildByClass(ValaConstructorDeclarationModifiers.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
+  }
+
 }

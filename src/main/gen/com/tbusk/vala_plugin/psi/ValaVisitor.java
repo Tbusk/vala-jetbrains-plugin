@@ -375,10 +375,6 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitPreprocessorStatement(@NotNull ValaPreprocessorStatement o) {
-    visitPsiElement(o);
-  }
-
   public void visitPrimaryExpression(@NotNull ValaPrimaryExpression o) {
     visitPsiElement(o);
   }

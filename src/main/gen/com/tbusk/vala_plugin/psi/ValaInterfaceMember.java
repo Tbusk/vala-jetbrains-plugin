@@ -29,9 +29,6 @@ public interface ValaInterfaceMember extends PsiElement {
   ValaMethodDeclaration getMethodDeclaration();
 
   @Nullable
-  ValaPreprocessorStatement getPreprocessorStatement();
-
-  @Nullable
   ValaPropertyDeclaration getPropertyDeclaration();
 
   @Nullable

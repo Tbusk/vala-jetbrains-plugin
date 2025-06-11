@@ -69,13 +69,13 @@
         DOLLAR='$'
         POUND='#'
 
-        POUND_IF='#if'
-        POUND_ELIF='#elif'
-        POUND_ELSE='#else'
-        POUND_ENDIF='#endif'
-
         AS='as'
         IS='is'
+
+        PREPROCESSOR_IF='#if'
+        PREPROCESSOR_ELSE='#else'
+        PREPROCESSOR_ENDIF='#endif'
+        PREPROCESSOR_ELIF='#elif'
 
         WHITESPACE='regexp:\s+'
         IDENTIFIER='regexp:[a-zA-Z_][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_])*'
@@ -88,6 +88,7 @@
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
         REGULAR_EXPRESSION='regexp:/([^\\/]|\\.)*/'
+        PREPROCESSOR_DIRECTIVE="regexp:(#if | #endif | #elif | #else) .* (\r|\n|\r\n)"
     ]
 }
 
@@ -111,8 +112,7 @@ namespace_member ::= [ attributes ]
                        errordomain_declaration |
                        method_declaration |
                        field_declaration |
-                       constant_declaration |
-                       preprocessor_statement)
+                       constant_declaration)
 
 attributes ::= attribute*
 
@@ -122,7 +122,7 @@ attribute_arguments ::= LPAREN attribute_argument [ (COMMA attribute_argument)* 
 
 attribute_argument ::= IDENTIFIER EQUALS expression
 
-expression ::= lambda_expression | ( conditional_expression [ assignment_operator expression ] )
+expression ::= (lambda_expression | ( conditional_expression [ assignment_operator expression ] ))
 
 // get_assignment_operator plus >>=
 assignment_operator ::= EQUALS | PIPE_EQUALS | PLUS_EQUALS | MINUS_EQUALS | AND_EQUALS | XOR_EQUALS | DIVIDE_EQUALS | MULTIPLY_EQUALS | MODULO_EQUALS | SHIFT_LEFT_EQUALS | SHIFT_RIGHT_EQUALS
@@ -195,7 +195,7 @@ unary_operator ::= PLUS | MINUS | EXCLAMATION | TILDE | INCREMENT | DECREMENT | 
 
 primary_expression ::= ( literal | initializer | tuple | template | this_access | base_access |
                        object_or_array_creation_expression | yield_expression | sizeof_expression | typeof_expression |
-                       simple_name | primitive_type | preprocessor_statement )
+                       simple_name | primitive_type )
                        [ (member_access | pointer_member_access | method_call | element_access |
                          post_increment_expression | post_decrement_expression)* ]
 
@@ -209,13 +209,13 @@ post_increment_expression ::= INCREMENT
 
 post_decrement_expression ::= DECREMENT
 
-literal ::= true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL | CHAR_LITERAL | open_regex_literal |
+literal ::= true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL ['f'] | CHAR_LITERAL | open_regex_literal |
             STRING_LITERAL | regex_literal
 
-initializer ::= LBRACE [argument [ (COMMA argument)* ]] RBRACE
+initializer ::= LBRACE [argument [ (COMMA  argument)* ] [COMMA] ] RBRACE
 
 // parse_argument_list
-arguments ::= argument [ (COMMA argument)* ]
+arguments ::= argument  [ (COMMA  argument)* ]
 
 argument ::= ref expression | out expression | [ AT ] IDENTIFIER COLON expression | expression | [ AT ] IDENTIFIER
 
@@ -275,7 +275,7 @@ constructor_declaration ::= [ constructor_declaration_modifiers ] construct bloc
 constructor_declaration_modifiers ::= constructor_declaration_modifier [ (" " constructor_declaration_modifier)* ]
 constructor_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override
 
-destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE LPAREN RPAREN block
+destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE IDENTIFIER LPAREN RPAREN block
 
 class_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] class symbol [ type_arguments ]
                       [ COLON base_types ] LBRACE class_member* RBRACE
@@ -294,9 +294,7 @@ class_member ::= [ attributes ]
                    field_declaration |
                    constant_declaration |
                    constructor_declaration |
-                   destructor_declaration |
-                   preprocessor_statement
-                   )
+                   destructor_declaration)
 
 access_modifier ::= private | protected | internal | public
 
@@ -330,8 +328,7 @@ interface_member ::= [ attributes ]
                        signal_declaration |
                        field_declaration |
                        constant_declaration |
-                       property_declaration |
-                       preprocessor_statement)
+                       property_declaration)
 
 namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE
 
@@ -386,7 +383,7 @@ property_get_accessor ::= 'get' ( SEMICOLON | block )
 
 property_set_accessor ::= 'set' ( SEMICOLON | block )
 
-property_construct_accessor ::= 'construct' ( SEMICOLON | block )
+property_construct_accessor ::= 'construct' ['set'] ( SEMICOLON | block )
 
 property_declaration_modifiers ::= property_declaration_modifier [ (" " property_declaration_modifier)* ]
 property_declaration_modifier ::= class | static | extern | inline | abstract | virtual | override | new
@@ -399,8 +396,6 @@ statement ::= block | SEMICOLON | if_statement | switch_statement | while_statem
               try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement
 
 if_statement ::= if LPAREN expression RPAREN embedded_statement [ else embedded_statement ]
-
-preprocessor_statement ::= POUND_IF expression | POUND_ELIF expression | POUND_ELSE  | POUND_ENDIF
 
 embedded_statement ::= block | embedded_statement_without_block
 
@@ -455,4 +450,5 @@ local_tuple_declaration ::= LPAREN IDENTIFIER [ (COMMA IDENTIFIER)* ] RPAREN EQU
 
 local_variable ::= IDENTIFIER [ inline_array_type ] [ EQUALS expression ]
 
-expression_statement ::= statement_expression SEMICOLON
+expression_statement ::= statement_expression SEMICOLON {pin=2 recoverWhile=expression_recovery}
+private expression_recovery ::= !( SEMICOLON)
