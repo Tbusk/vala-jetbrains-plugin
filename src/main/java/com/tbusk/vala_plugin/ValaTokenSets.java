@@ -1,13 +1,14 @@
 package com.tbusk.vala_plugin;
 
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.tbusk.vala_plugin.psi.ValaTypes;
 
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import static com.tbusk.vala_plugin.psi.ValaTypes.*;
+import static com.tbusk.vala_plugin.psi.ValaTypes.STRING_LITERAL;
 
 public interface ValaTokenSets {
 
@@ -15,7 +16,8 @@ public interface ValaTokenSets {
     TokenSet COMMENTS = TokenSet.create(
             ValaTypes.COMMENT,
             ValaTypes.DOC_COMMENT,
-            ValaTypes.BLOCK_COMMENT
+            ValaTypes.BLOCK_COMMENT,
+            ValaTypes.PREPROCESSOR_DIRECTIVE
     );
 
     TokenSet STRINGS = TokenSet.create(
@@ -58,8 +60,6 @@ public interface ValaTokenSets {
 
             // If, Elif, Else, Endif
             ValaTypes.IF,
-            ValaTypes.ELIF,
-            ValaTypes.ENDIF,
             ValaTypes.ELSE,
 
             // Do, While
@@ -75,8 +75,6 @@ public interface ValaTokenSets {
             ValaTypes.STRUCT,
             ValaTypes.ENUM,
             ValaTypes.INTERFACE,
-            ValaTypes.HASHMAP,
-            ValaTypes.OBJECT,
 
             // Switch, Case, Default, Finally
             ValaTypes.SWITCH,
@@ -94,6 +92,8 @@ public interface ValaTokenSets {
             ValaTypes.VIRTUAL,
             ValaTypes.STATIC,
             ValaTypes.ASYNC,
+            ValaTypes.REF,
+            ValaTypes.OUT,
 
             // Access Modifiers
             ValaTypes.PUBLIC,
@@ -113,137 +113,28 @@ public interface ValaTokenSets {
             ValaTypes.CONTINUE,
             ValaTypes.USING,
             ValaTypes.NAMESPACE,
-            ValaTypes.ASSERT,
             ValaTypes.NEW,
             ValaTypes.THIS,
             ValaTypes.DELETE,
             ValaTypes.IN,
             ValaTypes.YIELD,
             ValaTypes.BASE,
-            ValaTypes.IS,
-            ValaTypes.AS,
-            ValaTypes.TYPEOF,
-            ValaTypes.CCODE,
-            ValaTypes.VERSION,
-            ValaTypes.DBUS,
-            ValaTypes.DELEGATE,
             ValaTypes.SIGNAL,
             ValaTypes.ERRORDOMAIN,
             ValaTypes.REQUIRES,
             ValaTypes.ENSURES,
             ValaTypes.LOCK,
             ValaTypes.WEAK,
-            ValaTypes.EXTERN
+            ValaTypes.EXTERN,
+            ValaTypes.PREPROCESSOR_IF,
+            ValaTypes.PREPROCESSOR_ELIF,
+            ValaTypes.PREPROCESSOR_ELSE,
+            ValaTypes.PREPROCESSOR_ENDIF
     );
 
     Set<String> KEYWORDS_STRINGS = new HashSet<>(
-            List.of("bool",
-                    "int",
-                    "uint",
-                    "long",
-                    "ulong",
-                    "float",
-                    "double",
-                    "string",
-                    "char",
-                    "uchar",
-                    "unichar",
-                    "short",
-                    "ushort",
-                    "uint8",
-                    "uint16",
-                    "uint32",
-                    "uint64",
-                    "int8",
-                    "int16",
-                    "int32",
-                    "int64",
-                    "size_t",
-                    "ssize_t",
-
-                    // Values
-                    "null",
-                    "true",
-                    "false",
-
-                    // If, Elif, Else, Endif
-                    "if",
-                    "elif",
-                    "endif",
-                    "else",
-
-                    // Do, While
-                    "do",
-                    "while",
-
-                    // For, Foreach
-                    "for",
-                    "foreach",
-
-                    // Data Structures
-                    "class",
-                    "struct",
-                    "enum",
-                    "interface",
-                    "HashMap",
-                    "Object",
-
-                    // Switch, Case, Default, Finally
-                    "switch",
-                    "case",
-                    "default",
-                    "finally",
-
-                    // Modifiers
-                    "const",
-                    "construct",
-                    "override",
-                    "unowned",
-                    "owned",
-                    "abstract",
-                    "virtual",
-                    "static",
-
-                    // Access Modifiers
-                    "public",
-                    "private",
-                    "protected",
-                    "internal",
-
-                    // Try, Catch, Throw, Throws
-                    "try",
-                    "catch",
-                    "throw",
-                    "throws",
-
-                    // Misc Keywords
-                    "async",
-                    "return",
-                    "break",
-                    "continue",
-                    "using",
-                    "namespace",
-                    "assert",
-                    "new",
-                    "this",
-                    "delete",
-                    "in",
-                    "yield",
-                    "base",
-                    "is",
-                    "as",
-                    "typeof",
-                    "CCode",
-                    "Version",
-                    "DBus",
-                    "delegate",
-                    "signal",
-                    "errordomain",
-                    "requires",
-                    "ensures",
-                    "lock",
-                    "weak",
-                    "extern"
-            )
+            Arrays.stream(KEYWORDS.getTypes())
+                    .map(IElementType::getDebugName)
+                    .toList()
     );
 }

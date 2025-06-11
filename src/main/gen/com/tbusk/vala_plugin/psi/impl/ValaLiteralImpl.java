@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaItemsImpl extends ASTWrapperPsiElement implements ValaItems {
+public class ValaLiteralImpl extends ASTWrapperPsiElement implements ValaLiteral {
 
-  public ValaItemsImpl(@NotNull ASTNode node) {
+  public ValaLiteralImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitItems(this);
+    visitor.visitLiteral(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class ValaItemsImpl extends ASTWrapperPsiElement implements ValaItems {
 
   @Override
   @Nullable
-  public PsiElement getBlockComment() {
-    return findChildByType(BLOCK_COMMENT);
+  public ValaRegexLiteral getRegexLiteral() {
+    return findChildByClass(ValaRegexLiteral.class);
   }
 
   @Override
@@ -41,44 +41,14 @@ public class ValaItemsImpl extends ASTWrapperPsiElement implements ValaItems {
 
   @Override
   @Nullable
-  public PsiElement getComment() {
-    return findChildByType(COMMENT);
+  public PsiElement getDecimalLiteral() {
+    return findChildByType(DECIMAL_LITERAL);
   }
 
   @Override
   @Nullable
-  public PsiElement getConstant() {
-    return findChildByType(CONSTANT);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getDocComment() {
-    return findChildByType(DOC_COMMENT);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getEmpty() {
-    return findChildByType(EMPTY);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getMethodCall() {
-    return findChildByType(METHOD_CALL);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getNumber() {
-    return findChildByType(NUMBER);
+  public PsiElement getIntegerLiteral() {
+    return findChildByType(INTEGER_LITERAL);
   }
 
   @Override
@@ -89,8 +59,8 @@ public class ValaItemsImpl extends ASTWrapperPsiElement implements ValaItems {
 
   @Override
   @Nullable
-  public PsiElement getWhitespace() {
-    return findChildByType(WHITESPACE);
+  public PsiElement getTripleQuoteString() {
+    return findChildByType(TRIPLE_QUOTE_STRING);
   }
 
 }
