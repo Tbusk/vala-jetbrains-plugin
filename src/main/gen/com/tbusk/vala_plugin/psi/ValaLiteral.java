@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ValaLiteral extends PsiElement {
 
   @Nullable
-  ValaOpenRegexLiteral getOpenRegexLiteral();
-
-  @Nullable
   ValaRegexLiteral getRegexLiteral();
 
   @Nullable
@@ -24,5 +21,8 @@ public interface ValaLiteral extends PsiElement {
 
   @Nullable
   PsiElement getStringLiteral();
+
+  @Nullable
+  PsiElement getTripleQuoteString();
 
 }

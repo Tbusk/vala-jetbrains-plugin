@@ -62,6 +62,7 @@ REGULAR_EXPRESSION=\/([^\\\/]|\\.)*\/
 COMMENT="//"[^\r\n]*
 BLOCK_COMMENT="/*"([^*]|\*[^/])*"\*/"
 DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
+TRIPLE_QUOTE_STRING=\"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
 PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\n")
 
 %%
@@ -74,6 +75,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     {INTEGER_LITERAL}           { return ValaTypes.INTEGER_LITERAL; }
     {DECIMAL_LITERAL}           { return ValaTypes.DECIMAL_LITERAL; }
     {WHITE_SPACE}      { return TokenType.WHITE_SPACE; }
+    {TRIPLE_QUOTE_STRING} { return ValaTypes.TRIPLE_QUOTE_STRING; }
 
     // Misc Keywords
     "return"             { return ValaTypes.RETURN; }
@@ -100,9 +102,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "new" {return ValaTypes.NEW; }
     "async" {return ValaTypes.ASYNC; }
     "this" {return ValaTypes.THIS; }
-    "is" {return ValaTypes.IS; }
     "base" {return ValaTypes.BASE; }
-    "as" {return ValaTypes.AS; }
     "signal" {return ValaTypes.SIGNAL; }
     "errordomain" {return ValaTypes.ERRORDOMAIN; }
     "requires" {return ValaTypes.REQUIRES; }
@@ -206,7 +206,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "]"         { return ValaTypes.RBRACKET; }
     "@"               { return ValaTypes.AT; }
     "?"    { return ValaTypes.QUESTION_MARK; }
-    "_"        { return ValaTypes.UNDERSCORE; }
     "|"        { return ValaTypes.PIPE; }
     "&"        { return ValaTypes.AND; }
     "^"        { return ValaTypes.CARET; }

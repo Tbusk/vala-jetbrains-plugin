@@ -29,12 +29,6 @@ public class ValaLiteralImpl extends ASTWrapperPsiElement implements ValaLiteral
 
   @Override
   @Nullable
-  public ValaOpenRegexLiteral getOpenRegexLiteral() {
-    return findChildByClass(ValaOpenRegexLiteral.class);
-  }
-
-  @Override
-  @Nullable
   public ValaRegexLiteral getRegexLiteral() {
     return findChildByClass(ValaRegexLiteral.class);
   }
@@ -61,6 +55,12 @@ public class ValaLiteralImpl extends ASTWrapperPsiElement implements ValaLiteral
   @Nullable
   public PsiElement getStringLiteral() {
     return findChildByType(STRING_LITERAL);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTripleQuoteString() {
+    return findChildByType(TRIPLE_QUOTE_STRING);
   }
 
 }

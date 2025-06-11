@@ -10,7 +10,7 @@ public interface ValaSimpleName extends PsiElement {
   @Nullable
   ValaTypeArguments getTypeArguments();
 
-  @NotNull
+  @Nullable
   PsiElement getIdentifier();
 
 }

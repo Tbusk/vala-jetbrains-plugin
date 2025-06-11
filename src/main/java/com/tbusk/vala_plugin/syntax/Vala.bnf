@@ -52,7 +52,6 @@
         RBRACKET=']'
         QUESTION_MARK='?'
         AT='@'
-        UNDERSCORE='_'
         GREATER_THAN='>'
         LESS_THAN='<'
         PLUS='+'
@@ -69,9 +68,6 @@
         DOLLAR='$'
         POUND='#'
 
-        AS='as'
-        IS='is'
-
         PREPROCESSOR_IF='#if'
         PREPROCESSOR_ELSE='#else'
         PREPROCESSOR_ENDIF='#endif'
@@ -85,6 +81,7 @@
         DECIMAL_LITERAL='regexp:(-?[0-9]+[.]?[0-9]*)'
         COMMENT='regexp://.*'
         BLOCK_COMMENT='regexp:/[^*]\*+([^/*][^*]*\*+)*/'
+        TRIPLE_QUOTE_STRING='regexp:"""([^"]|"[^"]|""[^"])*"""'
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
         REGULAR_EXPRESSION='regexp:/([^\\/]|\\.)*/'
@@ -145,7 +142,7 @@ and_expression ::= equality_expression [ AND equality_expression ]
 
 equality_expression ::= relational_expression [( ( EQUALS_EQUALS | NOT_EQUALS ) relational_expression)* ]
 
-relational_expression ::= shift_expression [ ((( LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS ) shift_expression ) | ( IS type ) | ( AS type ) )*]
+relational_expression ::= shift_expression [ ((( LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS ) shift_expression ) | ( 'is' type ) | ( 'as' type ) )*]
 
 // parse_type
 type ::= ( void [ (STAR)* ] ) | ( [ dynamic ] [ unowned ] (symbol | primitive_type) [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type* )
@@ -209,8 +206,8 @@ post_increment_expression ::= INCREMENT
 
 post_decrement_expression ::= DECREMENT
 
-literal ::= true | false | null | INTEGER_LITERAL | DECIMAL_LITERAL ['f'] | CHAR_LITERAL | open_regex_literal |
-            STRING_LITERAL | regex_literal
+literal ::= true | false | null | INTEGER_LITERAL ['U'] | DECIMAL_LITERAL ['f' | 'U'] | CHAR_LITERAL |
+            STRING_LITERAL | regex_literal | TRIPLE_QUOTE_STRING
 
 initializer ::= LBRACE [argument [ (COMMA  argument)* ] [COMMA] ] RBRACE
 
@@ -222,8 +219,6 @@ argument ::= ref expression | out expression | [ AT ] IDENTIFIER COLON expressio
 tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
 
 template ::= '@"' [ (expression COMMA)* ] '"'
-
-open_regex_literal ::= FORWARD_SLASH literal
 
 regex_literal ::= REGULAR_EXPRESSION [ m | i | x | o | s ] [member]
 
@@ -249,7 +244,7 @@ member ::= member_part [ (DOT member_part)* ]
 member_part ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach ) [ type_arguments ]
 
 // parse_type_argument_list
-type_arguments ::= LESS_THAN type [ (COMMA type)* ] GREATER_THAN
+type_arguments ::= LESS_THAN [ weak ] type [ (COMMA [ weak ] type)* ] GREATER_THAN
 
 yield_expression ::= yield [ base_access DOT ] member method_call
 
@@ -259,11 +254,11 @@ sizeof_expression ::= sizeof LPAREN type RPAREN
 
 typeof_expression ::= typeof LPAREN type RPAREN
 
-simple_name ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER ) [ type_arguments ]
+simple_name ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | lock ) [ type_arguments ]
 
 lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
 
-lambda_expression_params ::= [ AT ] IDENTIFIER | ( LPAREN [ IDENTIFIER [ (COMMA IDENTIFIER)* ] ] RPAREN )
+lambda_expression_params ::= [ AT ] IDENTIFIER | ( LPAREN [ [ ref ] IDENTIFIER [ (COMMA [ ref ] IDENTIFIER)* ] ] RPAREN )
 
 lambda_expression_body ::= expression | block
 
@@ -362,7 +357,7 @@ signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] sign
 signal_declaration_modifiers ::= signal_declaration_modifier [ (" " signal_declaration_modifier)* ]
 signal_declaration_modifier ::= async | extern | inline | abstract | virtual | override | new
 
-method_declaration ::= [ access_modifier ] [ member_declaration_modifier ] type IDENTIFIER [(DOT IDENTIFIER)*] [ type_parameters ]
+method_declaration ::= [ access_modifier ] [ member_declaration_modifier ] type (IDENTIFIER | lock ) [(DOT IDENTIFIER)*] [ type_parameters ]
                        LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
 
 constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const type (IDENTIFIER) [ inline_array_type ]
@@ -393,7 +388,7 @@ block ::= LBRACE statement* RBRACE
 // parse_statements
 statement ::= block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
               break_statement | continue_statement | return_statement | yield_statement | throw_statement |
-              try_statement | lock_statement | delete_statement | local_variable_declarations | expression_statement
+              try_statement | delete_statement | local_variable_declarations | expression_statement | lock_statement
 
 if_statement ::= if LPAREN expression RPAREN embedded_statement [ else embedded_statement ]
 
@@ -401,8 +396,8 @@ embedded_statement ::= block | embedded_statement_without_block
 
 embedded_statement_without_block ::= SEMICOLON | if_statement | switch_statement | while_statement | for_statement |
                                      foreach_statement | break_statement | continue_statement | return_statement |
-                                     yield_statement | throw_statement | try_statement | lock_statement | delete_statement |
-                                     expression_statement
+                                     yield_statement | throw_statement | try_statement | delete_statement |
+                                     expression_statement | lock_statement
 
 switch_statement ::= switch LPAREN expression RPAREN LBRACE switch_section* RBRACE
 
@@ -420,7 +415,7 @@ for_iterator ::= statement_expression [ (COMMA statement_expression)* ]
 
 statement_expression ::= expression
 
-foreach_statement ::= foreach LPAREN ( var | type ) IDENTIFIER in expression RPAREN embedded_statement
+foreach_statement ::= foreach LPAREN [ unowned ] ( var | type ) IDENTIFIER in expression RPAREN embedded_statement
 
 break_statement ::= break SEMICOLON
 
@@ -442,13 +437,12 @@ lock_statement ::= lock LPAREN expression RPAREN embedded_statement
 
 delete_statement ::= delete expression SEMICOLON
 
-local_variable_declarations ::= [ weak ] ( var | type ) local_variable_declaration [ (COMMA local_variable_declaration)* ]
+local_variable_declarations ::= [ weak | unowned | owned ] ( var | type ) local_variable_declaration [ (COMMA local_variable_declaration)* ]
 
 local_variable_declaration ::= local_tuple_declaration | local_variable
 
 local_tuple_declaration ::= LPAREN IDENTIFIER [ (COMMA IDENTIFIER)* ] RPAREN EQUALS expression
 
-local_variable ::= IDENTIFIER [ inline_array_type ] [ EQUALS expression ]
+local_variable ::= [ AT ] IDENTIFIER [ inline_array_type ] [ EQUALS expression ]
 
-expression_statement ::= statement_expression SEMICOLON {pin=2 recoverWhile=expression_recovery}
-private expression_recovery ::= !( SEMICOLON)
+expression_statement ::= statement_expression SEMICOLON

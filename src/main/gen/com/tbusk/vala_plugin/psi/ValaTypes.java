@@ -94,7 +94,6 @@ public interface ValaTypes {
   IElementType OBJECT_CREATION_EXPRESSION = new ValaElementType("OBJECT_CREATION_EXPRESSION");
   IElementType OBJECT_INITIALIZER = new ValaElementType("OBJECT_INITIALIZER");
   IElementType OBJECT_OR_ARRAY_CREATION_EXPRESSION = new ValaElementType("OBJECT_OR_ARRAY_CREATION_EXPRESSION");
-  IElementType OPEN_REGEX_LITERAL = new ValaElementType("OPEN_REGEX_LITERAL");
   IElementType PARAMETER = new ValaElementType("PARAMETER");
   IElementType PARAMETERS = new ValaElementType("PARAMETERS");
   IElementType POINTER_MEMBER_ACCESS = new ValaElementType("POINTER_MEMBER_ACCESS");
@@ -152,7 +151,6 @@ public interface ValaTypes {
   IElementType AND = new ValaTokenType("&");
   IElementType AND_AND = new ValaTokenType("&&");
   IElementType AND_EQUALS = new ValaTokenType("&=");
-  IElementType AS = new ValaTokenType("as");
   IElementType ASYNC = new ValaTokenType("async");
   IElementType AT = new ValaTokenType("@");
   IElementType BACKSLASH = new ValaTokenType("\\\\");
@@ -215,7 +213,6 @@ public interface ValaTypes {
   IElementType INTEGER_LITERAL = new ValaTokenType("INTEGER_LITERAL");
   IElementType INTERFACE = new ValaTokenType("interface");
   IElementType INTERNAL = new ValaTokenType("internal");
-  IElementType IS = new ValaTokenType("is");
   IElementType LBRACE = new ValaTokenType("{");
   IElementType LBRACKET = new ValaTokenType("[");
   IElementType LESS_THAN = new ValaTokenType("<");
@@ -279,6 +276,7 @@ public interface ValaTypes {
   IElementType THIS = new ValaTokenType("this");
   IElementType THROW = new ValaTokenType("throw");
   IElementType TILDE = new ValaTokenType("~");
+  IElementType TRIPLE_QUOTE_STRING = new ValaTokenType("TRIPLE_QUOTE_STRING");
   IElementType TRUE = new ValaTokenType("true");
   IElementType TRY = new ValaTokenType("try");
   IElementType TYPEOF = new ValaTokenType("typeof");
@@ -289,7 +287,6 @@ public interface ValaTypes {
   IElementType UINT64 = new ValaTokenType("uint64");
   IElementType UINT8 = new ValaTokenType("uint8");
   IElementType ULONG = new ValaTokenType("ulong");
-  IElementType UNDERSCORE = new ValaTokenType("_");
   IElementType UNICHAR = new ValaTokenType("unichar");
   IElementType UNOWNED = new ValaTokenType("unowned");
   IElementType USHORT = new ValaTokenType("ushort");
@@ -563,9 +560,6 @@ public interface ValaTypes {
       }
       else if (type == OBJECT_OR_ARRAY_CREATION_EXPRESSION) {
         return new ValaObjectOrArrayCreationExpressionImpl(node);
-      }
-      else if (type == OPEN_REGEX_LITERAL) {
-        return new ValaOpenRegexLiteralImpl(node);
       }
       else if (type == PARAMETER) {
         return new ValaParameterImpl(node);

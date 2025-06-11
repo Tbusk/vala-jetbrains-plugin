@@ -34,9 +34,9 @@ public class ValaSimpleNameImpl extends ASTWrapperPsiElement implements ValaSimp
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }

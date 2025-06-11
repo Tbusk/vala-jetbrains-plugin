@@ -351,10 +351,6 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitOpenRegexLiteral(@NotNull ValaOpenRegexLiteral o) {
-    visitPsiElement(o);
-  }
-
   public void visitParameter(@NotNull ValaParameter o) {
     visitPsiElement(o);
   }
