@@ -4147,43 +4147,15 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // REGULAR_EXPRESSION [ m | i | x | o | s ] [member]
+  // REGULAR_EXPRESSION
   public static boolean regex_literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "regex_literal")) return false;
     if (!nextTokenIs(b, REGULAR_EXPRESSION)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, REGULAR_EXPRESSION);
-    r = r && regex_literal_1(b, l + 1);
-    r = r && regex_literal_2(b, l + 1);
     exit_section_(b, m, REGEX_LITERAL, r);
     return r;
-  }
-
-  // [ m | i | x | o | s ]
-  private static boolean regex_literal_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "regex_literal_1")) return false;
-    regex_literal_1_0(b, l + 1);
-    return true;
-  }
-
-  // m | i | x | o | s
-  private static boolean regex_literal_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "regex_literal_1_0")) return false;
-    boolean r;
-    r = consumeToken(b, M);
-    if (!r) r = consumeToken(b, I);
-    if (!r) r = consumeToken(b, X);
-    if (!r) r = consumeToken(b, O);
-    if (!r) r = consumeToken(b, S);
-    return r;
-  }
-
-  // [member]
-  private static boolean regex_literal_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "regex_literal_2")) return false;
-    member(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */

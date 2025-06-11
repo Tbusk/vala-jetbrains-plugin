@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaRegexLiteral extends PsiElement {
 
-  @Nullable
-  ValaMember getMember();
-
   @NotNull
   PsiElement getRegularExpression();
 

@@ -85,7 +85,7 @@
         TRIPLE_QUOTE_STRING='regexp:"""([^"]|"[^"]|""[^"])*"""'
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
-        REGULAR_EXPRESSION='regexp:/([^\\/]|\\.)*/'
+        REGULAR_EXPRESSION='regexp:/([()\[\].+^$|\\?_].*/\n? *(\.match | ;))'
         PREPROCESSOR_DIRECTIVE="regexp:(#if | #endif | #elif | #else) .* (\r|\n|\r\n)"
     ]
 }
@@ -221,7 +221,7 @@ tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
 
 template ::= '@"' [ (expression COMMA)* ] '"'
 
-regex_literal ::= REGULAR_EXPRESSION [ m | i | x | o | s ] [member]
+regex_literal ::= REGULAR_EXPRESSION
 
 this_access ::= this
 

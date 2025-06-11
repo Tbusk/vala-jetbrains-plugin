@@ -56,7 +56,8 @@ STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
 DECIMAL_LITERAL=(-?[0-9]+[.]?[0-9]*)
 INTEGER_LITERAL=(-?[0-9]+)
-REGULAR_EXPRESSION=\/([^\\\/]|\\.)*\/
+REGULAR_EXPRESSION=\/([\(\)\[\]\.\+\^\$\|\\\?_].*\/[\n]?[ ]*(\.match | ;))
+
 
 // Comments
 COMMENT="//"[^\r\n]*

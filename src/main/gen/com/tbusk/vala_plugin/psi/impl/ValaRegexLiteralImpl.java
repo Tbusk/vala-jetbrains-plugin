@@ -28,12 +28,6 @@ public class ValaRegexLiteralImpl extends ASTWrapperPsiElement implements ValaRe
   }
 
   @Override
-  @Nullable
-  public ValaMember getMember() {
-    return findChildByClass(ValaMember.class);
-  }
-
-  @Override
   @NotNull
   public PsiElement getRegularExpression() {
     return findNotNullChildByType(REGULAR_EXPRESSION);
