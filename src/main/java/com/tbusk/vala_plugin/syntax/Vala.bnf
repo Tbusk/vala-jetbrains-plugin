@@ -132,13 +132,13 @@ conditional_or_expression ::= conditional_and_expression [ (OR_OR conditional_an
 
 conditional_and_expression ::= in_expression [ (AND_AND in_expression)* ]
 
-in_expression ::= inclusive_or_expression [ in inclusive_or_expression ]
+in_expression ::= inclusive_or_expression [ ( in inclusive_or_expression )* ]
 
-inclusive_or_expression ::= exclusive_or_expression [ PIPE exclusive_or_expression ]
+inclusive_or_expression ::= exclusive_or_expression [ ( PIPE exclusive_or_expression )* ]
 
-exclusive_or_expression ::= and_expression [ CARET and_expression ]
+exclusive_or_expression ::= and_expression [ ( CARET and_expression )* ]
 
-and_expression ::= equality_expression [ AND equality_expression ]
+and_expression ::= equality_expression [ ( AND equality_expression )* ]
 
 equality_expression ::= relational_expression [( ( EQUALS_EQUALS | NOT_EQUALS ) relational_expression)* ]
 
