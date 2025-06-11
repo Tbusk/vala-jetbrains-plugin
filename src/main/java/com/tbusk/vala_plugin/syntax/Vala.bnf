@@ -85,7 +85,7 @@
         TRIPLE_QUOTE_STRING='regexp:"""([^"]|"[^"]|""[^"])*"""'
         DOC_COMMENT='regexp:/[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
-        REGULAR_EXPRESSION='regexp:/([()\[\].+^$|\\?_].*/\n? *(\.match | ;))'
+        REGULAR_EXPRESSION="regexp:/([()\[\].+^$|\\?_{}a-zA-Z0-9@*\-'].*/\n? *([mixos]*\n? *(\.match|;|\.replace_eval|\.replace)))"
         PREPROCESSOR_DIRECTIVE="regexp:(#if | #endif | #elif | #else) .* (\r|\n|\r\n)"
     ]
 }
@@ -171,7 +171,7 @@ primitive_type ::= ( char
                      | size_t
                      | ssize_t
                      | string
-                     | signal )
+                     | signal | ref)
 
 // parse_type can_weak
 type_weak ::= ( void [ STAR ] ) | ( [ dynamic ] [ unowned | weak | owned ] (symbol | primitive_type) [ type_arguments ] [ STAR ] [ QUESTION_MARK ] array_type* )
@@ -207,8 +207,12 @@ post_increment_expression ::= INCREMENT
 
 post_decrement_expression ::= DECREMENT
 
-literal ::= true | false | null | INTEGER_LITERAL ['U'] | DECIMAL_LITERAL ['f' | 'U'] | CHAR_LITERAL |
+literal ::= true | false | null | INTEGER_LITERAL [ integer_literal_suffix ] | DECIMAL_LITERAL [ decimal_literal_suffix ] | CHAR_LITERAL |
             STRING_LITERAL | regex_literal | TRIPLE_QUOTE_STRING
+
+private integer_literal_suffix ::= 'U' | 'UL' | 'LL' | 'ULL' | 'L' | 'u' | 'ul' | 'll' | 'ull' | 'l'
+
+private decimal_literal_suffix ::= 'f' | 'F' | 'd' | 'D'
 
 initializer ::= LBRACE [argument [ (COMMA  argument)* ] [COMMA] ] RBRACE
 
@@ -255,7 +259,7 @@ sizeof_expression ::= sizeof LPAREN type RPAREN
 
 typeof_expression ::= typeof LPAREN type RPAREN
 
-simple_name ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | lock ) [ type_arguments ]
+simple_name ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | lock | [ AT ] ref) [ type_arguments ]
 
 lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
 
@@ -444,6 +448,6 @@ local_variable_declaration ::= local_tuple_declaration | local_variable
 
 local_tuple_declaration ::= LPAREN IDENTIFIER [ (COMMA IDENTIFIER)* ] RPAREN EQUALS expression
 
-local_variable ::= [ AT ] IDENTIFIER [ inline_array_type ] [ EQUALS expression ]
+local_variable ::= [ AT ] (IDENTIFIER | ref) [ inline_array_type ] [ EQUALS expression ]
 
 expression_statement ::= statement_expression SEMICOLON

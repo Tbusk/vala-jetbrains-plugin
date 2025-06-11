@@ -40,9 +40,9 @@ public class ValaLocalVariableImpl extends ASTWrapperPsiElement implements ValaL
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }
