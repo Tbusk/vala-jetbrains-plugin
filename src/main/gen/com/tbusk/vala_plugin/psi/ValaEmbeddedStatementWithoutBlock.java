@@ -29,6 +29,9 @@ public interface ValaEmbeddedStatementWithoutBlock extends PsiElement {
   ValaIfStatement getIfStatement();
 
   @Nullable
+  ValaLocalVariableDeclarations getLocalVariableDeclarations();
+
+  @Nullable
   ValaLockStatement getLockStatement();
 
   @Nullable

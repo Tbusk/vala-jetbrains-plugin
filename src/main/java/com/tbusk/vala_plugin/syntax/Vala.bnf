@@ -242,7 +242,7 @@ array_size ::= expression [ (COMMA expression)* ]
 // parse_member_name
 member ::= member_part [ (DOT member_part)* ]
 
-member_part ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach ) [ type_arguments ]
+member_part ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach | lock ) [ type_arguments ]
 
 // parse_type_argument_list
 type_arguments ::= LESS_THAN [ weak ] type [ (COMMA [ weak ] type)* ] GREATER_THAN
@@ -398,7 +398,7 @@ embedded_statement ::= block | embedded_statement_without_block
 embedded_statement_without_block ::= SEMICOLON | if_statement | switch_statement | while_statement | for_statement |
                                      foreach_statement | break_statement | continue_statement | return_statement |
                                      yield_statement | throw_statement | try_statement | delete_statement |
-                                     expression_statement | lock_statement
+                                     expression_statement | lock_statement | local_variable_declarations
 
 switch_statement ::= switch LPAREN expression RPAREN LBRACE switch_section* RBRACE
 

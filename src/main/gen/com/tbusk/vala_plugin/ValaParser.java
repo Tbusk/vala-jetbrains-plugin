@@ -1386,7 +1386,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // SEMICOLON | if_statement | switch_statement | while_statement | for_statement |
   //                                      foreach_statement | break_statement | continue_statement | return_statement |
   //                                      yield_statement | throw_statement | try_statement | delete_statement |
-  //                                      expression_statement | lock_statement
+  //                                      expression_statement | lock_statement | local_variable_declarations
   public static boolean embedded_statement_without_block(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "embedded_statement_without_block")) return false;
     boolean r;
@@ -1406,6 +1406,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = delete_statement(b, l + 1);
     if (!r) r = expression_statement(b, l + 1);
     if (!r) r = lock_statement(b, l + 1);
+    if (!r) r = local_variable_declarations(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -3112,7 +3113,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach ) [ type_arguments ]
+  // ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach | lock ) [ type_arguments ]
   public static boolean member_part(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_part")) return false;
     boolean r;
@@ -3123,7 +3124,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach
+  // "global::" IDENTIFIER | [ AT ] IDENTIFIER | primitive_type | foreach | lock
   private static boolean member_part_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_part_0")) return false;
     boolean r;
@@ -3132,6 +3133,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = member_part_0_1(b, l + 1);
     if (!r) r = primitive_type(b, l + 1);
     if (!r) r = consumeToken(b, FOREACH);
+    if (!r) r = consumeToken(b, LOCK);
     exit_section_(b, m, null, r);
     return r;
   }

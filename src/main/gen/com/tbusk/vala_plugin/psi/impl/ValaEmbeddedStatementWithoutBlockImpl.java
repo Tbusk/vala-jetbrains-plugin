@@ -71,6 +71,12 @@ public class ValaEmbeddedStatementWithoutBlockImpl extends ASTWrapperPsiElement 
 
   @Override
   @Nullable
+  public ValaLocalVariableDeclarations getLocalVariableDeclarations() {
+    return findChildByClass(ValaLocalVariableDeclarations.class);
+  }
+
+  @Override
+  @Nullable
   public ValaLockStatement getLockStatement() {
     return findChildByClass(ValaLockStatement.class);
   }
