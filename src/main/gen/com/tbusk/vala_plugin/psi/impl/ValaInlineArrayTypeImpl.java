@@ -28,9 +28,9 @@ public class ValaInlineArrayTypeImpl extends ASTWrapperPsiElement implements Val
   }
 
   @Override
-  @NotNull
+  @Nullable
   public PsiElement getIntegerLiteral() {
-    return findNotNullChildByType(INTEGER_LITERAL);
+    return findChildByType(INTEGER_LITERAL);
   }
 
 }

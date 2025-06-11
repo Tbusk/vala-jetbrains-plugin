@@ -47,8 +47,8 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
 
   @Override
   @Nullable
-  public ValaMemberDeclarationModifier getMemberDeclarationModifier() {
-    return findChildByClass(ValaMemberDeclarationModifier.class);
+  public ValaMemberDeclarationModifiers getMemberDeclarationModifiers() {
+    return findChildByClass(ValaMemberDeclarationModifiers.class);
   }
 
   @Override

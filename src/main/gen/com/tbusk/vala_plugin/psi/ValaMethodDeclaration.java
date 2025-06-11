@@ -17,7 +17,7 @@ public interface ValaMethodDeclaration extends PsiElement {
   ValaEnsures getEnsures();
 
   @Nullable
-  ValaMemberDeclarationModifier getMemberDeclarationModifier();
+  ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
 
   @Nullable
   ValaParameters getParameters();

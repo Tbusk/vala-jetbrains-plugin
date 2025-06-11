@@ -151,6 +151,7 @@ public interface ValaTypes {
   IElementType AND = new ValaTokenType("&");
   IElementType AND_AND = new ValaTokenType("&&");
   IElementType AND_EQUALS = new ValaTokenType("&=");
+  IElementType ARROW = new ValaTokenType("->");
   IElementType ASYNC = new ValaTokenType("async");
   IElementType AT = new ValaTokenType("@");
   IElementType BACKSLASH = new ValaTokenType("\\\\");

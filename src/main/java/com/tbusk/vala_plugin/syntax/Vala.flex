@@ -179,6 +179,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "null"       { return ValaTypes.NULL; }
 
     // Characters
+    "->"             { return ValaTypes.ARROW; }
     "++"             { return ValaTypes.INCREMENT; }
     "--"             { return ValaTypes.DECREMENT; }
     "=="            { return ValaTypes.EQUALS_EQUALS; }

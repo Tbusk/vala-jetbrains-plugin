@@ -38,6 +38,7 @@
         SHIFT_LEFT_EQUALS='<<='
         SHIFT_RIGHT_EQUALS='>>='
         DOT_DOT_DOT='...'
+        ARROW='->'
         MODULO='%'
         DOT='.'
         COMMA=','
@@ -198,7 +199,7 @@ primary_expression ::= ( literal | initializer | tuple | template | this_access 
 
 member_access ::= DOT [AT] member
 
-pointer_member_access ::= (STAR member) | (member STAR)
+pointer_member_access ::= ARROW [AT] member
 
 element_access ::= LBRACKET [expression (COLON expression)*] RBRACKET
 
@@ -258,16 +259,16 @@ simple_name ::= ( "global::" IDENTIFIER | [ AT ] IDENTIFIER | lock ) [ type_argu
 
 lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
 
-lambda_expression_params ::= [ AT ] IDENTIFIER | ( LPAREN [ [ ref ] IDENTIFIER [ (COMMA [ ref ] IDENTIFIER)* ] ] RPAREN )
+lambda_expression_params ::= [ AT ] IDENTIFIER | ( LPAREN [ ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref) [ (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))* ] ] RPAREN )
 
 lambda_expression_body ::= expression | block
 
-member_declaration_modifiers ::= member_declaration_modifier [ (" " member_declaration_modifier)* ]
+member_declaration_modifiers ::= member_declaration_modifier [ (member_declaration_modifier)* ]
 member_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override | new
 
 constructor_declaration ::= [ constructor_declaration_modifiers ] construct block
 
-constructor_declaration_modifiers ::= constructor_declaration_modifier [ (" " constructor_declaration_modifier)* ]
+constructor_declaration_modifiers ::= constructor_declaration_modifier [ ( constructor_declaration_modifier )* ]
 constructor_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override
 
 destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE IDENTIFIER LPAREN RPAREN block
@@ -293,7 +294,7 @@ class_member ::= [ attributes ]
 
 access_modifier ::= private | protected | internal | public
 
-type_declaration_modifiers ::= type_declaration_modifier [ (" " type_declaration_modifier)* ]
+type_declaration_modifiers ::= type_declaration_modifier [ ( type_declaration_modifier)* ]
 type_declaration_modifier ::= abstract | extern | static
 
 enum_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] enum symbol
@@ -305,7 +306,7 @@ enumvalue ::= [ attributes ] (IDENTIFIER) [ EQUALS expression ]
 errordomain_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] errordomain symbol
                             LBRACE errorcodes [ SEMICOLON method_declaration* ] RBRACE
 
-errorcodes ::= errorcode [ (COMMA errorcode)* ]
+errorcodes ::= errorcode [ (COMMA errorcode)* [ COMMA ] ]
 errorcode ::= [ attributes ] IDENTIFIER [ EQUALS expression ]
 
 interface_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] interface symbol [ type_parameters ]
@@ -348,22 +349,22 @@ ensures ::= 'ensures' LPAREN expression RPAREN [ ensures ]
 delegate_declaration ::= [ access_modifier ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
                          LPAREN [ parameters ] RPAREN [ throws ] SEMICOLON
 
-delegate_declaration_modifiers ::= delegate_declaration_modifier [ (" " delegate_declaration_modifier)* ]
+delegate_declaration_modifiers ::= delegate_declaration_modifier [ ( delegate_declaration_modifier)* ]
 delegate_declaration_modifier ::= async | class | extern | inline | abstract | virtual | override
 
 signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal type IDENTIFIER
                        LPAREN [ parameters ] RPAREN ( SEMICOLON | block )
 
-signal_declaration_modifiers ::= signal_declaration_modifier [ (" " signal_declaration_modifier)* ]
+signal_declaration_modifiers ::= signal_declaration_modifier [ (signal_declaration_modifier)* ]
 signal_declaration_modifier ::= async | extern | inline | abstract | virtual | override | new
 
-method_declaration ::= [ access_modifier ] [ member_declaration_modifier ] type (IDENTIFIER | lock ) [(DOT IDENTIFIER)*] [ type_parameters ]
+method_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] type (IDENTIFIER | lock ) [(DOT IDENTIFIER)*] [ type_parameters ]
                        LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
 
 constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const type (IDENTIFIER) [ inline_array_type ]
                          [ EQUALS expression ] SEMICOLON
 
-inline_array_type ::= LBRACKET INTEGER_LITERAL RBRACKET
+inline_array_type ::= LBRACKET [INTEGER_LITERAL] RBRACKET
 
 field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] type_weak IDENTIFIER [ EQUALS expression ] SEMICOLON
 
@@ -380,7 +381,7 @@ property_set_accessor ::= 'set' ( SEMICOLON | block )
 
 property_construct_accessor ::= 'construct' ['set'] ( SEMICOLON | block )
 
-property_declaration_modifiers ::= property_declaration_modifier [ (" " property_declaration_modifier)* ]
+property_declaration_modifiers ::= property_declaration_modifier [ (property_declaration_modifier)* ]
 property_declaration_modifier ::= class | static | extern | inline | abstract | virtual | override | new
 
 block ::= LBRACE statement* RBRACE

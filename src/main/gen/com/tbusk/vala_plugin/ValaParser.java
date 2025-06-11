@@ -1029,7 +1029,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // constructor_declaration_modifier [ (" " constructor_declaration_modifier)* ]
+  // constructor_declaration_modifier [ ( constructor_declaration_modifier )* ]
   public static boolean constructor_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constructor_declaration_modifiers")) return false;
     boolean r;
@@ -1040,14 +1040,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (" " constructor_declaration_modifier)* ]
+  // [ ( constructor_declaration_modifier )* ]
   private static boolean constructor_declaration_modifiers_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constructor_declaration_modifiers_1")) return false;
     constructor_declaration_modifiers_1_0(b, l + 1);
     return true;
   }
 
-  // (" " constructor_declaration_modifier)*
+  // ( constructor_declaration_modifier )*
   private static boolean constructor_declaration_modifiers_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constructor_declaration_modifiers_1_0")) return false;
     while (true) {
@@ -1058,13 +1058,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // " " constructor_declaration_modifier
+  // ( constructor_declaration_modifier )
   private static boolean constructor_declaration_modifiers_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constructor_declaration_modifiers_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, " ");
-    r = r && constructor_declaration_modifier(b, l + 1);
+    r = constructor_declaration_modifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1228,7 +1227,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // delegate_declaration_modifier [ (" " delegate_declaration_modifier)* ]
+  // delegate_declaration_modifier [ ( delegate_declaration_modifier)* ]
   public static boolean delegate_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_modifiers")) return false;
     boolean r;
@@ -1239,14 +1238,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (" " delegate_declaration_modifier)* ]
+  // [ ( delegate_declaration_modifier)* ]
   private static boolean delegate_declaration_modifiers_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_modifiers_1")) return false;
     delegate_declaration_modifiers_1_0(b, l + 1);
     return true;
   }
 
-  // (" " delegate_declaration_modifier)*
+  // ( delegate_declaration_modifier)*
   private static boolean delegate_declaration_modifiers_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_modifiers_1_0")) return false;
     while (true) {
@@ -1257,13 +1256,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // " " delegate_declaration_modifier
+  // ( delegate_declaration_modifier)
   private static boolean delegate_declaration_modifiers_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_modifiers_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, " ");
-    r = r && delegate_declaration_modifier(b, l + 1);
+    r = delegate_declaration_modifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1691,7 +1689,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // errorcode [ (COMMA errorcode)* ]
+  // errorcode [ (COMMA errorcode)* [ COMMA ] ]
   public static boolean errorcodes(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "errorcodes")) return false;
     if (!nextTokenIs(b, "<errorcodes>", IDENTIFIER, LBRACKET)) return false;
@@ -1703,33 +1701,51 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (COMMA errorcode)* ]
+  // [ (COMMA errorcode)* [ COMMA ] ]
   private static boolean errorcodes_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "errorcodes_1")) return false;
     errorcodes_1_0(b, l + 1);
     return true;
   }
 
-  // (COMMA errorcode)*
+  // (COMMA errorcode)* [ COMMA ]
   private static boolean errorcodes_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "errorcodes_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = errorcodes_1_0_0(b, l + 1);
+    r = r && errorcodes_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA errorcode)*
+  private static boolean errorcodes_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "errorcodes_1_0_0")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!errorcodes_1_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "errorcodes_1_0", c)) break;
+      if (!errorcodes_1_0_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "errorcodes_1_0_0", c)) break;
     }
     return true;
   }
 
   // COMMA errorcode
-  private static boolean errorcodes_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "errorcodes_1_0_0")) return false;
+  private static boolean errorcodes_1_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "errorcodes_1_0_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
     r = r && errorcode(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // [ COMMA ]
+  private static boolean errorcodes_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "errorcodes_1_0_1")) return false;
+    consumeToken(b, COMMA);
+    return true;
   }
 
   /* ********************************************************** */
@@ -2302,15 +2318,24 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACKET INTEGER_LITERAL RBRACKET
+  // LBRACKET [INTEGER_LITERAL] RBRACKET
   public static boolean inline_array_type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "inline_array_type")) return false;
     if (!nextTokenIs(b, LBRACKET)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, LBRACKET, INTEGER_LITERAL, RBRACKET);
+    r = consumeToken(b, LBRACKET);
+    r = r && inline_array_type_1(b, l + 1);
+    r = r && consumeToken(b, RBRACKET);
     exit_section_(b, m, INLINE_ARRAY_TYPE, r);
     return r;
+  }
+
+  // [INTEGER_LITERAL]
+  private static boolean inline_array_type_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "inline_array_type_1")) return false;
+    consumeToken(b, INTEGER_LITERAL);
+    return true;
   }
 
   /* ********************************************************** */
@@ -2503,7 +2528,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ AT ] IDENTIFIER | ( LPAREN [ [ ref ] IDENTIFIER [ (COMMA [ ref ] IDENTIFIER)* ] ] RPAREN )
+  // [ AT ] IDENTIFIER | ( LPAREN [ ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref) [ (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))* ] ] RPAREN )
   public static boolean lambda_expression_params(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambda_expression_params")) return false;
     boolean r;
@@ -2532,7 +2557,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // LPAREN [ [ ref ] IDENTIFIER [ (COMMA [ ref ] IDENTIFIER)* ] ] RPAREN
+  // LPAREN [ ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref) [ (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))* ] ] RPAREN
   private static boolean lambda_expression_params_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambda_expression_params_1")) return false;
     boolean r;
@@ -2544,66 +2569,160 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ [ ref ] IDENTIFIER [ (COMMA [ ref ] IDENTIFIER)* ] ]
+  // [ ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref) [ (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))* ] ]
   private static boolean lambda_expression_params_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambda_expression_params_1_1")) return false;
     lambda_expression_params_1_1_0(b, l + 1);
     return true;
   }
 
-  // [ ref ] IDENTIFIER [ (COMMA [ ref ] IDENTIFIER)* ]
+  // ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref) [ (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))* ]
   private static boolean lambda_expression_params_1_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = lambda_expression_params_1_1_0_0(b, l + 1);
+    r = r && lambda_expression_params_1_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ ref ] [ AT ] IDENTIFIER | [ AT ] ref
+  private static boolean lambda_expression_params_1_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_params_1_1_0_0_0(b, l + 1);
+    if (!r) r = lambda_expression_params_1_1_0_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ ref ] [ AT ] IDENTIFIER
+  private static boolean lambda_expression_params_1_1_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_params_1_1_0_0_0_0(b, l + 1);
+    r = r && lambda_expression_params_1_1_0_0_0_1(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
-    r = r && lambda_expression_params_1_1_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [ ref ]
-  private static boolean lambda_expression_params_1_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0")) return false;
+  private static boolean lambda_expression_params_1_1_0_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_0_0")) return false;
     consumeToken(b, REF);
     return true;
   }
 
-  // [ (COMMA [ ref ] IDENTIFIER)* ]
-  private static boolean lambda_expression_params_1_1_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_2")) return false;
-    lambda_expression_params_1_1_0_2_0(b, l + 1);
+  // [ AT ]
+  private static boolean lambda_expression_params_1_1_0_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_0_1")) return false;
+    consumeToken(b, AT);
     return true;
   }
 
-  // (COMMA [ ref ] IDENTIFIER)*
-  private static boolean lambda_expression_params_1_1_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_2_0")) return false;
+  // [ AT ] ref
+  private static boolean lambda_expression_params_1_1_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_params_1_1_0_0_1_0(b, l + 1);
+    r = r && consumeToken(b, REF);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ AT ]
+  private static boolean lambda_expression_params_1_1_0_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_1_0")) return false;
+    consumeToken(b, AT);
+    return true;
+  }
+
+  // [ (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))* ]
+  private static boolean lambda_expression_params_1_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1")) return false;
+    lambda_expression_params_1_1_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // (COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref))*
+  private static boolean lambda_expression_params_1_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!lambda_expression_params_1_1_0_2_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "lambda_expression_params_1_1_0_2_0", c)) break;
+      if (!lambda_expression_params_1_1_0_1_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "lambda_expression_params_1_1_0_1_0", c)) break;
     }
     return true;
   }
 
-  // COMMA [ ref ] IDENTIFIER
-  private static boolean lambda_expression_params_1_1_0_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_2_0_0")) return false;
+  // COMMA ([ ref ] [ AT ] IDENTIFIER | [ AT ] ref)
+  private static boolean lambda_expression_params_1_1_0_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
-    r = r && lambda_expression_params_1_1_0_2_0_0_1(b, l + 1);
+    r = r && lambda_expression_params_1_1_0_1_0_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ ref ] [ AT ] IDENTIFIER | [ AT ] ref
+  private static boolean lambda_expression_params_1_1_0_1_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_params_1_1_0_1_0_0_1_0(b, l + 1);
+    if (!r) r = lambda_expression_params_1_1_0_1_0_0_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ ref ] [ AT ] IDENTIFIER
+  private static boolean lambda_expression_params_1_1_0_1_0_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_params_1_1_0_1_0_0_1_0_0(b, l + 1);
+    r = r && lambda_expression_params_1_1_0_1_0_0_1_0_1(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [ ref ]
-  private static boolean lambda_expression_params_1_1_0_2_0_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_2_0_0_1")) return false;
+  private static boolean lambda_expression_params_1_1_0_1_0_0_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_0_0")) return false;
     consumeToken(b, REF);
+    return true;
+  }
+
+  // [ AT ]
+  private static boolean lambda_expression_params_1_1_0_1_0_0_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_0_1")) return false;
+    consumeToken(b, AT);
+    return true;
+  }
+
+  // [ AT ] ref
+  private static boolean lambda_expression_params_1_1_0_1_0_0_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_params_1_1_0_1_0_0_1_1_0(b, l + 1);
+    r = r && consumeToken(b, REF);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ AT ]
+  private static boolean lambda_expression_params_1_1_0_1_0_0_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_1_0")) return false;
+    consumeToken(b, AT);
     return true;
   }
 
@@ -2940,7 +3059,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // member_declaration_modifier [ (" " member_declaration_modifier)* ]
+  // member_declaration_modifier [ (member_declaration_modifier)* ]
   public static boolean member_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_declaration_modifiers")) return false;
     boolean r;
@@ -2951,14 +3070,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (" " member_declaration_modifier)* ]
+  // [ (member_declaration_modifier)* ]
   private static boolean member_declaration_modifiers_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_declaration_modifiers_1")) return false;
     member_declaration_modifiers_1_0(b, l + 1);
     return true;
   }
 
-  // (" " member_declaration_modifier)*
+  // (member_declaration_modifier)*
   private static boolean member_declaration_modifiers_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_declaration_modifiers_1_0")) return false;
     while (true) {
@@ -2969,13 +3088,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // " " member_declaration_modifier
+  // (member_declaration_modifier)
   private static boolean member_declaration_modifiers_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_declaration_modifiers_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, " ");
-    r = r && member_declaration_modifier(b, l + 1);
+    r = member_declaration_modifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -3084,7 +3202,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ access_modifier ] [ member_declaration_modifier ] type (IDENTIFIER | lock ) [(DOT IDENTIFIER)*] [ type_parameters ]
+  // [ access_modifier ] [ member_declaration_modifiers ] type (IDENTIFIER | lock ) [(DOT IDENTIFIER)*] [ type_parameters ]
   //                        LPAREN [ parameters ] RPAREN [ throws ] [ requires ] [ ensures ] ( SEMICOLON | block )
   public static boolean method_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method_declaration")) return false;
@@ -3114,10 +3232,10 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ member_declaration_modifier ]
+  // [ member_declaration_modifiers ]
   private static boolean method_declaration_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "method_declaration_1")) return false;
-    member_declaration_modifier(b, l + 1);
+    member_declaration_modifiers(b, l + 1);
     return true;
   }
 
@@ -3605,37 +3723,24 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (STAR member) | (member STAR)
+  // ARROW [AT] member
   public static boolean pointer_member_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "pointer_member_access")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, POINTER_MEMBER_ACCESS, "<pointer member access>");
-    r = pointer_member_access_0(b, l + 1);
-    if (!r) r = pointer_member_access_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // STAR member
-  private static boolean pointer_member_access_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "pointer_member_access_0")) return false;
+    if (!nextTokenIs(b, ARROW)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, STAR);
+    r = consumeToken(b, ARROW);
+    r = r && pointer_member_access_1(b, l + 1);
     r = r && member(b, l + 1);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, POINTER_MEMBER_ACCESS, r);
     return r;
   }
 
-  // member STAR
+  // [AT]
   private static boolean pointer_member_access_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "pointer_member_access_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = member(b, l + 1);
-    r = r && consumeToken(b, STAR);
-    exit_section_(b, m, null, r);
-    return r;
+    consumeToken(b, AT);
+    return true;
   }
 
   /* ********************************************************** */
@@ -3934,7 +4039,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // property_declaration_modifier [ (" " property_declaration_modifier)* ]
+  // property_declaration_modifier [ (property_declaration_modifier)* ]
   public static boolean property_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_declaration_modifiers")) return false;
     boolean r;
@@ -3945,14 +4050,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (" " property_declaration_modifier)* ]
+  // [ (property_declaration_modifier)* ]
   private static boolean property_declaration_modifiers_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_declaration_modifiers_1")) return false;
     property_declaration_modifiers_1_0(b, l + 1);
     return true;
   }
 
-  // (" " property_declaration_modifier)*
+  // (property_declaration_modifier)*
   private static boolean property_declaration_modifiers_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_declaration_modifiers_1_0")) return false;
     while (true) {
@@ -3963,13 +4068,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // " " property_declaration_modifier
+  // (property_declaration_modifier)
   private static boolean property_declaration_modifiers_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_declaration_modifiers_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, " ");
-    r = r && property_declaration_modifier(b, l + 1);
+    r = property_declaration_modifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4326,7 +4430,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // signal_declaration_modifier [ (" " signal_declaration_modifier)* ]
+  // signal_declaration_modifier [ (signal_declaration_modifier)* ]
   public static boolean signal_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "signal_declaration_modifiers")) return false;
     boolean r;
@@ -4337,14 +4441,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (" " signal_declaration_modifier)* ]
+  // [ (signal_declaration_modifier)* ]
   private static boolean signal_declaration_modifiers_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "signal_declaration_modifiers_1")) return false;
     signal_declaration_modifiers_1_0(b, l + 1);
     return true;
   }
 
-  // (" " signal_declaration_modifier)*
+  // (signal_declaration_modifier)*
   private static boolean signal_declaration_modifiers_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "signal_declaration_modifiers_1_0")) return false;
     while (true) {
@@ -4355,13 +4459,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // " " signal_declaration_modifier
+  // (signal_declaration_modifier)
   private static boolean signal_declaration_modifiers_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "signal_declaration_modifiers_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, " ");
-    r = r && signal_declaration_modifier(b, l + 1);
+    r = signal_declaration_modifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -5108,7 +5211,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // type_declaration_modifier [ (" " type_declaration_modifier)* ]
+  // type_declaration_modifier [ ( type_declaration_modifier)* ]
   public static boolean type_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_declaration_modifiers")) return false;
     boolean r;
@@ -5119,14 +5222,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ (" " type_declaration_modifier)* ]
+  // [ ( type_declaration_modifier)* ]
   private static boolean type_declaration_modifiers_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_declaration_modifiers_1")) return false;
     type_declaration_modifiers_1_0(b, l + 1);
     return true;
   }
 
-  // (" " type_declaration_modifier)*
+  // ( type_declaration_modifier)*
   private static boolean type_declaration_modifiers_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_declaration_modifiers_1_0")) return false;
     while (true) {
@@ -5137,13 +5240,12 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // " " type_declaration_modifier
+  // ( type_declaration_modifier)
   private static boolean type_declaration_modifiers_1_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_declaration_modifiers_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, " ");
-    r = r && type_declaration_modifier(b, l + 1);
+    r = type_declaration_modifier(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
