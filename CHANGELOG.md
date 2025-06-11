@@ -11,6 +11,7 @@
 - Adding single, double quotation, and backtick escape functionality.
 - Updated plugin logo and added a different dark mode icon.
 - Updated source file icon to be more consistent with the JetBrains theme.
+- Implemented robust parser that can handle majority of Vala syntax.
 
 ## [1.1.1-ALPHA]
 ### What's Changed
