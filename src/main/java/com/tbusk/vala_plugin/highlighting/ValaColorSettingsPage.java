@@ -46,7 +46,7 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Local variable", ValaSyntaxHighlighter.LOCAL_VARIABLE_DECLARATION),
             new AttributesDescriptor("Global variable", ValaSyntaxHighlighter.GLOBAL_VARIABLE_DECLARATION),
             new AttributesDescriptor("Constant variable", ValaSyntaxHighlighter.CONSTANT_VARIABLE_DECLARATION),
-            new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL)
+            new AttributesDescriptor("Method declaration", ValaSyntaxHighlighter.METHOD_DECLARATION)
     };
 
     /**

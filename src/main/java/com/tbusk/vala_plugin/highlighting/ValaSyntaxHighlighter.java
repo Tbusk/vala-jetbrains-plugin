@@ -40,7 +40,8 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey GLOBAL_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_GLOBAL_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE);
     public static final TextAttributesKey CONSTANT_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.CONSTANT);
 
-    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.CONSTANT);
+    public static final TextAttributesKey METHOD_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_METHOD_DECLARATION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION);
+
 
     public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("VALA_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
 

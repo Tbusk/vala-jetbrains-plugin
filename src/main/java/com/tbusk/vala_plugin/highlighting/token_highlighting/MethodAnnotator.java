@@ -5,73 +5,31 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import com.tbusk.vala_plugin.highlighting.ValaAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighter;
-import com.tbusk.vala_plugin.psi.*;
+import com.tbusk.vala_plugin.psi.ValaMethodDeclaration;
+import com.tbusk.vala_plugin.psi.ValaType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class MethodAnnotator implements TokenHighlighter {
 
     @Override
     public void highlightToken(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
 
-        if (!(psiElement instanceof ValaMethodCall methodCall)) {
+        if (!(psiElement instanceof ValaMethodDeclaration methodDeclaration)) {
             return;
         }
 
-        PsiElement element = methodCall.getPrevSibling();
+        ValaType type = methodDeclaration.getType();
 
-        if (element == null) {
-            return;
-        }
+        PsiElement identifier = type.getNextSibling();
 
-        element = element.getPrevSibling();
+        if (identifier == null) return;
 
-        if (element == null) {
-            return;
-        }
+        ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.METHOD_DECLARATION);
 
-        if (element instanceof ValaSimpleName simpleName) {
-            PsiElement identifier = simpleName.getIdentifier();
-
-            if (identifier == null) {
-                return;
-            }
-
-            System.out.println("Method call identifier: " + identifier.getText());
-
-            ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.METHOD_CALL);
-
-            annotationHolder.newAnnotation(HighlightSeverity.INFORMATION, "")
+        annotationHolder.newAnnotation(HighlightSeverity.INFORMATION, "")
                     .range(identifier.getTextRange())
-                    .textAttributes(ValaSyntaxHighlighter.METHOD_CALL)
+                .textAttributes(ValaSyntaxHighlighter.METHOD_DECLARATION)
                     .create();
-        }
-
-        if (element instanceof ValaMemberAccess memberAccess) {
-            ValaMember member = memberAccess.getMember();
-
-            List<ValaMemberPart> memberParts = member.getMemberPartList();
-
-            if (memberParts.isEmpty()) {
-                return;
-            }
-
-            ValaMemberPart lastMemberPart = memberParts.getLast();
-
-            PsiElement identifier = lastMemberPart.getIdentifier();
-
-            if (identifier == null) {
-                return;
-            }
-
-            ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.METHOD_CALL);
-
-            annotationHolder.newAnnotation(HighlightSeverity.INFORMATION, "")
-                    .range(identifier.getTextRange())
-                    .textAttributes(ValaSyntaxHighlighter.METHOD_CALL)
-                    .create();
-        }
 
     }
 }
