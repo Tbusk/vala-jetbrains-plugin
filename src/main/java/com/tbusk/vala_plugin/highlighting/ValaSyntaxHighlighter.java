@@ -36,10 +36,13 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey COMMA = TextAttributesKey.createTextAttributesKey("VALA_COMMA", DefaultLanguageHighlighterColors.COMMA);
     public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("VALA_DOT", DefaultLanguageHighlighterColors.DOT);
     public static final TextAttributesKey PARENTHESES = TextAttributesKey.createTextAttributesKey("VALA_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
+    public static final TextAttributesKey LOCAL_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_LOCAL_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
+    public static final TextAttributesKey GLOBAL_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_GLOBAL_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE);
+    public static final TextAttributesKey CONSTANT_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.CONSTANT);
+
+    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.CONSTANT);
 
     public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("VALA_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-    public static final TextAttributesKey CONSTANT = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
-    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.STATIC_FIELD);
 
     // Text attributes key arrays used to highlight tokens of specific types.
     private static final TextAttributesKey[] LINE_COMMENT_KEYS = new TextAttributesKey[]{LINE_COMMENT};
@@ -50,8 +53,6 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] KEYWORD_KEYS = new TextAttributesKey[]{KEYWORD};
     private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
     private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
-    private static final TextAttributesKey[] CONSTANT_KEYS = new TextAttributesKey[]{CONSTANT};
-    private static final TextAttributesKey[] METHOD_CALL_KEYS = new TextAttributesKey[]{METHOD_CALL};
     private static final TextAttributesKey[] SEMICOLON_KEYS = new TextAttributesKey[]{SEMICOLON};
     private static final TextAttributesKey[] BRACKETS_KEYS = new TextAttributesKey[]{BRACKETS};
     private static final TextAttributesKey[] BRACES_KEYS = new TextAttributesKey[]{BRACES};

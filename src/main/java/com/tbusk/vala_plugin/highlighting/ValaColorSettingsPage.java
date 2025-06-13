@@ -37,14 +37,16 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Keyword", ValaSyntaxHighlighter.KEYWORD),
             new AttributesDescriptor("String", ValaSyntaxHighlighter.STRING),
             new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER),
-            new AttributesDescriptor("Constant", ValaSyntaxHighlighter.CONSTANT),
-            new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL),
             new AttributesDescriptor("Semicolon", ValaSyntaxHighlighter.SEMICOLON),
             new AttributesDescriptor("Brackets", ValaSyntaxHighlighter.BRACKETS),
             new AttributesDescriptor("Braces", ValaSyntaxHighlighter.BRACES),
             new AttributesDescriptor("Comma", ValaSyntaxHighlighter.COMMA),
             new AttributesDescriptor("Dot", ValaSyntaxHighlighter.DOT),
             new AttributesDescriptor("Parentheses", ValaSyntaxHighlighter.PARENTHESES),
+            new AttributesDescriptor("Local variable", ValaSyntaxHighlighter.LOCAL_VARIABLE_DECLARATION),
+            new AttributesDescriptor("Global variable", ValaSyntaxHighlighter.GLOBAL_VARIABLE_DECLARATION),
+            new AttributesDescriptor("Constant variable", ValaSyntaxHighlighter.CONSTANT_VARIABLE_DECLARATION),
+            new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL)
     };
 
     /**
