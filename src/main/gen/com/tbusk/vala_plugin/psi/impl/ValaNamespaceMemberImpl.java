@@ -59,12 +59,6 @@ public class ValaNamespaceMemberImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @Nullable
-  public ValaFieldDeclaration getFieldDeclaration() {
-    return findChildByClass(ValaFieldDeclaration.class);
-  }
-
-  @Override
-  @Nullable
   public ValaInterfaceDeclaration getInterfaceDeclaration() {
     return findChildByClass(ValaInterfaceDeclaration.class);
   }
