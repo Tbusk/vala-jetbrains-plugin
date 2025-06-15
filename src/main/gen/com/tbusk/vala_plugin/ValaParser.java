@@ -3450,7 +3450,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                        enum_declaration |
   //                        errordomain_declaration |
   //                        method_declaration |
-  //                        field_declaration |
   //                        constant_declaration)
   public static boolean namespace_member(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "namespace_member")) return false;
@@ -3476,7 +3475,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                        enum_declaration |
   //                        errordomain_declaration |
   //                        method_declaration |
-  //                        field_declaration |
   //                        constant_declaration
   private static boolean namespace_member_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "namespace_member_1")) return false;
@@ -3488,7 +3486,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = enum_declaration(b, l + 1);
     if (!r) r = errordomain_declaration(b, l + 1);
     if (!r) r = method_declaration(b, l + 1);
-    if (!r) r = field_declaration(b, l + 1);
     if (!r) r = constant_declaration(b, l + 1);
     return r;
   }
@@ -4569,7 +4566,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
   //               break_statement | continue_statement | return_statement | yield_statement | throw_statement |
-  //               try_statement | delete_statement | local_variable_declarations | expression_statement | lock_statement
+  //               try_statement | delete_statement | local_variable_declarations | expression_statement | lock_statement | constant_declaration
   public static boolean statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "statement")) return false;
     boolean r;
@@ -4592,6 +4589,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = local_variable_declarations(b, l + 1);
     if (!r) r = expression_statement(b, l + 1);
     if (!r) r = lock_statement(b, l + 1);
+    if (!r) r = constant_declaration(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

@@ -23,9 +23,6 @@ public interface ValaNamespaceMember extends PsiElement {
   ValaErrordomainDeclaration getErrordomainDeclaration();
 
   @Nullable
-  ValaFieldDeclaration getFieldDeclaration();
-
-  @Nullable
   ValaInterfaceDeclaration getInterfaceDeclaration();
 
   @Nullable

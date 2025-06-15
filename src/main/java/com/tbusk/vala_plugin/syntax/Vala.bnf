@@ -392,7 +392,7 @@ block ::= LBRACE statement* RBRACE
 // parse_statements
 statement ::= block | SEMICOLON | if_statement | switch_statement | while_statement | do_statement | for_statement | foreach_statement |
               break_statement | continue_statement | return_statement | yield_statement | throw_statement |
-              try_statement | delete_statement | local_variable_declarations | expression_statement | lock_statement
+              try_statement | delete_statement | local_variable_declarations | expression_statement | lock_statement | constant_declaration
 
 if_statement ::= if LPAREN expression RPAREN embedded_statement [ else embedded_statement ]
 
