@@ -37,11 +37,14 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("VALA_DOT", DefaultLanguageHighlighterColors.DOT);
     public static final TextAttributesKey PARENTHESES = TextAttributesKey.createTextAttributesKey("VALA_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
     public static final TextAttributesKey LOCAL_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_LOCAL_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
+    public static final TextAttributesKey LOCAL_VARIABLE_ASSIGNMENT = TextAttributesKey.createTextAttributesKey("VALA_LOCAL_VARIABLE_ASSIGNMENT", DefaultLanguageHighlighterColors.REASSIGNED_LOCAL_VARIABLE);
     public static final TextAttributesKey GLOBAL_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_GLOBAL_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.GLOBAL_VARIABLE);
     public static final TextAttributesKey CONSTANT_VARIABLE_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT_VARIABLE_DECLARATION", DefaultLanguageHighlighterColors.CONSTANT);
+    public static final TextAttributesKey CLASS_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_CLASS_DECLARATION", DefaultLanguageHighlighterColors.CLASS_NAME);
+    public static final TextAttributesKey CLASS_REFERENCE = TextAttributesKey.createTextAttributesKey("VALA_CLASS_REFERENCE", DefaultLanguageHighlighterColors.CLASS_REFERENCE);
 
     public static final TextAttributesKey METHOD_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_METHOD_DECLARATION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION);
-
+    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL);
 
     public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("VALA_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
 

@@ -5,30 +5,24 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import com.tbusk.vala_plugin.highlighting.ValaAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighter;
-import com.tbusk.vala_plugin.psi.ValaLocalVariable;
+import com.tbusk.vala_plugin.psi.ValaClassDeclaration;
 import org.jetbrains.annotations.NotNull;
 
-public class LocalVariableAnnotator implements TokenHighlighter {
+public class ClassAnnotator implements TokenHighlighter {
 
     @Override
     public void highlightToken(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-
-        if (!(psiElement instanceof ValaLocalVariable localVariable)) {
+        if (!(psiElement instanceof ValaClassDeclaration classDeclaration)) {
             return;
         }
 
-        PsiElement identifier = localVariable.getIdentifier();
+        PsiElement identifier = classDeclaration.getSymbol();
 
-        if (identifier == null) {
-            return;
-        }
-
-        ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.LOCAL_VARIABLE_ASSIGNMENT);
+        ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.CLASS_REFERENCE);
 
         annotationHolder.newAnnotation(HighlightSeverity.INFORMATION, "")
                 .range(identifier.getTextRange())
-                .textAttributes(ValaSyntaxHighlighter.LOCAL_VARIABLE_DECLARATION)
+                .textAttributes(ValaSyntaxHighlighter.CLASS_DECLARATION)
                 .create();
     }
-
 }

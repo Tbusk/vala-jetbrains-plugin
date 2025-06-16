@@ -19,7 +19,8 @@ public class ValaAnnotator implements Annotator {
                     "ValaFieldDeclarationImpl", new GlobalVariableAnnotator(),
                     "ValaSimpleNameImpl", new ExistingIdentifierAnnotator(),
                     "ValaConstantDeclarationImpl", new ConstantVariableAnnotator(),
-                    "ValaMethodDeclarationImpl", new MethodAnnotator()
+                    "ValaMethodDeclarationImpl", new MethodAnnotator(),
+                    "ValaClassDeclarationImpl", new ClassAnnotator()
             ));
 
     @Override

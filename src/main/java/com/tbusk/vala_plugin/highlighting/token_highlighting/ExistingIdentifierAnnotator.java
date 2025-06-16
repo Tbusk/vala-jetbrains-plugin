@@ -32,3 +32,4 @@ public class ExistingIdentifierAnnotator implements TokenHighlighter {
         }
     }
 }
+

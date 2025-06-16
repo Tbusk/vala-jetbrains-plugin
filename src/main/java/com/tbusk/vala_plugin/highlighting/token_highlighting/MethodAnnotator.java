@@ -20,11 +20,10 @@ public class MethodAnnotator implements TokenHighlighter {
 
         ValaType type = methodDeclaration.getType();
 
-        PsiElement identifier = type.getNextSibling();
+        // First sibling is whitespace, next is identifier
+        PsiElement identifier = type.getNextSibling().getNextSibling();
 
-        if (identifier == null) return;
-
-        ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.METHOD_DECLARATION);
+        ValaAnnotator.TOKEN_HIGHLIGHTS.putIfAbsent(identifier.getText(), ValaSyntaxHighlighter.METHOD_CALL);
 
         annotationHolder.newAnnotation(HighlightSeverity.INFORMATION, "")
                     .range(identifier.getTextRange())
@@ -33,3 +32,4 @@ public class MethodAnnotator implements TokenHighlighter {
 
     }
 }
+
