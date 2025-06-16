@@ -13,6 +13,12 @@ To configure the path of the LSP or command used,
 <kbd>⚙️</kbd> > <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Vala Plugin Settings</kbd> > 
 `Specify path` > <kbd>Apply</kbd>
 
+> **Note**: If you encounter this message: `Formatting failed: Failed to execute child process ?uncrustify? 
+> (No such file or directory)`, then you'll need to install a dependency called
+`uncrustify` https://github.com/uncrustify/uncrustify/. The language server says
+> it is optional, but it is required for the code help formatter, which can be
+> installed via your package manager. In ElementaryOS, you can install it with `sudo apt install uncrustify`.
+
 ### Language Server Manager
 The plugin uses the RedHat LSP4IJ manager to handle the language server, which is available at 
 https://github.com/redhat-developer/lsp4ij and https://plugins.jetbrains.com/plugin/23257-lsp4ij. This allows for easy 

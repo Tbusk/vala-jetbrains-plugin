@@ -41,6 +41,12 @@ public class ValaStatementImpl extends ASTWrapperPsiElement implements ValaState
 
   @Override
   @Nullable
+  public ValaConstantDeclaration getConstantDeclaration() {
+    return findChildByClass(ValaConstantDeclaration.class);
+  }
+
+  @Override
+  @Nullable
   public ValaContinueStatement getContinueStatement() {
     return findChildByClass(ValaContinueStatement.class);
   }
