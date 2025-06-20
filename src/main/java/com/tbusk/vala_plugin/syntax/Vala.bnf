@@ -109,6 +109,7 @@ namespace_member ::= [ attributes ]
                        enum_declaration |
                        errordomain_declaration |
                        method_declaration |
+                       delegate_declaration |
                        constant_declaration)
 
 attributes ::= attribute*

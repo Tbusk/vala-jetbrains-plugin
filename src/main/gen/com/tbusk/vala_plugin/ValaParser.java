@@ -3450,6 +3450,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                        enum_declaration |
   //                        errordomain_declaration |
   //                        method_declaration |
+  //                        delegate_declaration |
   //                        constant_declaration)
   public static boolean namespace_member(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "namespace_member")) return false;
@@ -3475,6 +3476,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   //                        enum_declaration |
   //                        errordomain_declaration |
   //                        method_declaration |
+  //                        delegate_declaration |
   //                        constant_declaration
   private static boolean namespace_member_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "namespace_member_1")) return false;
@@ -3486,6 +3488,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = enum_declaration(b, l + 1);
     if (!r) r = errordomain_declaration(b, l + 1);
     if (!r) r = method_declaration(b, l + 1);
+    if (!r) r = delegate_declaration(b, l + 1);
     if (!r) r = constant_declaration(b, l + 1);
     return r;
   }

@@ -112,6 +112,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "weak" {return ValaTypes.WEAK; }
     "extern" {return ValaTypes.EXTERN; }
     "delegate" {return ValaTypes.DELEGATE; }
+    "inline" {return ValaTypes.INLINE; }
 
     // Comments
     {DOC_COMMENT}      { return ValaTypes.DOC_COMMENT; }

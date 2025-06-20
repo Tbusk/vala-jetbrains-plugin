@@ -129,7 +129,8 @@ public interface ValaTokenSets {
             ValaTypes.PREPROCESSOR_IF,
             ValaTypes.PREPROCESSOR_ELIF,
             ValaTypes.PREPROCESSOR_ELSE,
-            ValaTypes.PREPROCESSOR_ENDIF
+            ValaTypes.PREPROCESSOR_ENDIF,
+            ValaTypes.INLINE
     );
 
     Set<String> KEYWORDS_STRINGS = new HashSet<>(
