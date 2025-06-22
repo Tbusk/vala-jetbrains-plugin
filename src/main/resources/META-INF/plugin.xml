@@ -82,6 +82,18 @@
 
         <lang.commenter language="Vala"
                         implementationClass="com.tbusk.vala_plugin.comment_out.ValaCommenter"/>
+
+        <codeStyleSettingsProvider
+                implementation="com.tbusk.vala_plugin.code_style.ValaCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsContributor
+                implementation="com.tbusk.vala_plugin.code_style.ValaLanguageCodeStyleSettingsProvider"/>
+        <fileIndentOptionsProvider
+                implementation="com.tbusk.vala_plugin.code_style.ValaFileTypeIndentOptionsProvider"/>
+
+        <lang.formatter
+                language="Vala"
+                implementationClass="com.tbusk.vala_plugin.code_style.ValaFormattingModelBuilder"/>
+
     </extensions>
 
     <actions >
