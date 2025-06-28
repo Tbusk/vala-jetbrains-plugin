@@ -94,6 +94,8 @@
                 language="Vala"
                 implementationClass="com.tbusk.vala_plugin.code_style.ValaFormattingModelBuilder"/>
 
+        <enterHandlerDelegate implementation="com.tbusk.vala_plugin.code_style.ValaEnterHandlerDelegate"/>
+
     </extensions>
 
     <actions >
