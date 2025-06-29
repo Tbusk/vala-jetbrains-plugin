@@ -59,6 +59,30 @@ public class ValaBlock extends AbstractBlock {
     }
 
     @Override
+    public @NotNull ChildAttributes getChildAttributes(int newChildIndex) {
+        IElementType parentType = myNode.getElementType();
+
+        if (parentType == ValaTypes.BLOCK) {
+            return new ChildAttributes(Indent.getNormalIndent(), null);
+        }
+
+        if (parentType == ValaTypes.NAMESPACE_DECLARATION ||
+                parentType == ValaTypes.INTERFACE_DECLARATION ||
+                parentType == ValaTypes.CLASS_DECLARATION ||
+                parentType == ValaTypes.ENUM_DECLARATION ||
+                parentType == ValaTypes.STRUCT_DECLARATION ||
+                parentType == ValaTypes.SIGNAL_DECLARATION ||
+                parentType == ValaTypes.ERRORDOMAIN_DECLARATION ||
+                parentType == ValaTypes.PROPERTY_DECLARATION ||
+                parentType == ValaTypes.INITIALIZER ||
+                parentType == ValaTypes.OBJECT_INITIALIZER) {
+            return new ChildAttributes(Indent.getNormalIndent(), null);
+        }
+
+        return new ChildAttributes(Indent.getNoneIndent(), null);
+    }
+
+    @Override
     public Indent getIndent() {
         return indent;
     }
