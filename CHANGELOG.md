@@ -10,6 +10,9 @@
 - Added new Vala project wizard with Meson to Java-based IDEs
 - Added new Vala project wizard to non-Java-based IDEs
 - Added new Vala project wizard with Meson to non-Java-based IDEs
+- Fixed indentation when enter key pressed inside a 'block'
+- Implemented a custom formatter
+- Added new settings page for code style with some configuration options
 
 ## [1.1.3-ALPHA]
 ### What's Changed
