@@ -55,7 +55,7 @@ dependencies {
 
         testFramework(TestFrameworkType.Platform)
 
-        pluginVerifier(version="1.384")
+        pluginVerifier(version = "1.388")
     }
 }
 
