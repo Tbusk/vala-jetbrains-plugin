@@ -66,6 +66,10 @@ public class ValaBlock extends AbstractBlock {
             return new ChildAttributes(Indent.getNormalIndent(), null);
         }
 
+        if (parentType == ValaTypes.SWITCH_SECTION) {
+            return new ChildAttributes(Indent.getNormalIndent(), null);
+        }
+
         if (parentType == ValaTypes.NAMESPACE_DECLARATION ||
                 parentType == ValaTypes.INTERFACE_DECLARATION ||
                 parentType == ValaTypes.CLASS_DECLARATION ||
@@ -75,7 +79,8 @@ public class ValaBlock extends AbstractBlock {
                 parentType == ValaTypes.ERRORDOMAIN_DECLARATION ||
                 parentType == ValaTypes.PROPERTY_DECLARATION ||
                 parentType == ValaTypes.INITIALIZER ||
-                parentType == ValaTypes.OBJECT_INITIALIZER) {
+                parentType == ValaTypes.OBJECT_INITIALIZER ||
+                parentType == ValaTypes.SWITCH_STATEMENT) {
             return new ChildAttributes(Indent.getNormalIndent(), null);
         }
 
