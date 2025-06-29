@@ -1,12 +1,35 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 # vala-jetbrains-plugin Changelog
+
 ## [Unreleased]
+
 ### What's Changed
 
+- Added new Vala project wizard to Java-based IDEs
+- Added new Vala project wizard with Meson to Java-based IDEs
+- Added new Vala project wizard to non-Java-based IDEs
+- Added new Vala project wizard with Meson to non-Java-based IDEs
+
+## [1.1.3-ALPHA]
+### What's Changed
 - Update parser to permit constants being declared in statements.
 - Update parser to no longer permit non-constant variables being declared in the namespace.
 - Update parser to allow delegate declaration in the namespace.
+
+## [1.1.2-ALPHA]
+
+### What's Changed
+
+- Adding semantic token colorization support from the language server.
+- Adding LSP4IJ configuration for code insight, spell checker, folding builder, psi structure viewer, and parameter
+  info.
+- Adding syntax highlighting for .in files.
+- Adding comment out and uncomment functionality.
+- Adding single, double quotation, and backtick escape functionality.
+- Updated plugin logo and added a different dark mode icon.
+- Updated source file icon to be more consistent with the JetBrains theme.
+- Implemented robust parser that can handle majority of Vala syntax.
 
 ## [1.1.1-ALPHA]
 ### What's Changed
