@@ -1447,7 +1447,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // [ access_modifier ] [ type_declaration_modifiers ] enum symbol
-  //                      LBRACE enumvalues [ SEMICOLON [ (method_declaration | constant_declaration)* ] ] RBRACE
+  //                      LBRACE enumvalues* [ SEMICOLON [ (method_declaration | constant_declaration)* ] ] RBRACE
   public static boolean enum_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_declaration")) return false;
     boolean r;
@@ -1457,7 +1457,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, ENUM);
     r = r && symbol(b, l + 1);
     r = r && consumeToken(b, LBRACE);
-    r = r && enumvalues(b, l + 1);
+    r = r && enum_declaration_5(b, l + 1);
     r = r && enum_declaration_6(b, l + 1);
     r = r && consumeToken(b, RBRACE);
     exit_section_(b, l, m, r, false, null);
@@ -1475,6 +1475,17 @@ public class ValaParser implements PsiParser, LightPsiParser {
   private static boolean enum_declaration_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "enum_declaration_1")) return false;
     type_declaration_modifiers(b, l + 1);
+    return true;
+  }
+
+  // enumvalues*
+  private static boolean enum_declaration_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "enum_declaration_5")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!enumvalues(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "enum_declaration_5", c)) break;
+    }
     return true;
   }
 

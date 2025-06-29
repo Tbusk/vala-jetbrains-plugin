@@ -14,7 +14,7 @@ public interface ValaEnumDeclaration extends PsiElement {
   List<ValaConstantDeclaration> getConstantDeclarationList();
 
   @NotNull
-  ValaEnumvalues getEnumvalues();
+  List<ValaEnumvalues> getEnumvaluesList();
 
   @NotNull
   List<ValaMethodDeclaration> getMethodDeclarationList();

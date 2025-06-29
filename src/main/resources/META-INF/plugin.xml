@@ -104,6 +104,23 @@
                 id="VALA_EMPTY_MESON"
                 order="after VALA_EMPTY"
         />
+
+        <codeStyleSettingsProvider
+                implementation="com.tbusk.vala_plugin.code_style.ValaCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsContributor
+                implementation="com.tbusk.vala_plugin.code_style.ValaLanguageCodeStyleSettingsProvider"/>
+        <fileIndentOptionsProvider
+                implementation="com.tbusk.vala_plugin.code_style.ValaFileTypeIndentOptionsProvider"/>
+
+        <lang.formatter
+                language="Vala"
+                implementationClass="com.tbusk.vala_plugin.code_style.ValaFormattingModelBuilder"/>
+
+        <lang.braceMatcher
+                language="Vala"
+                implementationClass="com.tbusk.vala_plugin.code_style.ValaPairedBraceMatcher"
+        />
+
     </extensions>
 
     <actions >
