@@ -302,7 +302,7 @@ type_declaration_modifiers ::= type_declaration_modifier [ ( type_declaration_mo
 type_declaration_modifier ::= abstract | extern | static
 
 enum_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] enum symbol
-                     LBRACE enumvalues [ SEMICOLON [ (method_declaration | constant_declaration)* ] ] RBRACE
+                     LBRACE enumvalues* [ SEMICOLON [ (method_declaration | constant_declaration)* ] ] RBRACE
 
 enumvalues ::= enumvalue [ (COMMA enumvalue)* ] [ COMMA ]
 enumvalue ::= [ attributes ] (IDENTIFIER) [ EQUALS expression ]
