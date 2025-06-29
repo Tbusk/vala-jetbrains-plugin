@@ -1,0 +1,30 @@
+## https://velocity.apache.org/engine/2.0/vtl-reference.html
+# ${PROJECT_NAME}
+
+Provide a description of the project here.
+
+#[[### Installation
+]]#
+
+List the installation instructions here.
+
+1.
+
+#[[### Dependencies
+]]#
+
+List all required / optional dependencies here.
+
+1.
+
+#[[### Contributing
+]]#
+
+If contributions are wanted, either link to a contributing guide or describe what your vision is.
+
+#[[### License
+Pick a license most suited for your needs. If you do not share it, then no permission will be granted to anyone who
+views or uses the project to do anything with it.
+
+Read more at https://choosealicense.com/
+]]#

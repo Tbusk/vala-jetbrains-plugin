@@ -1,0 +1,11 @@
+# Meson
+build/
+
+# CLang
+.cache/
+
+# Jetbrains Editor
+.idea/
+
+# Misc
+*.env
