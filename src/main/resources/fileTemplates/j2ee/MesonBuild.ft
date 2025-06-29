@@ -1,0 +1,24 @@
+## https://velocity.apache.org/engine/2.0/vtl-reference.html
+project(
+'${PROJECT_NAME}',
+'vala', 'c',
+version: '1.0.0',
+license: '',
+default_options : []
+)
+
+dependencies = [
+
+]
+
+source_files = files (
+[
+]
+)
+
+application = executable(
+'${PROJECT_NAME}',
+dependencies: dependencies,
+sources: source_files,
+install: true
+)
