@@ -118,6 +118,11 @@
 
         <enterHandlerDelegate implementation="com.tbusk.vala_plugin.code_style.ValaEnterHandlerDelegate"/>
 
+        <lang.braceMatcher
+                language="Vala"
+                implementationClass="com.tbusk.vala_plugin.code_style.ValaPairedBraceMatcher"
+        />
+
     </extensions>
 
     <actions >
