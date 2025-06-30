@@ -22,14 +22,88 @@ If you want to support this project or encounter any problems, please consider o
 
 <!-- Plugin description end -->
 
-## Project Development Phases
-1. Improve syntax highlighting and enhance compatability with themes and color customization with the language.
-2. Add additional feature support, including most refactor methods to improve development experience.
-3. Add runnability support to make files executable.
-4. Add installation capabilities if the LSP is not found so it can be installed and downloaded.
-5. Create a new project template.
-6. Additional new file templates, including enums, structs, classes, etc.
-7. Add non-lsp syntax checking to provide immediate rather than delayed syntax checks.
+## Features
+
+### LSP
+- [x] diagnostics
+- [x] code completion
+    - [x] member access and scope-visible completion
+    - [x] context-sensitive suggestions
+        - completions for abstract methods/properties to implement
+- [x] symbol outline
+- [x] goto definition
+- [x] symbol references
+- [x] goto implementation
+- [x] signature help
+- [x] hover
+- [x] symbol documentation
+    - [x] from comments in source code
+    - [x] from GIR and VAPI files
+- [x] code lenses
+- [x] rename refactoring
+- [x] supported projects
+    - [x] meson
+
+### Standard
+
+- [x] Comment out / Uncomment Out
+- [x] Formatter
+- [x] Comment quick-exit
+- [x] LSP Integration
+- [x] New project templates
+    - [x] Meson project
+    - [x] Empty project
+- [ ] Syntax checks
+    - [x] Basic grammar checks (declarations, what can go where, etc.)
+    - [ ] Variable location usage
+    - [ ] Multiple identical declarations
+    - [ ] Recovery and pinning
+    - [ ] Expression validation
+    - [ ] Member existence (eg., varaible inside class, method inside namespace) validation
+    - [ ] Correct usage of method
+    - [ ] Type checks
+- [ ] Syntax highlighting
+    - [x] Keywords
+    - [ ] Declarations (class, namespace, enum, errordomain, etc.)
+    - [ ] Already declared identifiers for method calls, variable usage, etc. in project
+    - [ ] Identifiers declared in namespaces outside of project via Vapi
+- [ ] Run
+    - [ ] File outside file
+    - [ ] File inside file
+    - [ ] Method inside file (test, non-test)
+    - [ ] Meson build file
+- [ ] Auto-install LSP
+- [ ] Code Style configurability (settings page, editorconfig)
+    - [x] Limited support
+    - [ ] Complete support
+- [ ] Settings Page
+    - [x] LSP location config
+    - [ ] LSP feature enable/disable
+    - [ ] Vala install location
+    - [ ] Vapi location
+    - [ ] New project configurability
+- [ ] New File Templates
+    - [x] Empty Vala File
+    - [ ] Enum vala file
+    - [ ] errordomain vala file
+    - [ ] Vala config file
+    - [ ] Struct file
+    - [ ] Main method file
+    - [ ] Test file- [ ] Brace folding
+- [ ] Spellcheck
+- [ ] Goto definition
+- [ ] Refactoring
+- [ ] Inline documentation
+- [ ] Meson support (syntax highlighting, validation)
+    - [x] CLion
+    - [ ] Others
+- [ ] Linter support
+- [ ] Documentation
+    - [ ] LSP
+    - [ ] Formatter/editorconfig
+    - [x] Contributions
+    - [ ] Code
+    - [x] Installation
 
 ## Installation
 
