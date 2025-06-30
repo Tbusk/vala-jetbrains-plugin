@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * ValaCodeStyleSettingsProvider is responsible for providing custom code style settings for the Vala programming language.
  * It extends CodeStyleSettingsProvider to integrate with IntelliJ's code style settings framework.
  */
-public class ValaCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
+public final class ValaCodeStyleSettingsProvider extends CodeStyleSettingsProvider {
 
     /**
      * Returns the custom code style settings class for Vala.
