@@ -89,7 +89,8 @@ If you want to support this project or encounter any problems, please consider o
     - [ ] Vala config file
     - [ ] Struct file
     - [ ] Main method file
-    - [ ] Test file- [ ] Brace folding
+    - [ ] Test file
+- [ ] Brace folding
 - [ ] Spellcheck
 - [ ] Goto definition
 - [ ] Refactoring
