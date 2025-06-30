@@ -3,7 +3,6 @@ package com.tbusk.vala_plugin.code_style;
 import com.intellij.lang.Language;
 import com.intellij.psi.codeStyle.CodeStyleSettingsCustomizable;
 import com.intellij.psi.codeStyle.CommonCodeStyleSettings;
-import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsContributor;
 import com.intellij.psi.codeStyle.LanguageCodeStyleSettingsProvider;
 import com.tbusk.vala_plugin.language.ValaLanguage;
 import org.jetbrains.annotations.NotNull;
@@ -11,10 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
-@SuppressWarnings("UnstableApiUsage")
-public class ValaLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider implements LanguageCodeStyleSettingsContributor {
+public class ValaLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSettingsProvider {
 
     private static final String BEFORE_LEFT_BRACE_GROUP_NAME = "Before left brace";
     private static final String AROUND_COLON_GROUP_NAME = "Around colon";
@@ -94,11 +91,5 @@ public class ValaLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
     @Override
     public @NotNull Language getLanguage() {
         return ValaLanguage.INSTANCE;
-    }
-
-    @SuppressWarnings("UnstableApiUsage")
-    @Override
-    public List<LanguageCodeStyleSettingsProvider> getProviders() {
-        return List.of(this);
     }
 }

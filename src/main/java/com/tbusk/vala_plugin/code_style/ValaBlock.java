@@ -164,9 +164,8 @@ public class ValaBlock extends AbstractBlock {
             return Indent.getNormalIndent();
         }
 
-        if ((parentType == ValaTypes.METHOD_CALL) &&
-                (childType == ValaTypes.ARGUMENTS || childType == ValaTypes.PARAMETERS)) {
-            return Indent.getNormalIndent();
+        if (parentType == ValaTypes.ARGUMENTS || parentType == ValaTypes.PARAMETERS) {
+            return Indent.getContinuationIndent();
         }
 
         if ((parentType == ValaTypes.LOCAL_VARIABLE) &&

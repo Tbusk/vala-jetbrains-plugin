@@ -105,12 +105,14 @@
                 order="after VALA_EMPTY"
         />
 
-        <codeStyleSettingsProvider
-                implementation="com.tbusk.vala_plugin.code_style.ValaCodeStyleSettingsProvider"/>
-        <langCodeStyleSettingsContributor
-                implementation="com.tbusk.vala_plugin.code_style.ValaLanguageCodeStyleSettingsProvider"/>
         <fileIndentOptionsProvider
                 implementation="com.tbusk.vala_plugin.code_style.ValaFileTypeIndentOptionsProvider"/>
+
+        <langCodeStyleSettingsProvider
+                implementation="com.tbusk.vala_plugin.code_style.ValaLanguageCodeStyleSettingsProvider"/>
+
+        <codeStyleSettingsProvider
+                implementation="com.tbusk.vala_plugin.code_style.ValaCodeStyleSettingsProvider"/>
 
         <lang.formatter
                 language="Vala"
