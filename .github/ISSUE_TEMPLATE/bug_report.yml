@@ -38,6 +38,10 @@ body:
       label: Version
       description: What version of the plugin are you using?
       options:
+        - Latest
+        - 1.2.0-ALPHA
+        - 1.1.3-ALPHA
+        - 1.1.2-ALPHA
         - 1.1.1-ALPHA
         - 1.1.0-ALPHA
         - 1.0.1-ALPHA
