@@ -114,7 +114,7 @@ namespace_member ::= [ attributes ]
 
 attributes ::= attribute*
 
-attribute ::= LBRACKET IDENTIFIER [ attribute_arguments ] RBRACKET
+attribute ::= LBRACKET IDENTIFIER [ attribute_arguments ] [ (COMMA IDENTIFIER [ attribute_arguments ])* ] RBRACKET
 
 attribute_arguments ::= LPAREN attribute_argument [ (COMMA attribute_argument)* ] RPAREN
 

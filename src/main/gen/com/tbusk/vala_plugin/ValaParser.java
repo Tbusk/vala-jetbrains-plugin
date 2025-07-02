@@ -421,7 +421,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LBRACKET IDENTIFIER [ attribute_arguments ] RBRACKET
+  // LBRACKET IDENTIFIER [ attribute_arguments ] [ (COMMA IDENTIFIER [ attribute_arguments ])* ] RBRACKET
   public static boolean attribute(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute")) return false;
     if (!nextTokenIs(b, LBRACKET)) return false;
@@ -429,6 +429,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, LBRACKET, IDENTIFIER);
     r = r && attribute_2(b, l + 1);
+    r = r && attribute_3(b, l + 1);
     r = r && consumeToken(b, RBRACKET);
     exit_section_(b, m, ATTRIBUTE, r);
     return r;
@@ -437,6 +438,42 @@ public class ValaParser implements PsiParser, LightPsiParser {
   // [ attribute_arguments ]
   private static boolean attribute_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "attribute_2")) return false;
+    attribute_arguments(b, l + 1);
+    return true;
+  }
+
+  // [ (COMMA IDENTIFIER [ attribute_arguments ])* ]
+  private static boolean attribute_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_3")) return false;
+    attribute_3_0(b, l + 1);
+    return true;
+  }
+
+  // (COMMA IDENTIFIER [ attribute_arguments ])*
+  private static boolean attribute_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_3_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!attribute_3_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "attribute_3_0", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA IDENTIFIER [ attribute_arguments ]
+  private static boolean attribute_3_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_3_0_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COMMA, IDENTIFIER);
+    r = r && attribute_3_0_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [ attribute_arguments ]
+  private static boolean attribute_3_0_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "attribute_3_0_0_2")) return false;
     attribute_arguments(b, l + 1);
     return true;
   }

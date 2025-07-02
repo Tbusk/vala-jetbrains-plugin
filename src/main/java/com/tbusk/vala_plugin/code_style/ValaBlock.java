@@ -96,6 +96,13 @@ public class ValaBlock extends AbstractBlock {
         IElementType parentType = myNode.getElementType();
         IElementType childType = child.getElementType();
 
+        if ((parentType == ValaTypes.CLASS_MEMBER ||
+                parentType == ValaTypes.NAMESPACE_MEMBER ||
+                parentType == ValaTypes.INTERFACE_MEMBER ||
+                parentType == ValaTypes.STRUCT_MEMBER) && (myNode.findChildByType(ValaTypes.ATTRIBUTES) != null || myNode.findChildByType(ValaTypes.ATTRIBUTE) != null)) {
+            return Indent.getNoneIndent();
+        }
+
         if (parentType == ValaTypes.PREPROCESSOR_DIRECTIVE || childType == ValaTypes.PREPROCESSOR_DIRECTIVE) {
             return Indent.getAbsoluteNoneIndent();
         }
@@ -108,7 +115,7 @@ public class ValaBlock extends AbstractBlock {
             return Indent.getNormalIndent();
         }
 
-        if (parentType == ValaTypes.ERRORDOMAIN_DECLARATION && (childType != ValaTypes.SEMICOLON && childType != ValaTypes.RBRACE)) {
+        if (parentType == ValaTypes.ERRORDOMAIN_DECLARATION && (childType == ValaTypes.ERRORCODES || childType == ValaTypes.METHOD_DECLARATION)) {
             return Indent.getNormalIndent();
         }
 
@@ -126,10 +133,6 @@ public class ValaBlock extends AbstractBlock {
 
         if (parentType == ValaTypes.STRUCT_DECLARATION && childType == ValaTypes.STRUCT_MEMBER) {
             return Indent.getNormalIndent();
-        }
-
-        if ((parentType == ValaTypes.CLASS_MEMBER || parentType == ValaTypes.NAMESPACE_MEMBER || parentType == ValaTypes.INTERFACE_MEMBER) && myNode.findChildByType(ValaTypes.ATTRIBUTES) != null) {
-            return Indent.getNoneIndent();
         }
 
         if (parentType == ValaTypes.ENUM_DECLARATION &&

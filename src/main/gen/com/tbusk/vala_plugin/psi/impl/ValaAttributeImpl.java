@@ -28,15 +28,9 @@ public class ValaAttributeImpl extends ASTWrapperPsiElement implements ValaAttri
   }
 
   @Override
-  @Nullable
-  public ValaAttributeArguments getAttributeArguments() {
-    return findChildByClass(ValaAttributeArguments.class);
-  }
-
-  @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public List<ValaAttributeArguments> getAttributeArgumentsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributeArguments.class);
   }
 
 }
