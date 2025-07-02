@@ -125,6 +125,7 @@ public interface ValaTokenSets {
             ValaTypes.PREPROCESSOR_ELIF,
             ValaTypes.PREPROCESSOR_ELSE,
             ValaTypes.PREPROCESSOR_ENDIF,
-            ValaTypes.INLINE
+            ValaTypes.INLINE,
+            ValaTypes.DELEGATE
     );
 }

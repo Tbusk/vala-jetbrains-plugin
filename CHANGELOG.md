@@ -6,6 +6,14 @@
 
 ### What's Changed
 
+- Added keyword highlighting for delegate
+- Patched indentation for errordomain and attribute pairing.
+- Updated parser to permit multiple identifiers / arguments rather than
+  a single one per attribute
+
+## [1.2.0-ALPHA]
+
+### What's Changed
 - Added new Vala project wizard to Java-based IDEs
 - Added new Vala project wizard with Meson to Java-based IDEs
 - Added new Vala project wizard to non-Java-based IDEs
