@@ -6,6 +6,23 @@
 
 ### What's Changed
 
+- Added missing keyword highlighting (dynamic, typeof, sizeof, as, is, global, get, set, default, etc.)
+- Added additional syntax support for arrays, slicing, and variable usage instead of just numbers
+- Fixed issue with '@' not taking account all possible keywords in parser.
+- Added support for trailing comma in a few additional places where commas are used with parser.
+- Added support for expanded usage of numerical suffixes so int numbers can have a float suffix char.
+- Added support for alternate form of property set construct
+- Added support for multiple constants to be declared at once separated by comma
+- Added support for constructor to be used in structs
+- Added support for attributes to be used in structs
+- Added support for using hexadecimal literals
+- Added support for field declarations in namespace member area (only partially supported by compiler)
+- Added support for using some keywords from outside objects (like GLib.Object's new, get, set)
+- Added support for additional nullability of variables / types
+
+## [1.2.1-ALPHA]
+### What's Changed
+
 - Added keyword highlighting for delegate
 - Patched indentation for errordomain and attribute pairing.
 - Updated parser to permit multiple identifiers / arguments rather than

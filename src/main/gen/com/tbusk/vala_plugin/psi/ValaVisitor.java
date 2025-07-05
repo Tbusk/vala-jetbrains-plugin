@@ -163,7 +163,7 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitEnsures(@NotNull ValaEnsures o) {
+  public void visitEnsuresStatement(@NotNull ValaEnsuresStatement o) {
     visitPsiElement(o);
   }
 
@@ -419,7 +419,7 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRequires(@NotNull ValaRequires o) {
+  public void visitRequiresStatement(@NotNull ValaRequiresStatement o) {
     visitPsiElement(o);
   }
 
@@ -495,7 +495,7 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitThrows(@NotNull ValaThrows o) {
+  public void visitThrowsStatement(@NotNull ValaThrowsStatement o) {
     visitPsiElement(o);
   }
 

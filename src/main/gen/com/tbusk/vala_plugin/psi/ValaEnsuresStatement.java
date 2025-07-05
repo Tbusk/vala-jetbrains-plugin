@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaRequires extends PsiElement {
+public interface ValaEnsuresStatement extends PsiElement {
+
+  @Nullable
+  ValaEnsuresStatement getEnsuresStatement();
 
   @NotNull
   ValaExpression getExpression();
-
-  @Nullable
-  ValaRequires getRequires();
 
 }

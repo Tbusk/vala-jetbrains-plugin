@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaEnsures extends PsiElement {
-
-  @Nullable
-  ValaEnsures getEnsures();
+public interface ValaThrowsStatement extends PsiElement {
 
   @NotNull
-  ValaExpression getExpression();
+  List<ValaType> getTypeList();
 
 }

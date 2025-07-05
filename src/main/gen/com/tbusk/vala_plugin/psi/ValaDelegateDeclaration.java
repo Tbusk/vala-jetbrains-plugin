@@ -20,7 +20,7 @@ public interface ValaDelegateDeclaration extends PsiElement {
   ValaSymbol getSymbol();
 
   @Nullable
-  ValaThrows getThrows();
+  ValaThrowsStatement getThrowsStatement();
 
   @NotNull
   ValaType getType();

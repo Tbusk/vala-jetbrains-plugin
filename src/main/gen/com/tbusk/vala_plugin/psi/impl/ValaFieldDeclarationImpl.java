@@ -41,6 +41,12 @@ public class ValaFieldDeclarationImpl extends ASTWrapperPsiElement implements Va
 
   @Override
   @Nullable
+  public ValaInlineArrayType getInlineArrayType() {
+    return findChildByClass(ValaInlineArrayType.class);
+  }
+
+  @Override
+  @Nullable
   public ValaMemberDeclarationModifiers getMemberDeclarationModifiers() {
     return findChildByClass(ValaMemberDeclarationModifiers.class);
   }

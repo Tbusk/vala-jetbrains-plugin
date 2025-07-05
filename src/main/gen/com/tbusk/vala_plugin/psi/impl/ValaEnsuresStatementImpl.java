@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaRequiresImpl extends ASTWrapperPsiElement implements ValaRequires {
+public class ValaEnsuresStatementImpl extends ASTWrapperPsiElement implements ValaEnsuresStatement {
 
-  public ValaRequiresImpl(@NotNull ASTNode node) {
+  public ValaEnsuresStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitRequires(this);
+    visitor.visitEnsuresStatement(this);
   }
 
   @Override
@@ -28,15 +28,15 @@ public class ValaRequiresImpl extends ASTWrapperPsiElement implements ValaRequir
   }
 
   @Override
-  @NotNull
-  public ValaExpression getExpression() {
-    return findNotNullChildByClass(ValaExpression.class);
+  @Nullable
+  public ValaEnsuresStatement getEnsuresStatement() {
+    return findChildByClass(ValaEnsuresStatement.class);
   }
 
   @Override
-  @Nullable
-  public ValaRequires getRequires() {
-    return findChildByClass(ValaRequires.class);
+  @NotNull
+  public ValaExpression getExpression() {
+    return findNotNullChildByClass(ValaExpression.class);
   }
 
 }

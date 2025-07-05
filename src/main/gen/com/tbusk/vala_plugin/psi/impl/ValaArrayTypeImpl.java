@@ -33,4 +33,10 @@ public class ValaArrayTypeImpl extends ASTWrapperPsiElement implements ValaArray
     return findChildByClass(ValaArraySize.class);
   }
 
+  @Override
+  @Nullable
+  public ValaMember getMember() {
+    return findChildByClass(ValaMember.class);
+  }
+
 }

@@ -10,19 +10,16 @@ public interface ValaConstantDeclaration extends PsiElement {
   @Nullable
   ValaAccessModifier getAccessModifier();
 
-  @Nullable
-  ValaExpression getExpression();
+  @NotNull
+  List<ValaExpression> getExpressionList();
 
-  @Nullable
-  ValaInlineArrayType getInlineArrayType();
+  @NotNull
+  List<ValaInlineArrayType> getInlineArrayTypeList();
 
   @Nullable
   ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
 
   @NotNull
   ValaType getType();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

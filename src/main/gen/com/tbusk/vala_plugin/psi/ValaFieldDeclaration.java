@@ -14,6 +14,9 @@ public interface ValaFieldDeclaration extends PsiElement {
   ValaExpression getExpression();
 
   @Nullable
+  ValaInlineArrayType getInlineArrayType();
+
+  @Nullable
   ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
 
   @NotNull

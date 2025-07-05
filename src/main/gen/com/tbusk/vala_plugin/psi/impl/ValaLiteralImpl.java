@@ -47,6 +47,12 @@ public class ValaLiteralImpl extends ASTWrapperPsiElement implements ValaLiteral
 
   @Override
   @Nullable
+  public PsiElement getHexadecimalLiteral() {
+    return findChildByType(HEXADECIMAL_LITERAL);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIntegerLiteral() {
     return findChildByType(INTEGER_LITERAL);
   }

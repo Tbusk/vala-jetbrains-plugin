@@ -14,7 +14,7 @@ public interface ValaMethodDeclaration extends PsiElement {
   ValaBlock getBlock();
 
   @Nullable
-  ValaEnsures getEnsures();
+  ValaEnsuresStatement getEnsuresStatement();
 
   @Nullable
   ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
@@ -23,10 +23,10 @@ public interface ValaMethodDeclaration extends PsiElement {
   ValaParameters getParameters();
 
   @Nullable
-  ValaRequires getRequires();
+  ValaRequiresStatement getRequiresStatement();
 
   @Nullable
-  ValaThrows getThrows();
+  ValaThrowsStatement getThrowsStatement();
 
   @NotNull
   ValaType getType();

@@ -21,7 +21,109 @@ public interface ValaTokenSets {
 
     TokenSet KEYWORDS = TokenSet.create(
 
-            // Types
+            // Selection
+            ValaTypes.IF,
+            ValaTypes.ELSE,
+            ValaTypes.SWITCH,
+            ValaTypes.CASE,
+            ValaTypes.DEFAULT,
+
+            // Iteration
+            ValaTypes.DO,
+            ValaTypes.WHILE,
+            ValaTypes.FOR,
+            ValaTypes.FOREACH,
+            ValaTypes.IN,
+
+            // Jumping
+            ValaTypes.BREAK,
+            ValaTypes.CONTINUE,
+            ValaTypes.RETURN,
+
+            // Exception Handling
+            ValaTypes.TRY,
+            ValaTypes.CATCH,
+            ValaTypes.THROW,
+            ValaTypes.FINALLY,
+
+            // Synchronization
+            ValaTypes.LOCK,
+
+            // Type Declaration
+            ValaTypes.CLASS,
+            ValaTypes.INTERFACE,
+            ValaTypes.STRUCT,
+            ValaTypes.ENUM,
+            ValaTypes.DELEGATE,
+            ValaTypes.ERRORDOMAIN,
+
+            // Type Modifiers
+            ValaTypes.CONST,
+            ValaTypes.WEAK,
+            ValaTypes.UNOWNED,
+            ValaTypes.DYNAMIC,
+
+            // Modifiers
+            ValaTypes.ABSTRACT,
+            ValaTypes.VIRTUAL,
+            ValaTypes.OVERRIDE,
+            ValaTypes.SIGNAL,
+            ValaTypes.EXTERN,
+            ValaTypes.STATIC,
+            ValaTypes.ASYNC,
+            ValaTypes.INLINE,
+            ValaTypes.NEW,
+
+            // Access Modifiers
+            ValaTypes.PUBLIC,
+            ValaTypes.PRIVATE,
+            ValaTypes.PROTECTED,
+            ValaTypes.INTERNAL,
+
+            // Method Parameters
+            ValaTypes.OUT,
+            ValaTypes.REF,
+
+            // Method Contract Keywords
+            ValaTypes.THROWS,
+            ValaTypes.REQUIRES,
+            ValaTypes.ENSURES,
+
+            // Namespaces
+            ValaTypes.NAMESPACE,
+            ValaTypes.USING,
+
+            // Operator Keywords
+            ValaTypes.AS,
+            ValaTypes.IS,
+            //ValaTypes.IN,
+            //ValaTypes.NEW,
+            ValaTypes.DELETE,
+            ValaTypes.SIZEOF,
+            ValaTypes.TYPEOF,
+
+            // Access Keywords
+            ValaTypes.THIS,
+            ValaTypes.BASE,
+
+            // Literal Keywords
+            ValaTypes.NULL,
+            ValaTypes.TRUE,
+            ValaTypes.FALSE,
+
+            // Property Context
+            ValaTypes.GET,
+            ValaTypes.SET,
+            ValaTypes.CONSTRUCT,
+
+            // Other Keywords
+            ValaTypes.VOID,
+            ValaTypes.VAR,
+            ValaTypes.YIELD,
+            ValaTypes.GLOBAL,
+            ValaTypes.OWNED,
+
+            // Primitive Types
             ValaTypes.BOOL,
             ValaTypes.INT,
             ValaTypes.UINT,
@@ -45,87 +147,11 @@ public interface ValaTokenSets {
             ValaTypes.INT64,
             ValaTypes.SIZE_T,
             ValaTypes.SSIZE_T,
-            ValaTypes.VAR,
-            ValaTypes.VOID,
 
-            // Values
-            ValaTypes.NULL,
-            ValaTypes.TRUE,
-            ValaTypes.FALSE,
-
-            // If, Elif, Else, Endif
-            ValaTypes.IF,
-            ValaTypes.ELSE,
-
-            // Do, While
-            ValaTypes.DO,
-            ValaTypes.WHILE,
-
-            // For, Foreach
-            ValaTypes.FOR,
-            ValaTypes.FOREACH,
-
-            // Data Structures
-            ValaTypes.CLASS,
-            ValaTypes.STRUCT,
-            ValaTypes.ENUM,
-            ValaTypes.INTERFACE,
-
-            // Switch, Case, Default, Finally
-            ValaTypes.SWITCH,
-            ValaTypes.CASE,
-            ValaTypes.DEFAULT,
-            ValaTypes.FINALLY,
-
-            // Modifiers
-            ValaTypes.CONST,
-            ValaTypes.CONSTRUCT,
-            ValaTypes.OVERRIDE,
-            ValaTypes.UNOWNED,
-            ValaTypes.OWNED,
-            ValaTypes.ABSTRACT,
-            ValaTypes.VIRTUAL,
-            ValaTypes.STATIC,
-            ValaTypes.ASYNC,
-            ValaTypes.REF,
-            ValaTypes.OUT,
-
-            // Access Modifiers
-            ValaTypes.PUBLIC,
-            ValaTypes.PRIVATE,
-            ValaTypes.PROTECTED,
-            ValaTypes.INTERNAL,
-
-            // Try, Catch, Throw, Throws
-            ValaTypes.TRY,
-            ValaTypes.CATCH,
-            ValaTypes.THROW,
-            ValaTypes.THROWS,
-
-            // Misc Keywords
-            ValaTypes.RETURN,
-            ValaTypes.BREAK,
-            ValaTypes.CONTINUE,
-            ValaTypes.USING,
-            ValaTypes.NAMESPACE,
-            ValaTypes.NEW,
-            ValaTypes.THIS,
-            ValaTypes.DELETE,
-            ValaTypes.IN,
-            ValaTypes.YIELD,
-            ValaTypes.BASE,
-            ValaTypes.SIGNAL,
-            ValaTypes.ERRORDOMAIN,
-            ValaTypes.REQUIRES,
-            ValaTypes.ENSURES,
-            ValaTypes.LOCK,
-            ValaTypes.WEAK,
-            ValaTypes.EXTERN,
+            // Preprocessor
             ValaTypes.PREPROCESSOR_IF,
             ValaTypes.PREPROCESSOR_ELIF,
             ValaTypes.PREPROCESSOR_ELSE,
-            ValaTypes.PREPROCESSOR_ENDIF,
-            ValaTypes.INLINE,
-            ValaTypes.DELEGATE
+            ValaTypes.PREPROCESSOR_ENDIF
     );
 }
