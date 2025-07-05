@@ -17,18 +17,18 @@ public interface ValaCreationMethodDeclaration extends PsiElement {
   ValaConstructorDeclarationModifiers getConstructorDeclarationModifiers();
 
   @Nullable
-  ValaEnsures getEnsures();
+  ValaEnsuresStatement getEnsuresStatement();
 
   @Nullable
   ValaParameters getParameters();
 
   @Nullable
-  ValaRequires getRequires();
+  ValaRequiresStatement getRequiresStatement();
 
   @NotNull
   ValaSymbol getSymbol();
 
   @Nullable
-  ValaThrows getThrows();
+  ValaThrowsStatement getThrowsStatement();
 
 }

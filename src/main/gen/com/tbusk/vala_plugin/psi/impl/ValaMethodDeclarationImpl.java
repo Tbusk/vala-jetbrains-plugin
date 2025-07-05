@@ -41,8 +41,8 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
 
   @Override
   @Nullable
-  public ValaEnsures getEnsures() {
-    return findChildByClass(ValaEnsures.class);
+  public ValaEnsuresStatement getEnsuresStatement() {
+    return findChildByClass(ValaEnsuresStatement.class);
   }
 
   @Override
@@ -59,14 +59,14 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
 
   @Override
   @Nullable
-  public ValaRequires getRequires() {
-    return findChildByClass(ValaRequires.class);
+  public ValaRequiresStatement getRequiresStatement() {
+    return findChildByClass(ValaRequiresStatement.class);
   }
 
   @Override
   @Nullable
-  public ValaThrows getThrows() {
-    return findChildByClass(ValaThrows.class);
+  public ValaThrowsStatement getThrowsStatement() {
+    return findChildByClass(ValaThrowsStatement.class);
   }
 
   @Override

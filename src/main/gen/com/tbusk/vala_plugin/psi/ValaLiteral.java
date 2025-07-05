@@ -17,6 +17,9 @@ public interface ValaLiteral extends PsiElement {
   PsiElement getDecimalLiteral();
 
   @Nullable
+  PsiElement getHexadecimalLiteral();
+
+  @Nullable
   PsiElement getIntegerLiteral();
 
   @Nullable

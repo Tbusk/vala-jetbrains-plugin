@@ -47,7 +47,7 @@ public interface ValaTypes {
   IElementType ELEMENT_ACCESS = new ValaElementType("ELEMENT_ACCESS");
   IElementType EMBEDDED_STATEMENT = new ValaElementType("EMBEDDED_STATEMENT");
   IElementType EMBEDDED_STATEMENT_WITHOUT_BLOCK = new ValaElementType("EMBEDDED_STATEMENT_WITHOUT_BLOCK");
-  IElementType ENSURES = new ValaElementType("ENSURES");
+  IElementType ENSURES_STATEMENT = new ValaElementType("ENSURES_STATEMENT");
   IElementType ENUMVALUE = new ValaElementType("ENUMVALUE");
   IElementType ENUMVALUES = new ValaElementType("ENUMVALUES");
   IElementType ENUM_DECLARATION = new ValaElementType("ENUM_DECLARATION");
@@ -111,7 +111,7 @@ public interface ValaTypes {
   IElementType PROPERTY_SET_ACCESSOR = new ValaElementType("PROPERTY_SET_ACCESSOR");
   IElementType REGEX_LITERAL = new ValaElementType("REGEX_LITERAL");
   IElementType RELATIONAL_EXPRESSION = new ValaElementType("RELATIONAL_EXPRESSION");
-  IElementType REQUIRES = new ValaElementType("REQUIRES");
+  IElementType REQUIRES_STATEMENT = new ValaElementType("REQUIRES_STATEMENT");
   IElementType RETURN_STATEMENT = new ValaElementType("RETURN_STATEMENT");
   IElementType SHIFT_EXPRESSION = new ValaElementType("SHIFT_EXPRESSION");
   IElementType SIGNAL_DECLARATION = new ValaElementType("SIGNAL_DECLARATION");
@@ -129,7 +129,7 @@ public interface ValaTypes {
   IElementType SYMBOL_PART = new ValaElementType("SYMBOL_PART");
   IElementType TEMPLATE = new ValaElementType("TEMPLATE");
   IElementType THIS_ACCESS = new ValaElementType("THIS_ACCESS");
-  IElementType THROWS = new ValaElementType("THROWS");
+  IElementType THROWS_STATEMENT = new ValaElementType("THROWS_STATEMENT");
   IElementType THROW_STATEMENT = new ValaElementType("THROW_STATEMENT");
   IElementType TRY_STATEMENT = new ValaElementType("TRY_STATEMENT");
   IElementType TUPLE = new ValaElementType("TUPLE");
@@ -152,8 +152,8 @@ public interface ValaTypes {
   IElementType AND_AND = new ValaTokenType("&&");
   IElementType AND_EQUALS = new ValaTokenType("&=");
   IElementType ARROW = new ValaTokenType("->");
+  IElementType AS = new ValaTokenType("as");
   IElementType ASYNC = new ValaTokenType("async");
-  IElementType AT = new ValaTokenType("@");
   IElementType BACKSLASH = new ValaTokenType("\\\\");
   IElementType BACKTICK = new ValaTokenType("`");
   IElementType BASE = new ValaTokenType("base");
@@ -186,6 +186,7 @@ public interface ValaTypes {
   IElementType DOUBLE = new ValaTokenType("double");
   IElementType DYNAMIC = new ValaTokenType("dynamic");
   IElementType ELSE = new ValaTokenType("else");
+  IElementType ENSURES = new ValaTokenType("ensures");
   IElementType ENUM = new ValaTokenType("enum");
   IElementType EQUALS = new ValaTokenType("=");
   IElementType EQUALS_EQUALS = new ValaTokenType("==");
@@ -198,8 +199,11 @@ public interface ValaTypes {
   IElementType FOR = new ValaTokenType("for");
   IElementType FOREACH = new ValaTokenType("foreach");
   IElementType FORWARD_SLASH = new ValaTokenType("/");
+  IElementType GET = new ValaTokenType("get");
+  IElementType GLOBAL = new ValaTokenType("global");
   IElementType GREATER_THAN = new ValaTokenType(">");
   IElementType GREATER_THAN_EQUALS = new ValaTokenType(">=");
+  IElementType HEXADECIMAL_LITERAL = new ValaTokenType("HEXADECIMAL_LITERAL");
   IElementType IDENTIFIER = new ValaTokenType("IDENTIFIER");
   IElementType IF = new ValaTokenType("if");
   IElementType IN = new ValaTokenType("in");
@@ -213,6 +217,7 @@ public interface ValaTypes {
   IElementType INTEGER_LITERAL = new ValaTokenType("INTEGER_LITERAL");
   IElementType INTERFACE = new ValaTokenType("interface");
   IElementType INTERNAL = new ValaTokenType("internal");
+  IElementType IS = new ValaTokenType("is");
   IElementType LBRACE = new ValaTokenType("{");
   IElementType LBRACKET = new ValaTokenType("[");
   IElementType LESS_THAN = new ValaTokenType("<");
@@ -252,12 +257,12 @@ public interface ValaTypes {
   IElementType RBRACKET = new ValaTokenType("]");
   IElementType REF = new ValaTokenType("ref");
   IElementType REGULAR_EXPRESSION = new ValaTokenType("REGULAR_EXPRESSION");
+  IElementType REQUIRES = new ValaTokenType("requires");
   IElementType RETURN = new ValaTokenType("return");
   IElementType RPAREN = new ValaTokenType(")");
   IElementType SEMICOLON = new ValaTokenType(";");
-  IElementType SHIFT_LEFT = new ValaTokenType("<<");
+  IElementType SET = new ValaTokenType("set");
   IElementType SHIFT_LEFT_EQUALS = new ValaTokenType("<<=");
-  IElementType SHIFT_RIGHT = new ValaTokenType(">>");
   IElementType SHIFT_RIGHT_EQUALS = new ValaTokenType(">>=");
   IElementType SHORT = new ValaTokenType("short");
   IElementType SIGNAL = new ValaTokenType("signal");
@@ -272,6 +277,7 @@ public interface ValaTypes {
   IElementType SWITCH = new ValaTokenType("switch");
   IElementType THIS = new ValaTokenType("this");
   IElementType THROW = new ValaTokenType("throw");
+  IElementType THROWS = new ValaTokenType("throws");
   IElementType TILDE = new ValaTokenType("~");
   IElementType TRIPLE_QUOTE_STRING = new ValaTokenType("TRIPLE_QUOTE_STRING");
   IElementType TRUE = new ValaTokenType("true");
@@ -416,8 +422,8 @@ public interface ValaTypes {
       else if (type == EMBEDDED_STATEMENT_WITHOUT_BLOCK) {
         return new ValaEmbeddedStatementWithoutBlockImpl(node);
       }
-      else if (type == ENSURES) {
-        return new ValaEnsuresImpl(node);
+      else if (type == ENSURES_STATEMENT) {
+        return new ValaEnsuresStatementImpl(node);
       }
       else if (type == ENUMVALUE) {
         return new ValaEnumvalueImpl(node);
@@ -608,8 +614,8 @@ public interface ValaTypes {
       else if (type == RELATIONAL_EXPRESSION) {
         return new ValaRelationalExpressionImpl(node);
       }
-      else if (type == REQUIRES) {
-        return new ValaRequiresImpl(node);
+      else if (type == REQUIRES_STATEMENT) {
+        return new ValaRequiresStatementImpl(node);
       }
       else if (type == RETURN_STATEMENT) {
         return new ValaReturnStatementImpl(node);
@@ -662,8 +668,8 @@ public interface ValaTypes {
       else if (type == THIS_ACCESS) {
         return new ValaThisAccessImpl(node);
       }
-      else if (type == THROWS) {
-        return new ValaThrowsImpl(node);
+      else if (type == THROWS_STATEMENT) {
+        return new ValaThrowsStatementImpl(node);
       }
       else if (type == THROW_STATEMENT) {
         return new ValaThrowStatementImpl(node);

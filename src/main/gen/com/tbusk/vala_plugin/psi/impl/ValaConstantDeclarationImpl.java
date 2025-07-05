@@ -34,15 +34,15 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @Nullable
-  public ValaExpression getExpression() {
-    return findChildByClass(ValaExpression.class);
+  @NotNull
+  public List<ValaExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
   }
 
   @Override
-  @Nullable
-  public ValaInlineArrayType getInlineArrayType() {
-    return findChildByClass(ValaInlineArrayType.class);
+  @NotNull
+  public List<ValaInlineArrayType> getInlineArrayTypeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaInlineArrayType.class);
   }
 
   @Override
@@ -55,12 +55,6 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
   @NotNull
   public ValaType getType() {
     return findNotNullChildByClass(ValaType.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

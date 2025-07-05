@@ -41,6 +41,12 @@ public class ValaStructMemberImpl extends ASTWrapperPsiElement implements ValaSt
 
   @Override
   @Nullable
+  public ValaCreationMethodDeclaration getCreationMethodDeclaration() {
+    return findChildByClass(ValaCreationMethodDeclaration.class);
+  }
+
+  @Override
+  @Nullable
   public ValaFieldDeclaration getFieldDeclaration() {
     return findChildByClass(ValaFieldDeclaration.class);
   }

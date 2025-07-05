@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ValaInlineArrayType extends PsiElement {
 
   @Nullable
+  ValaMember getMember();
+
+  @Nullable
   PsiElement getIntegerLiteral();
 
 }

@@ -53,8 +53,8 @@ public class ValaDelegateDeclarationImpl extends ASTWrapperPsiElement implements
 
   @Override
   @Nullable
-  public ValaThrows getThrows() {
-    return findChildByClass(ValaThrows.class);
+  public ValaThrowsStatement getThrowsStatement() {
+    return findChildByClass(ValaThrowsStatement.class);
   }
 
   @Override

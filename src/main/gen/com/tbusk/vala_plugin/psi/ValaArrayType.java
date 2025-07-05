@@ -10,4 +10,7 @@ public interface ValaArrayType extends PsiElement {
   @Nullable
   ValaArraySize getArraySize();
 
+  @Nullable
+  ValaMember getMember();
+
 }
