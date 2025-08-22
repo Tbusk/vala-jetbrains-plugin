@@ -29,18 +29,6 @@ public class ValaDelegateDeclarationImpl extends ASTWrapperPsiElement implements
 
   @Override
   @Nullable
-  public ValaAccessModifier getAccessModifier() {
-    return findChildByClass(ValaAccessModifier.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaDelegateDeclarationModifiers getDelegateDeclarationModifiers() {
-    return findChildByClass(ValaDelegateDeclarationModifiers.class);
-  }
-
-  @Override
-  @Nullable
   public ValaParameters getParameters() {
     return findChildByClass(ValaParameters.class);
   }

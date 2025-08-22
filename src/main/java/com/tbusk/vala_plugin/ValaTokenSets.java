@@ -73,6 +73,8 @@ public interface ValaTokenSets {
             ValaTypes.ASYNC,
             ValaTypes.INLINE,
             ValaTypes.NEW,
+            ValaTypes.SEALED,
+            ValaTypes.PARTIAL,
 
             // Access Modifiers
             ValaTypes.PUBLIC,

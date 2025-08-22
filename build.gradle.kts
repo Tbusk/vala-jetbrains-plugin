@@ -54,8 +54,6 @@ dependencies {
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
         testFramework(TestFrameworkType.Platform)
-
-        pluginVerifier(version = "1.388")
     }
 }
 

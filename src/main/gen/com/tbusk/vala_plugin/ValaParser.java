@@ -1223,7 +1223,19 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ access_modifier ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
+  // private | protected | internal | public
+  static boolean delegate_access_modifiers(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "delegate_access_modifiers")) return false;
+    boolean r;
+    r = consumeToken(b, PRIVATE);
+    if (!r) r = consumeToken(b, PROTECTED);
+    if (!r) r = consumeToken(b, INTERNAL);
+    if (!r) r = consumeToken(b, PUBLIC);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
   //                          LPAREN [ parameters ] RPAREN [ throws_statement ] SEMICOLON
   public static boolean delegate_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration")) return false;
@@ -1244,10 +1256,10 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ access_modifier ]
+  // [ delegate_access_modifiers ]
   private static boolean delegate_declaration_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_0")) return false;
-    access_modifier(b, l + 1);
+    delegate_access_modifiers(b, l + 1);
     return true;
   }
 
@@ -1280,31 +1292,31 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // async | class | extern | inline | abstract | virtual | override
-  public static boolean delegate_declaration_modifier(PsiBuilder b, int l) {
+  // abstract | async | class | extern | inline | override | sealed | static | virtual
+  static boolean delegate_declaration_modifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_modifier")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, DELEGATE_DECLARATION_MODIFIER, "<delegate declaration modifier>");
-    r = consumeToken(b, ASYNC);
+    r = consumeToken(b, ABSTRACT);
+    if (!r) r = consumeToken(b, ASYNC);
     if (!r) r = consumeToken(b, CLASS);
     if (!r) r = consumeToken(b, EXTERN);
     if (!r) r = consumeToken(b, INLINE);
-    if (!r) r = consumeToken(b, ABSTRACT);
-    if (!r) r = consumeToken(b, VIRTUAL);
     if (!r) r = consumeToken(b, OVERRIDE);
-    exit_section_(b, l, m, r, false, null);
+    if (!r) r = consumeToken(b, SEALED);
+    if (!r) r = consumeToken(b, STATIC);
+    if (!r) r = consumeToken(b, VIRTUAL);
     return r;
   }
 
   /* ********************************************************** */
   // delegate_declaration_modifier [ ( delegate_declaration_modifier)* ]
-  public static boolean delegate_declaration_modifiers(PsiBuilder b, int l) {
+  static boolean delegate_declaration_modifiers(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration_modifiers")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, DELEGATE_DECLARATION_MODIFIERS, "<delegate declaration modifiers>");
+    Marker m = enter_section_(b);
     r = delegate_declaration_modifier(b, l + 1);
     r = r && delegate_declaration_modifiers_1(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -1871,7 +1883,19 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ access_modifier ] [ type_declaration_modifiers ] errordomain symbol
+  // private | public | protected | internal
+  static boolean errordomain_access_modifier(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "errordomain_access_modifier")) return false;
+    boolean r;
+    r = consumeToken(b, PRIVATE);
+    if (!r) r = consumeToken(b, PUBLIC);
+    if (!r) r = consumeToken(b, PROTECTED);
+    if (!r) r = consumeToken(b, INTERNAL);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // [ errordomain_access_modifier ] [ errordomain_type_declaration_modifiers ] errordomain symbol
   //                             LBRACE errorcodes [ SEMICOLON method_declaration* ] RBRACE
   public static boolean errordomain_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "errordomain_declaration")) return false;
@@ -1889,17 +1913,17 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [ access_modifier ]
+  // [ errordomain_access_modifier ]
   private static boolean errordomain_declaration_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "errordomain_declaration_0")) return false;
-    access_modifier(b, l + 1);
+    errordomain_access_modifier(b, l + 1);
     return true;
   }
 
-  // [ type_declaration_modifiers ]
+  // [ errordomain_type_declaration_modifiers ]
   private static boolean errordomain_declaration_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "errordomain_declaration_1")) return false;
-    type_declaration_modifiers(b, l + 1);
+    errordomain_type_declaration_modifiers(b, l + 1);
     return true;
   }
 
@@ -1930,6 +1954,18 @@ public class ValaParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "errordomain_declaration_6_0_1", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // extern | abstract | partial | sealed
+  static boolean errordomain_type_declaration_modifiers(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "errordomain_type_declaration_modifiers")) return false;
+    boolean r;
+    r = consumeToken(b, EXTERN);
+    if (!r) r = consumeToken(b, ABSTRACT);
+    if (!r) r = consumeToken(b, PARTIAL);
+    if (!r) r = consumeToken(b, SEALED);
+    return r;
   }
 
   /* ********************************************************** */
@@ -5229,13 +5265,15 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // abstract | extern | static
+  // abstract | extern | partial | sealed | static
   public static boolean type_declaration_modifier(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_declaration_modifier")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, TYPE_DECLARATION_MODIFIER, "<type declaration modifier>");
     r = consumeToken(b, ABSTRACT);
     if (!r) r = consumeToken(b, EXTERN);
+    if (!r) r = consumeToken(b, PARTIAL);
+    if (!r) r = consumeToken(b, SEALED);
     if (!r) r = consumeToken(b, STATIC);
     exit_section_(b, l, m, r, false, null);
     return r;

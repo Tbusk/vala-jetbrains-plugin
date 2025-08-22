@@ -131,14 +131,6 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDelegateDeclarationModifier(@NotNull ValaDelegateDeclarationModifier o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDelegateDeclarationModifiers(@NotNull ValaDelegateDeclarationModifiers o) {
-    visitPsiElement(o);
-  }
-
   public void visitDeleteStatement(@NotNull ValaDeleteStatement o) {
     visitPsiElement(o);
   }

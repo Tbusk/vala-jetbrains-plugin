@@ -317,19 +317,13 @@ class_member ::= [ attributes ]
 access_modifier ::= private | protected | internal | public
 
 type_declaration_modifiers ::= type_declaration_modifier [ ( type_declaration_modifier)* ]
-type_declaration_modifier ::= abstract | extern | static
+type_declaration_modifier ::= abstract | extern | partial | sealed | static
 
 enum_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] enum symbol
                      LBRACE enumvalues* [ SEMICOLON [ ([attributes] (method_declaration | constant_declaration))* ] ] RBRACE
 
 enumvalues ::= enumvalue [ (COMMA enumvalue)* ] [ COMMA ]
 enumvalue ::= [ attributes ] (IDENTIFIER) [ EQUALS expression ]
-
-errordomain_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] errordomain symbol
-                            LBRACE errorcodes [ SEMICOLON method_declaration* ] RBRACE
-
-errorcodes ::= errorcode [ (COMMA errorcode)* [ COMMA ] ]
-errorcode ::= [ attributes ] IDENTIFIER [ EQUALS expression ]
 
 interface_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] interface symbol [ type_parameters ]
                           [ COLON base_types ] LBRACE interface_member* RBRACE
@@ -367,12 +361,6 @@ throws_statement ::= throws type [ (COMMA type)* ]
 requires_statement ::= requires LPAREN expression RPAREN [ requires_statement ]
 
 ensures_statement ::= ensures LPAREN expression RPAREN [ ensures_statement ]
-
-delegate_declaration ::= [ access_modifier ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
-                         LPAREN [ parameters ] RPAREN [ throws_statement ] SEMICOLON
-
-delegate_declaration_modifiers ::= delegate_declaration_modifier [ ( delegate_declaration_modifier)* ]
-delegate_declaration_modifier ::= async | class | extern | inline | abstract | virtual | override
 
 signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal type IDENTIFIER
                        LPAREN [ parameters ] RPAREN ( SEMICOLON | block )
@@ -470,3 +458,24 @@ local_tuple_declaration ::= LPAREN IDENTIFIER [ (COMMA IDENTIFIER)* ] RPAREN EQU
 local_variable ::= IDENTIFIER [ inline_array_type ] [ EQUALS expression ]
 
 expression_statement ::= statement_expression [SEMICOLON]
+
+// -- Error Domain, Checked Parser --
+errordomain_declaration ::= [ errordomain_access_modifier ] [ errordomain_type_declaration_modifiers ] errordomain symbol
+                            LBRACE errorcodes [ SEMICOLON method_declaration* ] RBRACE
+
+private errordomain_access_modifier ::= private | public | protected | internal
+
+private errordomain_type_declaration_modifiers ::= extern | abstract | partial | sealed
+
+errorcodes ::= errorcode [ (COMMA errorcode)* [ COMMA ] ]
+errorcode ::= [ attributes ] IDENTIFIER [ EQUALS expression ]
+
+// -- Delegates, Checked Parser --
+delegate_declaration ::= [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] delegate type symbol [ type_parameters ]
+                         LPAREN [ parameters ] RPAREN [ throws_statement ] SEMICOLON
+
+private delegate_access_modifiers ::= private | protected | internal | public
+
+private delegate_declaration_modifiers ::= delegate_declaration_modifier [ ( delegate_declaration_modifier)* ]
+private delegate_declaration_modifier ::= abstract | async | class | extern | inline | override | sealed | static | virtual
+

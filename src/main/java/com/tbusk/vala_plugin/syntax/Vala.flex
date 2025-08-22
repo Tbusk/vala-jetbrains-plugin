@@ -136,6 +136,8 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "async" { return ValaTypes.ASYNC; }
     "inline" { return ValaTypes.INLINE; }
     "new" { return ValaTypes.NEW; }
+    "sealed" { return ValaTypes.SEALED; }
+    "partial" { return ValaTypes.PARTIAL; }
 
     // Access Modifiers
     "public" { return ValaTypes.PUBLIC; }

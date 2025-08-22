@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaErrordomainDeclaration extends PsiElement {
 
-  @Nullable
-  ValaAccessModifier getAccessModifier();
-
   @NotNull
   ValaErrorcodes getErrorcodes();
 
@@ -18,8 +15,5 @@ public interface ValaErrordomainDeclaration extends PsiElement {
 
   @NotNull
   ValaSymbol getSymbol();
-
-  @Nullable
-  ValaTypeDeclarationModifiers getTypeDeclarationModifiers();
 
 }

@@ -39,8 +39,6 @@ public interface ValaTypes {
   IElementType CONTINUE_STATEMENT = new ValaElementType("CONTINUE_STATEMENT");
   IElementType CREATION_METHOD_DECLARATION = new ValaElementType("CREATION_METHOD_DECLARATION");
   IElementType DELEGATE_DECLARATION = new ValaElementType("DELEGATE_DECLARATION");
-  IElementType DELEGATE_DECLARATION_MODIFIER = new ValaElementType("DELEGATE_DECLARATION_MODIFIER");
-  IElementType DELEGATE_DECLARATION_MODIFIERS = new ValaElementType("DELEGATE_DECLARATION_MODIFIERS");
   IElementType DELETE_STATEMENT = new ValaElementType("DELETE_STATEMENT");
   IElementType DESTRUCTOR_DECLARATION = new ValaElementType("DESTRUCTOR_DECLARATION");
   IElementType DO_STATEMENT = new ValaElementType("DO_STATEMENT");
@@ -239,6 +237,7 @@ public interface ValaTypes {
   IElementType OVERRIDE = new ValaTokenType("override");
   IElementType OWNED = new ValaTokenType("owned");
   IElementType PARAMS = new ValaTokenType("params");
+  IElementType PARTIAL = new ValaTokenType("partial");
   IElementType PIPE = new ValaTokenType("|");
   IElementType PIPE_EQUALS = new ValaTokenType("|=");
   IElementType PLUS = new ValaTokenType("+");
@@ -260,6 +259,7 @@ public interface ValaTypes {
   IElementType REQUIRES = new ValaTokenType("requires");
   IElementType RETURN = new ValaTokenType("return");
   IElementType RPAREN = new ValaTokenType(")");
+  IElementType SEALED = new ValaTokenType("sealed");
   IElementType SEMICOLON = new ValaTokenType(";");
   IElementType SET = new ValaTokenType("set");
   IElementType SHIFT_LEFT_EQUALS = new ValaTokenType("<<=");
@@ -397,12 +397,6 @@ public interface ValaTypes {
       }
       else if (type == DELEGATE_DECLARATION) {
         return new ValaDelegateDeclarationImpl(node);
-      }
-      else if (type == DELEGATE_DECLARATION_MODIFIER) {
-        return new ValaDelegateDeclarationModifierImpl(node);
-      }
-      else if (type == DELEGATE_DECLARATION_MODIFIERS) {
-        return new ValaDelegateDeclarationModifiersImpl(node);
       }
       else if (type == DELETE_STATEMENT) {
         return new ValaDeleteStatementImpl(node);
