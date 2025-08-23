@@ -81,4 +81,10 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
     return findChildByClass(ValaTypeParameters.class);
   }
 
+  @Override
+  @NotNull
+  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  }
+
 }

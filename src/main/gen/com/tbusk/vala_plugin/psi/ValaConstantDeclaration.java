@@ -22,4 +22,7 @@ public interface ValaConstantDeclaration extends PsiElement {
   @NotNull
   ValaType getType();
 
+  @NotNull
+  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
+
 }

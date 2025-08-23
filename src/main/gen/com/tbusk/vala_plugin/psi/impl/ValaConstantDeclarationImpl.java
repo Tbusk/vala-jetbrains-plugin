@@ -57,4 +57,10 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
     return findNotNullChildByClass(ValaType.class);
   }
 
+  @Override
+  @NotNull
+  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  }
+
 }

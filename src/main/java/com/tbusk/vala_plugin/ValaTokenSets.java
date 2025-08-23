@@ -48,6 +48,7 @@ public interface ValaTokenSets {
 
             // Synchronization
             ValaTypes.LOCK,
+            ValaTypes.UNLOCK,
 
             // Type Declaration
             ValaTypes.CLASS,
@@ -85,6 +86,7 @@ public interface ValaTokenSets {
             // Method Parameters
             ValaTypes.OUT,
             ValaTypes.REF,
+            // ValaTypes.IN, is also included
 
             // Method Contract Keywords
             ValaTypes.THROWS,

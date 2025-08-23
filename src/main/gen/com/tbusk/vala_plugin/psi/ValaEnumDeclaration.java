@@ -11,21 +11,12 @@ public interface ValaEnumDeclaration extends PsiElement {
   ValaAccessModifier getAccessModifier();
 
   @NotNull
-  List<ValaAttributes> getAttributesList();
+  List<ValaEnumMember> getEnumMemberList();
 
   @NotNull
-  List<ValaConstantDeclaration> getConstantDeclarationList();
-
-  @NotNull
-  List<ValaEnumvalues> getEnumvaluesList();
-
-  @NotNull
-  List<ValaMethodDeclaration> getMethodDeclarationList();
+  ValaEnumvalues getEnumvalues();
 
   @NotNull
   ValaSymbol getSymbol();
-
-  @Nullable
-  ValaTypeDeclarationModifiers getTypeDeclarationModifiers();
 
 }

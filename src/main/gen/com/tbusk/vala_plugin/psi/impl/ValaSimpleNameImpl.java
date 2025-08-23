@@ -35,6 +35,12 @@ public class ValaSimpleNameImpl extends ASTWrapperPsiElement implements ValaSimp
 
   @Override
   @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
     return findChildByType(IDENTIFIER);
   }

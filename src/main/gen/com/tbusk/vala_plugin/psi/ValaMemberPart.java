@@ -14,6 +14,9 @@ public interface ValaMemberPart extends PsiElement {
   ValaTypeArguments getTypeArguments();
 
   @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

@@ -35,8 +35,8 @@ public class ValaSwitchStatementImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @NotNull
-  public List<ValaSwitchSection> getSwitchSectionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaSwitchSection.class);
+  public ValaSwitchSection getSwitchSection() {
+    return findNotNullChildByClass(ValaSwitchSection.class);
   }
 
 }

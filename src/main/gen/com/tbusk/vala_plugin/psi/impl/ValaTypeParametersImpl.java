@@ -27,4 +27,10 @@ public class ValaTypeParametersImpl extends ASTWrapperPsiElement implements Vala
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  }
+
 }

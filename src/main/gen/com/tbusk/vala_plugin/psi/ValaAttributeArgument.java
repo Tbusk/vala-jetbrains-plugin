@@ -10,7 +10,10 @@ public interface ValaAttributeArgument extends PsiElement {
   @NotNull
   ValaExpression getExpression();
 
-  @NotNull
+  @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

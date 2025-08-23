@@ -44,6 +44,7 @@
                 fieldName="INSTANCE"
                 language="Vala"
                 extensions="vala;vapi;in"/>
+        <internalFileTemplate id="empty_vala_file" name="Vala_File"/>
 
         <lang.parserDefinition
                 language="Vala"

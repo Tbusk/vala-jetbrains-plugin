@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaArrayType extends PsiElement {
 
-  @Nullable
-  ValaArraySize getArraySize();
+  @NotNull
+  List<ValaArraySize> getArraySizeList();
 
-  @Nullable
-  ValaMember getMember();
+  @NotNull
+  List<ValaMember> getMemberList();
 
 }
