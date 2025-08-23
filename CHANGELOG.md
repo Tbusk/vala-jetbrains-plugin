@@ -20,7 +20,7 @@
 - Allow use of void pointer array type
 - Allow use of weak and unowned in local variable declarations
 - Now only allow permitted type declaration modifiers in errordomain (extern, abstract, partial, sealed)
-- Now only allow permitted type declaration modifiers iun delegate (abstract, async, class, extern, inline, override,
+- Now only allow permitted type declaration modifiers in delegate (abstract, async, class, extern, inline, override,
   sealed, static, and virtual)
 - Add better support for parameter direction (in, out, ref) and ownage (own, unowned)
 - Adjust what is permissible with yield statements / expression based on the Vala parser (before any expression could be

@@ -43,7 +43,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
     compileOnly("org.jetbrains:grammar-kit:2023.3")
-    implementation("org.eclipse.jgit:org.eclipse.jgit:7.3.0.202506031305-r")
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
         create(providers.gradleProperty("platformType"), providers.gradleProperty("platformVersion"))
