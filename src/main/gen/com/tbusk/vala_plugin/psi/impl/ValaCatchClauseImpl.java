@@ -41,6 +41,12 @@ public class ValaCatchClauseImpl extends ASTWrapperPsiElement implements ValaCat
 
   @Override
   @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
     return findChildByType(IDENTIFIER);
   }

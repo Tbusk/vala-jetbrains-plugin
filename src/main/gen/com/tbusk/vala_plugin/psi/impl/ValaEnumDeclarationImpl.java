@@ -35,38 +35,20 @@ public class ValaEnumDeclarationImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @NotNull
-  public List<ValaAttributes> getAttributesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
+  public List<ValaEnumMember> getEnumMemberList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaEnumMember.class);
   }
 
   @Override
   @NotNull
-  public List<ValaConstantDeclaration> getConstantDeclarationList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaConstantDeclaration.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaEnumvalues> getEnumvaluesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaEnumvalues.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaMethodDeclaration> getMethodDeclarationList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMethodDeclaration.class);
+  public ValaEnumvalues getEnumvalues() {
+    return findNotNullChildByClass(ValaEnumvalues.class);
   }
 
   @Override
   @NotNull
   public ValaSymbol getSymbol() {
     return findNotNullChildByClass(ValaSymbol.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaTypeDeclarationModifiers getTypeDeclarationModifiers() {
-    return findChildByClass(ValaTypeDeclarationModifiers.class);
   }
 
 }

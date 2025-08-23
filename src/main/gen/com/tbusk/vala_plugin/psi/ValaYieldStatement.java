@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ValaYieldStatement extends PsiElement {
 
   @Nullable
-  ValaExpression getExpression();
-
-  @Nullable
-  ValaExpressionStatement getExpressionStatement();
+  ValaYieldExpression getYieldExpression();
 
 }

@@ -14,6 +14,9 @@ public interface ValaCatchClause extends PsiElement {
   ValaTypeWeak getTypeWeak();
 
   @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

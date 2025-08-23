@@ -14,9 +14,12 @@ public interface ValaForeachStatement extends PsiElement {
   ValaExpression getExpression();
 
   @Nullable
-  ValaType getType();
+  ValaTypeWeak getTypeWeak();
 
-  @NotNull
+  @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

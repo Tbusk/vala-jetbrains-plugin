@@ -13,7 +13,10 @@ public interface ValaEnumvalue extends PsiElement {
   @Nullable
   ValaExpression getExpression();
 
-  @NotNull
+  @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

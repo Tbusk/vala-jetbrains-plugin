@@ -34,4 +34,7 @@ public interface ValaMethodDeclaration extends PsiElement {
   @Nullable
   ValaTypeParameters getTypeParameters();
 
+  @NotNull
+  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
+
 }

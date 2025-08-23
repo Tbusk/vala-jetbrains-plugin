@@ -58,9 +58,15 @@ public class ValaSignalDeclarationImpl extends ASTWrapperPsiElement implements V
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }

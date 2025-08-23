@@ -5,6 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaDelegateDeclarationModifier extends PsiElement {
+public interface ValaCatchClauses extends PsiElement {
+
+  @NotNull
+  List<ValaCatchClause> getCatchClauseList();
+
+  @Nullable
+  ValaFinallyClause getFinallyClause();
 
 }

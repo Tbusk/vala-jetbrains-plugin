@@ -79,6 +79,10 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCatchClauses(@NotNull ValaCatchClauses o) {
+    visitPsiElement(o);
+  }
+
   public void visitClassDeclaration(@NotNull ValaClassDeclaration o) {
     visitPsiElement(o);
   }
@@ -131,14 +135,6 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDelegateDeclarationModifier(@NotNull ValaDelegateDeclarationModifier o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDelegateDeclarationModifiers(@NotNull ValaDelegateDeclarationModifiers o) {
-    visitPsiElement(o);
-  }
-
   public void visitDeleteStatement(@NotNull ValaDeleteStatement o) {
     visitPsiElement(o);
   }
@@ -168,6 +164,10 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumDeclaration(@NotNull ValaEnumDeclaration o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumMember(@NotNull ValaEnumMember o) {
     visitPsiElement(o);
   }
 
@@ -292,6 +292,10 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitLockStatement(@NotNull ValaLockStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMainBlockMember(@NotNull ValaMainBlockMember o) {
     visitPsiElement(o);
   }
 
@@ -543,7 +547,15 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitUnlockStatement(@NotNull ValaUnlockStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitUsingDirective(@NotNull ValaUsingDirective o) {
+    visitPsiElement(o);
+  }
+
+  public void visitValidIdentifierKeywords(@NotNull ValaValidIdentifierKeywords o) {
     visitPsiElement(o);
   }
 

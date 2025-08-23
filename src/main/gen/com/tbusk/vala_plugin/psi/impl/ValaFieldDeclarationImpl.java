@@ -58,9 +58,15 @@ public class ValaFieldDeclarationImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }

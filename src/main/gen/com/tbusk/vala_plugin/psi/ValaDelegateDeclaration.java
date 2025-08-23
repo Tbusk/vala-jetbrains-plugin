@@ -8,12 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ValaDelegateDeclaration extends PsiElement {
 
   @Nullable
-  ValaAccessModifier getAccessModifier();
-
-  @Nullable
-  ValaDelegateDeclarationModifiers getDelegateDeclarationModifiers();
-
-  @Nullable
   ValaParameters getParameters();
 
   @NotNull

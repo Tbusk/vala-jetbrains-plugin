@@ -34,9 +34,9 @@ public class ValaTryStatementImpl extends ASTWrapperPsiElement implements ValaTr
   }
 
   @Override
-  @NotNull
-  public List<ValaCatchClause> getCatchClauseList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaCatchClause.class);
+  @Nullable
+  public ValaCatchClauses getCatchClauses() {
+    return findChildByClass(ValaCatchClauses.class);
   }
 
   @Override
