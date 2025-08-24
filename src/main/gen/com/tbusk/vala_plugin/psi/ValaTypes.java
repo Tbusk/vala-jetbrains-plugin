@@ -141,12 +141,15 @@ public interface ValaTypes {
   IElementType TYPE_DECLARATION_MODIFIERS = new ValaElementType("TYPE_DECLARATION_MODIFIERS");
   IElementType TYPE_PARAMETERS = new ValaElementType("TYPE_PARAMETERS");
   IElementType TYPE_WEAK = new ValaElementType("TYPE_WEAK");
+  IElementType TYPE_WEAK_WITH_PARENTHESIS = new ValaElementType("TYPE_WEAK_WITH_PARENTHESIS");
+  IElementType TYPE_WITH_PARAMETERS = new ValaElementType("TYPE_WITH_PARAMETERS");
   IElementType UNARY_EXPRESSION = new ValaElementType("UNARY_EXPRESSION");
   IElementType UNARY_OPERATOR = new ValaElementType("UNARY_OPERATOR");
   IElementType UNLOCK_STATEMENT = new ValaElementType("UNLOCK_STATEMENT");
   IElementType USING_DIRECTIVE = new ValaElementType("USING_DIRECTIVE");
   IElementType VALID_IDENTIFIER_KEYWORDS = new ValaElementType("VALID_IDENTIFIER_KEYWORDS");
   IElementType WHILE_STATEMENT = new ValaElementType("WHILE_STATEMENT");
+  IElementType WITH_STATEMENT = new ValaElementType("WITH_STATEMENT");
   IElementType YIELD_EXPRESSION = new ValaElementType("YIELD_EXPRESSION");
   IElementType YIELD_STATEMENT = new ValaElementType("YIELD_STATEMENT");
 
@@ -306,6 +309,7 @@ public interface ValaTypes {
   IElementType VOLATILE = new ValaTokenType("volatile");
   IElementType WEAK = new ValaTokenType("weak");
   IElementType WHILE = new ValaTokenType("while");
+  IElementType WITH = new ValaTokenType("with");
   IElementType XOR_EQUALS = new ValaTokenType("^=");
   IElementType YIELD = new ValaTokenType("yield");
 
@@ -711,6 +715,12 @@ public interface ValaTypes {
       else if (type == TYPE_WEAK) {
         return new ValaTypeWeakImpl(node);
       }
+      else if (type == TYPE_WEAK_WITH_PARENTHESIS) {
+        return new ValaTypeWeakWithParenthesisImpl(node);
+      }
+      else if (type == TYPE_WITH_PARAMETERS) {
+        return new ValaTypeWithParametersImpl(node);
+      }
       else if (type == UNARY_EXPRESSION) {
         return new ValaUnaryExpressionImpl(node);
       }
@@ -728,6 +738,9 @@ public interface ValaTypes {
       }
       else if (type == WHILE_STATEMENT) {
         return new ValaWhileStatementImpl(node);
+      }
+      else if (type == WITH_STATEMENT) {
+        return new ValaWithStatementImpl(node);
       }
       else if (type == YIELD_EXPRESSION) {
         return new ValaYieldExpressionImpl(node);

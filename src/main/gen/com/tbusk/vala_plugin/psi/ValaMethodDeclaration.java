@@ -28,11 +28,14 @@ public interface ValaMethodDeclaration extends PsiElement {
   @Nullable
   ValaThrowsStatement getThrowsStatement();
 
-  @NotNull
+  @Nullable
   ValaType getType();
 
   @Nullable
   ValaTypeParameters getTypeParameters();
+
+  @Nullable
+  ValaTypeWithParameters getTypeWithParameters();
 
   @NotNull
   List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();

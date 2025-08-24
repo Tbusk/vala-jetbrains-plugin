@@ -535,6 +535,14 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTypeWeakWithParenthesis(@NotNull ValaTypeWeakWithParenthesis o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeWithParameters(@NotNull ValaTypeWithParameters o) {
+    visitPsiElement(o);
+  }
+
   public void visitTypeofExpression(@NotNull ValaTypeofExpression o) {
     visitPsiElement(o);
   }
@@ -560,6 +568,10 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitWhileStatement(@NotNull ValaWhileStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitWithStatement(@NotNull ValaWithStatement o) {
     visitPsiElement(o);
   }
 

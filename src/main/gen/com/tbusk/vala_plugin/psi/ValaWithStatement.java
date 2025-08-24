@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaTypeArguments extends PsiElement {
+public interface ValaWithStatement extends PsiElement {
 
-  @NotNull
-  List<ValaType> getTypeList();
+  @Nullable
+  ValaExpression getExpression();
 
-  @NotNull
-  List<ValaTypeWithParameters> getTypeWithParametersList();
+  @Nullable
+  ValaLocalVariableDeclarations getLocalVariableDeclarations();
 
 }

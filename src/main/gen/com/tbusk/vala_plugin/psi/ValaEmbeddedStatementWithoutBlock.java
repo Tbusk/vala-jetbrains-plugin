@@ -53,6 +53,9 @@ public interface ValaEmbeddedStatementWithoutBlock extends PsiElement {
   ValaWhileStatement getWhileStatement();
 
   @Nullable
+  ValaWithStatement getWithStatement();
+
+  @Nullable
   ValaYieldStatement getYieldStatement();
 
 }

@@ -53,6 +53,12 @@ public class ValaStatementImpl extends ASTWrapperPsiElement implements ValaState
 
   @Override
   @Nullable
+  public ValaDelegateDeclaration getDelegateDeclaration() {
+    return findChildByClass(ValaDelegateDeclaration.class);
+  }
+
+  @Override
+  @Nullable
   public ValaDeleteStatement getDeleteStatement() {
     return findChildByClass(ValaDeleteStatement.class);
   }
@@ -133,6 +139,12 @@ public class ValaStatementImpl extends ASTWrapperPsiElement implements ValaState
   @Nullable
   public ValaWhileStatement getWhileStatement() {
     return findChildByClass(ValaWhileStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaWithStatement getWithStatement() {
+    return findChildByClass(ValaWithStatement.class);
   }
 
   @Override

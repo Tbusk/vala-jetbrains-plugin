@@ -35,6 +35,12 @@ public class ValaArrayTypeImpl extends ASTWrapperPsiElement implements ValaArray
 
   @Override
   @NotNull
+  public List<ValaExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
+  }
+
+  @Override
+  @NotNull
   public List<ValaMember> getMemberList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMember.class);
   }

@@ -20,6 +20,9 @@ public interface ValaParameter extends PsiElement {
   ValaType getType();
 
   @Nullable
+  ValaTypeWithParameters getTypeWithParameters();
+
+  @Nullable
   ValaValidIdentifierKeywords getValidIdentifierKeywords();
 
   @Nullable

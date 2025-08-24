@@ -54,10 +54,10 @@ WHITE_SPACE=[ \t\n\r]+
 IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*\\??@?
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
-DECIMAL_LITERAL=(-?[0-9]+[.]?[0-9]*)
+DECIMAL_LITERAL=([0-9]+.[0-9]+)
 HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+
-INTEGER_LITERAL=(-?[0-9]+)
-REGULAR_EXPRESSION=\/([\(\)\[\]\.\+\^\$\|\\\?_\{\}a-zA-Z0-9@*\-\'].*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match|;|\.replace_eval|\.replace)))
+INTEGER_LITERAL=([0-9]+)
+REGULAR_EXPRESSION=\/([\(\)\[\]\.\+\^\$\|\\\?_\{\}a-zA-Z0-9@*\-\'].*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace)))
 
 // Comments
 COMMENT="//"[^\r\n]*
@@ -159,13 +159,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "namespace" { return ValaTypes.NAMESPACE; }
     "using" { return ValaTypes.USING; }
 
-    // Operator Keywords
-    "as" { return ValaTypes.AS; }
-    "is" { return ValaTypes.IS; }
-    "delete" { return ValaTypes.DELETE; }
-    "sizeof" { return ValaTypes.SIZEOF; }
-    "typeof" { return ValaTypes.TYPEOF; }
-
     // Access Keywords
     "this" { return ValaTypes.THIS; }
     "base" { return ValaTypes.BASE; }
@@ -186,6 +179,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "yield" { return ValaTypes.YIELD; }
     "global" { return ValaTypes.GLOBAL; }
     "owned" { return ValaTypes.OWNED; }
+    "with" { return ValaTypes.WITH; }
 
     // Primitive Types
     "bool" { return ValaTypes.BOOL; }
@@ -211,6 +205,13 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "int64" { return ValaTypes.INT64; }
     "size_t" { return ValaTypes.SIZE_T; }
     "ssize_t" { return ValaTypes.SSIZE_T; }
+
+    // Operator Keywords
+    "as" { return ValaTypes.AS; }
+    "is" { return ValaTypes.IS; }
+    "delete" { return ValaTypes.DELETE; }
+    "sizeof" { return ValaTypes.SIZEOF; }
+    "typeof" { return ValaTypes.TYPEOF; }
 
     // Relational Operators
     ">" { return ValaTypes.GREATER_THAN; }

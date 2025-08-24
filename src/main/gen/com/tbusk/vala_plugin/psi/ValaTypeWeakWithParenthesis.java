@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaTypeArguments extends PsiElement {
+public interface ValaTypeWeakWithParenthesis extends PsiElement {
 
   @NotNull
-  List<ValaType> getTypeList();
+  List<ValaArrayType> getArrayTypeList();
 
   @NotNull
-  List<ValaTypeWithParameters> getTypeWithParametersList();
+  ValaTypeWeak getTypeWeak();
 
 }

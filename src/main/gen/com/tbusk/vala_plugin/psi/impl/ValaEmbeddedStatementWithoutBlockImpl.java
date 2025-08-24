@@ -119,6 +119,12 @@ public class ValaEmbeddedStatementWithoutBlockImpl extends ASTWrapperPsiElement 
 
   @Override
   @Nullable
+  public ValaWithStatement getWithStatement() {
+    return findChildByClass(ValaWithStatement.class);
+  }
+
+  @Override
+  @Nullable
   public ValaYieldStatement getYieldStatement() {
     return findChildByClass(ValaYieldStatement.class);
   }

@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaTypeofExpression extends PsiElement {
 
-  @NotNull
+  @Nullable
   ValaType getType();
+
+  @Nullable
+  ValaTypeWithParameters getTypeWithParameters();
 
 }

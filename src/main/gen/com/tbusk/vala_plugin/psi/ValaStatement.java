@@ -20,6 +20,9 @@ public interface ValaStatement extends PsiElement {
   ValaContinueStatement getContinueStatement();
 
   @Nullable
+  ValaDelegateDeclaration getDelegateDeclaration();
+
+  @Nullable
   ValaDeleteStatement getDeleteStatement();
 
   @Nullable
@@ -60,6 +63,9 @@ public interface ValaStatement extends PsiElement {
 
   @Nullable
   ValaWhileStatement getWhileStatement();
+
+  @Nullable
+  ValaWithStatement getWithStatement();
 
   @Nullable
   ValaYieldStatement getYieldStatement();

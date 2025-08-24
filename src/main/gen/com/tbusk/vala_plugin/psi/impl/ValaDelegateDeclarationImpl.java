@@ -29,6 +29,12 @@ public class ValaDelegateDeclarationImpl extends ASTWrapperPsiElement implements
 
   @Override
   @Nullable
+  public ValaBlock getBlock() {
+    return findChildByClass(ValaBlock.class);
+  }
+
+  @Override
+  @Nullable
   public ValaParameters getParameters() {
     return findChildByClass(ValaParameters.class);
   }
@@ -46,15 +52,21 @@ public class ValaDelegateDeclarationImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaType getType() {
-    return findNotNullChildByClass(ValaType.class);
+    return findChildByClass(ValaType.class);
   }
 
   @Override
   @Nullable
   public ValaTypeParameters getTypeParameters() {
     return findChildByClass(ValaTypeParameters.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWithParameters getTypeWithParameters() {
+    return findChildByClass(ValaTypeWithParameters.class);
   }
 
 }

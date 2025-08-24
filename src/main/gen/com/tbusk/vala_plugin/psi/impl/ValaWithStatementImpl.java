@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaBaseTypesImpl extends ASTWrapperPsiElement implements ValaBaseTypes {
+public class ValaWithStatementImpl extends ASTWrapperPsiElement implements ValaWithStatement {
 
-  public ValaBaseTypesImpl(@NotNull ASTNode node) {
+  public ValaWithStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitBaseTypes(this);
+    visitor.visitWithStatement(this);
   }
 
   @Override
@@ -28,15 +28,15 @@ public class ValaBaseTypesImpl extends ASTWrapperPsiElement implements ValaBaseT
   }
 
   @Override
-  @NotNull
-  public List<ValaType> getTypeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaType.class);
+  @Nullable
+  public ValaExpression getExpression() {
+    return findChildByClass(ValaExpression.class);
   }
 
   @Override
-  @NotNull
-  public List<ValaTypeWithParameters> getTypeWithParametersList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWithParameters.class);
+  @Nullable
+  public ValaLocalVariableDeclarations getLocalVariableDeclarations() {
+    return findChildByClass(ValaLocalVariableDeclarations.class);
   }
 
 }

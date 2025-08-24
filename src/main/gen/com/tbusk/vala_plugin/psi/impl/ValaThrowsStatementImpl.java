@@ -33,4 +33,10 @@ public class ValaThrowsStatementImpl extends ASTWrapperPsiElement implements Val
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaType.class);
   }
 
+  @Override
+  @NotNull
+  public List<ValaTypeWithParameters> getTypeWithParametersList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWithParameters.class);
+  }
+
 }

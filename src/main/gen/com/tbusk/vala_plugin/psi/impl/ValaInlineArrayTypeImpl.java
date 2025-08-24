@@ -29,6 +29,12 @@ public class ValaInlineArrayTypeImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @Nullable
+  public ValaExpression getExpression() {
+    return findChildByClass(ValaExpression.class);
+  }
+
+  @Override
+  @Nullable
   public ValaMember getMember() {
     return findChildByClass(ValaMember.class);
   }

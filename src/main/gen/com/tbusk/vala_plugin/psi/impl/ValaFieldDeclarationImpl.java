@@ -52,9 +52,15 @@ public class ValaFieldDeclarationImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaTypeWeak getTypeWeak() {
-    return findNotNullChildByClass(ValaTypeWeak.class);
+    return findChildByClass(ValaTypeWeak.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis() {
+    return findChildByClass(ValaTypeWeakWithParenthesis.class);
   }
 
   @Override
