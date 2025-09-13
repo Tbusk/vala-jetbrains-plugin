@@ -34,15 +34,9 @@ public class ValaFieldDeclarationImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
-  @Nullable
-  public ValaExpression getExpression() {
-    return findChildByClass(ValaExpression.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaInlineArrayType getInlineArrayType() {
-    return findChildByClass(ValaInlineArrayType.class);
+  @NotNull
+  public List<ValaFieldDeclarationSection> getFieldDeclarationSectionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaFieldDeclarationSection.class);
   }
 
   @Override
@@ -52,21 +46,15 @@ public class ValaFieldDeclarationImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaTypeWeak getTypeWeak() {
-    return findNotNullChildByClass(ValaTypeWeak.class);
+    return findChildByClass(ValaTypeWeak.class);
   }
 
   @Override
   @Nullable
-  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
-    return findChildByClass(ValaValidIdentifierKeywords.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
+  public ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis() {
+    return findChildByClass(ValaTypeWeakWithParenthesis.class);
   }
 
 }

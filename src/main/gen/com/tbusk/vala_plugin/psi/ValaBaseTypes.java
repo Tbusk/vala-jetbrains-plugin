@@ -10,4 +10,10 @@ public interface ValaBaseTypes extends PsiElement {
   @NotNull
   List<ValaType> getTypeList();
 
+  @NotNull
+  List<ValaTypeArguments> getTypeArgumentsList();
+
+  @NotNull
+  List<ValaTypeWithParameters> getTypeWithParametersList();
+
 }

@@ -39,4 +39,10 @@ public class ValaLocalVariableDeclarationsImpl extends ASTWrapperPsiElement impl
     return findChildByClass(ValaType.class);
   }
 
+  @Override
+  @Nullable
+  public ValaTypeWithParameters getTypeWithParameters() {
+    return findChildByClass(ValaTypeWithParameters.class);
+  }
+
 }

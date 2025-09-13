@@ -19,8 +19,11 @@ public interface ValaSignalDeclaration extends PsiElement {
   @Nullable
   ValaSignalDeclarationModifiers getSignalDeclarationModifiers();
 
-  @NotNull
+  @Nullable
   ValaType getType();
+
+  @Nullable
+  ValaTypeWithParameters getTypeWithParameters();
 
   @Nullable
   ValaValidIdentifierKeywords getValidIdentifierKeywords();

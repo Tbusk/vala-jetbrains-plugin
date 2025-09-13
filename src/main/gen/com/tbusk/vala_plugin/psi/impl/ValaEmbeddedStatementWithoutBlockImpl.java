@@ -35,6 +35,12 @@ public class ValaEmbeddedStatementWithoutBlockImpl extends ASTWrapperPsiElement 
 
   @Override
   @Nullable
+  public ValaConstantDeclaration getConstantDeclaration() {
+    return findChildByClass(ValaConstantDeclaration.class);
+  }
+
+  @Override
+  @Nullable
   public ValaContinueStatement getContinueStatement() {
     return findChildByClass(ValaContinueStatement.class);
   }
@@ -83,6 +89,18 @@ public class ValaEmbeddedStatementWithoutBlockImpl extends ASTWrapperPsiElement 
 
   @Override
   @Nullable
+  public ValaMethodDeclaration getMethodDeclaration() {
+    return findChildByClass(ValaMethodDeclaration.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaObjectOrArrayCreationExpression getObjectOrArrayCreationExpression() {
+    return findChildByClass(ValaObjectOrArrayCreationExpression.class);
+  }
+
+  @Override
+  @Nullable
   public ValaReturnStatement getReturnStatement() {
     return findChildByClass(ValaReturnStatement.class);
   }
@@ -115,6 +133,12 @@ public class ValaEmbeddedStatementWithoutBlockImpl extends ASTWrapperPsiElement 
   @Nullable
   public ValaWhileStatement getWhileStatement() {
     return findChildByClass(ValaWhileStatement.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaWithStatement getWithStatement() {
+    return findChildByClass(ValaWithStatement.class);
   }
 
   @Override

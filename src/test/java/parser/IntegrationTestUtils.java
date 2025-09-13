@@ -1,3 +1,5 @@
+package parser;
+
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -17,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -24,11 +27,13 @@ public class IntegrationTestUtils {
 
     private static final Logger log = LoggerFactory.getLogger(IntegrationTestUtils.class);
 
-    public static void testRepoSourceFilesForParsingErrors(final CodeInsightTestFixture testFixture, final String zipUrl, final String repoName) throws IOException, CompressorException {
+    public static void testRepoSourceFilesForParsingErrors(final CodeInsightTestFixture testFixture, final String zipUrl, final String repoName, final int allowableErrors, final HashSet<String> errorsToIgnore) throws IOException, CompressorException {
 
         assert (testFixture != null) : "testFixture cannot be null.";
         assert (repoName != null) : "repoName cannot be null";
         assert (zipUrl != null) : "zipUrl cannot be null.";
+        assert (allowableErrors >= 0) : "allowableErrors cannot be negative.";
+        assert (errorsToIgnore != null) : "errorsToIgnore cannot be null.";
 
         final String repoFolderPathName = String.format("src/test/vala/%s_repo", repoName);
         final Path repoFolderPath = Path.of(repoFolderPathName);
@@ -57,11 +62,13 @@ public class IntegrationTestUtils {
             final PsiFile psiFile = testFixture.configureByText(fileName, content);
             assert (psiFile != null) : "psiFile cannot be null";
 
-            if (PsiTreeUtil.hasErrorElements(psiFile)) {
+            if (PsiTreeUtil.hasErrorElements(psiFile) && !errorsToIgnore.contains(fileName)) {
                 errorFileNames.add(fileName);
-                log.error("Failed to parse for '{}'", testFilePath.getFileName().toString());
+                log.error("Failed to parse for '{}'", testFilePath);
             }
         }
+
+        assert (errorFileNames.size() <= allowableErrors) : "Regression found. Only can have a max of " + allowableErrors + " errors while there are " + errorFileNames.size() + " errors.";
 
         final int testsPassed = files.size() - errorFileNames.size();
         log.info("Pass rate: {}/{}", testsPassed, files.size());

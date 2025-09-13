@@ -6,6 +6,29 @@
 
 ### What's Changed
 
+- Added coalescing token support
+- Added support for named arguments/parameters
+- Improved regular expression literal support
+- Added support for numeric and numeric-prefix identifiers
+- Added support for triple-quote string templates
+- Added support for empty attribute arguments
+- Added support for 'global::' prefix preceding symbol in types
+- Added support for structs with primitive type identifiers
+- Added support for constant declarations in embedded statements
+- Added support for experimental local functions
+- Added support for unowned usage in field declarations
+- Fixed misc issues with comments overstepping regex
+- Added support for multiple declarations in a single field declaration statement
+- Added support for no errorcode declaration in errordomain declaration
+- Added support for attributes to be used in the method declaration section of errordomain
+- Added support for primitive types to be used as parameters
+- Added support for additional identifier keywords to be used without @ preceding
+- Fixed misc issues and edge cases found in vala source and other repos
+
+## [1.2.3-ALPHA]
+
+### What's Changed
+
 - Added main block support (including using methods, fields with var, etc. outside namespace)
 - Added support for declaring interfaces in interfaces
 - More forgiving on identifier keywords being used when not specifying @ before to match the Vala parser

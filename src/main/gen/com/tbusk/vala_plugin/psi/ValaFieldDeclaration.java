@@ -10,22 +10,16 @@ public interface ValaFieldDeclaration extends PsiElement {
   @Nullable
   ValaAccessModifier getAccessModifier();
 
-  @Nullable
-  ValaExpression getExpression();
-
-  @Nullable
-  ValaInlineArrayType getInlineArrayType();
+  @NotNull
+  List<ValaFieldDeclarationSection> getFieldDeclarationSectionList();
 
   @Nullable
   ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
 
-  @NotNull
+  @Nullable
   ValaTypeWeak getTypeWeak();
 
   @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
+  ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
 
 }

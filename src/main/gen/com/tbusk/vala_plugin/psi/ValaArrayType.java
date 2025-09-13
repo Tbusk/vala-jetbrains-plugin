@@ -11,6 +11,12 @@ public interface ValaArrayType extends PsiElement {
   List<ValaArraySize> getArraySizeList();
 
   @NotNull
+  List<ValaExpression> getExpressionList();
+
+  @NotNull
   List<ValaMember> getMemberList();
+
+  @NotNull
+  List<ValaPrimitiveType> getPrimitiveTypeList();
 
 }

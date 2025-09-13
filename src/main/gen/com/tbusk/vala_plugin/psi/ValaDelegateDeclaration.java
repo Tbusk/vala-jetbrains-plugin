@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ValaDelegateDeclaration extends PsiElement {
 
   @Nullable
+  ValaBlock getBlock();
+
+  @Nullable
   ValaParameters getParameters();
 
   @NotNull
@@ -16,10 +19,13 @@ public interface ValaDelegateDeclaration extends PsiElement {
   @Nullable
   ValaThrowsStatement getThrowsStatement();
 
-  @NotNull
+  @Nullable
   ValaType getType();
 
   @Nullable
   ValaTypeParameters getTypeParameters();
+
+  @Nullable
+  ValaTypeWithParameters getTypeWithParameters();
 
 }

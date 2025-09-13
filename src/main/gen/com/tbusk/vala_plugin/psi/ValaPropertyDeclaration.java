@@ -16,8 +16,11 @@ public interface ValaPropertyDeclaration extends PsiElement {
   @NotNull
   List<ValaPropertyDeclarationPart> getPropertyDeclarationPartList();
 
-  @NotNull
+  @Nullable
   ValaTypeWeak getTypeWeak();
+
+  @Nullable
+  ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
 
   @Nullable
   ValaValidIdentifierKeywords getValidIdentifierKeywords();

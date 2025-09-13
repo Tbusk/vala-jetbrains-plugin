@@ -10,6 +10,12 @@ public interface ValaObjectCreationExpression extends PsiElement {
   @Nullable
   ValaArguments getArguments();
 
+  @NotNull
+  List<ValaMemberAccess> getMemberAccessList();
+
+  @NotNull
+  List<ValaMethodCall> getMethodCallList();
+
   @Nullable
   ValaObjectInitializer getObjectInitializer();
 

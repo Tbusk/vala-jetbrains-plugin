@@ -29,8 +29,14 @@ public class ValaErrordomainDeclarationImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @NotNull
+  public List<ValaAttributes> getAttributesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
+  }
+
+  @Override
+  @Nullable
   public ValaErrorcodes getErrorcodes() {
-    return findNotNullChildByClass(ValaErrorcodes.class);
+    return findChildByClass(ValaErrorcodes.class);
   }
 
   @Override

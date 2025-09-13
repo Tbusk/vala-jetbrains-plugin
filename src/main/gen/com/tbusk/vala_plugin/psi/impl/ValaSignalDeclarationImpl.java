@@ -52,9 +52,15 @@ public class ValaSignalDeclarationImpl extends ASTWrapperPsiElement implements V
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaType getType() {
-    return findNotNullChildByClass(ValaType.class);
+    return findChildByClass(ValaType.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWithParameters getTypeWithParameters() {
+    return findChildByClass(ValaTypeWithParameters.class);
   }
 
   @Override

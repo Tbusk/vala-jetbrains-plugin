@@ -34,6 +34,18 @@ public class ValaObjectCreationExpressionImpl extends ASTWrapperPsiElement imple
   }
 
   @Override
+  @NotNull
+  public List<ValaMemberAccess> getMemberAccessList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMemberAccess.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ValaMethodCall> getMethodCallList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMethodCall.class);
+  }
+
+  @Override
   @Nullable
   public ValaObjectInitializer getObjectInitializer() {
     return findChildByClass(ValaObjectInitializer.class);

@@ -33,4 +33,10 @@ public class ValaArgumentsImpl extends ASTWrapperPsiElement implements ValaArgum
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaArgument.class);
   }
 
+  @Override
+  @NotNull
+  public List<ValaNamedArgument> getNamedArgumentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaNamedArgument.class);
+  }
+
 }
