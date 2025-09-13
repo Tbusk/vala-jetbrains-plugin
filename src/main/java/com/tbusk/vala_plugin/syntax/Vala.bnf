@@ -106,7 +106,7 @@
         DOC_COMMENT='regexp:/\*\*.*?\*/'
         BLOCK_COMMENT='regexp:/\*[^*]*\*+([^/*][^*]*\*+)*/'
         EMPTY='regexp:\s*'
-        REGULAR_EXPRESSION="regexp:/([()\[\].+^$|\\?_{}a-zA-Z0-9@*\-'].*/\n? *([mixos]*\n? *(\.match_all|\.match|;|\.replace_eval|\.replace)))"
+        REGULAR_EXPRESSION="regexp:/([^/\\]|\\.)*/"
         PREPROCESSOR_DIRECTIVE="regexp:(#if | #endif | #elif | #else) .* (\r|\n|\r\n)"
     ]
 }
@@ -243,7 +243,7 @@ post_increment_expression ::= INCREMENT
 post_decrement_expression ::= DECREMENT
 
 literal ::= true | false | null | INTEGER_LITERAL [ numerical_suffix ] | DECIMAL_LITERAL [ numerical_suffix ] | CHAR_LITERAL |
-            STRING_LITERAL | regex_literal | TRIPLE_QUOTE_STRING | HEXADECIMAL_LITERAL [ numerical_suffix ]
+            STRING_LITERAL | TRIPLE_QUOTE_STRING | HEXADECIMAL_LITERAL [ numerical_suffix ] | regex_literal
 
 private numerical_suffix ::= 'U' | 'UL' | 'LL' | 'ULL' | 'L' | 'u' | 'ul' | 'll' | 'ull' | 'l' | 'f' | 'F' | 'd' | 'D'
 
@@ -259,7 +259,7 @@ tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
 
 template ::= '@"' [ (expression COMMA)* ] '"'
 
-regex_literal ::= REGULAR_EXPRESSION
+regex_literal ::= REGULAR_EXPRESSION [('m'|'i'|'x'|'o'|'s')*]
 
 this_access ::= this
 
