@@ -3571,7 +3571,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // true | false | null | INTEGER_LITERAL [ numerical_suffix ] | DECIMAL_LITERAL [ numerical_suffix ] | CHAR_LITERAL |
-  //             STRING_LITERAL | regex_literal | TRIPLE_QUOTE_STRING | HEXADECIMAL_LITERAL [ numerical_suffix ]
+  //             STRING_LITERAL | TRIPLE_QUOTE_STRING | HEXADECIMAL_LITERAL [ numerical_suffix ] | regex_literal
   public static boolean literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal")) return false;
     boolean r;
@@ -3583,9 +3583,9 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = literal_4(b, l + 1);
     if (!r) r = consumeToken(b, CHAR_LITERAL);
     if (!r) r = consumeToken(b, STRING_LITERAL);
-    if (!r) r = regex_literal(b, l + 1);
     if (!r) r = consumeToken(b, TRIPLE_QUOTE_STRING);
-    if (!r) r = literal_9(b, l + 1);
+    if (!r) r = literal_8(b, l + 1);
+    if (!r) r = regex_literal(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -3627,19 +3627,19 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   // HEXADECIMAL_LITERAL [ numerical_suffix ]
-  private static boolean literal_9(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_9")) return false;
+  private static boolean literal_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "literal_8")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, HEXADECIMAL_LITERAL);
-    r = r && literal_9_1(b, l + 1);
+    r = r && literal_8_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [ numerical_suffix ]
-  private static boolean literal_9_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_9_1")) return false;
+  private static boolean literal_8_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "literal_8_1")) return false;
     numerical_suffix(b, l + 1);
     return true;
   }
@@ -5598,14 +5598,45 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // REGULAR_EXPRESSION
+  // REGULAR_EXPRESSION [('m'|'i'|'x'|'o'|'s')*]
   public static boolean regex_literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "regex_literal")) return false;
     if (!nextTokenIs(b, REGULAR_EXPRESSION)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, REGULAR_EXPRESSION);
+    r = r && regex_literal_1(b, l + 1);
     exit_section_(b, m, REGEX_LITERAL, r);
+    return r;
+  }
+
+  // [('m'|'i'|'x'|'o'|'s')*]
+  private static boolean regex_literal_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "regex_literal_1")) return false;
+    regex_literal_1_0(b, l + 1);
+    return true;
+  }
+
+  // ('m'|'i'|'x'|'o'|'s')*
+  private static boolean regex_literal_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "regex_literal_1_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!regex_literal_1_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "regex_literal_1_0", c)) break;
+    }
+    return true;
+  }
+
+  // 'm'|'i'|'x'|'o'|'s'
+  private static boolean regex_literal_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "regex_literal_1_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, "m");
+    if (!r) r = consumeToken(b, "i");
+    if (!r) r = consumeToken(b, "x");
+    if (!r) r = consumeToken(b, "o");
+    if (!r) r = consumeToken(b, "s");
     return r;
   }
 

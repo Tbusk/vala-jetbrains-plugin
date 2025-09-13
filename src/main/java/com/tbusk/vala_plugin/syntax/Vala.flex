@@ -58,7 +58,7 @@ CHAR_LITERAL=\'([^\\\']|\\.)*\'
 DECIMAL_LITERAL=([0-9]+.[0-9]+)
 HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+
 INTEGER_LITERAL=([0-9]+)
-REGULAR_EXPRESSION=\/([\(\)\[\]\.\+\^\$\|\\\?_\{\}a-zA-Z0-9@*\-\'].*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace)))
+REGULAR_EXPRESSION=\/([\(\)\[\].\+\^\$\|\\\?_\{\}a-zA-Z0-9!:@*\-\']*.*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace|,)))
 
 // Comments
 COMMENT="//"[^\r\n]*
@@ -278,40 +278,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "`" { return ValaTypes.BACKTICK; }
     "$" { return ValaTypes.DOLLAR; }
 
-    {REGULAR_EXPRESSION} {
-          String matched = yytext().toString();
-          int len = matched.length();
-
-          // Find the first non-escaped closing slash
-          for (int i = 1; i < len; i++) {
-              if (matched.charAt(i) == '/' && matched.charAt(i-1) != '\\') {
-                  // Check for flags [mixos] after the closing slash
-                  int flagEnd = i + 1;
-                  while (flagEnd < len && "mixos".indexOf(matched.charAt(flagEnd)) != -1) {
-                      flagEnd++;
-                  }
-
-                  // Check if followed by required patterns
-                  String remaining = matched.substring(flagEnd);
-                  if (remaining.startsWith(".match_all") ||
-                      remaining.startsWith(".match") ||
-                      remaining.startsWith(";") ||
-                      remaining.startsWith(".replace_eval") ||
-                      remaining.startsWith(".replace") ||
-                      remaining.startsWith(",")) {
-
-                      // Push back everything after the flags
-                      yypushback(len - flagEnd);
-                      return ValaTypes.REGULAR_EXPRESSION;
-                  }
-              }
-          }
-
-          // If no valid regex found, treat as division or other token
-          yypushback(len - 1);
-          return ValaTypes.FORWARD_SLASH; // or appropriate fallback token
-    }
-
     // Lastly
     {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
     {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
@@ -319,6 +285,25 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
     {IDENTIFIER} { return ValaTypes.IDENTIFIER; }
     {PREPROCESSOR_DIRECTIVE} { return ValaTypes.PREPROCESSOR_DIRECTIVE; }
+
+    {REGULAR_EXPRESSION} {
+            String matched = yytext().toString();
+            int length = matched.length();
+
+            // Find the first non-escaped closing slash
+            for (int i = 1; i < length; i++) {
+                if (matched.charAt(i) == '/' && matched.charAt(i - 1) != '\\') {
+
+                    yypushback(length - i - 1);
+
+                    return ValaTypes.REGULAR_EXPRESSION;
+                }
+            }
+
+            // If no valid regex found, treat as a regular forward slash token
+            yypushback(length - 1);
+            return ValaTypes.FORWARD_SLASH;
+      }
 
     // Error Fallback
     [^] { return TokenType.BAD_CHARACTER; }
