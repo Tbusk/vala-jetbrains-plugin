@@ -59,6 +59,7 @@ public interface ValaTypes {
   IElementType EXPRESSION = new ValaElementType("EXPRESSION");
   IElementType EXPRESSION_STATEMENT = new ValaElementType("EXPRESSION_STATEMENT");
   IElementType FIELD_DECLARATION = new ValaElementType("FIELD_DECLARATION");
+  IElementType FIELD_DECLARATION_SECTION = new ValaElementType("FIELD_DECLARATION_SECTION");
   IElementType FINALLY_CLAUSE = new ValaElementType("FINALLY_CLAUSE");
   IElementType FOREACH_STATEMENT = new ValaElementType("FOREACH_STATEMENT");
   IElementType FOR_INITIALIZER = new ValaElementType("FOR_INITIALIZER");
@@ -90,6 +91,7 @@ public interface ValaTypes {
   IElementType METHOD_CALL = new ValaElementType("METHOD_CALL");
   IElementType METHOD_DECLARATION = new ValaElementType("METHOD_DECLARATION");
   IElementType MULTIPLICATIVE_EXPRESSION = new ValaElementType("MULTIPLICATIVE_EXPRESSION");
+  IElementType NAMED_ARGUMENT = new ValaElementType("NAMED_ARGUMENT");
   IElementType NAMESPACE_DECLARATION = new ValaElementType("NAMESPACE_DECLARATION");
   IElementType NAMESPACE_MEMBER = new ValaElementType("NAMESPACE_MEMBER");
   IElementType OBJECT_CREATION_EXPRESSION = new ValaElementType("OBJECT_CREATION_EXPRESSION");
@@ -172,6 +174,7 @@ public interface ValaTypes {
   IElementType CHAR = new ValaTokenType("char");
   IElementType CHAR_LITERAL = new ValaTokenType("CHAR_LITERAL");
   IElementType CLASS = new ValaTokenType("class");
+  IElementType COALESCING = new ValaTokenType("??");
   IElementType COLON = new ValaTokenType(":");
   IElementType COMMA = new ValaTokenType(",");
   IElementType COMMENT = new ValaTokenType("COMMENT");
@@ -245,6 +248,7 @@ public interface ValaTypes {
   IElementType OVERRIDE = new ValaTokenType("override");
   IElementType OWN = new ValaTokenType("own");
   IElementType OWNED = new ValaTokenType("owned");
+  IElementType PARAMS = new ValaTokenType("params");
   IElementType PARTIAL = new ValaTokenType("partial");
   IElementType PIPE = new ValaTokenType("|");
   IElementType PIPE_EQUALS = new ValaTokenType("|=");
@@ -469,6 +473,9 @@ public interface ValaTypes {
       else if (type == FIELD_DECLARATION) {
         return new ValaFieldDeclarationImpl(node);
       }
+      else if (type == FIELD_DECLARATION_SECTION) {
+        return new ValaFieldDeclarationSectionImpl(node);
+      }
       else if (type == FINALLY_CLAUSE) {
         return new ValaFinallyClauseImpl(node);
       }
@@ -561,6 +568,9 @@ public interface ValaTypes {
       }
       else if (type == MULTIPLICATIVE_EXPRESSION) {
         return new ValaMultiplicativeExpressionImpl(node);
+      }
+      else if (type == NAMED_ARGUMENT) {
+        return new ValaNamedArgumentImpl(node);
       }
       else if (type == NAMESPACE_DECLARATION) {
         return new ValaNamespaceDeclarationImpl(node);

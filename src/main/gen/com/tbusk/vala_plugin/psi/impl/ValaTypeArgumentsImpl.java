@@ -29,14 +29,14 @@ public class ValaTypeArgumentsImpl extends ASTWrapperPsiElement implements ValaT
 
   @Override
   @NotNull
-  public List<ValaType> getTypeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaType.class);
+  public List<ValaTypeWeak> getTypeWeakList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWeak.class);
   }
 
   @Override
   @NotNull
-  public List<ValaTypeWithParameters> getTypeWithParametersList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWithParameters.class);
+  public List<ValaTypeWeakWithParenthesis> getTypeWeakWithParenthesisList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWeakWithParenthesis.class);
   }
 
 }

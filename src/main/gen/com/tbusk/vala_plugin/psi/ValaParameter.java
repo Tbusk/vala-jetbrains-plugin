@@ -17,7 +17,16 @@ public interface ValaParameter extends PsiElement {
   ValaInlineArrayType getInlineArrayType();
 
   @Nullable
+  ValaPrimitiveType getPrimitiveType();
+
+  @Nullable
   ValaType getType();
+
+  @Nullable
+  ValaTypeWeak getTypeWeak();
+
+  @Nullable
+  ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
 
   @Nullable
   ValaTypeWithParameters getTypeWithParameters();

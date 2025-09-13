@@ -16,4 +16,7 @@ public interface ValaArrayType extends PsiElement {
   @NotNull
   List<ValaMember> getMemberList();
 
+  @NotNull
+  List<ValaPrimitiveType> getPrimitiveTypeList();
+
 }

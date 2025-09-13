@@ -11,6 +11,9 @@ public interface ValaEmbeddedStatementWithoutBlock extends PsiElement {
   ValaBreakStatement getBreakStatement();
 
   @Nullable
+  ValaConstantDeclaration getConstantDeclaration();
+
+  @Nullable
   ValaContinueStatement getContinueStatement();
 
   @Nullable
@@ -33,6 +36,12 @@ public interface ValaEmbeddedStatementWithoutBlock extends PsiElement {
 
   @Nullable
   ValaLockStatement getLockStatement();
+
+  @Nullable
+  ValaMethodDeclaration getMethodDeclaration();
+
+  @Nullable
+  ValaObjectOrArrayCreationExpression getObjectOrArrayCreationExpression();
 
   @Nullable
   ValaReturnStatement getReturnStatement();

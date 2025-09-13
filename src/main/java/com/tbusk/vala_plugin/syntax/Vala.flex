@@ -51,7 +51,8 @@ import com.tbusk.vala_plugin.psi.ValaTokenType;
 
 // Tokens
 WHITE_SPACE=[ \t\n\r]+
-IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*\\??@?
+IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*@?
+PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]*@?\??
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
 DECIMAL_LITERAL=([0-9]+.[0-9]+)
@@ -61,9 +62,9 @@ REGULAR_EXPRESSION=\/([\(\)\[\]\.\+\^\$\|\\\?_\{\}a-zA-Z0-9@*\-\'].*\/[\n]?[ ]*(
 
 // Comments
 COMMENT="//"[^\r\n]*
-BLOCK_COMMENT="/*"([^*]|\*[^/])*"\*/"
-DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
-TRIPLE_QUOTE_STRING=\"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
+BLOCK_COMMENT= "/*" [^*] ~"*/" | "/*" "*"+ "/"
+DOC_COMMENT="/**" ( [^*] | \*+ [^/*] )* "*" + "/"
+TRIPLE_QUOTE_STRING=@?\"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
 PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\n")
 
 %%
@@ -73,9 +74,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     // Other tokens
     {STRING_LITERAL} { return ValaTypes.STRING_LITERAL; }
     {CHAR_LITERAL} { return ValaTypes.CHAR_LITERAL; }
-    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
-    {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
-    {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
     {WHITE_SPACE} { return TokenType.WHITE_SPACE; }
     {TRIPLE_QUOTE_STRING} { return ValaTypes.TRIPLE_QUOTE_STRING; }
 
@@ -180,6 +178,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "global" { return ValaTypes.GLOBAL; }
     "owned" { return ValaTypes.OWNED; }
     "with" { return ValaTypes.WITH; }
+    "params" { return ValaTypes.PARAMS; }
 
     // Primitive Types
     "bool" { return ValaTypes.BOOL; }
@@ -256,6 +255,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "!=" { return ValaTypes.NOT_EQUALS; }
 
     // Characters
+    "??" { return ValaTypes.COALESCING; }
     ";" { return ValaTypes.SEMICOLON; }
     ":" { return ValaTypes.COLON; }
     "," { return ValaTypes.COMMA; }
@@ -278,8 +278,45 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "`" { return ValaTypes.BACKTICK; }
     "$" { return ValaTypes.DOLLAR; }
 
+    {REGULAR_EXPRESSION} {
+          String matched = yytext().toString();
+          int len = matched.length();
+
+          // Find the first non-escaped closing slash
+          for (int i = 1; i < len; i++) {
+              if (matched.charAt(i) == '/' && matched.charAt(i-1) != '\\') {
+                  // Check for flags [mixos] after the closing slash
+                  int flagEnd = i + 1;
+                  while (flagEnd < len && "mixos".indexOf(matched.charAt(flagEnd)) != -1) {
+                      flagEnd++;
+                  }
+
+                  // Check if followed by required patterns
+                  String remaining = matched.substring(flagEnd);
+                  if (remaining.startsWith(".match_all") ||
+                      remaining.startsWith(".match") ||
+                      remaining.startsWith(";") ||
+                      remaining.startsWith(".replace_eval") ||
+                      remaining.startsWith(".replace") ||
+                      remaining.startsWith(",")) {
+
+                      // Push back everything after the flags
+                      yypushback(len - flagEnd);
+                      return ValaTypes.REGULAR_EXPRESSION;
+                  }
+              }
+          }
+
+          // If no valid regex found, treat as division or other token
+          yypushback(len - 1);
+          return ValaTypes.FORWARD_SLASH; // or appropriate fallback token
+    }
+
     // Lastly
-    {REGULAR_EXPRESSION} { return ValaTypes.REGULAR_EXPRESSION; }
+    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
+    {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
+    {PRE_NUMERIC_IDENTIFIER} { return ValaTypes.IDENTIFIER; }
+    {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
     {IDENTIFIER} { return ValaTypes.IDENTIFIER; }
     {PREPROCESSOR_DIRECTIVE} { return ValaTypes.PREPROCESSOR_DIRECTIVE; }
 

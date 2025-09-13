@@ -10,4 +10,7 @@ public interface ValaArguments extends PsiElement {
   @NotNull
   List<ValaArgument> getArgumentList();
 
+  @NotNull
+  List<ValaNamedArgument> getNamedArgumentList();
+
 }

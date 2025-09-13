@@ -211,6 +211,10 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFieldDeclarationSection(@NotNull ValaFieldDeclarationSection o) {
+    visitPsiElement(o);
+  }
+
   public void visitFinallyClause(@NotNull ValaFinallyClause o) {
     visitPsiElement(o);
   }
@@ -332,6 +336,10 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitMultiplicativeExpression(@NotNull ValaMultiplicativeExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedArgument(@NotNull ValaNamedArgument o) {
     visitPsiElement(o);
   }
 

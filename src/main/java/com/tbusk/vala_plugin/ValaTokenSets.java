@@ -127,6 +127,7 @@ public interface ValaTokenSets {
             ValaTypes.GLOBAL,
             ValaTypes.OWNED,
             ValaTypes.WITH,
+            ValaTypes.PARAMS,
 
             // Primitive Types
             ValaTypes.BOOL,

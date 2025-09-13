@@ -1,9 +1,12 @@
+package parser.samples;
+
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import parser.IntegrationTestUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

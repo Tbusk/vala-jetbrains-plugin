@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ValaErrordomainDeclaration extends PsiElement {
 
   @NotNull
+  List<ValaAttributes> getAttributesList();
+
+  @Nullable
   ValaErrorcodes getErrorcodes();
 
   @NotNull

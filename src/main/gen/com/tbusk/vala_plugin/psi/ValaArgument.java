@@ -11,6 +11,9 @@ public interface ValaArgument extends PsiElement {
   ValaExpression getExpression();
 
   @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

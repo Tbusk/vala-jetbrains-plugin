@@ -10,10 +10,22 @@ public interface ValaObjectOrArrayCreationExpression extends PsiElement {
   @Nullable
   ValaArrayCreationExpression getArrayCreationExpression();
 
-  @NotNull
+  @Nullable
   ValaMember getMember();
 
   @Nullable
   ValaObjectCreationExpression getObjectCreationExpression();
+
+  @Nullable
+  ValaType getType();
+
+  @Nullable
+  ValaTypeWeak getTypeWeak();
+
+  @Nullable
+  ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
+
+  @Nullable
+  ValaTypeWithParameters getTypeWithParameters();
 
 }

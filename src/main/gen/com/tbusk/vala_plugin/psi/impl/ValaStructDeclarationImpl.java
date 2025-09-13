@@ -40,15 +40,27 @@ public class ValaStructDeclarationImpl extends ASTWrapperPsiElement implements V
   }
 
   @Override
+  @Nullable
+  public ValaPrimitiveType getPrimitiveType() {
+    return findChildByClass(ValaPrimitiveType.class);
+  }
+
+  @Override
   @NotNull
   public List<ValaStructMember> getStructMemberList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaStructMember.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaSymbol getSymbol() {
-    return findNotNullChildByClass(ValaSymbol.class);
+    return findChildByClass(ValaSymbol.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeArguments getTypeArguments() {
+    return findChildByClass(ValaTypeArguments.class);
   }
 
   @Override

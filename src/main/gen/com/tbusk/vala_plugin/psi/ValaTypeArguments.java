@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface ValaTypeArguments extends PsiElement {
 
   @NotNull
-  List<ValaType> getTypeList();
+  List<ValaTypeWeak> getTypeWeakList();
 
   @NotNull
-  List<ValaTypeWithParameters> getTypeWithParametersList();
+  List<ValaTypeWeakWithParenthesis> getTypeWeakWithParenthesisList();
 
 }
