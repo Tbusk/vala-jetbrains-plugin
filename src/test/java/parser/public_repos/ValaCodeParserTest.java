@@ -21,10 +21,11 @@ public class ValaCodeParserTest extends BasePlatformTestCase {
                         "enum_only.vala",
                         "struct_only.vala",
                         "glib-2.0.vapi",
-                        "regex.vala"
+                        "regex.vala",
+                        "bug761267-2.vala"
                 )
         );
 
-        IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "vala", 1, errorsToIgnore);
+        IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "vala", 0, errorsToIgnore);
     }
 }
