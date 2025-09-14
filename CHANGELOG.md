@@ -6,6 +6,58 @@
 
 ### What's Changed
 
+- Added coalescing token support
+- Added support for named arguments/parameters
+- Improved regular expression literal support
+- Added support for numeric and numeric-prefix identifiers
+- Added support for triple-quote string templates
+- Added support for empty attribute arguments
+- Added support for 'global::' prefix preceding symbol in types
+- Added support for structs with primitive type identifiers
+- Added support for constant declarations in embedded statements
+- Added support for experimental local functions
+- Added support for unowned usage in field declarations
+- Fixed misc issues with comments overstepping regex
+- Added support for multiple declarations in a single field declaration statement
+- Added support for no errorcode declaration in errordomain declaration
+- Added support for attributes to be used in the method declaration section of errordomain
+- Added support for primitive types to be used as parameters
+- Added support for additional identifier keywords to be used without @ preceding
+- Fixed misc issues and edge cases found in vala source and other repos
+
+## [1.2.3-ALPHA]
+
+### What's Changed
+
+- Added main block support (including using methods, fields with var, etc. outside namespace)
+- Added support for declaring interfaces in interfaces
+- More forgiving on identifier keywords being used when not specifying @ before to match the Vala parser
+- Allow use of dynamic in foreach statement
+- Allow use of weak in foreach statement
+- Allow permitted type declaration modifiers in interface (abstract, extern, and sealed)
+- Allow permitted type declaration modifiers in enum (abstract, extern, and sealed)
+- Allow one use of a default statement in a switch
+- Remove using expression in default statement in a switch
+- Added support for unlock statement
+- Allow nullability question mark to be used after identifier in object/array creation expressions
+- Allow use of void pointer array type
+- Allow use of weak and unowned in local variable declarations
+- Now only allow permitted type declaration modifiers in errordomain (extern, abstract, partial, sealed)
+- Now only allow permitted type declaration modifiers in delegate (abstract, async, class, extern, inline, override,
+  sealed, static, and virtual)
+- Add better support for parameter direction (in, out, ref) and ownage (own, unowned)
+- Adjust what is permissible with yield statements / expression based on the Vala parser (before any expression could be
+  used. Now only method calls can be, and now return isn't permitted after yield)
+- Update try, catch, finally block to match the Vala parser (need either finally block or catch clause with a try
+  statement, and only one finally)
+- Add support for identifiers ending with @ used in config files
+- Removed unused spell-check support as platform updated
+- Added capability to run parsing/lexing tests on sample files and any repo link
+
+## [1.2.2-ALPHA]
+
+### What's Changed
+
 - Added missing keyword highlighting (dynamic, typeof, sizeof, as, is, global, get, set, default, etc.)
 - Added additional syntax support for arrays, slicing, and variable usage instead of just numbers
 - Fixed issue with '@' not taking account all possible keywords in parser.

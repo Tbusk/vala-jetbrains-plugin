@@ -26,6 +26,7 @@ public interface ValaTypes {
   IElementType BLOCK = new ValaElementType("BLOCK");
   IElementType BREAK_STATEMENT = new ValaElementType("BREAK_STATEMENT");
   IElementType CATCH_CLAUSE = new ValaElementType("CATCH_CLAUSE");
+  IElementType CATCH_CLAUSES = new ValaElementType("CATCH_CLAUSES");
   IElementType CLASS_DECLARATION = new ValaElementType("CLASS_DECLARATION");
   IElementType CLASS_MEMBER = new ValaElementType("CLASS_MEMBER");
   IElementType COALESCING_EXPRESSION = new ValaElementType("COALESCING_EXPRESSION");
@@ -39,8 +40,6 @@ public interface ValaTypes {
   IElementType CONTINUE_STATEMENT = new ValaElementType("CONTINUE_STATEMENT");
   IElementType CREATION_METHOD_DECLARATION = new ValaElementType("CREATION_METHOD_DECLARATION");
   IElementType DELEGATE_DECLARATION = new ValaElementType("DELEGATE_DECLARATION");
-  IElementType DELEGATE_DECLARATION_MODIFIER = new ValaElementType("DELEGATE_DECLARATION_MODIFIER");
-  IElementType DELEGATE_DECLARATION_MODIFIERS = new ValaElementType("DELEGATE_DECLARATION_MODIFIERS");
   IElementType DELETE_STATEMENT = new ValaElementType("DELETE_STATEMENT");
   IElementType DESTRUCTOR_DECLARATION = new ValaElementType("DESTRUCTOR_DECLARATION");
   IElementType DO_STATEMENT = new ValaElementType("DO_STATEMENT");
@@ -51,6 +50,7 @@ public interface ValaTypes {
   IElementType ENUMVALUE = new ValaElementType("ENUMVALUE");
   IElementType ENUMVALUES = new ValaElementType("ENUMVALUES");
   IElementType ENUM_DECLARATION = new ValaElementType("ENUM_DECLARATION");
+  IElementType ENUM_MEMBER = new ValaElementType("ENUM_MEMBER");
   IElementType EQUALITY_EXPRESSION = new ValaElementType("EQUALITY_EXPRESSION");
   IElementType ERRORCODE = new ValaElementType("ERRORCODE");
   IElementType ERRORCODES = new ValaElementType("ERRORCODES");
@@ -59,6 +59,7 @@ public interface ValaTypes {
   IElementType EXPRESSION = new ValaElementType("EXPRESSION");
   IElementType EXPRESSION_STATEMENT = new ValaElementType("EXPRESSION_STATEMENT");
   IElementType FIELD_DECLARATION = new ValaElementType("FIELD_DECLARATION");
+  IElementType FIELD_DECLARATION_SECTION = new ValaElementType("FIELD_DECLARATION_SECTION");
   IElementType FINALLY_CLAUSE = new ValaElementType("FINALLY_CLAUSE");
   IElementType FOREACH_STATEMENT = new ValaElementType("FOREACH_STATEMENT");
   IElementType FOR_INITIALIZER = new ValaElementType("FOR_INITIALIZER");
@@ -80,6 +81,7 @@ public interface ValaTypes {
   IElementType LOCAL_VARIABLE_DECLARATION = new ValaElementType("LOCAL_VARIABLE_DECLARATION");
   IElementType LOCAL_VARIABLE_DECLARATIONS = new ValaElementType("LOCAL_VARIABLE_DECLARATIONS");
   IElementType LOCK_STATEMENT = new ValaElementType("LOCK_STATEMENT");
+  IElementType MAIN_BLOCK_MEMBER = new ValaElementType("MAIN_BLOCK_MEMBER");
   IElementType MEMBER = new ValaElementType("MEMBER");
   IElementType MEMBER_ACCESS = new ValaElementType("MEMBER_ACCESS");
   IElementType MEMBER_DECLARATION_MODIFIER = new ValaElementType("MEMBER_DECLARATION_MODIFIER");
@@ -89,6 +91,7 @@ public interface ValaTypes {
   IElementType METHOD_CALL = new ValaElementType("METHOD_CALL");
   IElementType METHOD_DECLARATION = new ValaElementType("METHOD_DECLARATION");
   IElementType MULTIPLICATIVE_EXPRESSION = new ValaElementType("MULTIPLICATIVE_EXPRESSION");
+  IElementType NAMED_ARGUMENT = new ValaElementType("NAMED_ARGUMENT");
   IElementType NAMESPACE_DECLARATION = new ValaElementType("NAMESPACE_DECLARATION");
   IElementType NAMESPACE_MEMBER = new ValaElementType("NAMESPACE_MEMBER");
   IElementType OBJECT_CREATION_EXPRESSION = new ValaElementType("OBJECT_CREATION_EXPRESSION");
@@ -140,10 +143,15 @@ public interface ValaTypes {
   IElementType TYPE_DECLARATION_MODIFIERS = new ValaElementType("TYPE_DECLARATION_MODIFIERS");
   IElementType TYPE_PARAMETERS = new ValaElementType("TYPE_PARAMETERS");
   IElementType TYPE_WEAK = new ValaElementType("TYPE_WEAK");
+  IElementType TYPE_WEAK_WITH_PARENTHESIS = new ValaElementType("TYPE_WEAK_WITH_PARENTHESIS");
+  IElementType TYPE_WITH_PARAMETERS = new ValaElementType("TYPE_WITH_PARAMETERS");
   IElementType UNARY_EXPRESSION = new ValaElementType("UNARY_EXPRESSION");
   IElementType UNARY_OPERATOR = new ValaElementType("UNARY_OPERATOR");
+  IElementType UNLOCK_STATEMENT = new ValaElementType("UNLOCK_STATEMENT");
   IElementType USING_DIRECTIVE = new ValaElementType("USING_DIRECTIVE");
+  IElementType VALID_IDENTIFIER_KEYWORDS = new ValaElementType("VALID_IDENTIFIER_KEYWORDS");
   IElementType WHILE_STATEMENT = new ValaElementType("WHILE_STATEMENT");
+  IElementType WITH_STATEMENT = new ValaElementType("WITH_STATEMENT");
   IElementType YIELD_EXPRESSION = new ValaElementType("YIELD_EXPRESSION");
   IElementType YIELD_STATEMENT = new ValaElementType("YIELD_STATEMENT");
 
@@ -166,6 +174,7 @@ public interface ValaTypes {
   IElementType CHAR = new ValaTokenType("char");
   IElementType CHAR_LITERAL = new ValaTokenType("CHAR_LITERAL");
   IElementType CLASS = new ValaTokenType("class");
+  IElementType COALESCING = new ValaTokenType("??");
   IElementType COLON = new ValaTokenType(":");
   IElementType COMMA = new ValaTokenType(",");
   IElementType COMMENT = new ValaTokenType("COMMENT");
@@ -182,9 +191,9 @@ public interface ValaTypes {
   IElementType DOC_COMMENT = new ValaTokenType("DOC_COMMENT");
   IElementType DOLLAR = new ValaTokenType("$");
   IElementType DOT = new ValaTokenType(".");
-  IElementType DOT_DOT_DOT = new ValaTokenType("...");
   IElementType DOUBLE = new ValaTokenType("double");
   IElementType DYNAMIC = new ValaTokenType("dynamic");
+  IElementType ELLIPSIS = new ValaTokenType("...");
   IElementType ELSE = new ValaTokenType("else");
   IElementType ENSURES = new ValaTokenType("ensures");
   IElementType ENUM = new ValaTokenType("enum");
@@ -237,8 +246,10 @@ public interface ValaTypes {
   IElementType OR_OR = new ValaTokenType("||");
   IElementType OUT = new ValaTokenType("out");
   IElementType OVERRIDE = new ValaTokenType("override");
+  IElementType OWN = new ValaTokenType("own");
   IElementType OWNED = new ValaTokenType("owned");
   IElementType PARAMS = new ValaTokenType("params");
+  IElementType PARTIAL = new ValaTokenType("partial");
   IElementType PIPE = new ValaTokenType("|");
   IElementType PIPE_EQUALS = new ValaTokenType("|=");
   IElementType PLUS = new ValaTokenType("+");
@@ -260,6 +271,7 @@ public interface ValaTypes {
   IElementType REQUIRES = new ValaTokenType("requires");
   IElementType RETURN = new ValaTokenType("return");
   IElementType RPAREN = new ValaTokenType(")");
+  IElementType SEALED = new ValaTokenType("sealed");
   IElementType SEMICOLON = new ValaTokenType(";");
   IElementType SET = new ValaTokenType("set");
   IElementType SHIFT_LEFT_EQUALS = new ValaTokenType("<<=");
@@ -291,14 +303,17 @@ public interface ValaTypes {
   IElementType UINT8 = new ValaTokenType("uint8");
   IElementType ULONG = new ValaTokenType("ulong");
   IElementType UNICHAR = new ValaTokenType("unichar");
+  IElementType UNLOCK = new ValaTokenType("unlock");
   IElementType UNOWNED = new ValaTokenType("unowned");
   IElementType USHORT = new ValaTokenType("ushort");
   IElementType USING = new ValaTokenType("using");
   IElementType VAR = new ValaTokenType("var");
   IElementType VIRTUAL = new ValaTokenType("virtual");
   IElementType VOID = new ValaTokenType("void");
+  IElementType VOLATILE = new ValaTokenType("volatile");
   IElementType WEAK = new ValaTokenType("weak");
   IElementType WHILE = new ValaTokenType("while");
+  IElementType WITH = new ValaTokenType("with");
   IElementType XOR_EQUALS = new ValaTokenType("^=");
   IElementType YIELD = new ValaTokenType("yield");
 
@@ -359,6 +374,9 @@ public interface ValaTypes {
       else if (type == CATCH_CLAUSE) {
         return new ValaCatchClauseImpl(node);
       }
+      else if (type == CATCH_CLAUSES) {
+        return new ValaCatchClausesImpl(node);
+      }
       else if (type == CLASS_DECLARATION) {
         return new ValaClassDeclarationImpl(node);
       }
@@ -398,12 +416,6 @@ public interface ValaTypes {
       else if (type == DELEGATE_DECLARATION) {
         return new ValaDelegateDeclarationImpl(node);
       }
-      else if (type == DELEGATE_DECLARATION_MODIFIER) {
-        return new ValaDelegateDeclarationModifierImpl(node);
-      }
-      else if (type == DELEGATE_DECLARATION_MODIFIERS) {
-        return new ValaDelegateDeclarationModifiersImpl(node);
-      }
       else if (type == DELETE_STATEMENT) {
         return new ValaDeleteStatementImpl(node);
       }
@@ -434,6 +446,9 @@ public interface ValaTypes {
       else if (type == ENUM_DECLARATION) {
         return new ValaEnumDeclarationImpl(node);
       }
+      else if (type == ENUM_MEMBER) {
+        return new ValaEnumMemberImpl(node);
+      }
       else if (type == EQUALITY_EXPRESSION) {
         return new ValaEqualityExpressionImpl(node);
       }
@@ -457,6 +472,9 @@ public interface ValaTypes {
       }
       else if (type == FIELD_DECLARATION) {
         return new ValaFieldDeclarationImpl(node);
+      }
+      else if (type == FIELD_DECLARATION_SECTION) {
+        return new ValaFieldDeclarationSectionImpl(node);
       }
       else if (type == FINALLY_CLAUSE) {
         return new ValaFinallyClauseImpl(node);
@@ -521,6 +539,9 @@ public interface ValaTypes {
       else if (type == LOCK_STATEMENT) {
         return new ValaLockStatementImpl(node);
       }
+      else if (type == MAIN_BLOCK_MEMBER) {
+        return new ValaMainBlockMemberImpl(node);
+      }
       else if (type == MEMBER) {
         return new ValaMemberImpl(node);
       }
@@ -547,6 +568,9 @@ public interface ValaTypes {
       }
       else if (type == MULTIPLICATIVE_EXPRESSION) {
         return new ValaMultiplicativeExpressionImpl(node);
+      }
+      else if (type == NAMED_ARGUMENT) {
+        return new ValaNamedArgumentImpl(node);
       }
       else if (type == NAMESPACE_DECLARATION) {
         return new ValaNamespaceDeclarationImpl(node);
@@ -701,17 +725,32 @@ public interface ValaTypes {
       else if (type == TYPE_WEAK) {
         return new ValaTypeWeakImpl(node);
       }
+      else if (type == TYPE_WEAK_WITH_PARENTHESIS) {
+        return new ValaTypeWeakWithParenthesisImpl(node);
+      }
+      else if (type == TYPE_WITH_PARAMETERS) {
+        return new ValaTypeWithParametersImpl(node);
+      }
       else if (type == UNARY_EXPRESSION) {
         return new ValaUnaryExpressionImpl(node);
       }
       else if (type == UNARY_OPERATOR) {
         return new ValaUnaryOperatorImpl(node);
       }
+      else if (type == UNLOCK_STATEMENT) {
+        return new ValaUnlockStatementImpl(node);
+      }
       else if (type == USING_DIRECTIVE) {
         return new ValaUsingDirectiveImpl(node);
       }
+      else if (type == VALID_IDENTIFIER_KEYWORDS) {
+        return new ValaValidIdentifierKeywordsImpl(node);
+      }
       else if (type == WHILE_STATEMENT) {
         return new ValaWhileStatementImpl(node);
+      }
+      else if (type == WITH_STATEMENT) {
+        return new ValaWithStatementImpl(node);
       }
       else if (type == YIELD_EXPRESSION) {
         return new ValaYieldExpressionImpl(node);

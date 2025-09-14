@@ -53,12 +53,6 @@ public class ValaInterfaceDeclarationImpl extends ASTWrapperPsiElement implement
 
   @Override
   @Nullable
-  public ValaTypeDeclarationModifiers getTypeDeclarationModifiers() {
-    return findChildByClass(ValaTypeDeclarationModifiers.class);
-  }
-
-  @Override
-  @Nullable
   public ValaTypeParameters getTypeParameters() {
     return findChildByClass(ValaTypeParameters.class);
   }

@@ -40,9 +40,15 @@ public class ValaEnumvalueImpl extends ASTWrapperPsiElement implements ValaEnumv
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }

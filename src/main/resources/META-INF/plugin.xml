@@ -44,6 +44,7 @@
                 fieldName="INSTANCE"
                 language="Vala"
                 extensions="vala;vapi;in"/>
+        <internalFileTemplate id="empty_vala_file" name="Vala_File"/>
 
         <lang.parserDefinition
                 language="Vala"
@@ -62,10 +63,6 @@
 
         <codeInsight.parameterInfo language="Vala"
                                    implementationClass="com.redhat.devtools.lsp4ij.features.signatureHelp.LSPParameterInfoHandler"/>
-
-
-        <spellchecker.support language="Vala"
-                              implementationClass="com.tbusk.vala_plugin.spell_checker.ValaSpellCheckingStrategy"/>
 
         <typedHandler implementation="com.tbusk.vala_plugin.editing.CharacterAutoCloser"/>
 

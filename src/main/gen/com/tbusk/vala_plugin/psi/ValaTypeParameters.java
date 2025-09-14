@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaTypeParameters extends PsiElement {
 
+  @NotNull
+  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
+
 }

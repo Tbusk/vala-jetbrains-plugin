@@ -28,9 +28,15 @@ public class ValaSizeofExpressionImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaType getType() {
-    return findNotNullChildByClass(ValaType.class);
+    return findChildByClass(ValaType.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWithParameters getTypeWithParameters() {
+    return findChildByClass(ValaTypeWithParameters.class);
   }
 
 }

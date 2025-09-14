@@ -34,15 +34,39 @@ public class ValaObjectOrArrayCreationExpressionImpl extends ASTWrapperPsiElemen
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaMember getMember() {
-    return findNotNullChildByClass(ValaMember.class);
+    return findChildByClass(ValaMember.class);
   }
 
   @Override
   @Nullable
   public ValaObjectCreationExpression getObjectCreationExpression() {
     return findChildByClass(ValaObjectCreationExpression.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaType getType() {
+    return findChildByClass(ValaType.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWeak getTypeWeak() {
+    return findChildByClass(ValaTypeWeak.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis() {
+    return findChildByClass(ValaTypeWeakWithParenthesis.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWithParameters getTypeWithParameters() {
+    return findChildByClass(ValaTypeWithParameters.class);
   }
 
 }

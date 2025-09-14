@@ -33,4 +33,10 @@ public class ValaLocalTupleDeclarationImpl extends ASTWrapperPsiElement implemen
     return findNotNullChildByClass(ValaExpression.class);
   }
 
+  @Override
+  @NotNull
+  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  }
+
 }

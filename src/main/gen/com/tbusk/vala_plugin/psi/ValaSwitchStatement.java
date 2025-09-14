@@ -11,6 +11,6 @@ public interface ValaSwitchStatement extends PsiElement {
   ValaExpression getExpression();
 
   @NotNull
-  List<ValaSwitchSection> getSwitchSectionList();
+  ValaSwitchSection getSwitchSection();
 
 }

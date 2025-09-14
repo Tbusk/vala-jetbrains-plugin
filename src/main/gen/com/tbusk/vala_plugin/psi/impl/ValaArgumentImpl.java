@@ -35,6 +35,12 @@ public class ValaArgumentImpl extends ASTWrapperPsiElement implements ValaArgume
 
   @Override
   @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
     return findChildByType(IDENTIFIER);
   }

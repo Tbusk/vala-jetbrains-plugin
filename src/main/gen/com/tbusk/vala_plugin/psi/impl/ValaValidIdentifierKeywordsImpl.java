@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaDelegateDeclarationModifierImpl extends ASTWrapperPsiElement implements ValaDelegateDeclarationModifier {
+public class ValaValidIdentifierKeywordsImpl extends ASTWrapperPsiElement implements ValaValidIdentifierKeywords {
 
-  public ValaDelegateDeclarationModifierImpl(@NotNull ASTNode node) {
+  public ValaValidIdentifierKeywordsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitDelegateDeclarationModifier(this);
+    visitor.visitValidIdentifierKeywords(this);
   }
 
   @Override

@@ -5,6 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaDelegateDeclarationModifier extends PsiElement {
+public interface ValaTypeWithParameters extends PsiElement {
+
+  @NotNull
+  List<ValaArrayType> getArrayTypeList();
+
+  @NotNull
+  ValaType getType();
 
 }

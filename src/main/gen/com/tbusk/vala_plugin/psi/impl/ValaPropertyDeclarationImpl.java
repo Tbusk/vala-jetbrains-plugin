@@ -46,15 +46,27 @@ public class ValaPropertyDeclarationImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaTypeWeak getTypeWeak() {
-    return findNotNullChildByClass(ValaTypeWeak.class);
+    return findChildByClass(ValaTypeWeak.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis() {
+    return findChildByClass(ValaTypeWeakWithParenthesis.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
+  }
+
+  @Override
+  @Nullable
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return findChildByType(IDENTIFIER);
   }
 
 }

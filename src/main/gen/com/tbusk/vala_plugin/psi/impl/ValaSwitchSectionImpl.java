@@ -34,9 +34,9 @@ public class ValaSwitchSectionImpl extends ASTWrapperPsiElement implements ValaS
   }
 
   @Override
-  @Nullable
-  public ValaExpression getExpression() {
-    return findChildByClass(ValaExpression.class);
+  @NotNull
+  public List<ValaExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
   }
 
 }

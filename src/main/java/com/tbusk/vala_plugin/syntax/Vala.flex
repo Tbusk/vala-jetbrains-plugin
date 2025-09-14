@@ -51,19 +51,20 @@ import com.tbusk.vala_plugin.psi.ValaTokenType;
 
 // Tokens
 WHITE_SPACE=[ \t\n\r]+
-IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*\\??
+IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*@?
+PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]*@?\??
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
-DECIMAL_LITERAL=(-?[0-9]+[.]?[0-9]*)
+DECIMAL_LITERAL=([0-9]+.[0-9]+)
 HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+
-INTEGER_LITERAL=(-?[0-9]+)
-REGULAR_EXPRESSION=\/([\(\)\[\]\.\+\^\$\|\\\?_\{\}a-zA-Z0-9@*\-\'].*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match|;|\.replace_eval|\.replace)))
+INTEGER_LITERAL=([0-9]+)
+REGULAR_EXPRESSION=\/([\(\)\[\].\+\^\$\|\\\?_\{\}a-zA-Z0-9!:@*\-\']*.*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace|,)))
 
 // Comments
 COMMENT="//"[^\r\n]*
-BLOCK_COMMENT="/*"([^*]|\*[^/])*"\*/"
-DOC_COMMENT="/**"([^*]|"*"+[^*/])*"*"+"/"
-TRIPLE_QUOTE_STRING=\"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
+BLOCK_COMMENT= "/*" [^*] ~"*/" | "/*" "*"+ "/"
+DOC_COMMENT="/**" ( [^*] | \*+ [^/*] )* "*" + "/"
+TRIPLE_QUOTE_STRING=@?\"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
 PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\n")
 
 %%
@@ -73,9 +74,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     // Other tokens
     {STRING_LITERAL} { return ValaTypes.STRING_LITERAL; }
     {CHAR_LITERAL} { return ValaTypes.CHAR_LITERAL; }
-    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
-    {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
-    {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
     {WHITE_SPACE} { return TokenType.WHITE_SPACE; }
     {TRIPLE_QUOTE_STRING} { return ValaTypes.TRIPLE_QUOTE_STRING; }
 
@@ -111,6 +109,7 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
 
     // Synchronization
     "lock" { return ValaTypes.LOCK; }
+    "unlock" { return ValaTypes.UNLOCK; }
 
     // Type Declaration
     "class" { return ValaTypes.CLASS; }
@@ -136,6 +135,8 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "async" { return ValaTypes.ASYNC; }
     "inline" { return ValaTypes.INLINE; }
     "new" { return ValaTypes.NEW; }
+    "sealed" { return ValaTypes.SEALED; }
+    "partial" { return ValaTypes.PARTIAL; }
 
     // Access Modifiers
     "public" { return ValaTypes.PUBLIC; }
@@ -155,13 +156,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     // Namespaces
     "namespace" { return ValaTypes.NAMESPACE; }
     "using" { return ValaTypes.USING; }
-
-    // Operator Keywords
-    "as" { return ValaTypes.AS; }
-    "is" { return ValaTypes.IS; }
-    "delete" { return ValaTypes.DELETE; }
-    "sizeof" { return ValaTypes.SIZEOF; }
-    "typeof" { return ValaTypes.TYPEOF; }
 
     // Access Keywords
     "this" { return ValaTypes.THIS; }
@@ -183,6 +177,8 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "yield" { return ValaTypes.YIELD; }
     "global" { return ValaTypes.GLOBAL; }
     "owned" { return ValaTypes.OWNED; }
+    "with" { return ValaTypes.WITH; }
+    "params" { return ValaTypes.PARAMS; }
 
     // Primitive Types
     "bool" { return ValaTypes.BOOL; }
@@ -208,6 +204,13 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "int64" { return ValaTypes.INT64; }
     "size_t" { return ValaTypes.SIZE_T; }
     "ssize_t" { return ValaTypes.SSIZE_T; }
+
+    // Operator Keywords
+    "as" { return ValaTypes.AS; }
+    "is" { return ValaTypes.IS; }
+    "delete" { return ValaTypes.DELETE; }
+    "sizeof" { return ValaTypes.SIZEOF; }
+    "typeof" { return ValaTypes.TYPEOF; }
 
     // Relational Operators
     ">" { return ValaTypes.GREATER_THAN; }
@@ -252,10 +255,11 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "!=" { return ValaTypes.NOT_EQUALS; }
 
     // Characters
+    "??" { return ValaTypes.COALESCING; }
     ";" { return ValaTypes.SEMICOLON; }
     ":" { return ValaTypes.COLON; }
     "," { return ValaTypes.COMMA; }
-    "..." { return ValaTypes.DOT_DOT_DOT; }
+    "..." { return ValaTypes.ELLIPSIS; }
     "." { return ValaTypes.DOT; }
     "(" { return ValaTypes.LPAREN; }
     ")" { return ValaTypes.RPAREN; }
@@ -275,9 +279,31 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "$" { return ValaTypes.DOLLAR; }
 
     // Lastly
-    {REGULAR_EXPRESSION} { return ValaTypes.REGULAR_EXPRESSION; }
+    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
+    {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
+    {PRE_NUMERIC_IDENTIFIER} { return ValaTypes.IDENTIFIER; }
+    {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
     {IDENTIFIER} { return ValaTypes.IDENTIFIER; }
     {PREPROCESSOR_DIRECTIVE} { return ValaTypes.PREPROCESSOR_DIRECTIVE; }
+
+    {REGULAR_EXPRESSION} {
+            String matched = yytext().toString();
+            int length = matched.length();
+
+            // Find the first non-escaped closing slash
+            for (int i = 1; i < length; i++) {
+                if (matched.charAt(i) == '/' && matched.charAt(i - 1) != '\\') {
+
+                    yypushback(length - i - 1);
+
+                    return ValaTypes.REGULAR_EXPRESSION;
+                }
+            }
+
+            // If no valid regex found, treat as a regular forward slash token
+            yypushback(length - 1);
+            return ValaTypes.FORWARD_SLASH;
+      }
 
     // Error Fallback
     [^] { return TokenType.BAD_CHARACTER; }

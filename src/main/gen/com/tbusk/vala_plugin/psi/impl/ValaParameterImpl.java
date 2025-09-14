@@ -41,8 +41,44 @@ public class ValaParameterImpl extends ASTWrapperPsiElement implements ValaParam
 
   @Override
   @Nullable
+  public ValaInlineArrayType getInlineArrayType() {
+    return findChildByClass(ValaInlineArrayType.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaPrimitiveType getPrimitiveType() {
+    return findChildByClass(ValaPrimitiveType.class);
+  }
+
+  @Override
+  @Nullable
   public ValaType getType() {
     return findChildByClass(ValaType.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWeak getTypeWeak() {
+    return findChildByClass(ValaTypeWeak.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis() {
+    return findChildByClass(ValaTypeWeakWithParenthesis.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaTypeWithParameters getTypeWithParameters() {
+    return findChildByClass(ValaTypeWithParameters.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
+    return findChildByClass(ValaValidIdentifierKeywords.class);
   }
 
   @Override

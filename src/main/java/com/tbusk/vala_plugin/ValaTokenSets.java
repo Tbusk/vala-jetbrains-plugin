@@ -48,6 +48,7 @@ public interface ValaTokenSets {
 
             // Synchronization
             ValaTypes.LOCK,
+            ValaTypes.UNLOCK,
 
             // Type Declaration
             ValaTypes.CLASS,
@@ -73,6 +74,8 @@ public interface ValaTokenSets {
             ValaTypes.ASYNC,
             ValaTypes.INLINE,
             ValaTypes.NEW,
+            ValaTypes.SEALED,
+            ValaTypes.PARTIAL,
 
             // Access Modifiers
             ValaTypes.PUBLIC,
@@ -83,6 +86,7 @@ public interface ValaTokenSets {
             // Method Parameters
             ValaTypes.OUT,
             ValaTypes.REF,
+            // ValaTypes.IN, is also included
 
             // Method Contract Keywords
             ValaTypes.THROWS,
@@ -122,6 +126,8 @@ public interface ValaTokenSets {
             ValaTypes.YIELD,
             ValaTypes.GLOBAL,
             ValaTypes.OWNED,
+            ValaTypes.WITH,
+            ValaTypes.PARAMS,
 
             // Primitive Types
             ValaTypes.BOOL,

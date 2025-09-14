@@ -13,11 +13,17 @@ public interface ValaStructDeclaration extends PsiElement {
   @Nullable
   ValaBaseTypes getBaseTypes();
 
+  @Nullable
+  ValaPrimitiveType getPrimitiveType();
+
   @NotNull
   List<ValaStructMember> getStructMemberList();
 
-  @NotNull
+  @Nullable
   ValaSymbol getSymbol();
+
+  @Nullable
+  ValaTypeArguments getTypeArguments();
 
   @Nullable
   ValaTypeDeclarationModifiers getTypeDeclarationModifiers();

@@ -10,8 +10,8 @@ public interface ValaTryStatement extends PsiElement {
   @NotNull
   ValaBlock getBlock();
 
-  @NotNull
-  List<ValaCatchClause> getCatchClauseList();
+  @Nullable
+  ValaCatchClauses getCatchClauses();
 
   @Nullable
   ValaFinallyClause getFinallyClause();

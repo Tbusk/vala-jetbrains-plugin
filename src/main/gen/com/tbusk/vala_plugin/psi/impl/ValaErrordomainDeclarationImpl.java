@@ -28,15 +28,15 @@ public class ValaErrordomainDeclarationImpl extends ASTWrapperPsiElement impleme
   }
 
   @Override
-  @Nullable
-  public ValaAccessModifier getAccessModifier() {
-    return findChildByClass(ValaAccessModifier.class);
+  @NotNull
+  public List<ValaAttributes> getAttributesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public ValaErrorcodes getErrorcodes() {
-    return findNotNullChildByClass(ValaErrorcodes.class);
+    return findChildByClass(ValaErrorcodes.class);
   }
 
   @Override
@@ -49,12 +49,6 @@ public class ValaErrordomainDeclarationImpl extends ASTWrapperPsiElement impleme
   @NotNull
   public ValaSymbol getSymbol() {
     return findNotNullChildByClass(ValaSymbol.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaTypeDeclarationModifiers getTypeDeclarationModifiers() {
-    return findChildByClass(ValaTypeDeclarationModifiers.class);
   }
 
 }

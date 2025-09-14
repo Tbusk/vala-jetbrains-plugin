@@ -41,8 +41,14 @@ public class ValaYieldExpressionImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @NotNull
-  public ValaMethodCall getMethodCall() {
-    return findNotNullChildByClass(ValaMethodCall.class);
+  public List<ValaMemberAccess> getMemberAccessList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMemberAccess.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ValaMethodCall> getMethodCallList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMethodCall.class);
   }
 
 }

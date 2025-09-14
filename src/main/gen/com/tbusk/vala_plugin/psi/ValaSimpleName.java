@@ -11,6 +11,9 @@ public interface ValaSimpleName extends PsiElement {
   ValaTypeArguments getTypeArguments();
 
   @Nullable
+  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+
+  @Nullable
   PsiElement getIdentifier();
 
 }

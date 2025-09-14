@@ -14,6 +14,9 @@ public interface ValaYieldExpression extends PsiElement {
   ValaMember getMember();
 
   @NotNull
-  ValaMethodCall getMethodCall();
+  List<ValaMemberAccess> getMemberAccessList();
+
+  @NotNull
+  List<ValaMethodCall> getMethodCallList();
 
 }

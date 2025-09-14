@@ -35,6 +35,9 @@ public interface ValaClassMember extends PsiElement {
   ValaFieldDeclaration getFieldDeclaration();
 
   @Nullable
+  ValaInterfaceDeclaration getInterfaceDeclaration();
+
+  @Nullable
   ValaMethodDeclaration getMethodDeclaration();
 
   @Nullable

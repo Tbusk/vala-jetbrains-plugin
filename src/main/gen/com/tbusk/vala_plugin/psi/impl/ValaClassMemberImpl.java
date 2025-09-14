@@ -83,6 +83,12 @@ public class ValaClassMemberImpl extends ASTWrapperPsiElement implements ValaCla
 
   @Override
   @Nullable
+  public ValaInterfaceDeclaration getInterfaceDeclaration() {
+    return findChildByClass(ValaInterfaceDeclaration.class);
+  }
+
+  @Override
+  @Nullable
   public ValaMethodDeclaration getMethodDeclaration() {
     return findChildByClass(ValaMethodDeclaration.class);
   }

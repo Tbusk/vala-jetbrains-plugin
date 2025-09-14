@@ -10,7 +10,7 @@ public interface ValaSwitchSection extends PsiElement {
   @NotNull
   List<ValaEmbeddedStatementWithoutBlock> getEmbeddedStatementWithoutBlockList();
 
-  @Nullable
-  ValaExpression getExpression();
+  @NotNull
+  List<ValaExpression> getExpressionList();
 
 }

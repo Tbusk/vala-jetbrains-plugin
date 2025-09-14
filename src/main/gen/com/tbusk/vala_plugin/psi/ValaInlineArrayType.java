@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaInlineArrayType extends PsiElement {
 
-  @Nullable
-  ValaMember getMember();
+  @NotNull
+  List<ValaExpression> getExpressionList();
 
-  @Nullable
-  PsiElement getIntegerLiteral();
+  @NotNull
+  List<ValaMember> getMemberList();
 
 }

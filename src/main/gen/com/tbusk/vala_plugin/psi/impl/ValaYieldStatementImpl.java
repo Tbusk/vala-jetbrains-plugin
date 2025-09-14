@@ -29,14 +29,8 @@ public class ValaYieldStatementImpl extends ASTWrapperPsiElement implements Vala
 
   @Override
   @Nullable
-  public ValaExpression getExpression() {
-    return findChildByClass(ValaExpression.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaExpressionStatement getExpressionStatement() {
-    return findChildByClass(ValaExpressionStatement.class);
+  public ValaYieldExpression getYieldExpression() {
+    return findChildByClass(ValaYieldExpression.class);
   }
 
 }

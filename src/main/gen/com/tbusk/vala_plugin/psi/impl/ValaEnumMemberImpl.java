@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaDelegateDeclarationModifiersImpl extends ASTWrapperPsiElement implements ValaDelegateDeclarationModifiers {
+public class ValaEnumMemberImpl extends ASTWrapperPsiElement implements ValaEnumMember {
 
-  public ValaDelegateDeclarationModifiersImpl(@NotNull ASTNode node) {
+  public ValaEnumMemberImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitDelegateDeclarationModifiers(this);
+    visitor.visitEnumMember(this);
   }
 
   @Override
@@ -28,9 +28,21 @@ public class ValaDelegateDeclarationModifiersImpl extends ASTWrapperPsiElement i
   }
 
   @Override
-  @NotNull
-  public List<ValaDelegateDeclarationModifier> getDelegateDeclarationModifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaDelegateDeclarationModifier.class);
+  @Nullable
+  public ValaAttributes getAttributes() {
+    return findChildByClass(ValaAttributes.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaConstantDeclaration getConstantDeclaration() {
+    return findChildByClass(ValaConstantDeclaration.class);
+  }
+
+  @Override
+  @Nullable
+  public ValaMethodDeclaration getMethodDeclaration() {
+    return findChildByClass(ValaMethodDeclaration.class);
   }
 
 }
