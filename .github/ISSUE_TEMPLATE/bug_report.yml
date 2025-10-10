@@ -37,6 +37,7 @@ body:
       description: What version of the plugin are you using?
       options:
         - Latest (if not added)
+        - 1.2.5-ALPHA
         - 1.2.4-ALPHA
         - 1.2.3-ALPHA
         - 1.2.2-ALPHA
