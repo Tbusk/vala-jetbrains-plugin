@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us improve
-title: "[BUG]: "
+title: "bug: "
 labels: ["Bug"]
 assignees:
   - tbusk
@@ -37,6 +37,7 @@ body:
       description: What version of the plugin are you using?
       options:
         - Latest (if not added)
+        - 1.2.5-ALPHA
         - 1.2.4-ALPHA
         - 1.2.3-ALPHA
         - 1.2.2-ALPHA

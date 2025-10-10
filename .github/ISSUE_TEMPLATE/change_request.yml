@@ -1,6 +1,6 @@
 name: Change request
 description: Suggest a change that can help the project
-title: "[CHANGE]: "
+title: "change: "
 labels: ["Change Request"]
 assignees:
   - tbusk

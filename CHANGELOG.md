@@ -6,6 +6,12 @@
 
 ### What's Changed
 
+-
+
+## [1.2.4-ALPHA]
+
+### What's Changed
+
 - Added coalescing token support
 - Added support for named arguments/parameters
 - Improved regular expression literal support
