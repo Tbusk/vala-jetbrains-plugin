@@ -1,7 +1,23 @@
-### Choose a template for your pull request:
+<!-- Thank you for your contribution! Please fill out this template to help us review your PR -->
 
-Please choose the template that best describes your contribution. This will open a new pull request with the correct template pre-filled.
+<!-- Add an issue number below. If one hasn't been created, create one -->
+Closes #
 
-- **[Feature](?expand=1&template=feature_pr_template.md)**: For adding a new feature or enhancement.
-- **[Patch/Bug Fix](?expand=1&template=patch_pr_template.md)**: For submitting a fix for an issue.
-- **[Change](?expand=1&template=change_pr_template.md)**: For any changes made outside of patches and new features.
+### Summary
+
+<!-- Provide a general summary of what this PR achieves -->
+
+### Type of Change
+
+- [ ] Feature: A new feature has been implemented.
+- [ ] Patch / Bug Fix: A fix for an issue found.
+- [ ] Change: A change has been made.
+
+### PR Details
+
+<!-- Describe in more detail what this PR achieves and why, and anything that is important to know about it -->
+
+### Additional Information
+
+<!-- Include anything additional, like helpful links, supporting docs, screenshots, etc. -->
+
