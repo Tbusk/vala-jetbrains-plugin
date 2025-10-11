@@ -1,0 +1,16 @@
+name: "Pull Request Labeler"
+on:
+  - pull_request_target
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/labeler@v6
+        with:
+          repo-token: '${{ secrets.GH_ACTIONS_KEY }}'
+          sync-labels: true

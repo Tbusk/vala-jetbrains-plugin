@@ -1,0 +1,21 @@
+{
+  "LABEL": {
+    "name": "PR title needs formatting",
+    "color": "EEEEEE"
+  },
+  "CHECKS": {
+    "prefixes": [
+      "patch: ",
+      "feat: ",
+      "change: ",
+      "docs: ",
+      "test: ",
+      "chore: "
+    ]
+  },
+  "MESSAGES": {
+    "success": "All Good",
+    "failure": "Failing CI test",
+    "notice": ""
+  }
+}
