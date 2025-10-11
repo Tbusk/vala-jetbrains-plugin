@@ -12,5 +12,5 @@ jobs:
     steps:
       - uses: actions/labeler@v6
         with:
-          repo-token: '${{ secrets.GITHUB_ACTIONS_KEY }}'
+          repo-token: '${{ secrets.GH_ACTIONS_KEY }}'
           sync-labels: true

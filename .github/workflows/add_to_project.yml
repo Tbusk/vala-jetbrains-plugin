@@ -14,4 +14,4 @@ jobs:
       - uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/Tbusk/projects/11
-          github-token: ${{ secrets.GITHUB_ACTIONS_KEY }}
+          github-token: ${{ secrets.GH_ACTIONS_KEY }}

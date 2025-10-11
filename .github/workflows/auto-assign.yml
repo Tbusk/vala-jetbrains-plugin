@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: wow-actions/auto-assign@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_ACTIONS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACTIONS_KEY }}
           reviewers: |
             Tbusk
           assignees: ''
