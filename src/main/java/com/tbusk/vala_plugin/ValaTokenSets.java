@@ -5,6 +5,7 @@ import com.tbusk.vala_plugin.psi.ValaTypes;
 
 import static com.tbusk.vala_plugin.psi.ValaTypes.STRING_LITERAL;
 
+// https://plugins.jetbrains.com/docs/intellij/lexer-and-parser-definition.html#define-token-sets
 public interface ValaTokenSets {
 
     // Token Sets

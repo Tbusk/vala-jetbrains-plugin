@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
+// https://plugins.jetbrains.com/docs/intellij/language-and-filetype.html#define-a-file-type
 public final class ValaFileType extends LanguageFileType {
 
     public static final ValaFileType INSTANCE = new ValaFileType();

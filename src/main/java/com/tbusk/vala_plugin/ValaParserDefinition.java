@@ -10,11 +10,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import com.tbusk.vala_plugin.psi.ValaTypes;
 import com.tbusk.vala_plugin.language.ValaFile;
 import com.tbusk.vala_plugin.language.ValaLanguage;
+import com.tbusk.vala_plugin.psi.ValaTypes;
 import org.jetbrains.annotations.NotNull;
 
+// https://plugins.jetbrains.com/docs/intellij/lexer-and-parser-definition.html#define-a-parser
 public class ValaParserDefinition implements ParserDefinition {
 
     public static final IFileElementType FILE = new IFileElementType(ValaLanguage.INSTANCE);
