@@ -1,0 +1,51 @@
+Documentation:
+  - changed_files:
+      - any-glob-to-any-file: [ 'docs/**', '*.md' ]
+
+Actions:
+  - changed-files:
+      - any-glob-to-any-file: '.github/workflows/**'
+
+Dependencies:
+  - head-branch: [ 'dependabot', 'bump' ]
+  - changed-files:
+      - any-glob-to-any-file: [ 'jflex/**', 'gradle/**', 'qodana.yml', 'gradlew', 'gradlew.bat' ]
+
+License:
+  - changed-files:
+      - any-glob-to-any-file: 'LICENSE'
+
+Templates:
+  - changed-files:
+      - any-glob-to-any-file: [ '.github/ISSUE_TEMPLATE/**', '.github/pull_request_template.md' ]
+
+Samples:
+  - changed-files:
+      - any-glob-to-any-file: 'src/test/vala/samples/**'
+
+Generated:
+  - changed-files:
+      - any-glob-to-any-file: 'src/main/gen/**'
+
+Configuration:
+  - changed-files:
+      - any-glob-to-any-file: [ 'gradle.properties', 'build.gradle.kts', '.gitignore', 'settings.gradle.kts', '.github/labeler.yml', '.github/dependabot.yml' ]
+
+Syntax:
+  - changed-files:
+      - any-glob-to-any-file: [ '*.bnf', '*.flex' ]
+
+Enhancement:
+  - head-branch: [ '^feature', 'feature', '^feat', 'feat' ]
+
+Change:
+  - head-branch: [ '^change', 'change' ]
+
+Patch:
+  - head-branch: [ '^patch', 'patch' ]
+
+Chore:
+  - head-branch: [ '^chore', 'chore' ]
+
+Test:
+  - head-branch: [ '^test', 'test' ]

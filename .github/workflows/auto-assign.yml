@@ -1,0 +1,19 @@
+# https://github.com/wow-actions/auto-assign
+name: Auto Assign
+on:
+  issues:
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#issues
+    types: [ opened, edited, labeled, unlabeled ]
+  pull_request:
+    types: [ opened, edited, labeled, unlabeled ]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wow-actions/auto-assign@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_ACTIONS_KEY }}
+          reviewers: |
+            Tbusk
+          assignees: ''
+          skipKeywords: wip, draft
