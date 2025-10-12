@@ -41,6 +41,12 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
+  public List<ValaIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaIdentifier.class);
+  }
+
+  @Override
+  @NotNull
   public List<ValaInlineArrayType> getInlineArrayTypeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaInlineArrayType.class);
   }
@@ -55,12 +61,6 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
   @NotNull
   public ValaType getType() {
     return findNotNullChildByClass(ValaType.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
   }
 
 }

@@ -36,10 +36,14 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey COMMA = TextAttributesKey.createTextAttributesKey("VALA_COMMA", DefaultLanguageHighlighterColors.COMMA);
     public static final TextAttributesKey DOT = TextAttributesKey.createTextAttributesKey("VALA_DOT", DefaultLanguageHighlighterColors.DOT);
     public static final TextAttributesKey PARENTHESES = TextAttributesKey.createTextAttributesKey("VALA_PARENTHESES", DefaultLanguageHighlighterColors.PARENTHESES);
+    public static final TextAttributesKey LOCAL_VARIABLE = TextAttributesKey.createTextAttributesKey("VALA_LOCAL_VARIABLE", DefaultLanguageHighlighterColors.LOCAL_VARIABLE);
+    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.FUNCTION_CALL);
+    public static final TextAttributesKey METHOD_DECLARATION = TextAttributesKey.createTextAttributesKey("VALA_METHOD_DECLARATION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION);
+    public static final TextAttributesKey CLASS_NAME = TextAttributesKey.createTextAttributesKey("VALA_CLASS_NAME", DefaultLanguageHighlighterColors.CLASS_NAME);
+
 
     public static final TextAttributesKey NUMBER = TextAttributesKey.createTextAttributesKey("VALA_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey CONSTANT = TextAttributesKey.createTextAttributesKey("VALA_CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
-    public static final TextAttributesKey METHOD_CALL = TextAttributesKey.createTextAttributesKey("VALA_METHOD_CALL", DefaultLanguageHighlighterColors.STATIC_FIELD);
 
     // Text attributes key arrays used to highlight tokens of specific types.
     private static final TextAttributesKey[] LINE_COMMENT_KEYS = new TextAttributesKey[]{LINE_COMMENT};
@@ -58,6 +62,9 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] COMMA_KEYS = new TextAttributesKey[]{COMMA};
     private static final TextAttributesKey[] DOT_KEYS = new TextAttributesKey[]{DOT};
     private static final TextAttributesKey[] PARENTHESES_KEYS = new TextAttributesKey[]{PARENTHESES};
+    private static final TextAttributesKey[] LOCAL_VARIABLE_KEYS = new TextAttributesKey[]{LOCAL_VARIABLE};
+    private static final TextAttributesKey[] METHOD_DECLARATION_KEYS = new TextAttributesKey[]{METHOD_DECLARATION};
+    private static final TextAttributesKey[] CLASS_NAME_KEYS = new TextAttributesKey[]{CLASS_NAME};
 
 
     // Map of a vala token type to the text attribute key array used to highlight it.
@@ -79,7 +86,11 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
                     Map.entry(ValaTypes.COMMA, COMMA_KEYS),
                     Map.entry(ValaTypes.DOT, DOT_KEYS),
                     Map.entry(ValaTypes.LPAREN, PARENTHESES_KEYS),
-                    Map.entry(ValaTypes.RPAREN, PARENTHESES_KEYS)
+                     Map.entry(ValaTypes.RPAREN, PARENTHESES_KEYS),
+                     Map.entry(ValaTypes.LOCAL_VARIABLE, LOCAL_VARIABLE_KEYS),
+                     Map.entry(ValaTypes.METHOD_CALL, METHOD_CALL_KEYS),
+                     Map.entry(ValaTypes.METHOD_DECLARATION, METHOD_DECLARATION_KEYS),
+                     Map.entry(ValaTypes.CLASS_DECLARATION, CLASS_NAME_KEYS)
              )
     );
 

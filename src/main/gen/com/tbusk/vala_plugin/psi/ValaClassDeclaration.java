@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaClassDeclaration extends PsiElement {
+public interface ValaClassDeclaration extends ValaNamedElement {
 
   @Nullable
   ValaAccessModifier getAccessModifier();

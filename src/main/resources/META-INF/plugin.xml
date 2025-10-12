@@ -120,6 +120,10 @@
                 implementationClass="com.tbusk.vala_plugin.code_style.ValaPairedBraceMatcher"
         />
 
+        <psi.referenceContributor language="Vala" implementation="com.tbusk.vala_plugin.psi.ValaReferenceContributor"/>
+
+        <annotator language="Vala" implementationClass="com.tbusk.vala_plugin.highlighting.ValaAnnotator"/>
+
     </extensions>
 
     <actions >

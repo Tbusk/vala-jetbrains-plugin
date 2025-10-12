@@ -11,6 +11,6 @@ public interface ValaLocalTupleDeclaration extends PsiElement {
   ValaExpression getExpression();
 
   @NotNull
-  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
+  List<ValaIdentifier> getIdentifierList();
 
 }

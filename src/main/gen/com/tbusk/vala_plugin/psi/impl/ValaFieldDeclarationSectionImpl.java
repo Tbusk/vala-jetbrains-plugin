@@ -35,20 +35,14 @@ public class ValaFieldDeclarationSectionImpl extends ASTWrapperPsiElement implem
 
   @Override
   @NotNull
+  public ValaIdentifier getIdentifier() {
+    return findNotNullChildByClass(ValaIdentifier.class);
+  }
+
+  @Override
+  @NotNull
   public List<ValaInlineArrayType> getInlineArrayTypeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaInlineArrayType.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
-    return findChildByClass(ValaValidIdentifierKeywords.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
   }
 
 }

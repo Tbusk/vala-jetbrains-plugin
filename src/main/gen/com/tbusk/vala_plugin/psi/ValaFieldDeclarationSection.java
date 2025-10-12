@@ -11,12 +11,9 @@ public interface ValaFieldDeclarationSection extends PsiElement {
   ValaExpression getExpression();
 
   @NotNull
+  ValaIdentifier getIdentifier();
+
+  @NotNull
   List<ValaInlineArrayType> getInlineArrayTypeList();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaMethodDeclaration extends PsiElement {
+public interface ValaMethodDeclaration extends ValaNamedElement {
 
   @Nullable
   ValaAccessModifier getAccessModifier();
@@ -15,6 +15,9 @@ public interface ValaMethodDeclaration extends PsiElement {
 
   @Nullable
   ValaEnsuresStatement getEnsuresStatement();
+
+  @NotNull
+  List<ValaIdentifier> getIdentifierList();
 
   @Nullable
   ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
@@ -36,8 +39,5 @@ public interface ValaMethodDeclaration extends PsiElement {
 
   @Nullable
   ValaTypeWithParameters getTypeWithParameters();
-
-  @NotNull
-  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
 
 }

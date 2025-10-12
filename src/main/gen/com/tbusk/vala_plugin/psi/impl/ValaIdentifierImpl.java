@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaMemberPartImpl extends ASTWrapperPsiElement implements ValaMemberPart {
+public class ValaIdentifierImpl extends ASTWrapperPsiElement implements ValaIdentifier {
 
-  public ValaMemberPartImpl(@NotNull ASTNode node) {
+  public ValaIdentifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitMemberPart(this);
+    visitor.visitIdentifier(this);
   }
 
   @Override
@@ -28,21 +28,9 @@ public class ValaMemberPartImpl extends ASTWrapperPsiElement implements ValaMemb
   }
 
   @Override
-  @Nullable
-  public ValaIdentifier getIdentifier() {
-    return findChildByClass(ValaIdentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaTypeArguments getTypeArguments() {
-    return findChildByClass(ValaTypeArguments.class);
+  @NotNull
+  public PsiElement getIdentifierToken() {
+    return findNotNullChildByType(IDENTIFIER_TOKEN);
   }
 
 }

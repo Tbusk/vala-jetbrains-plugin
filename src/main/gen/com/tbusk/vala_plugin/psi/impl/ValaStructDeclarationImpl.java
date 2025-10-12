@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaStructDeclarationImpl extends ASTWrapperPsiElement implements ValaStructDeclaration {
+public class ValaStructDeclarationImpl extends ValaNamedElementImpl implements ValaStructDeclaration {
 
   public ValaStructDeclarationImpl(@NotNull ASTNode node) {
     super(node);

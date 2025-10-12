@@ -10,6 +10,9 @@ public interface ValaPropertyDeclaration extends PsiElement {
   @Nullable
   ValaAccessModifier getAccessModifier();
 
+  @NotNull
+  ValaIdentifier getIdentifier();
+
   @Nullable
   ValaPropertyDeclarationModifiers getPropertyDeclarationModifiers();
 
@@ -21,11 +24,5 @@ public interface ValaPropertyDeclaration extends PsiElement {
 
   @Nullable
   ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

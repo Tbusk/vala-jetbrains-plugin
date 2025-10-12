@@ -14,6 +14,9 @@ public interface ValaParameter extends PsiElement {
   ValaExpression getExpression();
 
   @Nullable
+  ValaIdentifier getIdentifier();
+
+  @Nullable
   ValaInlineArrayType getInlineArrayType();
 
   @Nullable
@@ -30,11 +33,5 @@ public interface ValaParameter extends PsiElement {
 
   @Nullable
   ValaTypeWithParameters getTypeWithParameters();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

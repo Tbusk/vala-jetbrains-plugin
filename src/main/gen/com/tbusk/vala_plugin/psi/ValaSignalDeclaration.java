@@ -13,6 +13,9 @@ public interface ValaSignalDeclaration extends PsiElement {
   @Nullable
   ValaBlock getBlock();
 
+  @NotNull
+  ValaIdentifier getIdentifier();
+
   @Nullable
   ValaParameters getParameters();
 
@@ -24,11 +27,5 @@ public interface ValaSignalDeclaration extends PsiElement {
 
   @Nullable
   ValaTypeWithParameters getTypeWithParameters();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

@@ -34,6 +34,12 @@ public class ValaNamedArgumentImpl extends ASTWrapperPsiElement implements ValaN
   }
 
   @Override
+  @NotNull
+  public ValaIdentifier getIdentifier() {
+    return findNotNullChildByClass(ValaIdentifier.class);
+  }
+
+  @Override
   @Nullable
   public ValaTypeWeak getTypeWeak() {
     return findChildByClass(ValaTypeWeak.class);
@@ -49,18 +55,6 @@ public class ValaNamedArgumentImpl extends ASTWrapperPsiElement implements ValaN
   @Nullable
   public ValaTypeWithParameters getTypeWithParameters() {
     return findChildByClass(ValaTypeWithParameters.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
-    return findChildByClass(ValaValidIdentifierKeywords.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
   }
 
 }

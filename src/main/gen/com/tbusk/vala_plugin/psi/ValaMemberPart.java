@@ -8,15 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface ValaMemberPart extends PsiElement {
 
   @Nullable
+  ValaIdentifier getIdentifier();
+
+  @Nullable
   ValaPrimitiveType getPrimitiveType();
 
   @Nullable
   ValaTypeArguments getTypeArguments();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

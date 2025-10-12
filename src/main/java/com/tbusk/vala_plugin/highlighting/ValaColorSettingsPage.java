@@ -45,6 +45,7 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Comma", ValaSyntaxHighlighter.COMMA),
             new AttributesDescriptor("Dot", ValaSyntaxHighlighter.DOT),
             new AttributesDescriptor("Parentheses", ValaSyntaxHighlighter.PARENTHESES),
+            new AttributesDescriptor("Method declaration", ValaSyntaxHighlighter.METHOD_DECLARATION)
     };
 
     /**

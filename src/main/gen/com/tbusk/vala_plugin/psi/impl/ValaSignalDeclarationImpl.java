@@ -40,6 +40,12 @@ public class ValaSignalDeclarationImpl extends ASTWrapperPsiElement implements V
   }
 
   @Override
+  @NotNull
+  public ValaIdentifier getIdentifier() {
+    return findNotNullChildByClass(ValaIdentifier.class);
+  }
+
+  @Override
   @Nullable
   public ValaParameters getParameters() {
     return findChildByClass(ValaParameters.class);
@@ -61,18 +67,6 @@ public class ValaSignalDeclarationImpl extends ASTWrapperPsiElement implements V
   @Nullable
   public ValaTypeWithParameters getTypeWithParameters() {
     return findChildByClass(ValaTypeWithParameters.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
-    return findChildByClass(ValaValidIdentifierKeywords.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
   }
 
 }

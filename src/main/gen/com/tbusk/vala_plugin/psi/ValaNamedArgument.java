@@ -10,6 +10,9 @@ public interface ValaNamedArgument extends PsiElement {
   @NotNull
   List<ValaExpression> getExpressionList();
 
+  @NotNull
+  ValaIdentifier getIdentifier();
+
   @Nullable
   ValaTypeWeak getTypeWeak();
 
@@ -18,11 +21,5 @@ public interface ValaNamedArgument extends PsiElement {
 
   @Nullable
   ValaTypeWithParameters getTypeWithParameters();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

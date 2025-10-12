@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements ValaMethodDeclaration {
+public class ValaMethodDeclarationImpl extends ValaNamedElementImpl implements ValaMethodDeclaration {
 
   public ValaMethodDeclarationImpl(@NotNull ASTNode node) {
     super(node);
@@ -43,6 +43,12 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
   @Nullable
   public ValaEnsuresStatement getEnsuresStatement() {
     return findChildByClass(ValaEnsuresStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public List<ValaIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaIdentifier.class);
   }
 
   @Override
@@ -85,12 +91,6 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
   @Nullable
   public ValaTypeWithParameters getTypeWithParameters() {
     return findChildByClass(ValaTypeWithParameters.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
   }
 
 }

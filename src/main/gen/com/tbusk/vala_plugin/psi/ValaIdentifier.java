@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaAttributeArgument extends PsiElement {
+public interface ValaIdentifier extends PsiElement {
 
   @NotNull
-  ValaExpression getExpression();
-
-  @NotNull
-  ValaIdentifier getIdentifier();
+  PsiElement getIdentifierToken();
 
 }

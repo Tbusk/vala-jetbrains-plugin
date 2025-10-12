@@ -10,13 +10,10 @@ public interface ValaLocalVariable extends PsiElement {
   @Nullable
   ValaExpression getExpression();
 
+  @NotNull
+  ValaIdentifier getIdentifier();
+
   @Nullable
   ValaInlineArrayType getInlineArrayType();
-
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
 
 }

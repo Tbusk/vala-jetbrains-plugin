@@ -14,6 +14,9 @@ public interface ValaConstantDeclaration extends PsiElement {
   List<ValaExpression> getExpressionList();
 
   @NotNull
+  List<ValaIdentifier> getIdentifierList();
+
+  @NotNull
   List<ValaInlineArrayType> getInlineArrayTypeList();
 
   @Nullable
@@ -21,8 +24,5 @@ public interface ValaConstantDeclaration extends PsiElement {
 
   @NotNull
   ValaType getType();
-
-  @NotNull
-  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
 
 }

@@ -40,6 +40,12 @@ public class ValaForeachStatementImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
+  @NotNull
+  public ValaIdentifier getIdentifier() {
+    return findNotNullChildByClass(ValaIdentifier.class);
+  }
+
+  @Override
   @Nullable
   public ValaTypeWeak getTypeWeak() {
     return findChildByClass(ValaTypeWeak.class);
@@ -49,18 +55,6 @@ public class ValaForeachStatementImpl extends ASTWrapperPsiElement implements Va
   @Nullable
   public ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis() {
     return findChildByClass(ValaTypeWeakWithParenthesis.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
-    return findChildByClass(ValaValidIdentifierKeywords.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
   }
 
 }

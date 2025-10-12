@@ -65,6 +65,7 @@ public interface ValaTypes {
   IElementType FOR_INITIALIZER = new ValaElementType("FOR_INITIALIZER");
   IElementType FOR_ITERATOR = new ValaElementType("FOR_ITERATOR");
   IElementType FOR_STATEMENT = new ValaElementType("FOR_STATEMENT");
+  IElementType IDENTIFIER = new ValaElementType("IDENTIFIER");
   IElementType IF_STATEMENT = new ValaElementType("IF_STATEMENT");
   IElementType INCLUSIVE_OR_EXPRESSION = new ValaElementType("INCLUSIVE_OR_EXPRESSION");
   IElementType INITIALIZER = new ValaElementType("INITIALIZER");
@@ -213,7 +214,7 @@ public interface ValaTypes {
   IElementType GREATER_THAN = new ValaTokenType(">");
   IElementType GREATER_THAN_EQUALS = new ValaTokenType(">=");
   IElementType HEXADECIMAL_LITERAL = new ValaTokenType("HEXADECIMAL_LITERAL");
-  IElementType IDENTIFIER = new ValaTokenType("IDENTIFIER");
+  IElementType IDENTIFIER_TOKEN = new ValaTokenType("IDENTIFIER_TOKEN");
   IElementType IF = new ValaTokenType("if");
   IElementType IN = new ValaTokenType("in");
   IElementType INCREMENT = new ValaTokenType("++");
@@ -490,6 +491,9 @@ public interface ValaTypes {
       }
       else if (type == FOR_STATEMENT) {
         return new ValaForStatementImpl(node);
+      }
+      else if (type == IDENTIFIER) {
+        return new ValaIdentifierImpl(node);
       }
       else if (type == IF_STATEMENT) {
         return new ValaIfStatementImpl(node);
