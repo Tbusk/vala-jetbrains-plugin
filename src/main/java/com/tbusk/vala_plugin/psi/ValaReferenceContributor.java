@@ -12,7 +12,7 @@ public class ValaReferenceContributor extends PsiReferenceContributor {
                 new PsiReferenceProvider() {
                     @Override
                     public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement psiElement, @NotNull ProcessingContext processingContext) {
-                        return new PsiReference[]{new ValaReference(psiElement)};
+                        return new PsiReference[]{new ValaReference(psiElement, psiElement.getTextRange()),};
                     }
                 }
         );
