@@ -53,8 +53,8 @@ public class ValaNamedArgumentImpl extends ASTWrapperPsiElement implements ValaN
 
   @Override
   @Nullable
-  public ValaTypeWithParameters getTypeWithParameters() {
-    return findChildByClass(ValaTypeWithParameters.class);
+  public ValaTypeWithParenthesis getTypeWithParenthesis() {
+    return findChildByClass(ValaTypeWithParenthesis.class);
   }
 
 }

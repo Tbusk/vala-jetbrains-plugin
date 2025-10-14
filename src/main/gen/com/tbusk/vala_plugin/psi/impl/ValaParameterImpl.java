@@ -53,12 +53,6 @@ public class ValaParameterImpl extends ASTWrapperPsiElement implements ValaParam
 
   @Override
   @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
-  }
-
-  @Override
-  @Nullable
   public ValaType getType() {
     return findChildByClass(ValaType.class);
   }
@@ -77,8 +71,8 @@ public class ValaParameterImpl extends ASTWrapperPsiElement implements ValaParam
 
   @Override
   @Nullable
-  public ValaTypeWithParameters getTypeWithParameters() {
-    return findChildByClass(ValaTypeWithParameters.class);
+  public ValaTypeWithParenthesis getTypeWithParenthesis() {
+    return findChildByClass(ValaTypeWithParenthesis.class);
   }
 
 }

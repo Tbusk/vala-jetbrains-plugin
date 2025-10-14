@@ -4,13 +4,22 @@ package com.tbusk.vala_plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface ValaLocalTupleDeclaration extends PsiElement {
+public interface ValaLocalTupleDeclaration extends ValaNamedElement {
 
   @NotNull
   ValaExpression getExpression();
 
   @NotNull
-  List<ValaIdentifier> getIdentifierList();
+  ValaMember getMember();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }

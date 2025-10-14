@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
 public class ValaStructDeclarationImpl extends ValaNamedElementImpl implements ValaStructDeclaration {
 
@@ -40,21 +41,15 @@ public class ValaStructDeclarationImpl extends ValaNamedElementImpl implements V
   }
 
   @Override
-  @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
-  }
-
-  @Override
   @NotNull
   public List<ValaStructMember> getStructMemberList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaStructMember.class);
   }
 
   @Override
-  @Nullable
+  @NotNull
   public ValaSymbol getSymbol() {
-    return findChildByClass(ValaSymbol.class);
+    return findNotNullChildByClass(ValaSymbol.class);
   }
 
   @Override
@@ -67,6 +62,26 @@ public class ValaStructDeclarationImpl extends ValaNamedElementImpl implements V
   @Nullable
   public ValaTypeDeclarationModifiers getTypeDeclarationModifiers() {
     return findChildByClass(ValaTypeDeclarationModifiers.class);
+  }
+
+  @Override
+  public String getName() {
+    return ValaPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return ValaPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return ValaPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return ValaPsiImplUtil.getPresentation(this);
   }
 
 }

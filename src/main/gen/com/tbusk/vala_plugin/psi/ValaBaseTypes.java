@@ -14,6 +14,6 @@ public interface ValaBaseTypes extends PsiElement {
   List<ValaTypeArguments> getTypeArgumentsList();
 
   @NotNull
-  List<ValaTypeWithParameters> getTypeWithParametersList();
+  List<ValaTypeWithParenthesis> getTypeWithParenthesisList();
 
 }

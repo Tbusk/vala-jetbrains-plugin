@@ -33,10 +33,9 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Line comment", ValaSyntaxHighlighter.LINE_COMMENT),
             new AttributesDescriptor("Block comment", ValaSyntaxHighlighter.BLOCK_COMMENT),
             new AttributesDescriptor("Doc comment", ValaSyntaxHighlighter.DOC_COMMENT),
-            new AttributesDescriptor("Identifier", ValaSyntaxHighlighter.IDENTIFIER),
             new AttributesDescriptor("Keyword", ValaSyntaxHighlighter.KEYWORD),
-            new AttributesDescriptor("String", ValaSyntaxHighlighter.STRING),
-            new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER),
+            new AttributesDescriptor("String", ValaSyntaxHighlighter.STRING_LITERAL),
+            new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER_LITERAL),
             new AttributesDescriptor("Constant", ValaSyntaxHighlighter.CONSTANT),
             new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL),
             new AttributesDescriptor("Semicolon", ValaSyntaxHighlighter.SEMICOLON),
@@ -77,6 +76,7 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
      */
     @Override
     public @NonNls @NotNull String getDemoText() {
+        //language=vala
         return """
                 using GObject.Introspection;
                 

@@ -45,10 +45,4 @@ public class ValaArrayTypeImpl extends ASTWrapperPsiElement implements ValaArray
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaMember.class);
   }
 
-  @Override
-  @NotNull
-  public List<ValaPrimitiveType> getPrimitiveTypeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaPrimitiveType.class);
-  }
-
 }

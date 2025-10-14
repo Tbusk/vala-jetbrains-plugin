@@ -4,8 +4,9 @@ package com.tbusk.vala_plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface ValaDelegateDeclaration extends PsiElement {
+public interface ValaDelegateDeclaration extends ValaNamedElement {
 
   @Nullable
   ValaBlock getBlock();
@@ -26,6 +27,14 @@ public interface ValaDelegateDeclaration extends PsiElement {
   ValaTypeParameters getTypeParameters();
 
   @Nullable
-  ValaTypeWithParameters getTypeWithParameters();
+  ValaTypeWithParenthesis getTypeWithParenthesis();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }

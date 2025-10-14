@@ -28,15 +28,9 @@ public class ValaMemberPartImpl extends ASTWrapperPsiElement implements ValaMemb
   }
 
   @Override
-  @Nullable
+  @NotNull
   public ValaIdentifier getIdentifier() {
-    return findChildByClass(ValaIdentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
+    return findNotNullChildByClass(ValaIdentifier.class);
   }
 
   @Override

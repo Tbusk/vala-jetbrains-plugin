@@ -180,31 +180,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "with" { return ValaTypes.WITH; }
     "params" { return ValaTypes.PARAMS; }
 
-    // Primitive Types
-    "bool" { return ValaTypes.BOOL; }
-    "int" { return ValaTypes.INT; }
-    "uint" { return ValaTypes.UINT; }
-    "long" { return ValaTypes.LONG; }
-    "ulong" { return ValaTypes.ULONG; }
-    "float" { return ValaTypes.FLOAT; }
-    "double" { return ValaTypes.DOUBLE; }
-    "string" { return ValaTypes.STRING; }
-    "char" { return ValaTypes.CHAR; }
-    "uchar" { return ValaTypes.UCHAR; }
-    "unichar" { return ValaTypes.UNICHAR; }
-    "short" { return ValaTypes.SHORT; }
-    "ushort" { return ValaTypes.USHORT; }
-    "uint8" { return ValaTypes.UINT8; }
-    "uint16" { return ValaTypes.UINT16; }
-    "uint32" { return ValaTypes.UINT32; }
-    "uint64" { return ValaTypes.UINT64; }
-    "int8" { return ValaTypes.INT8; }
-    "int16" { return ValaTypes.INT16; }
-    "int32" { return ValaTypes.INT32; }
-    "int64" { return ValaTypes.INT64; }
-    "size_t" { return ValaTypes.SIZE_T; }
-    "ssize_t" { return ValaTypes.SSIZE_T; }
-
     // Operator Keywords
     "as" { return ValaTypes.AS; }
     "is" { return ValaTypes.IS; }
