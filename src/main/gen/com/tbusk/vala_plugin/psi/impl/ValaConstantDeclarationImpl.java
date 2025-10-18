@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaConstantDeclarationImpl extends ValaNamedElementImpl implements ValaConstantDeclaration {
 
-  public ValaConstantDeclarationImpl(@NotNull ASTNode node) {
+  public ValaConstantDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

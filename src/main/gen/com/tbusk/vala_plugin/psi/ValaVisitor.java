@@ -76,7 +76,7 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitCatchClause(@NotNull ValaCatchClause o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitCatchClauses(@NotNull ValaCatchClauses o) {
@@ -232,7 +232,7 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitForeachStatement(@NotNull ValaForeachStatement o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitIdentifier(@NotNull ValaIdentifier o) {
@@ -368,7 +368,7 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitParameter(@NotNull ValaParameter o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitParameters(@NotNull ValaParameters o) {

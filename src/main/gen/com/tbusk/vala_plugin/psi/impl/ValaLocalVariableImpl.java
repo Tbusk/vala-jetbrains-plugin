@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaLocalVariableImpl extends ValaNamedElementImpl implements ValaLocalVariable {
 
-  public ValaLocalVariableImpl(@NotNull ASTNode node) {
+  public ValaLocalVariableImpl(@Nullable ASTNode node) {
     super(node);
   }
 

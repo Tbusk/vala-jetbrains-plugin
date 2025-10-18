@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaMethodDeclarationImpl extends ValaNamedElementImpl implements ValaMethodDeclaration {
 
-  public ValaMethodDeclarationImpl(@NotNull ASTNode node) {
+  public ValaMethodDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

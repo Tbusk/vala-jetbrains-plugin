@@ -146,7 +146,7 @@ symbol ::= symbol_part [QUESTION_MARK] [ (DOT symbol_part [QUESTION_MARK])* ]
 identifier ::= IDENTIFIER_TOKEN | valid_identifier_keywords {
     mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
     implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-    methods=[getName setName getNameIdentifier getPresentation]
+    methods=[getName setName getNameIdentifier getPresentation getReferences]
 }
 symbol_part ::= ( global "::" identifier ) | identifier
 
@@ -214,7 +214,7 @@ primary_expression ::= ( literal | object_or_array_creation_expression | initial
                        [ ( [QUESTION_MARK] member_access | pointer_member_access | element_access |
                          post_increment_expression | method_call | post_decrement_expression)* ]
 
-member_access ::= DOT member
+member_access ::= DOT simple_name
 
 pointer_member_access ::= ARROW member
 
@@ -318,7 +318,7 @@ type_declaration_modifier ::= abstract | extern | partial | sealed | static
 // parse_type_parameter_list
 type_parameters ::= LESS_THAN (identifier) [ (COMMA (identifier))* ] GREATER_THAN
 
-struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct (symbol) [type_arguments]
+struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct symbol [type_arguments]
                        [ COLON base_types ] LBRACE struct_member* RBRACE {
                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
@@ -338,7 +338,7 @@ requires_statement ::= requires LPAREN expression RPAREN [ requires_statement ]
 
 ensures_statement ::= ensures LPAREN expression RPAREN [ ensures_statement ]
 
-signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal (type | type_with_parenthesis) (identifier)
+signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal (type | type_with_parenthesis) identifier
                        LPAREN [ parameters ] RPAREN ( SEMICOLON | block ) {
                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
@@ -369,9 +369,9 @@ field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] [(typ
                                                                                                                                                                                                            implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
                                                                                                                                                                                                            methods=[getName setName getNameIdentifier getPresentation]
                                                                                                                                                                                                        }
-field_declaration_section ::= (identifier) [inline_array_type] [ EQUALS expression [inline_array_type] ]
+field_declaration_section ::= identifier [inline_array_type] [ EQUALS expression [inline_array_type] ]
 
-property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] (type_weak | type_weak_with_parenthesis) (identifier)
+property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] (type_weak | type_weak_with_parenthesis) identifier
                          LBRACE property_declaration_part* RBRACE {
                                                                       mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                       implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
@@ -455,7 +455,11 @@ private delegate_declaration_modifier ::= abstract | async | class | extern | in
 // -- Parameters, Checked Parser --
 parameters ::= (parameter) [ (COMMA (parameter))* [ COMMA ] ]
 
-parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parenthesis | type_weak_with_parenthesis) ( identifier) [inline_array_type] [ EQUALS expression ] ) )
+parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parenthesis | type_weak_with_parenthesis) ( identifier) [inline_array_type] [ EQUALS expression ] ) ) {
+                                                                                                                                                                                                                                         mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                                                                                                                                         implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                                                      }
 
 private parameter_direction ::= in | out | ref
 private parameter_ownage ::= own | unowned
@@ -467,7 +471,11 @@ throw_statement ::= throw expression SEMICOLON
 try_statement ::= try block (catch_clauses | finally_clause)
 
 catch_clauses ::= catch_clause (catch_clause)* [finally_clause]
-catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) (identifier) RPAREN ] block
+catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) (identifier) RPAREN ] block {
+                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                          methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                      }
 
 // -- Finally Statement, Checked Parser --
 finally_clause ::= finally block
@@ -584,7 +592,11 @@ interface_member ::= [ attributes ]
                        interface_declaration ) // interfaces area allowed to be declared in interfaces
 
 // -- Foreach Statement, Checked Parser --
-foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) (identifier) in expression RPAREN embedded_statement
+foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) (identifier) in expression RPAREN embedded_statement {
+                                                                                                                                                                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                                                                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                                                                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                                           }
 
 valid_identifier_keywords ::= ( abstract
                             | async

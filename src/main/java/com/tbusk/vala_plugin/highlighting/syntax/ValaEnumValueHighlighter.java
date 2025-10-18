@@ -5,25 +5,25 @@ import com.intellij.psi.PsiElement;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighterUtil;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
-import com.tbusk.vala_plugin.psi.impl.ValaInterfaceDeclarationImpl;
+import com.tbusk.vala_plugin.psi.impl.ValaEnumvalueImpl;
 import org.jetbrains.annotations.NotNull;
 
-public final class ValaInterfaceDeclarationHighlighter implements ValaHighlighter {
+public final class ValaEnumValueHighlighter implements ValaHighlighter {
 
-    private static final ValaInterfaceDeclarationHighlighter INSTANCE = new ValaInterfaceDeclarationHighlighter();
+    private static final ValaEnumValueHighlighter INSTANCE = new ValaEnumValueHighlighter();
 
-    private ValaInterfaceDeclarationHighlighter() {
+    private ValaEnumValueHighlighter() {
     }
 
-    public static ValaInterfaceDeclarationHighlighter getInstance() {
+    public static ValaEnumValueHighlighter getInstance() {
         return INSTANCE;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof ValaInterfaceDeclarationImpl) {
+        if (psiElement instanceof ValaEnumvalueImpl) {
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
-            util.highlightSymbol(psiElement, annotationHolder, ValaTextAttributeKey.INTERFACE_NAME);
+            util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.CONSTANT);
         }
     }
 }

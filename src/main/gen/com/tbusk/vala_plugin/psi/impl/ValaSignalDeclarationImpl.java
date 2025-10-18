@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaSignalDeclarationImpl extends ValaNamedElementImpl implements ValaSignalDeclaration {
 
-  public ValaSignalDeclarationImpl(@NotNull ASTNode node) {
+  public ValaSignalDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

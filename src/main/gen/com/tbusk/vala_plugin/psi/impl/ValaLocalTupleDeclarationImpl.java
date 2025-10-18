@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaLocalTupleDeclarationImpl extends ValaNamedElementImpl implements ValaLocalTupleDeclaration {
 
-  public ValaLocalTupleDeclarationImpl(@NotNull ASTNode node) {
+  public ValaLocalTupleDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

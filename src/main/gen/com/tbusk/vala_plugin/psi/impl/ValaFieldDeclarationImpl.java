@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaFieldDeclarationImpl extends ValaNamedElementImpl implements ValaFieldDeclaration {
 
-  public ValaFieldDeclarationImpl(@NotNull ASTNode node) {
+  public ValaFieldDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

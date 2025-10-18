@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaErrordomainDeclarationImpl extends ValaNamedElementImpl implements ValaErrordomainDeclaration {
 
-  public ValaErrordomainDeclarationImpl(@NotNull ASTNode node) {
+  public ValaErrordomainDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

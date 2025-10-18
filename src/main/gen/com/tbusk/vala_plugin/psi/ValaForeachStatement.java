@@ -4,8 +4,9 @@ package com.tbusk.vala_plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface ValaForeachStatement extends PsiElement {
+public interface ValaForeachStatement extends ValaNamedElement {
 
   @NotNull
   ValaEmbeddedStatement getEmbeddedStatement();
@@ -21,5 +22,13 @@ public interface ValaForeachStatement extends PsiElement {
 
   @Nullable
   ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }

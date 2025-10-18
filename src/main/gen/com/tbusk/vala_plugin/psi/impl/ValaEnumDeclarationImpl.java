@@ -14,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 
 public class ValaEnumDeclarationImpl extends ValaNamedElementImpl implements ValaEnumDeclaration {
 
-  public ValaEnumDeclarationImpl(@NotNull ASTNode node) {
+  public ValaEnumDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 

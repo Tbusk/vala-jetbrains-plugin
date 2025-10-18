@@ -3,14 +3,15 @@ package com.tbusk.vala_plugin.highlighting.syntax;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
+import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
+import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
 import com.tbusk.vala_plugin.psi.ValaTypes;
 import com.tbusk.vala_plugin.psi.impl.ValaFieldDeclarationImpl;
 import org.jetbrains.annotations.NotNull;
 
-public final class ValaFieldDeclarationHighlighter {
+public final class ValaFieldDeclarationHighlighter implements ValaHighlighter {
 
     private static final ValaFieldDeclarationHighlighter INSTANCE = new ValaFieldDeclarationHighlighter();
 
@@ -33,7 +34,7 @@ public final class ValaFieldDeclarationHighlighter {
 
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .range(identifierNode.getTextRange())
-                            .textAttributes(DefaultLanguageHighlighterColors.LOCAL_VARIABLE)
+                            .textAttributes(ValaTextAttributeKey.LOCAL_VARIABLE)
                             .create();
                 }
             }

@@ -4040,14 +4040,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOT member
+  // DOT simple_name
   public static boolean member_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access")) return false;
     if (!nextTokenIs(b, DOT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, DOT);
-    r = r && member(b, l + 1);
+    r = r && simple_name(b, l + 1);
     exit_section_(b, m, MEMBER_ACCESS, r);
     return r;
   }

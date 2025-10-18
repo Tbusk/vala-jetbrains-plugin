@@ -1,15 +1,14 @@
 package com.tbusk.vala_plugin.highlighting.syntax;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
-import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighter;
-import com.tbusk.vala_plugin.psi.ValaTypes;
+import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
+import com.tbusk.vala_plugin.highlighting.ValaHighlighterUtil;
+import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
 import com.tbusk.vala_plugin.psi.impl.ValaAttributeArgumentImpl;
 import org.jetbrains.annotations.NotNull;
 
-public final class ValaAttributeArgumentHighlighter {
+public final class ValaAttributeArgumentHighlighter implements ValaHighlighter {
 
     private static final ValaAttributeArgumentHighlighter INSTANCE = new ValaAttributeArgumentHighlighter();
 
@@ -22,15 +21,9 @@ public final class ValaAttributeArgumentHighlighter {
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaAttributeArgumentImpl) {
-            ASTNode identifierNode = psiElement.getNode().findChildByType(ValaTypes.IDENTIFIER);
+            ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
-            if (identifierNode != null) {
-
-                annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(identifierNode.getTextRange())
-                        .textAttributes(ValaSyntaxHighlighter.ATTRIBUTE)
-                        .create();
-            }
+            util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.ATTRIBUTE);
         }
     }
 }

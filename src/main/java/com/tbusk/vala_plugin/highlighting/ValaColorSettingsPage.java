@@ -30,21 +30,21 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
      * settings page.
      */
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Line comment", ValaSyntaxHighlighter.LINE_COMMENT),
-            new AttributesDescriptor("Block comment", ValaSyntaxHighlighter.BLOCK_COMMENT),
-            new AttributesDescriptor("Doc comment", ValaSyntaxHighlighter.DOC_COMMENT),
-            new AttributesDescriptor("Keyword", ValaSyntaxHighlighter.KEYWORD),
-            new AttributesDescriptor("String", ValaSyntaxHighlighter.STRING_LITERAL),
-            new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER_LITERAL),
-            new AttributesDescriptor("Constant", ValaSyntaxHighlighter.CONSTANT),
-            new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL),
-            new AttributesDescriptor("Semicolon", ValaSyntaxHighlighter.SEMICOLON),
-            new AttributesDescriptor("Brackets", ValaSyntaxHighlighter.BRACKETS),
-            new AttributesDescriptor("Braces", ValaSyntaxHighlighter.BRACES),
-            new AttributesDescriptor("Comma", ValaSyntaxHighlighter.COMMA),
-            new AttributesDescriptor("Dot", ValaSyntaxHighlighter.DOT),
-            new AttributesDescriptor("Parentheses", ValaSyntaxHighlighter.PARENTHESES),
-            new AttributesDescriptor("Method declaration", ValaSyntaxHighlighter.METHOD_DECLARATION)
+            new AttributesDescriptor("Line comment", ValaTextAttributeKey.LINE_COMMENT),
+            new AttributesDescriptor("Block comment", ValaTextAttributeKey.BLOCK_COMMENT),
+            new AttributesDescriptor("Doc comment", ValaTextAttributeKey.DOC_COMMENT),
+            new AttributesDescriptor("Keyword", ValaTextAttributeKey.KEYWORD),
+            new AttributesDescriptor("String", ValaTextAttributeKey.STRING_LITERAL),
+            new AttributesDescriptor("Number", ValaTextAttributeKey.NUMBER_LITERAL),
+            new AttributesDescriptor("Constant", ValaTextAttributeKey.CONSTANT),
+            new AttributesDescriptor("Method call", ValaTextAttributeKey.METHOD_CALL),
+            new AttributesDescriptor("Semicolon", ValaTextAttributeKey.SEMICOLON),
+            new AttributesDescriptor("Brackets", ValaTextAttributeKey.BRACKETS),
+            new AttributesDescriptor("Braces", ValaTextAttributeKey.BRACES),
+            new AttributesDescriptor("Comma", ValaTextAttributeKey.COMMA),
+            new AttributesDescriptor("Dot", ValaTextAttributeKey.DOT),
+            new AttributesDescriptor("Parentheses", ValaTextAttributeKey.PARENTHESES),
+            new AttributesDescriptor("Method declaration", ValaTextAttributeKey.METHOD_DECLARATION)
     };
 
     /**
