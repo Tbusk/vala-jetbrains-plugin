@@ -1,5 +1,6 @@
 package com.tbusk.vala_plugin.psi;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.openapi.util.TextRange;
@@ -22,8 +23,17 @@ public class ValaPsiImplUtil {
         return null;
     }
 
-    public static String getName(ValaClassDeclaration decl) {
-        PsiElement id = findIdentifierToken(decl);
+    public static String getName(ValaClassDeclaration declaration) {
+
+        if (declaration != null) {
+            ASTNode symbolNode = declaration.getNode().findChildByType(ValaTypes.SYMBOL);
+
+            if (symbolNode != null) {
+
+            }
+        }
+
+        PsiElement id = findIdentifierToken(declaration);
         if (id != null) {
             return id.getText();
         }
@@ -41,6 +51,22 @@ public class ValaPsiImplUtil {
     }
 
     public static String getName(ValaFieldDeclaration decl) {
+        PsiElement id = findIdentifierToken(decl);
+        if (id != null) {
+            return id.getText();
+        }
+        return null;
+    }
+
+    public static String getName(ValaYieldStatement decl) {
+        PsiElement id = findIdentifierToken(decl);
+        if (id != null) {
+            return id.getText();
+        }
+        return null;
+    }
+
+    public static String getName(ValaDestructorDeclaration decl) {
         PsiElement id = findIdentifierToken(decl);
         if (id != null) {
             return id.getText();
@@ -69,6 +95,10 @@ public class ValaPsiImplUtil {
         return getNameFromSymbol(decl);
     }
 
+    public static String getName(ValaNamespaceDeclaration decl) {
+        return getNameFromSymbol(decl);
+    }
+
     public static String getName(ValaParameter decl) {
         ValaIdentifier id = decl.getIdentifier();
         if (id != null) {
@@ -91,6 +121,11 @@ public class ValaPsiImplUtil {
     }
 
     public static String getName(ValaPropertyDeclaration decl) {
+        ValaIdentifier id = decl.getIdentifier();
+        return getName(id);
+    }
+
+    public static String getName(ValaLocalVariable decl) {
         ValaIdentifier id = decl.getIdentifier();
         return getName(id);
     }

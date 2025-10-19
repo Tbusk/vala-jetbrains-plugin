@@ -22,14 +22,14 @@ public class ValaReferenceContributor extends PsiReferenceContributor {
             @NotNull
             @Override
             public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                ValaIdentifier targetId = null;
+                ValaIdentifier identifier = null;
                 if (element instanceof ValaIdentifier) {
-                    targetId = (ValaIdentifier) element;
+                    identifier = (ValaIdentifier) element;
                 } else if (element instanceof ValaSymbolPart || element instanceof ValaMemberPart) {
-                    targetId = PsiTreeUtil.getChildOfType(element, ValaIdentifier.class);
+                    identifier = PsiTreeUtil.getChildOfType(element, ValaIdentifier.class);
                 }
-                if (targetId != null) {
-                    return new PsiReference[]{new ValaReference(targetId, TextRange.from(0, targetId.getTextLength()))};
+                if (identifier != null) {
+                    return new PsiReference[]{new ValaReference(identifier, TextRange.from(0, identifier.getTextLength()))};
                 }
                 return PsiReference.EMPTY_ARRAY;
             }

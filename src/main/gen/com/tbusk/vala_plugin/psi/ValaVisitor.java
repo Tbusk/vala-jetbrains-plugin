@@ -140,7 +140,7 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitDestructorDeclaration(@NotNull ValaDestructorDeclaration o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitDoStatement(@NotNull ValaDoStatement o) {
@@ -348,7 +348,7 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitNamespaceDeclaration(@NotNull ValaNamespaceDeclaration o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitNamespaceMember(@NotNull ValaNamespaceMember o) {
@@ -584,7 +584,7 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitYieldExpression(@NotNull ValaYieldExpression o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitYieldStatement(@NotNull ValaYieldStatement o) {

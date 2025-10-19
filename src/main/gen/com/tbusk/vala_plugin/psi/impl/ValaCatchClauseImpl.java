@@ -58,7 +58,7 @@ public class ValaCatchClauseImpl extends ValaNamedElementImpl implements ValaCat
   }
 
   @Override
-  public PsiElement setName(String newName) {
+  public PsiElement setName(@NotNull String newName) {
     return ValaPsiImplUtil.setName(this, newName);
   }
 

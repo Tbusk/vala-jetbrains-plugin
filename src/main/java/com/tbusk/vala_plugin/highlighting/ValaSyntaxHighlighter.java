@@ -7,7 +7,7 @@ import com.intellij.psi.tree.IElementType;
 import com.tbusk.vala_plugin.ValaLexerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import static com.tbusk.vala_plugin.ValaTokenSets.KEYWORDS;
+import static com.tbusk.vala_plugin.ValaTokenSets.KEYWORD_SET;
 
 /**
  * ValaSyntaxHighlighter is responsible for providing syntax highlighting for Vala files.
@@ -37,7 +37,7 @@ public class ValaSyntaxHighlighter extends SyntaxHighlighterBase {
      */
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
-        if(KEYWORDS.contains(tokenType)) {
+        if (KEYWORD_SET.contains(tokenType)) {
             return ValaTextAttributeKeys.KEYWORD_KEYS;
         }
 

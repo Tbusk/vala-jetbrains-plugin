@@ -36,7 +36,9 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
             ValaNamespaceDeclarationHighlighter.getInstance(),
             ValaDelegateDeclarationHighlighter.getInstance(),
             ValaCreationMethodDeclarationHighlighter.getInstance(),
-            ValaPropertyDeclarationHighlighter.getInstance()
+            ValaPropertyDeclarationHighlighter.getInstance(),
+            ValaYieldExpressionHighlighter.getInstance(),
+            ValaDestructorDeclarationHighlighter.getInstance()
     );
 
     @Override

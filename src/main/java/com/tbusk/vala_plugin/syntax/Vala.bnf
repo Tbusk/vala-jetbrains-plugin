@@ -253,7 +253,7 @@ object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer 
 
 object_initializer ::= LBRACE member_initializer [ (COMMA member_initializer)* ] [COMMA] RBRACE
 
-member_initializer ::= (identifier) EQUALS expression
+member_initializer ::= identifier EQUALS expression
 
 array_creation_expression ::= [ (LBRACKET RBRACKET)* ] [ LBRACKET [ array_size ] RBRACKET ] [ initializer ]
 
@@ -284,7 +284,11 @@ constructor_declaration ::= [ constructor_declaration_modifiers ] construct bloc
 constructor_declaration_modifiers ::= constructor_declaration_modifier [ ( constructor_declaration_modifier )* ]
 constructor_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override
 
-destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE (identifier) LPAREN RPAREN block
+destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE identifier LPAREN RPAREN block {
+                                                                                                         mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                         implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                      }
 
 class_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] class symbol [ type_arguments ]
                       [ COLON base_types ] LBRACE class_member* RBRACE {
@@ -437,7 +441,7 @@ private errordomain_access_modifier ::= private | public | protected | internal
 private errordomain_type_declaration_modifiers ::= extern | abstract | partial | sealed
 
 errorcodes ::= errorcode [ (COMMA errorcode)* [ COMMA ] ]
-errorcode ::= [ attributes ] (identifier) [ EQUALS expression ]
+errorcode ::= [ attributes ] identifier [ EQUALS expression ]
 
 // -- Delegates, Checked Parser --
 delegate_declaration ::= [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] [delegate] (type | type_with_parenthesis) symbol [ type_parameters ]
@@ -453,9 +457,9 @@ private delegate_declaration_modifiers ::= delegate_declaration_modifier [ (dele
 private delegate_declaration_modifier ::= abstract | async | class | extern | inline | override | sealed | static | virtual
 
 // -- Parameters, Checked Parser --
-parameters ::= (parameter) [ (COMMA (parameter))* [ COMMA ] ]
+parameters ::= parameter [ (COMMA parameter)* [ COMMA ] ]
 
-parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parenthesis | type_weak_with_parenthesis) ( identifier) [inline_array_type] [ EQUALS expression ] ) ) {
+parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parenthesis | type_weak_with_parenthesis) identifier [inline_array_type] [ EQUALS expression ] ) ) {
                                                                                                                                                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
                                                                                                                                                                                                                                          methods=[getName setName getNameIdentifier getPresentation]
@@ -471,7 +475,7 @@ throw_statement ::= throw expression SEMICOLON
 try_statement ::= try block (catch_clauses | finally_clause)
 
 catch_clauses ::= catch_clause (catch_clause)* [finally_clause]
-catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) (identifier) RPAREN ] block {
+catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) identifier RPAREN ] block {
                                                                                                           mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                           implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
                                                                                                           methods=[getName setName getNameIdentifier getPresentation]
@@ -484,7 +488,11 @@ finally_clause ::= finally block
 yield_statement ::= yield SEMICOLON | yield_expression [SEMICOLON]
 
 // -- Yield Expression, Checked Parser --
-yield_expression ::= yield [new] [ base_access DOT ] member [ (member_access | method_call)* ]
+yield_expression ::= yield [new] [ base_access DOT ] member [ (member_access | method_call)* ] {
+                                                                                                    mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                    implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                    methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                }
 
 // -- Break Statement, Checked Parser --
 break_statement ::= break SEMICOLON
@@ -538,7 +546,11 @@ sizeof_expression ::= sizeof LPAREN (type | type_with_parenthesis) RPAREN
 typeof_expression ::= typeof LPAREN (type | type_with_parenthesis) RPAREN
 
 // -- Namespace Declaration, Checked Parser --
-namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE
+namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE {
+                                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                               methods=[getName setName getNameIdentifier getPresentation]
+                                                                                            }
 
 // -- Using Statement, Checked Parser --
 using_directive ::= using symbol [ (COMMA symbol)* ] SEMICOLON
@@ -592,7 +604,7 @@ interface_member ::= [ attributes ]
                        interface_declaration ) // interfaces area allowed to be declared in interfaces
 
 // -- Foreach Statement, Checked Parser --
-foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) (identifier) in expression RPAREN embedded_statement {
+foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) identifier in expression RPAREN embedded_statement {
                                                                                                                                                                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
                                                                                                                                                                                                                               methods=[getName setName getNameIdentifier getPresentation]

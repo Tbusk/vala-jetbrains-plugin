@@ -55,7 +55,7 @@ public final class ValaHighlighterUtil {
         ASTNode memberNode = psiElement.getNode().findChildByType(ValaTypes.MEMBER);
         if (memberNode != null) {
 
-            ASTNode[] memberPartNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.MEMBER_PART));
+            ASTNode[] memberPartNodes = memberNode.getChildren(TokenSet.create(ValaTypes.MEMBER_PART));
 
             for (ASTNode memberPartNode : memberPartNodes) {
 

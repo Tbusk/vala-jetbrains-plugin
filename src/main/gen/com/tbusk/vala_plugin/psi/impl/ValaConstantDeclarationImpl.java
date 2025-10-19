@@ -70,7 +70,7 @@ public class ValaConstantDeclarationImpl extends ValaNamedElementImpl implements
   }
 
   @Override
-  public PsiElement setName(String newName) {
+  public PsiElement setName(@NotNull String newName) {
     return ValaPsiImplUtil.setName(this, newName);
   }
 

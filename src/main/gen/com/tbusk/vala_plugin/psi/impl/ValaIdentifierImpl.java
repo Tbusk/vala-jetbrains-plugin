@@ -47,7 +47,7 @@ public class ValaIdentifierImpl extends ValaNamedElementImpl implements ValaIden
   }
 
   @Override
-  public PsiElement setName(String newName) {
+  public PsiElement setName(@NotNull String newName) {
     return ValaPsiImplUtil.setName(this, newName);
   }
 

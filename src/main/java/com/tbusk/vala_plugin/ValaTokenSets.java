@@ -1,7 +1,13 @@
 package com.tbusk.vala_plugin;
 
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.tbusk.vala_plugin.psi.ValaTypes;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.tbusk.vala_plugin.psi.ValaTypes.STRING_LITERAL;
 
@@ -135,4 +141,7 @@ public interface ValaTokenSets {
             ValaTypes.PREPROCESSOR_ELSE,
             ValaTypes.PREPROCESSOR_ENDIF
     );
+
+    Set<IElementType> KEYWORD_SET = Arrays.stream(KEYWORDS.getTypes())
+            .collect(Collectors.toCollection(HashSet::new));
 }

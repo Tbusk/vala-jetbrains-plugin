@@ -23,6 +23,19 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaPrimaryExpressionImpl) {
+
+            ASTNode simpleNode = psiElement.getNode().findChildByType(ValaTypes.SIMPLE_NAME);
+            if (simpleNode != null && simpleNode.getText().matches("[A-Z0-9_]+")) {
+                ASTNode identifierNode = simpleNode.findChildByType(ValaTypes.IDENTIFIER);
+
+                if (identifierNode != null) {
+                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.CONSTANT)
+                            .create();
+                }
+            }
+
             ASTNode methodCallNode = psiElement.getNode().findChildByType(ValaTypes.METHOD_CALL);
 
             if (methodCallNode != null) {

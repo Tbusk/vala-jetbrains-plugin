@@ -82,7 +82,7 @@ public class ValaCreationMethodDeclarationImpl extends ValaNamedElementImpl impl
   }
 
   @Override
-  public PsiElement setName(String newName) {
+  public PsiElement setName(@NotNull String newName) {
     return ValaPsiImplUtil.setName(this, newName);
   }
 
