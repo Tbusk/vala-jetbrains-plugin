@@ -3,7 +3,6 @@ package com.tbusk.vala_plugin.highlighting.syntax;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
@@ -32,17 +31,38 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
             PsiElement[] children = psiElement.getChildren();
 
-            for (int i = 0; i < children.length; i++) {
+            highlightMethodCallIdentifiers(children, annotationHolder);
+            highlightConstantIdentifiers(children, annotationHolder);
+            highlightOtherIdentifiers(psiElement, annotationHolder);
+        }
+    }
 
-                int currentPos = i;
+    private void highlightMethodCallIdentifiers(PsiElement[] children, AnnotationHolder annotationHolder) {
+        for (int i = 0; i < children.length; i++) {
 
-                if (children[i] instanceof ValaMethodCallImpl) {
-                    while (i > 0 && !(children[i] instanceof ValaSimpleNameImpl) && !(children[i] instanceof ValaMemberAccessImpl)) {
-                        i--;
+            int currentPos = i;
+
+            if (children[i] instanceof ValaMethodCallImpl) {
+                while (i > 0 && !(children[i] instanceof ValaSimpleNameImpl) && !(children[i] instanceof ValaMemberAccessImpl)) {
+                    i--;
+                }
+
+                if (children[i] instanceof ValaSimpleNameImpl) {
+                    ASTNode identifierNode = children[i].getNode().findChildByType(ValaTypes.IDENTIFIER);
+
+                    if (identifierNode != null) {
+                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                                .create();
                     }
+                }
 
-                    if (children[i] instanceof ValaSimpleNameImpl) {
-                        ASTNode identifierNode = children[i].getNode().findChildByType(ValaTypes.IDENTIFIER);
+                if (children[i] instanceof ValaMemberAccessImpl) {
+                    ASTNode simpleNameNode = children[i].getNode().findChildByType(ValaTypes.SIMPLE_NAME);
+
+                    if (simpleNameNode != null) {
+                        ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
 
                         if (identifierNode != null) {
                             annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
@@ -51,31 +71,37 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                                     .create();
                         }
                     }
+                }
 
-                    if (children[i] instanceof ValaMemberAccessImpl) {
-                        ASTNode simpleNameNode = children[i].getNode().findChildByType(ValaTypes.SIMPLE_NAME);
+                i = currentPos;
+            }
+        }
+    }
 
-                        if (simpleNameNode != null) {
-                            ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
+    private void highlightConstantIdentifiers(PsiElement[] children, @NotNull AnnotationHolder annotationHolder) {
 
-                            if (identifierNode != null) {
-                                annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                        .range(identifierNode.getTextRange())
-                                        .textAttributes(ValaTextAttributeKey.METHOD_CALL)
-                                        .create();
-                            }
-                        }
-                    }
+        String constantRegex = "[A-Z0-9_]+";
 
-                    i = currentPos;
+        for (PsiElement child : children) {
+            if (child instanceof ValaSimpleName) {
+                ASTNode identifierNode = child.getNode().findChildByType(ValaTypes.IDENTIFIER);
+
+                if (identifierNode != null && identifierNode.getText().matches(constantRegex)) {
+                    System.out.println(identifierNode.getText());
+                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.CONSTANT)
+                            .create();
                 }
             }
 
-            for (PsiElement child : children) {
-                if (child instanceof ValaSimpleName) {
-                    ASTNode identifierNode = child.getNode().findChildByType(ValaTypes.IDENTIFIER);
+            if (child instanceof ValaMemberAccess) {
+                ASTNode simpleNameNode = child.getNode().findChildByType(ValaTypes.SIMPLE_NAME);
 
-                    if (identifierNode != null && identifierNode.getText().matches("[A-Z0-9_]+")) {
+                if (simpleNameNode != null) {
+                    ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
+
+                    if (identifierNode != null && identifierNode.getText().matches(constantRegex)) {
                         System.out.println(identifierNode.getText());
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                                 .range(identifierNode.getTextRange())
@@ -83,52 +109,57 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                                 .create();
                     }
                 }
-
-                if (child instanceof ValaMemberAccess) {
-                    ASTNode simpleNameNode = child.getNode().findChildByType(ValaTypes.SIMPLE_NAME);
-
-                    if (simpleNameNode != null) {
-                        ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
-
-                        if (identifierNode != null && identifierNode.getText().matches("[A-Z0-9_]+")) {
-                            System.out.println(identifierNode.getText());
-                            annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                    .range(identifierNode.getTextRange())
-                                    .textAttributes(ValaTextAttributeKey.CONSTANT)
-                                    .create();
-                        }
-                    }
-                }
-
             }
 
-            ASTNode[] simpleNames = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.SIMPLE_NAME));
-            for (ASTNode simpleNameNode : simpleNames) {
+        }
+    }
+
+    private void highlightOtherIdentifiers(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
+        ASTNode[] simpleNameNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.SIMPLE_NAME));
+        for (ASTNode simpleNameNode : simpleNameNodes) {
+            ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
+
+            if (identifierNode != null) {
+                annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                        .create();
+            }
+        }
+
+        ASTNode[] memberAccessNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.MEMBER_ACCESS));
+        for (ASTNode memberAccessNode : memberAccessNodes) {
+            ASTNode simpleNameNode = memberAccessNode.findChildByType(ValaTypes.SIMPLE_NAME);
+
+            if (simpleNameNode != null) {
                 ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
 
                 if (identifierNode != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .range(identifierNode.getTextRange())
-                            .textAttributes(DefaultLanguageHighlighterColors.INSTANCE_FIELD)
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
                             .create();
                 }
             }
-
-            ASTNode[] memberAccesses = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.MEMBER_ACCESS));
-            for (ASTNode memberAccessNode : memberAccesses) {
-                ASTNode simpleNameNode = memberAccessNode.findChildByType(ValaTypes.SIMPLE_NAME);
-
-                if (simpleNameNode != null) {
-                    ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
-
-                    if (identifierNode != null) {
-                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(DefaultLanguageHighlighterColors.INSTANCE_FIELD)
-                                .create();
-                    }
-                }
-            }
         }
+
+        ASTNode[] memberNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.MEMBER));
+        for (ASTNode memberNode : memberNodes) {
+            ASTNode[] memberPartNodes = memberNode.getChildren(TokenSet.create(ValaTypes.MEMBER_PART));
+
+            for (ASTNode memberPartNode : memberPartNodes) {
+                ASTNode identifierNode = memberPartNode.findChildByType(TokenSet.create(ValaTypes.IDENTIFIER));
+
+                if (identifierNode != null) {
+                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                            .create();
+                }
+
+            }
+
+        }
+
     }
 }

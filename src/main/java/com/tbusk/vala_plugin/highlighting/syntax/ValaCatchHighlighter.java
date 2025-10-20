@@ -5,25 +5,26 @@ import com.intellij.psi.PsiElement;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighterUtil;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
-import com.tbusk.vala_plugin.psi.impl.ValaDelegateDeclarationImpl;
+import com.tbusk.vala_plugin.psi.ValaCatchClause;
 import org.jetbrains.annotations.NotNull;
 
-public final class ValaDelegateDeclarationHighlighter implements ValaHighlighter {
+public final class ValaCatchHighlighter implements ValaHighlighter {
 
-    private static final ValaDelegateDeclarationHighlighter INSTANCE = new ValaDelegateDeclarationHighlighter();
+    private static final ValaCatchHighlighter INSTANCE = new ValaCatchHighlighter();
 
-    private ValaDelegateDeclarationHighlighter() {
+    private ValaCatchHighlighter() {
     }
 
-    public static ValaDelegateDeclarationHighlighter getInstance() {
+    public static ValaCatchHighlighter getInstance() {
         return INSTANCE;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof ValaDelegateDeclarationImpl) {
+        if (psiElement instanceof ValaCatchClause) {
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
-            util.highlightSymbol(psiElement, annotationHolder, ValaTextAttributeKey.METHOD_DECLARATION);
+            util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.LOCAL_VARIABLE);
         }
     }
+
 }

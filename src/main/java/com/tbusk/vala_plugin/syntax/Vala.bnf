@@ -234,8 +234,8 @@ initializer ::= LBRACE [argument [ (COMMA  argument)* ] [COMMA] ] RBRACE
 // parse_argument_list
 arguments ::= ( named_argument | argument) [ (COMMA (named_argument | argument))* ]
 
-argument ::= [ref | out] (expression | (identifier) COLON expression | identifier)
-named_argument ::= [parameter_direction] [parameter_ownage] (identifier) COLON (expression | type_weak | type_with_parenthesis | type_weak_with_parenthesis | ['_'] LPAREN expression RPAREN ) [EQUALS expression]
+argument ::= [ref | out] (expression | identifier COLON expression | identifier)
+named_argument ::= [parameter_direction] [parameter_ownage] identifier COLON (expression | type_weak | type_with_parenthesis | type_weak_with_parenthesis | ['_'] LPAREN expression RPAREN ) [EQUALS expression]
 
 tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
 
@@ -272,7 +272,7 @@ method_call ::= LPAREN [ arguments ] RPAREN [ object_initializer ]
 simple_name ::= ( ['global::'] identifier) [ type_arguments ]
 lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
 
-lambda_expression_params ::= (identifier) | ( LPAREN [ ([ ref | out ] (identifier) ) [ (COMMA ([ ref | out ] (identifier) | ref))* ] ] RPAREN )
+lambda_expression_params ::= identifier | ( LPAREN [ ([ ref | out ] identifier ) [ (COMMA ([ ref | out ] identifier | ref))* ] ] RPAREN )
 
 lambda_expression_body ::= expression | block
 
@@ -320,7 +320,7 @@ type_declaration_modifiers ::= type_declaration_modifier [ ( type_declaration_mo
 type_declaration_modifier ::= abstract | extern | partial | sealed | static
 
 // parse_type_parameter_list
-type_parameters ::= LESS_THAN (identifier) [ (COMMA (identifier))* ] GREATER_THAN
+type_parameters ::= LESS_THAN identifier [ (COMMA identifier)* ] GREATER_THAN
 
 struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct symbol [type_arguments]
                        [ COLON base_types ] LBRACE struct_member* RBRACE {
@@ -360,7 +360,7 @@ method_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] (typ
                                                                                                                                             }
 
 constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) (identifier [ inline_array_type ])
-                         [ EQUALS expression ] [COMMA (identifier) [ inline_array_type ][ EQUALS expression ]] SEMICOLON {
+                         [ EQUALS expression ] [COMMA identifier [ inline_array_type ][ EQUALS expression ]] SEMICOLON {
                                                                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
                                                                                                                              methods=[getName setName getNameIdentifier getPresentation getReferences]
@@ -572,7 +572,7 @@ private enum_type_declaration_modifier ::= abstract | extern | sealed
 
 enumvalues ::= enumvalue [ (COMMA enumvalue)* ] [ COMMA ]
 // enums need at least one value
-enumvalue ::= [ attributes ] (identifier) [ EQUALS expression ]
+enumvalue ::= [ attributes ] identifier [ EQUALS expression ]
 // creation/construction methods explicitly are not permitted
 enum_member ::= [attributes] (constant_declaration | method_declaration)
 

@@ -30,21 +30,28 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
      * settings page.
      */
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Line comment", ValaTextAttributeKey.LINE_COMMENT),
-            new AttributesDescriptor("Block comment", ValaTextAttributeKey.BLOCK_COMMENT),
-            new AttributesDescriptor("Doc comment", ValaTextAttributeKey.DOC_COMMENT),
-            new AttributesDescriptor("Keyword", ValaTextAttributeKey.KEYWORD),
-            new AttributesDescriptor("String", ValaTextAttributeKey.STRING_LITERAL),
-            new AttributesDescriptor("Number", ValaTextAttributeKey.NUMBER_LITERAL),
-            new AttributesDescriptor("Constant", ValaTextAttributeKey.CONSTANT),
+            new AttributesDescriptor("Keywords", ValaTextAttributeKey.KEYWORD),
+            new AttributesDescriptor("Comments\\Line comment", ValaTextAttributeKey.LINE_COMMENT),
+            new AttributesDescriptor("Comments\\Block comment", ValaTextAttributeKey.BLOCK_COMMENT),
+            new AttributesDescriptor("Comments\\Doc comment", ValaTextAttributeKey.DOC_COMMENT),
+            new AttributesDescriptor("Strings", ValaTextAttributeKey.STRING_LITERAL),
+            new AttributesDescriptor("Numbers", ValaTextAttributeKey.NUMBER_LITERAL),
+            new AttributesDescriptor("Constants", ValaTextAttributeKey.CONSTANT),
+            new AttributesDescriptor("Parameters", ValaTextAttributeKey.PARAMETER),
+            new AttributesDescriptor("Attributes", ValaTextAttributeKey.ATTRIBUTE),
+            new AttributesDescriptor("Misc instances", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AttributesDescriptor("Local variables", ValaTextAttributeKey.LOCAL_VARIABLE),
             new AttributesDescriptor("Method call", ValaTextAttributeKey.METHOD_CALL),
-            new AttributesDescriptor("Semicolon", ValaTextAttributeKey.SEMICOLON),
+            new AttributesDescriptor("Semicolons", ValaTextAttributeKey.SEMICOLON),
             new AttributesDescriptor("Brackets", ValaTextAttributeKey.BRACKETS),
             new AttributesDescriptor("Braces", ValaTextAttributeKey.BRACES),
-            new AttributesDescriptor("Comma", ValaTextAttributeKey.COMMA),
-            new AttributesDescriptor("Dot", ValaTextAttributeKey.DOT),
+            new AttributesDescriptor("Commas", ValaTextAttributeKey.COMMA),
+            new AttributesDescriptor("Dots", ValaTextAttributeKey.DOT),
             new AttributesDescriptor("Parentheses", ValaTextAttributeKey.PARENTHESES),
-            new AttributesDescriptor("Method declaration", ValaTextAttributeKey.METHOD_DECLARATION)
+            new AttributesDescriptor("Method declaration", ValaTextAttributeKey.METHOD_DECLARATION),
+            new AttributesDescriptor("Misc declarations", ValaTextAttributeKey.STRUCTURE_NAMES),
+            new AttributesDescriptor("Interfaces", ValaTextAttributeKey.INTERFACE_NAME),
+            new AttributesDescriptor("Operations", ValaTextAttributeKey.OPERATIONS)
     };
 
     /**

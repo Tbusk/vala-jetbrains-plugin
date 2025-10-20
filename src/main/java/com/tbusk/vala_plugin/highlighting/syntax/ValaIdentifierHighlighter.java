@@ -26,20 +26,19 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
     public static final Map<String, TextAttributesKey> KEY_MAP = new HashMap<>(
             Map.ofEntries(
-                    new AbstractMap.SimpleEntry<>("ValaClassDeclaration", ValaTextAttributeKey.STRUCTURE_NAMES),
-                    new AbstractMap.SimpleEntry<>("ValaInterfaceDeclaration", ValaTextAttributeKey.STRUCTURE_NAMES),
-                    new AbstractMap.SimpleEntry<>("ValaStructDeclaration", ValaTextAttributeKey.STRUCTURE_NAMES),
-                    new AbstractMap.SimpleEntry<>("ValaEnumDeclaration", ValaTextAttributeKey.STRUCTURE_NAMES),
-                    new AbstractMap.SimpleEntry<>("ValaErrordomainDeclaration", ValaTextAttributeKey.STRUCTURE_NAMES),
+                    new AbstractMap.SimpleEntry<>("ValaClassDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaInterfaceDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaStructDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaEnumDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaErrordomainDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
 
                     new AbstractMap.SimpleEntry<>("ValaPropertyDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
-                    new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
 
+                    new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.LOCAL_VARIABLE),
-
                     new AbstractMap.SimpleEntry<>("ValaLocalVariable", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaForeachStatement", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaCatchClause", ValaTextAttributeKey.LOCAL_VARIABLE),

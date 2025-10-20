@@ -11,7 +11,6 @@ import java.util.List;
 public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
     public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = List.of(
-            ValaIdentifierHighlighter.getInstance(),
             ValaParameterHighlighter.getInstance(),
             ValaMethodDeclarationHighlighter.getInstance(),
             ValaSignalDeclarationHighlighter.getInstance(),
@@ -39,7 +38,9 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
             ValaPropertyDeclarationHighlighter.getInstance(),
             ValaYieldExpressionHighlighter.getInstance(),
             ValaDestructorDeclarationHighlighter.getInstance(),
-            ValaForEachHighlighter.getInstance()
+            ValaForEachHighlighter.getInstance(),
+            ValaCatchHighlighter.getInstance(),
+            ValaIdentifierHighlighter.getInstance()
     );
 
     @Override
