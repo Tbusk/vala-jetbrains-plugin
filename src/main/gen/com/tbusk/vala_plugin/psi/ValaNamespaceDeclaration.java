@@ -5,6 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiReference;
 
 public interface ValaNamespaceDeclaration extends ValaNamedElement {
 
@@ -24,5 +25,7 @@ public interface ValaNamespaceDeclaration extends ValaNamedElement {
   PsiElement getNameIdentifier();
 
   ItemPresentation getPresentation();
+
+  PsiReference[] getReferences();
 
 }

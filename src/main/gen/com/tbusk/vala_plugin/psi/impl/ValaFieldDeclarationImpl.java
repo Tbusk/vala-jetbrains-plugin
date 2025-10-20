@@ -11,6 +11,7 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
 import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiReference;
 
 public class ValaFieldDeclarationImpl extends ValaNamedElementImpl implements ValaFieldDeclaration {
 
@@ -64,7 +65,7 @@ public class ValaFieldDeclarationImpl extends ValaNamedElementImpl implements Va
   }
 
   @Override
-  public PsiElement setName(@NotNull String newName) {
+  public PsiElement setName(String newName) {
     return ValaPsiImplUtil.setName(this, newName);
   }
 
@@ -76,6 +77,11 @@ public class ValaFieldDeclarationImpl extends ValaNamedElementImpl implements Va
   @Override
   public ItemPresentation getPresentation() {
     return ValaPsiImplUtil.getPresentation(this);
+  }
+
+  @Override
+  public PsiReference[] getReferences() {
+    return ValaPsiImplUtil.getReferences(this);
   }
 
 }

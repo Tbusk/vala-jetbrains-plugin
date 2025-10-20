@@ -287,14 +287,14 @@ constructor_declaration_modifier ::= async | class | extern | inline | static | 
 destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE identifier LPAREN RPAREN block {
                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                         methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                       }
 
 class_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] class symbol [ type_arguments ]
                       [ COLON base_types ] LBRACE class_member* RBRACE {
                                                                            mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                            implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                           methods=[getName setName getNameIdentifier getPresentation]
+                                                                           methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                        }
 
 base_types ::= (type | type_with_parenthesis) [type_arguments] [ (COMMA (type | type_with_parenthesis) [type_arguments])* ]
@@ -326,7 +326,7 @@ struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct
                        [ COLON base_types ] LBRACE struct_member* RBRACE {
                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                             methods=[getName setName getNameIdentifier getPresentation]
+                                                                             methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                          }
 
 struct_member ::= [ attributes ] ( field_declaration | method_declaration | constant_declaration | property_declaration | creation_method_declaration )
@@ -335,7 +335,7 @@ creation_method_declaration ::= [ access_modifier ] [ constructor_declaration_mo
                                 LPAREN [ parameters ] RPAREN [ throws_statement ] [ requires_statement ] [ ensures_statement ] ( SEMICOLON | block ) {
                                                                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                                                                      }
 
 requires_statement ::= requires LPAREN expression RPAREN [ requires_statement ]
@@ -346,7 +346,7 @@ signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] sign
                        LPAREN [ parameters ] RPAREN ( SEMICOLON | block ) {
                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                              methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                           }
 
 signal_declaration_modifiers ::= signal_declaration_modifier [ (signal_declaration_modifier)* ]
@@ -356,14 +356,14 @@ method_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] (typ
                        LPAREN [ parameters ] RPAREN [ throws_statement ] [ requires_statement ] [ ensures_statement ] ( SEMICOLON | block ) {
                                                                                                                                                 mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                 implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                                                methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                                                             }
 
-constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) ((identifier) [ inline_array_type ])
+constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) (identifier [ inline_array_type ])
                          [ EQUALS expression ] [COMMA (identifier) [ inline_array_type ][ EQUALS expression ]] SEMICOLON {
                                                                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                             methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                             methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                                          }
 
 inline_array_type ::= LBRACKET [ (expression | INTEGER_LITERAL | member | COMMA*) [COLON (expression | INTEGER_LITERAL | member)]] RBRACKET
@@ -371,7 +371,7 @@ inline_array_type ::= LBRACKET [ (expression | INTEGER_LITERAL | member | COMMA*
 field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] [(type_weak | [unowned] type_weak_with_parenthesis)] field_declaration_section (COMMA field_declaration_section)* SEMICOLON {
                                                                                                                                                                                                            mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                                                                            implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                                                                                                           methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                           methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                                                                                                                        }
 field_declaration_section ::= identifier [inline_array_type] [ EQUALS expression [inline_array_type] ]
 
@@ -379,7 +379,7 @@ property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] 
                          LBRACE property_declaration_part* RBRACE {
                                                                       mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                       implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                      methods=[getName setName getNameIdentifier getPresentation]
+                                                                      methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                   }
 
 property_declaration_part ::= ( default EQUALS expression SEMICOLON ) | property_accessor
@@ -417,13 +417,13 @@ local_variable_declaration ::= local_tuple_declaration | local_variable
 local_tuple_declaration ::= LPAREN member RPAREN EQUALS expression {
                                                                        mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                        implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                       methods=[getName setName getNameIdentifier getPresentation]
+                                                                       methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                    }
 
 local_variable ::= identifier [ inline_array_type ] [ EQUALS expression ] {
                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                              methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                           }
 
 expression_statement ::= statement_expression [SEMICOLON]
@@ -433,7 +433,7 @@ errordomain_declaration ::= [ errordomain_access_modifier ] [ errordomain_type_d
                             LBRACE [errorcodes [SEMICOLON]] [ ( [attributes] method_declaration)* ] RBRACE {
                                                                                                                mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                               methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                               methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                            }
 
 private errordomain_access_modifier ::= private | public | protected | internal
@@ -448,7 +448,7 @@ delegate_declaration ::= [ delegate_access_modifiers ] [ delegate_declaration_mo
                          LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON | block) {
                                                                                                    mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                    implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                   methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                   methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                }
 
 private delegate_access_modifiers ::= private | protected | internal | public
@@ -462,7 +462,7 @@ parameters ::= parameter [ (COMMA parameter)* [ COMMA ] ]
 parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parenthesis | type_weak_with_parenthesis) identifier [inline_array_type] [ EQUALS expression ] ) ) {
                                                                                                                                                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                                                                                                                                                       }
 
 private parameter_direction ::= in | out | ref
@@ -478,7 +478,7 @@ catch_clauses ::= catch_clause (catch_clause)* [finally_clause]
 catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) identifier RPAREN ] block {
                                                                                                           mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                           implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                          methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                          methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                       }
 
 // -- Finally Statement, Checked Parser --
@@ -491,7 +491,7 @@ yield_statement ::= yield SEMICOLON | yield_expression [SEMICOLON]
 yield_expression ::= yield [new] [ base_access DOT ] member [ (member_access | method_call)* ] {
                                                                                                     mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                     implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                    methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                    methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                 }
 
 // -- Break Statement, Checked Parser --
@@ -549,7 +549,7 @@ typeof_expression ::= typeof LPAREN (type | type_with_parenthesis) RPAREN
 namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE {
                                                                                                mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                               methods=[getName setName getNameIdentifier getPresentation]
+                                                                                               methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                             }
 
 // -- Using Statement, Checked Parser --
@@ -563,7 +563,7 @@ enum_declaration ::= [ access_modifier ] [ enum_type_declaration_modifiers ] enu
                      LBRACE enumvalues [ SEMICOLON [ enum_member* ] ] RBRACE {
                                                                                  mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                  implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                 methods=[getName setName getNameIdentifier getPresentation]
+                                                                                 methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                              }
 // doesn't prevent duplicates
 private enum_type_declaration_modifiers ::= enum_type_declaration_modifier [ enum_type_declaration_modifier* ]
@@ -581,7 +581,7 @@ interface_declaration ::= [ access_modifier ] [ interface_type_declaration_modif
                           [ COLON base_types ] LBRACE interface_member* RBRACE {
                                                                                    mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                    implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                   methods=[getName setName getNameIdentifier getPresentation]
+                                                                                   methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                }
 
 private interface_type_declaration_modifiers ::= interface_type_declaration_modifier [ interface_type_declaration_modifier* ]
@@ -607,7 +607,7 @@ interface_member ::= [ attributes ]
 foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) identifier in expression RPAREN embedded_statement {
                                                                                                                                                                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                                                                                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                                                                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                                              methods=[getName setName getNameIdentifier getPresentation getReferences]
                                                                                                                                                                                                                            }
 
 valid_identifier_keywords ::= ( abstract

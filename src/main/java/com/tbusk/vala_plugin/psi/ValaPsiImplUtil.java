@@ -3,203 +3,93 @@ package com.tbusk.vala_plugin.psi;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.NlsSafe;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiNamedElement;
 import com.intellij.psi.PsiReference;
-import com.intellij.psi.tree.IElementType;
-import com.tbusk.vala_plugin.ValaTokenSets;
+import com.intellij.psi.tree.TokenSet;
+import com.tbusk.vala_plugin.language.ValaFile;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class ValaPsiImplUtil {
 
     public static String getName(ValaNamedElement element) {
-        PsiElement identifierNode = getNameIdentifier(element);
+        ASTNode namedElementNode = element.getNode();
+
+        ASTNode identifierNode = namedElementNode.findChildByType(ValaTypes.IDENTIFIER);
         if (identifierNode != null) {
-            return identifierNode.getText();
+            return getIdentifierName(identifierNode);
         }
+
+        ASTNode symbolNode = namedElementNode.findChildByType(ValaTypes.SYMBOL);
+        if (symbolNode != null) {
+            return getSymbolName(symbolNode);
+        }
+
+        ASTNode memberNode = namedElementNode.findChildByType(ValaTypes.MEMBER);
+        if (memberNode != null) {
+            return getMemberName(memberNode);
+        }
+
         return null;
     }
 
-    public static String getName(ValaClassDeclaration declaration) {
+    private static String getIdentifierName(ASTNode identifierNode) {
+        return identifierNode.getText();
+    }
 
-        if (declaration != null) {
-            ASTNode symbolNode = declaration.getNode().findChildByType(ValaTypes.SYMBOL);
+    private static String getSymbolName(ASTNode symbolNode) {
+        StringBuilder nameBuilder = new StringBuilder();
 
-            if (symbolNode != null) {
+        ASTNode[] symbolPartNodes = symbolNode.getChildren(TokenSet.create(ValaTypes.SYMBOL_PART));
 
+        for (ASTNode symbolPartNode : symbolPartNodes) {
+
+            ASTNode identifierNode = symbolPartNode.findChildByType(ValaTypes.IDENTIFIER);
+
+            if (identifierNode != null && !symbolPartNode.equals(symbolPartNodes[symbolPartNodes.length - 1])) {
+                nameBuilder.append(identifierNode.getText());
+                nameBuilder.append(".");
+            } else if (identifierNode != null) {
+                nameBuilder.append(identifierNode.getText());
             }
         }
 
-        PsiElement id = findIdentifierToken(declaration);
-        if (id != null) {
-            return id.getText();
-        }
-        return null;
+        return nameBuilder.toString();
     }
 
-    public static String getName(ValaMethodDeclaration decl) {
-        ValaMember member = decl.getMember();
-        PsiElement id = findIdentifierToken(member);
+    private static String getMemberName(ASTNode memberNode) {
+        StringBuilder nameBuilder = new StringBuilder();
 
-        if (id != null) {
-            return id.getText();
-        }
-        return null;
-    }
+        ASTNode[] memberPartNodes = memberNode.getChildren(TokenSet.create(ValaTypes.MEMBER_PART));
 
-    public static String getName(ValaFieldDeclaration decl) {
-        PsiElement id = findIdentifierToken(decl);
-        if (id != null) {
-            return id.getText();
-        }
-        return null;
-    }
+        for (ASTNode memberPartNode : memberPartNodes) {
 
-    public static String getName(ValaYieldStatement decl) {
-        PsiElement id = findIdentifierToken(decl);
-        if (id != null) {
-            return id.getText();
-        }
-        return null;
-    }
+            ASTNode identifierNode = memberPartNode.findChildByType(ValaTypes.IDENTIFIER);
 
-    public static String getName(ValaDestructorDeclaration decl) {
-        PsiElement id = findIdentifierToken(decl);
-        if (id != null) {
-            return id.getText();
-        }
-        return null;
-    }
-
-    public static String getName(ValaSignalDeclaration decl) {
-        // Similar
-        return getNameFromSymbol(decl);
-    }
-
-    public static String getName(ValaStructDeclaration decl) {
-        return getNameFromSymbol(decl);
-    }
-
-    public static String getName(ValaEnumDeclaration decl) {
-        return getNameFromSymbol(decl);
-    }
-
-    public static String getName(ValaInterfaceDeclaration decl) {
-        return getNameFromSymbol(decl);
-    }
-
-    public static String getName(ValaErrordomainDeclaration decl) {
-        return getNameFromSymbol(decl);
-    }
-
-    public static String getName(ValaNamespaceDeclaration decl) {
-        return getNameFromSymbol(decl);
-    }
-
-    public static String getName(ValaParameter decl) {
-        ValaIdentifier id = decl.getIdentifier();
-        if (id != null) {
-            return getName(id);
-        }
-        return null;
-    }
-
-    public static String getName(ValaCatchClause decl) {
-        ValaIdentifier id = decl.getIdentifier();
-        if (id != null) {
-            return getName(id);
-        }
-        return null;
-    }
-
-    public static String getName(ValaForeachStatement decl) {
-        ValaIdentifier id = decl.getIdentifier();
-        return getName(id);
-    }
-
-    public static String getName(ValaPropertyDeclaration decl) {
-        ValaIdentifier id = decl.getIdentifier();
-        return getName(id);
-    }
-
-    public static String getName(ValaLocalVariable decl) {
-        ValaIdentifier id = decl.getIdentifier();
-        return getName(id);
-    }
-
-    private static String getNameFromSymbol(ValaNamedElement decl) {
-        PsiElement id = findIdentifierToken(decl);
-        if (id != null) {
-            return id.getText();
-        }
-        return null;
-    }
-
-    private static PsiElement findIdentifierToken(PsiElement element) {
-
-        if (element instanceof ValaIdentifier id) {
-            PsiElement token = id.getIdentifierToken();
-            if (token != null) {
-                return token;
-            }
-            return id.getValidIdentifierKeywords();
-        }
-
-        if (element.getFirstChild() == null && !(element instanceof com.intellij.psi.PsiErrorElement)) {
-            IElementType type = element.getNode().getElementType();
-            if (type == ValaTypes.IDENTIFIER_TOKEN || ValaTokenSets.KEYWORDS.contains(type)) {
-                return element;
+            if (identifierNode != null && !memberPartNode.equals(memberPartNodes[memberPartNodes.length - 1])) {
+                nameBuilder.append(identifierNode.getText());
+                nameBuilder.append(".");
+            } else if (identifierNode != null) {
+                nameBuilder.append(identifierNode.getText());
             }
         }
 
-        for (PsiElement child : element.getChildren()) {
-            PsiElement found = findIdentifierToken(child);
-            if (found != null) {
-                return found;
-            }
-        }
-        return null;
-    }
-
-    public static PsiElement getIdentifierToken(ValaIdentifier element) {
-        PsiElement child = element.getFirstChild();
-        if (child != null && child.getNode().getElementType() == ValaTypes.IDENTIFIER_TOKEN) {
-            return child;
-        }
-        return null;
-    }
-
-    public static ValaValidIdentifierKeywords getValidIdentifierKeywords(ValaIdentifier element) {
-        PsiElement child = element.getFirstChild();
-        if (child != null && ValaTokenSets.KEYWORDS.contains(child.getNode().getElementType())) {
-            return (ValaValidIdentifierKeywords) child;
-        }
-        return null;
-    }
-
-    public static String getName(ValaIdentifier element) {
-        PsiElement token = getIdentifierToken(element);
-        if (token != null) {
-            return token.getText();
-        }
-        ValaValidIdentifierKeywords keyword = getValidIdentifierKeywords(element);
-        if (keyword != null) {
-            return keyword.getText();
-        }
-        return element.getText();
+        return nameBuilder.toString();
     }
 
     public static PsiElement getNameIdentifier(ValaNamedElement element) {
-        return findIdentifierToken(element);
+        return element;
     }
 
     public static PsiElement setName(ValaNamedElement element, String newName) {
         PsiElement identifierToken = getNameIdentifier(element);
 
-        if (identifierToken != null) {
+        if (element != null) {
             ValaIdentifier newIdentifier = ValaElementFactory.createIdentifier(element.getProject(), newName);
             PsiElement newIdToken = newIdentifier.getIdentifierToken();
             if (newIdToken != null) {
@@ -232,7 +122,42 @@ public class ValaPsiImplUtil {
         };
     }
 
-    public static PsiReference[] getReferences(ValaIdentifier element) {
-        return new PsiReference[]{new ValaReference(element, TextRange.from(0, element.getTextLength()))};
+    public static PsiReference[] getReferences(PsiElement element) {
+
+        String name = null;
+
+        ASTNode simpleNameNode = element.getNode().findChildByType(ValaTypes.SIMPLE_NAME);
+
+        if (simpleNameNode != null) {
+            name = getIdentifierName(simpleNameNode);
+        }
+
+        if (element instanceof ValaIdentifier) {
+            name = getIdentifierName(element.getNode());
+        }
+
+        if (element instanceof ValaMember) {
+            name = getMemberName(element.getNode());
+        }
+
+        if (element instanceof ValaSymbol) {
+            name = getSymbolName(element.getNode());
+        }
+
+        if (name != null) {
+            List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile((ValaFile) element.getContainingFile(), name);
+
+            PsiReference[] references = new PsiReference[declarations.size()];
+
+            for (int i = 0; i < declarations.size(); i++) {
+                references[i] = new ValaReference(declarations.get(i), declarations.get(i).getTextRange());
+            }
+
+            System.out.println("Elements: " + Arrays.toString(references));
+
+            return references;
+        }
+
+        return PsiReference.EMPTY_ARRAY;
     }
 }

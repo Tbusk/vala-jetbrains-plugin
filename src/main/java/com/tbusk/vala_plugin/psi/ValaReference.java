@@ -27,7 +27,7 @@ public class ValaReference extends PsiPolyVariantReferenceBase<PsiElement> {
         List<ResolveResult> results = new ArrayList<>();
 
         if (containingFile != null) {
-            List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, name, true);
+            List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, name);
             for (PsiNamedElement element : declarations) {
                 results.add(new PsiElementResolveResult(element));
             }
@@ -42,7 +42,7 @@ public class ValaReference extends PsiPolyVariantReferenceBase<PsiElement> {
         List<LookupElement> variants = new ArrayList<>();
 
         if (containingFile != null) {
-            List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, name, true);
+            List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, name);
 
             for (PsiNamedElement declaration : declarations) {
                 String declName = declaration.getName();

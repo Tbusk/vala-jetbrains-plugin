@@ -64,7 +64,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                         psiElement.getParent().getParent() instanceof ValaPrimaryExpression) {
                     ValaFile containingFile = PsiTreeUtil.getParentOfType(psiElement, ValaFile.class);
 
-                    List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, psiElement.getText(), true);
+                    List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, psiElement.getText());
 
                     if (!declarations.isEmpty()) {
 

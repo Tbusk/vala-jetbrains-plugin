@@ -1209,7 +1209,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) ((identifier) [ inline_array_type ])
+  // [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) (identifier [ inline_array_type ])
   //                          [ EQUALS expression ] [COMMA (identifier) [ inline_array_type ][ EQUALS expression ]] SEMICOLON
   public static boolean constant_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constant_declaration")) return false;
@@ -1259,23 +1259,13 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (identifier) [ inline_array_type ]
+  // identifier [ inline_array_type ]
   private static boolean constant_declaration_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "constant_declaration_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = constant_declaration_4_0(b, l + 1);
-    r = r && constant_declaration_4_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (identifier)
-  private static boolean constant_declaration_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "constant_declaration_4_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
     r = identifier(b, l + 1);
+    r = r && constant_declaration_4_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -4062,25 +4052,15 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (identifier) EQUALS expression
+  // identifier EQUALS expression
   public static boolean member_initializer(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_initializer")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MEMBER_INITIALIZER, "<member initializer>");
-    r = member_initializer_0(b, l + 1);
+    r = identifier(b, l + 1);
     r = r && consumeToken(b, EQUALS);
     r = r && expression(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // (identifier)
-  private static boolean member_initializer_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "member_initializer_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
-    exit_section_(b, m, null, r);
     return r;
   }
 
