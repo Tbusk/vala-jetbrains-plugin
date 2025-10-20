@@ -208,11 +208,11 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitFieldDeclaration(@NotNull ValaFieldDeclaration o) {
-    visitNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitFieldDeclarationSection(@NotNull ValaFieldDeclarationSection o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitFinallyClause(@NotNull ValaFinallyClause o) {

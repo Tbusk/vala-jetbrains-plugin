@@ -12,7 +12,6 @@ import com.tbusk.vala_plugin.language.ValaFile;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Arrays;
 import java.util.List;
 
 public class ValaPsiImplUtil {
@@ -152,8 +151,6 @@ public class ValaPsiImplUtil {
             for (int i = 0; i < declarations.size(); i++) {
                 references[i] = new ValaReference(declarations.get(i), declarations.get(i).getTextRange());
             }
-
-            System.out.println("Elements: " + Arrays.toString(references));
 
             return references;
         }

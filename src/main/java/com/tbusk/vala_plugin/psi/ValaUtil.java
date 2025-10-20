@@ -32,7 +32,7 @@ public class ValaUtil {
         Collection<ValaClassDeclaration> classDeclarations = PsiTreeUtil.collectElementsOfType(file, ValaClassDeclaration.class);
         allDeclarationsInFile.addAll(classDeclarations);
 
-        Collection<ValaFieldDeclaration> fieldDeclarations = PsiTreeUtil.collectElementsOfType(file, ValaFieldDeclaration.class);
+        Collection<ValaFieldDeclarationSection> fieldDeclarations = PsiTreeUtil.collectElementsOfType(file, ValaFieldDeclarationSection.class);
         allDeclarationsInFile.addAll(fieldDeclarations);
 
         Collection<ValaStructDeclaration> structDeclarations = PsiTreeUtil.collectElementsOfType(file, ValaStructDeclaration.class);

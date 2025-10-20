@@ -152,11 +152,11 @@ symbol_part ::= ( global "::" identifier ) | identifier
 
 attributes ::= attribute*
 
-attribute ::= LBRACKET (identifier) [ attribute_arguments ] [ (COMMA (identifier) [ attribute_arguments ])* ] RBRACKET
+attribute ::= LBRACKET identifier [ attribute_arguments ] [ (COMMA identifier [ attribute_arguments ])* ] RBRACKET
 
 attribute_arguments ::= LPAREN [attribute_argument [ (COMMA attribute_argument)* ] ] RPAREN
 
-attribute_argument ::= (identifier) EQUALS expression
+attribute_argument ::= identifier EQUALS expression
 
 expression ::= (lambda_expression | ( conditional_expression [ assignment_operator expression ] ))
 
@@ -368,12 +368,12 @@ constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] co
 
 inline_array_type ::= LBRACKET [ (expression | INTEGER_LITERAL | member | COMMA*) [COLON (expression | INTEGER_LITERAL | member)]] RBRACKET
 
-field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] [(type_weak | [unowned] type_weak_with_parenthesis)] field_declaration_section (COMMA field_declaration_section)* SEMICOLON {
-                                                                                                                                                                                                           mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
-                                                                                                                                                                                                           implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
-                                                                                                                                                                                                           methods=[getName setName getNameIdentifier getPresentation getReferences]
-                                                                                                                                                                                                       }
-field_declaration_section ::= identifier [inline_array_type] [ EQUALS expression [inline_array_type] ]
+field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] [(type_weak | [unowned] type_weak_with_parenthesis)] field_declaration_section (COMMA field_declaration_section)* SEMICOLON
+field_declaration_section ::= identifier [inline_array_type] [ EQUALS expression [inline_array_type] ] {
+                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                          methods=[getName setName getNameIdentifier getPresentation getReferences]
+                                                                                                       }
 
 property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] (type_weak | type_weak_with_parenthesis) identifier
                          LBRACE property_declaration_part* RBRACE {
