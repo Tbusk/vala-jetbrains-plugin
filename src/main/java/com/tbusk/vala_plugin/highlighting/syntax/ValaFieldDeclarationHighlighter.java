@@ -25,11 +25,12 @@ public final class ValaFieldDeclarationHighlighter implements ValaHighlighter {
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaFieldDeclarationImpl) {
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             ASTNode[] fieldDeclarationSectionNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.FIELD_DECLARATION_SECTION));
 
             for (ASTNode fieldDeclarationSectionNode : fieldDeclarationSectionNodes) {
+
+                ValaSyntaxHighlightingAnnotator.addScopedElement(fieldDeclarationSectionNode.getPsi());
 
                 ASTNode identifierNode = fieldDeclarationSectionNode.findChildByType(ValaTypes.IDENTIFIER);
 

@@ -8,7 +8,10 @@ import com.tbusk.vala_plugin.highlighting.ValaElementScope;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
 import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
+import com.tbusk.vala_plugin.psi.ValaCatchClause;
+import com.tbusk.vala_plugin.psi.ValaForeachStatement;
 import com.tbusk.vala_plugin.psi.ValaIdentifier;
+import com.tbusk.vala_plugin.psi.ValaParameter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
@@ -54,18 +57,32 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof ValaIdentifier identifier) {
+        if (psiElement instanceof ValaIdentifier identifier && !(psiElement.getParent() instanceof ValaParameter) && !(psiElement.getParent() instanceof ValaForeachStatement) && !(psiElement.getParent() instanceof ValaCatchClause)) {
 
             String scopeName = String.format("%s.%s", psiElement.getContainingFile().getName(), identifier.getText());
+
+            System.out.println("Scope name: " + scopeName);
 
             if (ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeName)) {
                 Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeName);
 
                 ValaElementScope scope = findClosestScope(identifier, scopes);
-                annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(psiElement.getTextRange())
-                        .textAttributes(KEY_MAP.getOrDefault(scope.type(), ValaTextAttributeKey.IDENTIFIER))
-                        .create();
+
+                if (scope == null) {
+                    System.out.println("Scope not found with: " + identifier.getText());
+                    if (!ValaSyntaxHighlightingAnnotator.HIGHLIGHT_RETRIES.contains(identifier)) {
+                        ValaSyntaxHighlightingAnnotator.HIGHLIGHT_RETRIES.add(identifier);
+                    } else {
+                        ValaSyntaxHighlightingAnnotator.HIGHLIGHT_RETRIES.remove(identifier);
+                    }
+                }
+
+                if (scope != null) {
+                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(psiElement.getTextRange())
+                            .textAttributes(KEY_MAP.get(scope.type()))
+                            .create();
+                }
             }
         }
     }
@@ -76,18 +93,21 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
         int closestDistance = Integer.MAX_VALUE;
 
         for (ValaElementScope scope : scopes) {
-            int scopeStart = scope.range().getEndOffset();
+            if (scope.parentRange().getStartOffset() <= identifierStart && scope.parentRange().getEndOffset() >= identifierStart) {
+                System.out.println("Scope: " + scope + " inside parent.");
+                int scopeStart = scope.range().getStartOffset();
 
-            if (scopeStart <= identifierStart) {
-                int distance = identifierStart - scopeStart;
+                if (scopeStart <= identifierStart) {
+                    int distance = identifierStart - scopeStart;
 
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestScope = scope;
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestScope = scope;
+                    }
                 }
             }
         }
 
-        return closestScope != null ? closestScope : scopes.iterator().next();
+        return closestScope;
     }
 }
