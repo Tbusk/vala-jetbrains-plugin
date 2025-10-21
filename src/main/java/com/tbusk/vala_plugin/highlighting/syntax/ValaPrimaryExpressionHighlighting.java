@@ -87,7 +87,6 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                 ASTNode identifierNode = child.getNode().findChildByType(ValaTypes.IDENTIFIER);
 
                 if (identifierNode != null && identifierNode.getText().matches(constantRegex)) {
-                    System.out.println(identifierNode.getText());
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .range(identifierNode.getTextRange())
                             .textAttributes(ValaTextAttributeKey.CONSTANT)
@@ -102,7 +101,6 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                     ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
 
                     if (identifierNode != null && identifierNode.getText().matches(constantRegex)) {
-                        System.out.println(identifierNode.getText());
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                                 .range(identifierNode.getTextRange())
                                 .textAttributes(ValaTextAttributeKey.CONSTANT)

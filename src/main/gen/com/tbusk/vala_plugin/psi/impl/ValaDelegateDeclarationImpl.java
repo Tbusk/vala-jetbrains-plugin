@@ -11,7 +11,6 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.psi.PsiReference;
 
 public class ValaDelegateDeclarationImpl extends ValaNamedElementImpl implements ValaDelegateDeclaration {
 
@@ -89,11 +88,6 @@ public class ValaDelegateDeclarationImpl extends ValaNamedElementImpl implements
   @Override
   public ItemPresentation getPresentation() {
     return ValaPsiImplUtil.getPresentation(this);
-  }
-
-  @Override
-  public PsiReference[] getReferences() {
-    return ValaPsiImplUtil.getReferences(this);
   }
 
 }

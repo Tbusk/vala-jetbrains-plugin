@@ -123,10 +123,7 @@
         <annotator language="Vala"
                    implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator"/>
 
-        <lang.refactoringSupport language="Vala"
-                                 implementationClass="com.tbusk.vala_plugin.psi.ValaRefactoringSupportProvider"/>
-
-        <psi.referenceContributor language="Vala" implementation="com.tbusk.vala_plugin.psi.ValaReferenceContributor"/>
+        <lang.findUsagesProvider language="Vala" implementationClass="com.tbusk.vala_plugin.psi.ValaUsageProvider"/>
 
     </extensions>
 

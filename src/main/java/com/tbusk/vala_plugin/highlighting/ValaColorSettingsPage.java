@@ -31,9 +31,9 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
      */
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
             new AttributesDescriptor("Keywords", ValaTextAttributeKey.KEYWORD),
-            new AttributesDescriptor("Comments\\Line comment", ValaTextAttributeKey.LINE_COMMENT),
-            new AttributesDescriptor("Comments\\Block comment", ValaTextAttributeKey.BLOCK_COMMENT),
-            new AttributesDescriptor("Comments\\Doc comment", ValaTextAttributeKey.DOC_COMMENT),
+            new AttributesDescriptor("Comments//Line comment", ValaTextAttributeKey.LINE_COMMENT),
+            new AttributesDescriptor("Comments//Block comment", ValaTextAttributeKey.BLOCK_COMMENT),
+            new AttributesDescriptor("Comments//Doc comment", ValaTextAttributeKey.DOC_COMMENT),
             new AttributesDescriptor("Strings", ValaTextAttributeKey.STRING_LITERAL),
             new AttributesDescriptor("Numbers", ValaTextAttributeKey.NUMBER_LITERAL),
             new AttributesDescriptor("Constants", ValaTextAttributeKey.CONSTANT),

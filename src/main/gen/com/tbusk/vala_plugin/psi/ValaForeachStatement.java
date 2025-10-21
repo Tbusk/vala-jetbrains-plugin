@@ -5,7 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.psi.PsiReference;
 
 public interface ValaForeachStatement extends ValaNamedElement {
 
@@ -31,7 +30,5 @@ public interface ValaForeachStatement extends ValaNamedElement {
   PsiElement getNameIdentifier();
 
   ItemPresentation getPresentation();
-
-  PsiReference[] getReferences();
 
 }

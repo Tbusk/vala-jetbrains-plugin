@@ -21,6 +21,7 @@ public final class ValaEnumValueHighlighter implements ValaHighlighter {
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaEnumvalueImpl) {
+
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
             util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.CONSTANT);

@@ -4,18 +4,17 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.tbusk.vala_plugin.highlighting.ValaElementScope;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
+import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
-import com.tbusk.vala_plugin.language.ValaFile;
-import com.tbusk.vala_plugin.psi.*;
+import com.tbusk.vala_plugin.psi.ValaIdentifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
@@ -55,27 +54,40 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof ValaIdentifier) {
+        if (psiElement instanceof ValaIdentifier identifier) {
 
-            if (psiElement.getParent() instanceof ValaSimpleName) {
+            String scopeName = String.format("%s.%s", psiElement.getContainingFile().getName(), identifier.getText());
 
-                if (psiElement.getParent().getParent() instanceof ValaMemberAccess ||
-                        psiElement.getParent().getParent() instanceof ValaPrimaryExpression) {
-                    ValaFile containingFile = PsiTreeUtil.getParentOfType(psiElement, ValaFile.class);
+            if (ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeName)) {
+                Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeName);
 
-                    List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile(containingFile, psiElement.getText());
+                ValaElementScope scope = findClosestScope(identifier, scopes);
+                annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                        .range(psiElement.getTextRange())
+                        .textAttributes(KEY_MAP.getOrDefault(scope.type(), ValaTextAttributeKey.IDENTIFIER))
+                        .create();
+            }
+        }
+    }
 
-                    if (!declarations.isEmpty()) {
+    public ValaElementScope findClosestScope(ValaIdentifier identifier, Set<ValaElementScope> scopes) {
+        ValaElementScope closestScope = null;
+        int identifierStart = identifier.getTextRange().getStartOffset();
+        int closestDistance = Integer.MAX_VALUE;
 
-                        String implementationClassName = declarations.getFirst().getClass().getSimpleName();
+        for (ValaElementScope scope : scopes) {
+            int scopeStart = scope.range().getEndOffset();
 
-                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(psiElement.getTextRange())
-                                .textAttributes(KEY_MAP.getOrDefault(implementationClassName.substring(0, implementationClassName.indexOf("Impl")), ValaTextAttributeKey.IDENTIFIER))
-                                .create();
-                    }
+            if (scopeStart <= identifierStart) {
+                int distance = identifierStart - scopeStart;
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestScope = scope;
                 }
             }
         }
+
+        return closestScope != null ? closestScope : scopes.iterator().next();
     }
 }

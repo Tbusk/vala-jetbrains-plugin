@@ -5,14 +5,10 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiNamedElement;
-import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.TokenSet;
-import com.tbusk.vala_plugin.language.ValaFile;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.List;
 
 public class ValaPsiImplUtil {
 
@@ -119,42 +115,5 @@ public class ValaPsiImplUtil {
                 return element.getIcon(0);
             }
         };
-    }
-
-    public static PsiReference[] getReferences(PsiElement element) {
-
-        String name = null;
-
-        ASTNode simpleNameNode = element.getNode().findChildByType(ValaTypes.SIMPLE_NAME);
-
-        if (simpleNameNode != null) {
-            name = getIdentifierName(simpleNameNode);
-        }
-
-        if (element instanceof ValaIdentifier) {
-            name = getIdentifierName(element.getNode());
-        }
-
-        if (element instanceof ValaMember) {
-            name = getMemberName(element.getNode());
-        }
-
-        if (element instanceof ValaSymbol) {
-            name = getSymbolName(element.getNode());
-        }
-
-        if (name != null) {
-            List<PsiNamedElement> declarations = ValaUtil.findDeclarationsInFile((ValaFile) element.getContainingFile(), name);
-
-            PsiReference[] references = new PsiReference[declarations.size()];
-
-            for (int i = 0; i < declarations.size(); i++) {
-                references[i] = new ValaReference(declarations.get(i), declarations.get(i).getTextRange());
-            }
-
-            return references;
-        }
-
-        return PsiReference.EMPTY_ARRAY;
     }
 }
