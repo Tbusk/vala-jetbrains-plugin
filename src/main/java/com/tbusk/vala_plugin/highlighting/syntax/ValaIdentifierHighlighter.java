@@ -14,10 +14,7 @@ import com.tbusk.vala_plugin.psi.ValaIdentifier;
 import com.tbusk.vala_plugin.psi.ValaParameter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
@@ -34,13 +31,13 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaEnumDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaErrordomainDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
 
-                    new AbstractMap.SimpleEntry<>("ValaPropertyDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
-                    new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
-                    new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
-                    new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
-                    new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
-                    new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
+                    new AbstractMap.SimpleEntry<>("ValaPropertyDeclaration", ValaTextAttributeKey.METHOD_CALL),
+                    new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
+                    new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
+                    new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_CALL),
 
+                    new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaLocalVariable", ValaTextAttributeKey.LOCAL_VARIABLE),
@@ -49,6 +46,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaLocalTupleDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
 
                     new AbstractMap.SimpleEntry<>("ValaParameter", ValaTextAttributeKey.PARAMETER),
+                    new AbstractMap.SimpleEntry<>("ValaLambdaExpressionParams", ValaTextAttributeKey.PARAMETER),
 
                     new AbstractMap.SimpleEntry<>("ValaConstantDeclaration", ValaTextAttributeKey.CONSTANT)
             )
@@ -69,6 +67,19 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                 Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeName);
 
                 ValaElementScope scope = findClosestScope(identifier, scopes);
+
+                if (scope == null) {
+
+                    if (ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.containsKey(identifier.getText())) {
+                        List<PsiElement> elements = ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.get(identifier.getText());
+                        elements.add(identifier);
+                        ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.put(identifier.getText(), elements);
+                    } else {
+                        List<PsiElement> elements = new ArrayList<>();
+                        elements.add(identifier);
+                        ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.put(identifier.getText(), elements);
+                    }
+                }
 
                 if (scope != null && !KEY_MAP.containsKey(scope.type())) {
                     throw new RuntimeException(scope.type());

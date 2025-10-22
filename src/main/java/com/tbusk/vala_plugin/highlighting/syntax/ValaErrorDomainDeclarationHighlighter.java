@@ -23,7 +23,7 @@ public final class ValaErrorDomainDeclarationHighlighter implements ValaHighligh
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaErrordomainDeclarationImpl) {
 
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
 
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 

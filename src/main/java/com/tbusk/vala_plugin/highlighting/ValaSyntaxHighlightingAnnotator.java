@@ -12,6 +12,7 @@ import java.util.*;
 public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
     public static final Map<String, Set<ValaElementScope>> SCOPE_MAP = new HashMap<>();
+    public static final Map<String, List<PsiElement>> MISSES_TO_RETRY = new HashMap<>();
     public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = List.of(
             ValaParameterHighlighter.getInstance(),
             ValaMethodDeclarationHighlighter.getInstance(),
@@ -41,6 +42,7 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
             ValaDestructorDeclarationHighlighter.getInstance(),
             ValaForEachHighlighter.getInstance(),
             ValaCatchHighlighter.getInstance(),
+            ValaLambdaExpressionHighlighting.getInstance(),
             ValaPrimaryExpressionHighlighting.getInstance(),
             ValaIdentifierHighlighter.getInstance()
     );
@@ -69,7 +71,7 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
         }
     }
 
-    public static void addScopedElement(PsiElement psiElement) {
+    public static void addScopedElement(PsiElement psiElement, AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaNamedElement namedElement) {
 
             String type = psiElement.getClass().getSimpleName();
@@ -99,14 +101,23 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
             if (SCOPE_MAP.containsKey(scopeName)) {
                 SCOPE_MAP.get(scopeName).add(scope);
-                System.out.println("Added " + scope + " to scope.");
             } else {
                 Set<ValaElementScope> scopeSet = new HashSet<>();
                 scopeSet.add(scope);
                 SCOPE_MAP.put(scopeName, scopeSet);
-                System.out.println("Created and added " + scope + " to scope.");
             }
 
+            if (MISSES_TO_RETRY.containsKey(namedElement.getName())) {
+                System.out.println("Catching -> " + namedElement.getName());
+                List<PsiElement> elementsToCheck = MISSES_TO_RETRY.get(namedElement.getName());
+                for (PsiElement element : elementsToCheck) {
+                    highlightCatchup(element, annotationHolder);
+                }
+            }
         }
+    }
+
+    private static void highlightCatchup(PsiElement psiElement, AnnotationHolder annotationHolder) {
+        ValaIdentifierHighlighter.getInstance().highlight(psiElement, annotationHolder);
     }
 }

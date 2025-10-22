@@ -25,7 +25,7 @@ public final class ValaObjectCreationHighlighter implements ValaHighlighter {
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaObjectInitializerImpl) {
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
 
             ASTNode[] memberInitializerNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.MEMBER_INITIALIZER));
 
