@@ -22,7 +22,7 @@ public final class ValaEnumDeclarationHighlighter implements ValaHighlighter {
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaEnumDeclarationImpl) {
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 

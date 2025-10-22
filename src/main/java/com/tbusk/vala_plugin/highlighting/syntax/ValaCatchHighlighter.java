@@ -24,7 +24,7 @@ public final class ValaCatchHighlighter implements ValaHighlighter {
         if (psiElement instanceof ValaCatchClause) {
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.LOCAL_VARIABLE);
         }

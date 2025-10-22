@@ -23,7 +23,7 @@ public final class ValaForEachHighlighter implements ValaHighlighter {
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaForeachStatementImpl) {
 
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 

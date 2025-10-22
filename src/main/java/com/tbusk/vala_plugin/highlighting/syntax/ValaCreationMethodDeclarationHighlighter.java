@@ -22,7 +22,7 @@ public final class ValaCreationMethodDeclarationHighlighter implements ValaHighl
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaCreationMethodDeclarationImpl) {
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 

@@ -22,7 +22,7 @@ public final class ValaDestructorDeclarationHighlighter implements ValaHighlight
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaDestructorDeclarationImpl) {
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 

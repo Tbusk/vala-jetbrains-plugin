@@ -12,7 +12,7 @@ import java.util.*;
 public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
     public static final Map<String, Set<ValaElementScope>> SCOPE_MAP = new HashMap<>();
-    public static final Map<String, List<PsiElement>> MISSES_TO_RETRY = new HashMap<>();
+    public static final Map<String, List<RetryHighlightElement>> MISSES_TO_RETRY = new HashMap<>();
     public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = List.of(
             ValaParameterHighlighter.getInstance(),
             ValaMethodDeclarationHighlighter.getInstance(),
@@ -71,7 +71,7 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
         }
     }
 
-    public static void addScopedElement(PsiElement psiElement, AnnotationHolder annotationHolder) {
+    public static void addScopedElement(PsiElement psiElement) {
         if (psiElement instanceof ValaNamedElement namedElement) {
 
             String type = psiElement.getClass().getSimpleName();
@@ -109,9 +109,10 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
             if (MISSES_TO_RETRY.containsKey(namedElement.getName())) {
                 System.out.println("Catching -> " + namedElement.getName());
-                List<PsiElement> elementsToCheck = MISSES_TO_RETRY.get(namedElement.getName());
-                for (PsiElement element : elementsToCheck) {
-                    highlightCatchup(element, annotationHolder);
+                List<RetryHighlightElement> elementsToCheck = MISSES_TO_RETRY.get(namedElement.getName());
+                List<RetryHighlightElement> elementsCopy = new ArrayList<>(elementsToCheck);
+                for (RetryHighlightElement element : elementsCopy) {
+                    highlightCatchup(element.psiElement(), element.annotationHolder());
                 }
             }
         }

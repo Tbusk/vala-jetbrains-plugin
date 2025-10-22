@@ -30,7 +30,7 @@ public final class ValaFieldDeclarationHighlighter implements ValaHighlighter {
 
             for (ASTNode fieldDeclarationSectionNode : fieldDeclarationSectionNodes) {
 
-                ValaSyntaxHighlightingAnnotator.addScopedElement(fieldDeclarationSectionNode.getPsi(), annotationHolder);
+                ValaSyntaxHighlightingAnnotator.addScopedElement(fieldDeclarationSectionNode.getPsi());
 
                 ASTNode identifierNode = fieldDeclarationSectionNode.findChildByType(ValaTypes.IDENTIFIER);
 

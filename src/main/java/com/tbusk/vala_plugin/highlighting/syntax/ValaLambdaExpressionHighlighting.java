@@ -30,7 +30,7 @@ public final class ValaLambdaExpressionHighlighting implements ValaHighlighter {
             ASTNode[] identifierNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.IDENTIFIER));
 
             for (ASTNode identifierNode : identifierNodes) {
-                ValaSyntaxHighlightingAnnotator.addScopedElement(identifierNode.getPsi(), annotationHolder);
+                ValaSyntaxHighlightingAnnotator.addScopedElement(identifierNode.getPsi());
 
                 util.highlightIdentifier(identifierNode.getPsi(), annotationHolder, ValaTextAttributeKey.PARAMETER);
             }

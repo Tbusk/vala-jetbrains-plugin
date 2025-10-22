@@ -24,7 +24,7 @@ public final class ValaLocalVariableDeclarationHighlighter implements ValaHighli
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaLocalVariableImpl ||
                 psiElement instanceof ValaLocalTupleDeclarationImpl) {
-            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement, annotationHolder);
+            ValaSyntaxHighlightingAnnotator.addScopedElement(psiElement);
 
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 

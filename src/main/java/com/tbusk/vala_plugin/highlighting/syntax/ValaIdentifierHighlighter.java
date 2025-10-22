@@ -4,10 +4,7 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
-import com.tbusk.vala_plugin.highlighting.ValaElementScope;
-import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
-import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
-import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
+import com.tbusk.vala_plugin.highlighting.*;
 import com.tbusk.vala_plugin.psi.ValaCatchClause;
 import com.tbusk.vala_plugin.psi.ValaForeachStatement;
 import com.tbusk.vala_plugin.psi.ValaIdentifier;
@@ -70,13 +67,15 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
                 if (scope == null) {
 
+                    RetryHighlightElement retryElement = new RetryHighlightElement(identifier, annotationHolder);
+
                     if (ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.containsKey(identifier.getText())) {
-                        List<PsiElement> elements = ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.get(identifier.getText());
-                        elements.add(identifier);
+                        List<RetryHighlightElement> elements = ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.get(identifier.getText());
+                        elements.add(retryElement);
                         ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.put(identifier.getText(), elements);
                     } else {
-                        List<PsiElement> elements = new ArrayList<>();
-                        elements.add(identifier);
+                        List<RetryHighlightElement> elements = new ArrayList<>();
+                        elements.add(retryElement);
                         ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.put(identifier.getText(), elements);
                     }
                 }
