@@ -6,6 +6,7 @@ import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.tree.TokenSet;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
+import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
 import com.tbusk.vala_plugin.psi.ValaMemberAccess;
 import com.tbusk.vala_plugin.psi.ValaSimpleName;
@@ -113,15 +114,21 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
     }
 
     private void highlightOtherIdentifiers(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
+
         ASTNode[] simpleNameNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.SIMPLE_NAME));
         for (ASTNode simpleNameNode : simpleNameNodes) {
             ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
 
             if (identifierNode != null) {
-                annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(identifierNode.getTextRange())
-                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                        .create();
+
+                String scopeKey = String.format("%s.%s", identifierNode.getPsi().getContainingFile().getName(), identifierNode.getText());
+
+                if (!ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeKey)) {
+                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                            .create();
+                }
             }
         }
 
@@ -133,10 +140,15 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                 ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
 
                 if (identifierNode != null) {
-                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                            .create();
+
+                    String scopeKey = String.format("%s.%s", identifierNode.getPsi().getContainingFile().getName(), identifierNode.getText());
+
+                    if (!ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeKey)) {
+                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                                .create();
+                    }
                 }
             }
         }
@@ -149,10 +161,15 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                 ASTNode identifierNode = memberPartNode.findChildByType(TokenSet.create(ValaTypes.IDENTIFIER));
 
                 if (identifierNode != null) {
-                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                            .create();
+
+                    String scopeKey = String.format("%s.%s", identifierNode.getPsi().getContainingFile().getName(), identifierNode.getText());
+
+                    if (!ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeKey)) {
+                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                                .create();
+                    }
                 }
 
             }

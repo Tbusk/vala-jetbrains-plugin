@@ -39,6 +39,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
+                    new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
 
                     new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.LOCAL_VARIABLE),
@@ -101,6 +102,8 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                         closestScope = scope;
                     }
                 }
+            } else {
+                System.out.println("Scope: " + scope + " NOT inside parent with range " + identifierStart + ".");
             }
         }
 

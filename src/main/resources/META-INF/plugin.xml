@@ -123,8 +123,6 @@
         <annotator language="Vala"
                    implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator"/>
 
-        <lang.findUsagesProvider language="Vala" implementationClass="com.tbusk.vala_plugin.psi.ValaUsageProvider"/>
-
     </extensions>
 
     <actions >

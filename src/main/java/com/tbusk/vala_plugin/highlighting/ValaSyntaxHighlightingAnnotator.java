@@ -51,7 +51,13 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
                     "ValaParameters",
                     "ValaEmbeddedStatementWithoutBlock",
                     "ValaEmbeddedStatement",
-                    "ValaFieldDeclaration"
+                    "ValaFieldDeclaration",
+                    "ValaClassMember",
+                    "ValaNamespaceMember",
+                    "ValaStructMember",
+                    "ValaInterfaceMember",
+                    "ValaIfStatement",
+                    "ValaBlock"
             )
     );
 
