@@ -38,6 +38,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
                     new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
+                    new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.METHOD_DECLARATION),
 
                     new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.LOCAL_VARIABLE),
@@ -59,7 +60,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaIdentifier identifier && !(psiElement.getParent() instanceof ValaParameter) && !(psiElement.getParent() instanceof ValaForeachStatement) && !(psiElement.getParent() instanceof ValaCatchClause)) {
 
-            String scopeName = String.format("%s.%s", psiElement.getContainingFile().getName(), identifier.getText());
+            String scopeName = String.format("%s.%s", identifier.getContainingFile().getName(), identifier.getText());
 
             System.out.println("Scope name: " + scopeName);
 
@@ -68,16 +69,11 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
                 ValaElementScope scope = findClosestScope(identifier, scopes);
 
-                if (scope == null) {
-                    System.out.println("Scope not found with: " + identifier.getText());
-                    if (!ValaSyntaxHighlightingAnnotator.HIGHLIGHT_RETRIES.contains(identifier)) {
-                        ValaSyntaxHighlightingAnnotator.HIGHLIGHT_RETRIES.add(identifier);
-                    } else {
-                        ValaSyntaxHighlightingAnnotator.HIGHLIGHT_RETRIES.remove(identifier);
-                    }
+                if (scope != null && !KEY_MAP.containsKey(scope.type())) {
+                    throw new RuntimeException(scope.type());
                 }
 
-                if (scope != null) {
+                if (scope != null && scope.type() != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .range(psiElement.getTextRange())
                             .textAttributes(KEY_MAP.get(scope.type()))

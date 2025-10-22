@@ -4,7 +4,6 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.psi.PsiElement;
 import com.tbusk.vala_plugin.highlighting.syntax.*;
-import com.tbusk.vala_plugin.psi.ValaIdentifier;
 import com.tbusk.vala_plugin.psi.ValaNamedElement;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +12,6 @@ import java.util.*;
 public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
     public static final Map<String, Set<ValaElementScope>> SCOPE_MAP = new HashMap<>();
-    public static final Set<ValaIdentifier> HIGHLIGHT_RETRIES = new HashSet<>();
     public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = List.of(
             ValaParameterHighlighter.getInstance(),
             ValaMethodDeclarationHighlighter.getInstance(),
@@ -62,10 +60,6 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
 
         for (ValaHighlighter highlighter : SYNTAX_HIGHLIGHTERS) {
             highlighter.highlight(psiElement, annotationHolder);
-        }
-
-        for (ValaIdentifier element : HIGHLIGHT_RETRIES) {
-            ValaIdentifierHighlighter.getInstance().highlight(element, annotationHolder);
         }
     }
 
