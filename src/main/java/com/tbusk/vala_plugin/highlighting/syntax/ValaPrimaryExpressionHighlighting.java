@@ -21,13 +21,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 
 public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter {
-    private static final ValaPrimaryExpressionHighlighting INSTANCE = new ValaPrimaryExpressionHighlighting();
+    private static volatile ValaPrimaryExpressionHighlighting instance;
 
     private ValaPrimaryExpressionHighlighting() {
     }
 
-    public static ValaPrimaryExpressionHighlighting getInstance() {
-        return INSTANCE;
+    public static synchronized ValaPrimaryExpressionHighlighting getInstance() {
+        if (instance == null) {
+            instance = new ValaPrimaryExpressionHighlighting();
+        }
+
+        return instance;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {

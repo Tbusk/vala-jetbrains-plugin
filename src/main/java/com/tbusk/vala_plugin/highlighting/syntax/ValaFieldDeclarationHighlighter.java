@@ -14,13 +14,17 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ValaFieldDeclarationHighlighter implements ValaHighlighter {
 
-    private static final ValaFieldDeclarationHighlighter INSTANCE = new ValaFieldDeclarationHighlighter();
+    private static volatile ValaFieldDeclarationHighlighter instance;
 
     private ValaFieldDeclarationHighlighter() {
     }
 
-    public static ValaFieldDeclarationHighlighter getInstance() {
-        return INSTANCE;
+    public static synchronized ValaFieldDeclarationHighlighter getInstance() {
+        if (instance == null) {
+            instance = new ValaFieldDeclarationHighlighter();
+        }
+
+        return instance;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
@@ -38,7 +42,7 @@ public final class ValaFieldDeclarationHighlighter implements ValaHighlighter {
 
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.LOCAL_VARIABLE)
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
                             .create();
                 }
             }

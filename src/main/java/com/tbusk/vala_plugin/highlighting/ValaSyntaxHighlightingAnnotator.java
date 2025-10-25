@@ -9,11 +9,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class ValaSyntaxHighlightingAnnotator implements Annotator {
+public final class ValaSyntaxHighlightingAnnotator implements Annotator {
 
     public static final Map<String, Set<ValaElementScope>> SCOPE_MAP = new HashMap<>();
-    public static final Map<String, List<RetryHighlightElement>> MISSES_TO_RETRY = new HashMap<>();
-    public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = List.of(
+    public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = Collections.synchronizedList(List.of(
             ValaParameterHighlighter.getInstance(),
             ValaMethodDeclarationHighlighter.getInstance(),
             ValaSignalDeclarationHighlighter.getInstance(),
@@ -45,8 +44,8 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
             ValaLambdaExpressionHighlighting.getInstance(),
             ValaPrimaryExpressionHighlighting.getInstance(),
             ValaIdentifierHighlighter.getInstance()
-    );
-    private static final Set<String> PARENTS_TO_IGNORE = new HashSet<>(
+    ));
+    private static final Set<String> PARENTS_TO_IGNORE = Collections.synchronizedSet(new HashSet<>(
             Set.of("ValaLocalVariableDeclaration",
                     "ValaLocalVariableDeclarations",
                     "ValaStatement",
@@ -61,7 +60,7 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
                     "ValaIfStatement",
                     "ValaBlock"
             )
-    );
+    ));
 
     @Override
     public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
@@ -71,7 +70,7 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
         }
     }
 
-    public static void addScopedElement(PsiElement psiElement) {
+    public synchronized static void addScopedElement(PsiElement psiElement) {
         if (psiElement instanceof ValaNamedElement namedElement) {
 
             String type = psiElement.getClass().getSimpleName();
@@ -106,19 +105,6 @@ public class ValaSyntaxHighlightingAnnotator implements Annotator {
                 scopeSet.add(scope);
                 SCOPE_MAP.put(scopeName, scopeSet);
             }
-
-            if (MISSES_TO_RETRY.containsKey(namedElement.getName())) {
-                System.out.println("Catching -> " + namedElement.getName());
-                List<RetryHighlightElement> elementsToCheck = MISSES_TO_RETRY.get(namedElement.getName());
-                List<RetryHighlightElement> elementsCopy = new ArrayList<>(elementsToCheck);
-                for (RetryHighlightElement element : elementsCopy) {
-                    highlightCatchup(element.psiElement(), element.annotationHolder());
-                }
-            }
         }
-    }
-
-    private static void highlightCatchup(PsiElement psiElement, AnnotationHolder annotationHolder) {
-        ValaIdentifierHighlighter.getInstance().highlight(psiElement, annotationHolder);
     }
 }

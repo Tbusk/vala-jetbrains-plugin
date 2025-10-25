@@ -10,13 +10,17 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ValaEnumValueHighlighter implements ValaHighlighter {
 
-    private static final ValaEnumValueHighlighter INSTANCE = new ValaEnumValueHighlighter();
+    private static volatile ValaEnumValueHighlighter instance;
 
     private ValaEnumValueHighlighter() {
     }
 
-    public static ValaEnumValueHighlighter getInstance() {
-        return INSTANCE;
+    public static synchronized ValaEnumValueHighlighter getInstance() {
+        if (instance == null) {
+            instance = new ValaEnumValueHighlighter();
+        }
+
+        return instance;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {

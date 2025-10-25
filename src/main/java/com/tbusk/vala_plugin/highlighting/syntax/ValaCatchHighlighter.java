@@ -11,13 +11,16 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ValaCatchHighlighter implements ValaHighlighter {
 
-    private static final ValaCatchHighlighter INSTANCE = new ValaCatchHighlighter();
+    private static volatile ValaCatchHighlighter instance;
 
     private ValaCatchHighlighter() {
     }
 
-    public static ValaCatchHighlighter getInstance() {
-        return INSTANCE;
+    public static synchronized ValaCatchHighlighter getInstance() {
+        if (instance == null) {
+            instance = new ValaCatchHighlighter();
+        }
+        return instance;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {

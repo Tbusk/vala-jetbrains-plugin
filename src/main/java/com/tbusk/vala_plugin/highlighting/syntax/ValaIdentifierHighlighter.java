@@ -4,29 +4,36 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiElement;
-import com.tbusk.vala_plugin.highlighting.*;
+import com.tbusk.vala_plugin.highlighting.ValaElementScope;
+import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
+import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
+import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
 import com.tbusk.vala_plugin.psi.ValaCatchClause;
 import com.tbusk.vala_plugin.psi.ValaForeachStatement;
 import com.tbusk.vala_plugin.psi.ValaIdentifier;
 import com.tbusk.vala_plugin.psi.ValaParameter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
-    private static final ValaIdentifierHighlighter INSTANCE = new ValaIdentifierHighlighter();
+    private static volatile ValaIdentifierHighlighter instance;
 
     private ValaIdentifierHighlighter() {
     }
 
-    public static final Map<String, TextAttributesKey> KEY_MAP = new HashMap<>(
+    public static final Map<String, TextAttributesKey> KEY_MAP = new ConcurrentHashMap<>(
             Map.ofEntries(
                     new AbstractMap.SimpleEntry<>("ValaClassDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaInterfaceDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaInterfaceDeclaration", ValaTextAttributeKey.INTERFACE_NAME),
                     new AbstractMap.SimpleEntry<>("ValaStructDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaEnumDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaErrordomainDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaNamespaceDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
 
                     new AbstractMap.SimpleEntry<>("ValaPropertyDeclaration", ValaTextAttributeKey.METHOD_CALL),
                     new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
@@ -36,7 +43,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.LOCAL_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.LOCAL_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.INSTANCE_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaLocalVariable", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaForeachStatement", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaCatchClause", ValaTextAttributeKey.LOCAL_VARIABLE),
@@ -49,8 +56,11 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
             )
     );
 
-    public static ValaIdentifierHighlighter getInstance() {
-        return INSTANCE;
+    public static synchronized ValaIdentifierHighlighter getInstance() {
+        if (instance == null) {
+            instance = new ValaIdentifierHighlighter();
+        }
+        return instance;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
@@ -64,21 +74,6 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                 Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeName);
 
                 ValaElementScope scope = findClosestScope(identifier, scopes);
-
-                if (scope == null) {
-
-                    RetryHighlightElement retryElement = new RetryHighlightElement(identifier, annotationHolder);
-
-                    if (ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.containsKey(identifier.getText())) {
-                        List<RetryHighlightElement> elements = ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.get(identifier.getText());
-                        elements.add(retryElement);
-                        ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.put(identifier.getText(), elements);
-                    } else {
-                        List<RetryHighlightElement> elements = new ArrayList<>();
-                        elements.add(retryElement);
-                        ValaSyntaxHighlightingAnnotator.MISSES_TO_RETRY.put(identifier.getText(), elements);
-                    }
-                }
 
                 if (scope != null && !KEY_MAP.containsKey(scope.type())) {
                     throw new RuntimeException(scope.type());

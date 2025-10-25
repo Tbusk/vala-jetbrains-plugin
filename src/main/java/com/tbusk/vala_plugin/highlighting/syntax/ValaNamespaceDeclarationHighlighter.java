@@ -11,13 +11,17 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ValaNamespaceDeclarationHighlighter implements ValaHighlighter {
 
-    private static final ValaNamespaceDeclarationHighlighter INSTANCE = new ValaNamespaceDeclarationHighlighter();
+    private static volatile ValaNamespaceDeclarationHighlighter instance;
 
     private ValaNamespaceDeclarationHighlighter() {
     }
 
-    public static ValaNamespaceDeclarationHighlighter getInstance() {
-        return INSTANCE;
+    public static synchronized ValaNamespaceDeclarationHighlighter getInstance() {
+        if (instance == null) {
+            instance = new ValaNamespaceDeclarationHighlighter();
+        }
+
+        return instance;
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
