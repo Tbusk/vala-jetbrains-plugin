@@ -29,8 +29,8 @@ public class ValaLambdaExpressionParamsImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @NotNull
-  public List<ValaIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaIdentifier.class);
+  public List<ValaLambdaExpressionParam> getLambdaExpressionParamList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaLambdaExpressionParam.class);
   }
 
 }

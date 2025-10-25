@@ -27,7 +27,7 @@ public final class ValaAttributeArgumentHighlighter implements ValaHighlighter {
         if (psiElement instanceof ValaAttributeArgumentImpl) {
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
-            util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.ATTRIBUTE);
+            util.highlightIdentifier(psiElement, annotationHolder, ValaTextAttributeKey.PARAMETER);
         }
     }
 }

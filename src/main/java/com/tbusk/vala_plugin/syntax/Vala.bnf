@@ -270,9 +270,14 @@ type_arguments ::= LESS_THAN [ weak ] (type_weak | type_weak_with_parenthesis) [
 method_call ::= LPAREN [ arguments ] RPAREN [ object_initializer ]
 
 simple_name ::= ( ['global::'] identifier) [ type_arguments ]
-lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
+lambda_expression ::= (lambda_expression_param | lambda_expression_params) [ type_arguments ] '=' '>' lambda_expression_body
 
-lambda_expression_params ::= identifier | ( LPAREN [ ([ ref | out ] identifier ) [ (COMMA ([ ref | out ] identifier | ref))* ] ] RPAREN )
+lambda_expression_params ::= LPAREN [ lambda_expression_param [(COMMA lambda_expression_param)*]] RPAREN
+lambda_expression_param ::= [ ref | out ] identifier {
+                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                          methods=[getName setName getNameIdentifier getPresentation]
+                                                      }
 
 lambda_expression_body ::= expression | block
 

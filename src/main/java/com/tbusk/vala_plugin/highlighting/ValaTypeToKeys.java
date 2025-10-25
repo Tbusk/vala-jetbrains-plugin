@@ -56,6 +56,7 @@ public class ValaTypeToKeys {
                     Map.entry(ValaTypes.DECREMENT, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.TILDE, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.AND, ValaTextAttributeKeys.OPERATION_KEYS),
+                    Map.entry(ValaTypes.AND_AND, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.PIPE, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.PIPE_EQUALS, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.STAR, ValaTextAttributeKeys.OPERATION_KEYS),
@@ -63,7 +64,8 @@ public class ValaTypeToKeys {
                     Map.entry(ValaTypes.XOR_EQUALS, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.SHIFT_LEFT_EQUALS, ValaTextAttributeKeys.OPERATION_KEYS),
                     Map.entry(ValaTypes.SHIFT_RIGHT_EQUALS, ValaTextAttributeKeys.OPERATION_KEYS),
-                    Map.entry(ValaTypes.EXCLAMATION, ValaTextAttributeKeys.OPERATION_KEYS)
+                    Map.entry(ValaTypes.EXCLAMATION, ValaTextAttributeKeys.OPERATION_KEYS),
+                    Map.entry(ValaTypes.ARROW, ValaTextAttributeKeys.OPERATION_KEYS)
             )
     );
 

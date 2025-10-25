@@ -75,6 +75,7 @@ public interface ValaTypes {
   IElementType IN_EXPRESSION = new ValaElementType("IN_EXPRESSION");
   IElementType LAMBDA_EXPRESSION = new ValaElementType("LAMBDA_EXPRESSION");
   IElementType LAMBDA_EXPRESSION_BODY = new ValaElementType("LAMBDA_EXPRESSION_BODY");
+  IElementType LAMBDA_EXPRESSION_PARAM = new ValaElementType("LAMBDA_EXPRESSION_PARAM");
   IElementType LAMBDA_EXPRESSION_PARAMS = new ValaElementType("LAMBDA_EXPRESSION_PARAMS");
   IElementType LITERAL = new ValaElementType("LITERAL");
   IElementType LOCAL_TUPLE_DECLARATION = new ValaElementType("LOCAL_TUPLE_DECLARATION");
@@ -500,6 +501,9 @@ public interface ValaTypes {
       }
       else if (type == LAMBDA_EXPRESSION_BODY) {
         return new ValaLambdaExpressionBodyImpl(node);
+      }
+      else if (type == LAMBDA_EXPRESSION_PARAM) {
+        return new ValaLambdaExpressionParamImpl(node);
       }
       else if (type == LAMBDA_EXPRESSION_PARAMS) {
         return new ValaLambdaExpressionParamsImpl(node);

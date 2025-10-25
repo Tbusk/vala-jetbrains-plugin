@@ -275,6 +275,10 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLambdaExpressionParam(@NotNull ValaLambdaExpressionParam o) {
+    visitNamedElement(o);
+  }
+
   public void visitLambdaExpressionParams(@NotNull ValaLambdaExpressionParams o) {
     visitPsiElement(o);
   }

@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface ValaLambdaExpressionParams extends PsiElement {
 
   @NotNull
-  List<ValaIdentifier> getIdentifierList();
+  List<ValaLambdaExpressionParam> getLambdaExpressionParamList();
 
 }

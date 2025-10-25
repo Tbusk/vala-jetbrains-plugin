@@ -50,7 +50,7 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaLocalTupleDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
 
                     new AbstractMap.SimpleEntry<>("ValaParameter", ValaTextAttributeKey.PARAMETER),
-                    new AbstractMap.SimpleEntry<>("ValaLambdaExpressionParams", ValaTextAttributeKey.PARAMETER),
+                    new AbstractMap.SimpleEntry<>("ValaLambdaExpressionParam", ValaTextAttributeKey.LOCAL_VARIABLE),
 
                     new AbstractMap.SimpleEntry<>("ValaConstantDeclaration", ValaTextAttributeKey.CONSTANT)
             )
@@ -67,8 +67,6 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
         if (psiElement instanceof ValaIdentifier identifier && !(psiElement.getParent() instanceof ValaParameter) && !(psiElement.getParent() instanceof ValaForeachStatement) && !(psiElement.getParent() instanceof ValaCatchClause)) {
 
             String scopeName = String.format("%s.%s", identifier.getContainingFile().getName(), identifier.getText());
-
-            System.out.println("Scope name: " + scopeName);
 
             if (ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeName)) {
                 Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeName);
@@ -96,7 +94,6 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
         for (ValaElementScope scope : scopes) {
             if (scope.parentRange().getStartOffset() <= identifierStart && scope.parentRange().getEndOffset() >= identifierStart) {
-                System.out.println("Scope: " + scope + " inside parent.");
                 int scopeStart = scope.range().getStartOffset();
 
                 if (scopeStart <= identifierStart) {
@@ -106,9 +103,9 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                         closestDistance = distance;
                         closestScope = scope;
                     }
+                } else if (scope.type().equals("ValaMethodDeclaration") || scope.type().equals("ValaCreationMethodDeclaration")) {
+                    closestScope = scope;
                 }
-            } else {
-                System.out.println("Scope: " + scope + " NOT inside parent with range " + identifierStart + ".");
             }
         }
 

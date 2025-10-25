@@ -3272,16 +3272,25 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
+  // (lambda_expression_param | lambda_expression_params) [ type_arguments ] '=' '>' lambda_expression_body
   public static boolean lambda_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "lambda_expression")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, LAMBDA_EXPRESSION, "<lambda expression>");
-    r = lambda_expression_params(b, l + 1);
+    r = lambda_expression_0(b, l + 1);
     r = r && lambda_expression_1(b, l + 1);
     r = r && consumeTokens(b, 0, EQUALS, GREATER_THAN);
     r = r && lambda_expression_body(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // lambda_expression_param | lambda_expression_params
+  private static boolean lambda_expression_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_0")) return false;
+    boolean r;
+    r = lambda_expression_param(b, l + 1);
+    if (!r) r = lambda_expression_params(b, l + 1);
     return r;
   }
 
@@ -3305,138 +3314,91 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier | ( LPAREN [ ([ ref | out ] identifier ) [ (COMMA ([ ref | out ] identifier | ref))* ] ] RPAREN )
-  public static boolean lambda_expression_params(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params")) return false;
+  // [ ref | out ] identifier
+  public static boolean lambda_expression_param(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_param")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, LAMBDA_EXPRESSION_PARAMS, "<lambda expression params>");
-    r = identifier(b, l + 1);
-    if (!r) r = lambda_expression_params_1(b, l + 1);
+    Marker m = enter_section_(b, l, _NONE_, LAMBDA_EXPRESSION_PARAM, "<lambda expression param>");
+    r = lambda_expression_param_0(b, l + 1);
+    r = r && identifier(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // LPAREN [ ([ ref | out ] identifier ) [ (COMMA ([ ref | out ] identifier | ref))* ] ] RPAREN
-  private static boolean lambda_expression_params_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, LPAREN);
-    r = r && lambda_expression_params_1_1(b, l + 1);
-    r = r && consumeToken(b, RPAREN);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ ([ ref | out ] identifier ) [ (COMMA ([ ref | out ] identifier | ref))* ] ]
-  private static boolean lambda_expression_params_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1")) return false;
-    lambda_expression_params_1_1_0(b, l + 1);
-    return true;
-  }
-
-  // ([ ref | out ] identifier ) [ (COMMA ([ ref | out ] identifier | ref))* ]
-  private static boolean lambda_expression_params_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = lambda_expression_params_1_1_0_0(b, l + 1);
-    r = r && lambda_expression_params_1_1_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ ref | out ] identifier
-  private static boolean lambda_expression_params_1_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = lambda_expression_params_1_1_0_0_0(b, l + 1);
-    r = r && identifier(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
   // [ ref | out ]
-  private static boolean lambda_expression_params_1_1_0_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_0")) return false;
-    lambda_expression_params_1_1_0_0_0_0(b, l + 1);
+  private static boolean lambda_expression_param_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_param_0")) return false;
+    lambda_expression_param_0_0(b, l + 1);
     return true;
   }
 
   // ref | out
-  private static boolean lambda_expression_params_1_1_0_0_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_0_0_0")) return false;
+  private static boolean lambda_expression_param_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_param_0_0")) return false;
     boolean r;
     r = consumeToken(b, REF);
     if (!r) r = consumeToken(b, OUT);
     return r;
   }
 
-  // [ (COMMA ([ ref | out ] identifier | ref))* ]
-  private static boolean lambda_expression_params_1_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1")) return false;
-    lambda_expression_params_1_1_0_1_0(b, l + 1);
+  /* ********************************************************** */
+  // LPAREN [ lambda_expression_param [(COMMA lambda_expression_param)*]] RPAREN
+  public static boolean lambda_expression_params(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params")) return false;
+    if (!nextTokenIs(b, LPAREN)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, LPAREN);
+    r = r && lambda_expression_params_1(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    exit_section_(b, m, LAMBDA_EXPRESSION_PARAMS, r);
+    return r;
+  }
+
+  // [ lambda_expression_param [(COMMA lambda_expression_param)*]]
+  private static boolean lambda_expression_params_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1")) return false;
+    lambda_expression_params_1_0(b, l + 1);
     return true;
   }
 
-  // (COMMA ([ ref | out ] identifier | ref))*
-  private static boolean lambda_expression_params_1_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0")) return false;
+  // lambda_expression_param [(COMMA lambda_expression_param)*]
+  private static boolean lambda_expression_params_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = lambda_expression_param(b, l + 1);
+    r = r && lambda_expression_params_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [(COMMA lambda_expression_param)*]
+  private static boolean lambda_expression_params_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_0_1")) return false;
+    lambda_expression_params_1_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // (COMMA lambda_expression_param)*
+  private static boolean lambda_expression_params_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_0_1_0")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!lambda_expression_params_1_1_0_1_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "lambda_expression_params_1_1_0_1_0", c)) break;
+      if (!lambda_expression_params_1_0_1_0_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "lambda_expression_params_1_0_1_0", c)) break;
     }
     return true;
   }
 
-  // COMMA ([ ref | out ] identifier | ref)
-  private static boolean lambda_expression_params_1_1_0_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0")) return false;
+  // COMMA lambda_expression_param
+  private static boolean lambda_expression_params_1_0_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "lambda_expression_params_1_0_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
-    r = r && lambda_expression_params_1_1_0_1_0_0_1(b, l + 1);
+    r = r && lambda_expression_param(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ ref | out ] identifier | ref
-  private static boolean lambda_expression_params_1_1_0_1_0_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = lambda_expression_params_1_1_0_1_0_0_1_0(b, l + 1);
-    if (!r) r = consumeToken(b, REF);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ ref | out ] identifier
-  private static boolean lambda_expression_params_1_1_0_1_0_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = lambda_expression_params_1_1_0_1_0_0_1_0_0(b, l + 1);
-    r = r && identifier(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ ref | out ]
-  private static boolean lambda_expression_params_1_1_0_1_0_0_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_0_0")) return false;
-    lambda_expression_params_1_1_0_1_0_0_1_0_0_0(b, l + 1);
-    return true;
-  }
-
-  // ref | out
-  private static boolean lambda_expression_params_1_1_0_1_0_0_1_0_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "lambda_expression_params_1_1_0_1_0_0_1_0_0_0")) return false;
-    boolean r;
-    r = consumeToken(b, REF);
-    if (!r) r = consumeToken(b, OUT);
     return r;
   }
 

@@ -8,8 +8,8 @@ import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighterUtil;
 import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
-import com.tbusk.vala_plugin.psi.ValaLambdaExpressionParams;
 import com.tbusk.vala_plugin.psi.ValaTypes;
+import com.tbusk.vala_plugin.psi.impl.ValaLambdaExpressionImpl;
 import org.jetbrains.annotations.NotNull;
 
 public final class ValaLambdaExpressionHighlighting implements ValaHighlighter {
@@ -28,15 +28,35 @@ public final class ValaLambdaExpressionHighlighting implements ValaHighlighter {
     }
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (psiElement instanceof ValaLambdaExpressionParams) {
+        if (psiElement instanceof ValaLambdaExpressionImpl) {
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
-            ASTNode[] identifierNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.IDENTIFIER));
+            ASTNode lambaExpressionParamsNode = psiElement.getNode().findChildByType(ValaTypes.LAMBDA_EXPRESSION_PARAMS);
 
-            for (ASTNode identifierNode : identifierNodes) {
-                ValaSyntaxHighlightingAnnotator.addScopedElement(identifierNode.getPsi());
+            if (lambaExpressionParamsNode != null) {
+                ASTNode[] lamdaExpressionParamNodes = lambaExpressionParamsNode.getChildren(TokenSet.create(ValaTypes.LAMBDA_EXPRESSION_PARAM));
 
-                util.highlightIdentifier(identifierNode.getPsi(), annotationHolder, ValaTextAttributeKey.PARAMETER);
+                for (ASTNode lambdaExpressionParamNode : lamdaExpressionParamNodes) {
+                    ASTNode identifierNode = lambdaExpressionParamNode.findChildByType(ValaTypes.IDENTIFIER);
+
+                    ValaSyntaxHighlightingAnnotator.addScopedElement(lambdaExpressionParamNode.getPsi());
+
+                    if (identifierNode != null) {
+                        util.highlightIdentifier(identifierNode.getPsi(), annotationHolder, ValaTextAttributeKey.LOCAL_VARIABLE);
+                    }
+                }
+            }
+
+            ASTNode lambdaExpressionParamNode = psiElement.getNode().findChildByType(ValaTypes.LAMBDA_EXPRESSION_PARAM);
+
+            if (lambdaExpressionParamNode != null) {
+                ASTNode identifierNode = lambdaExpressionParamNode.findChildByType(ValaTypes.IDENTIFIER);
+
+                ValaSyntaxHighlightingAnnotator.addScopedElement(lambdaExpressionParamNode.getPsi());
+
+                if (identifierNode != null) {
+                    util.highlightIdentifier(identifierNode.getPsi(), annotationHolder, ValaTextAttributeKey.LOCAL_VARIABLE);
+                }
             }
         }
     }

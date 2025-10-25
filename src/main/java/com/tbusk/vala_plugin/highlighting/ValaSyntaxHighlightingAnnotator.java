@@ -58,7 +58,10 @@ public final class ValaSyntaxHighlightingAnnotator implements Annotator {
                     "ValaStructMember",
                     "ValaInterfaceMember",
                     "ValaIfStatement",
-                    "ValaBlock"
+                    "ValaBlock",
+                    "ValaForInitializer",
+                    "ValaLambdaExpressionParams",
+                    "ValaLambdaExpression"
             )
     ));
 
