@@ -12,10 +12,7 @@ import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
 import com.tbusk.vala_plugin.psi.ValaMemberAccess;
 import com.tbusk.vala_plugin.psi.ValaSimpleName;
 import com.tbusk.vala_plugin.psi.ValaTypes;
-import com.tbusk.vala_plugin.psi.impl.ValaMemberAccessImpl;
-import com.tbusk.vala_plugin.psi.impl.ValaMethodCallImpl;
-import com.tbusk.vala_plugin.psi.impl.ValaPrimaryExpressionImpl;
-import com.tbusk.vala_plugin.psi.impl.ValaSimpleNameImpl;
+import com.tbusk.vala_plugin.psi.impl.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -46,6 +43,19 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
     }
 
     private void highlightMethodCallIdentifiers(PsiElement[] children, AnnotationHolder annotationHolder) {
+
+        // navigate down through object creation to handle chained method calls after object creation
+        if (children.length == 1 && children[0] instanceof ValaObjectOrArrayCreationExpressionImpl) {
+            children = children[0].getChildren();
+        } else if (children.length > 1) {
+            for (PsiElement child : children) {
+                if (child instanceof ValaObjectCreationExpressionImpl) {
+                    children = child.getChildren();
+                    break;
+                }
+            }
+        }
+
         for (int i = 0; i < children.length; i++) {
 
             int currentPos = i;
