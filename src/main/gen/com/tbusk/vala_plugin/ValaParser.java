@@ -3852,15 +3852,24 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOT simple_name
+  // DOT (simple_name | 'default')
   public static boolean member_access(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_access")) return false;
     if (!nextTokenIs(b, DOT)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, DOT);
-    r = r && simple_name(b, l + 1);
+    r = r && member_access_1(b, l + 1);
     exit_section_(b, m, MEMBER_ACCESS, r);
+    return r;
+  }
+
+  // simple_name | 'default'
+  private static boolean member_access_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "member_access_1")) return false;
+    boolean r;
+    r = simple_name(b, l + 1);
+    if (!r) r = consumeToken(b, "default");
     return r;
   }
 
@@ -3937,7 +3946,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( ["global::"] identifier ) [ type_arguments ]
+  // ( ["global::"] identifier) [ type_arguments ]
   public static boolean member_part(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "member_part")) return false;
     boolean r;

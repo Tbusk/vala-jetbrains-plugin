@@ -102,7 +102,7 @@
         CHAR_LITERAL="regexp:'([^'\\]|\\.)'"
         INTEGER_LITERAL='regexp:([0-9]+)'
         DECIMAL_LITERAL='regexp:([0-9]+(.)[0-9]+)'
-        HEXADECIMAL_LITERAL='regexp:0[xX][0-9a-fA-F]+'
+        HEXADECIMAL_LITERAL='regexp:0[xX][0-9a-fA-F]+(\.[0-9a-fA-F]+([pP][0-9]+[fFlLdD]?)?)?'
         TRIPLE_QUOTE_STRING='regexp:@?"""([^"]|"[^"]|""[^"])*"""'
         COMMENT='regexp://.*'
         DOC_COMMENT='regexp:/\*\*.*?\*/'
@@ -214,7 +214,7 @@ primary_expression ::= ( literal | object_or_array_creation_expression | initial
                        [ ( [QUESTION_MARK] member_access | pointer_member_access | element_access |
                          post_increment_expression | method_call | post_decrement_expression)* ]
 
-member_access ::= DOT simple_name
+member_access ::= DOT (simple_name | 'default')
 
 pointer_member_access ::= ARROW member
 
@@ -262,7 +262,7 @@ array_size ::= (expression | COMMA) [ (COMMA | COMMA expression)* ]
 // parse_member_name
 member ::= member_part [ (DOT member_part)* ]
 
-member_part ::= ( ["global::"] identifier ) [ type_arguments ]
+member_part ::= ( ["global::"] identifier) [ type_arguments ]
 
 // parse_type_argument_list
 type_arguments ::= LESS_THAN [ weak ] (type_weak | type_weak_with_parenthesis) [ (COMMA (type_weak | type_weak_with_parenthesis))* ] GREATER_THAN

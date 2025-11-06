@@ -20,6 +20,7 @@ public class ValaTypeToKeys {
 
                     Map.entry(ValaTypes.INTEGER_LITERAL, ValaTextAttributeKeys.NUMBER_LITERAL_KEYS),
                     Map.entry(ValaTypes.DECIMAL_LITERAL, ValaTextAttributeKeys.NUMBER_LITERAL_KEYS),
+                    Map.entry(ValaTypes.HEXADECIMAL_LITERAL, ValaTextAttributeKeys.NUMBER_LITERAL_KEYS),
 
                     Map.entry(ValaTypes.SEMICOLON, ValaTextAttributeKeys.SEMICOLON_KEYS),
 

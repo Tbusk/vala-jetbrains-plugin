@@ -56,7 +56,7 @@ PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]*@?\??
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
 DECIMAL_LITERAL=([0-9]+.[0-9]+)([fF]|[dD])?
-HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+
+HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+(\.[0-9a-fA-F]+([pP][0-9]+[fFlLdD]?)?)?
 INTEGER_LITERAL=([0-9]+)(([uU][lL][lL])|([uU][lL])|[uU]|[lL]{1,2})?
 REGULAR_EXPRESSION=\/([\(\)\[\].\+\^\$\|\\\?_\{\}a-zA-Z0-9!:@*\-\']*.*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace|,)))
 
@@ -254,8 +254,8 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "$" { return ValaTypes.DOLLAR; }
 
     // Lastly
-    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
     {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
+    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
     {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
     {PRE_NUMERIC_IDENTIFIER} { return ValaTypes.IDENTIFIER_TOKEN; }
     {IDENTIFIER} { return ValaTypes.IDENTIFIER_TOKEN; }
