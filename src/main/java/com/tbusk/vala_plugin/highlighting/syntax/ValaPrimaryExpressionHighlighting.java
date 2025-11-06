@@ -42,23 +42,41 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
         }
     }
 
-    private void highlightMethodCallIdentifiers(PsiElement[] children, AnnotationHolder annotationHolder) {
+    private void highlightObjectCreationChainedIdentifiers(PsiElement objectOrArrayCreationExpression, AnnotationHolder annotationHolder) {
 
-        // navigate down through object creation to handle chained method calls after object creation
-        if (children.length == 1 && children[0] instanceof ValaObjectOrArrayCreationExpressionImpl) {
-            children = children[0].getChildren();
-        } else if (children.length > 1) {
-            for (PsiElement child : children) {
-                if (child instanceof ValaObjectCreationExpressionImpl) {
-                    children = child.getChildren();
-                    break;
+        ASTNode objectCreationExpressionNode = objectOrArrayCreationExpression.getNode().findChildByType(ValaTypes.OBJECT_CREATION_EXPRESSION);
+        if (objectCreationExpressionNode != null) {
+            ASTNode[] memberAccessNodes = objectCreationExpressionNode.getChildren(TokenSet.create(ValaTypes.MEMBER_ACCESS));
+
+            for  (ASTNode memberAccessNode : memberAccessNodes) {
+                ASTNode simpleNameNode = memberAccessNode.findChildByType(ValaTypes.SIMPLE_NAME);
+
+                if (simpleNameNode != null) {
+                    ASTNode identifierNode = simpleNameNode.findChildByType(ValaTypes.IDENTIFIER);
+
+                    if (identifierNode != null) {
+                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                                .create();
+                    }
                 }
             }
         }
 
+    }
+
+    private void highlightMethodCallIdentifiers(PsiElement[] children, AnnotationHolder annotationHolder) {
+
         for (int i = 0; i < children.length; i++) {
 
             int currentPos = i;
+
+            if (children[i] instanceof ValaObjectOrArrayCreationExpressionImpl) {
+
+                highlightObjectCreationChainedIdentifiers(children[i], annotationHolder);
+
+            }
 
             if (children[i] instanceof ValaMethodCallImpl) {
                 while (i > 0 && !(children[i] instanceof ValaSimpleNameImpl) && !(children[i] instanceof ValaMemberAccessImpl)) {
