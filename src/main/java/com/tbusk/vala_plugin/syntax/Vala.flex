@@ -52,7 +52,7 @@ import com.tbusk.vala_plugin.psi.ValaTokenType;
 // Tokens
 WHITE_SPACE=[ \t\n\r]+
 IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*@?
-PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]+@?\??
+PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]*@?\??
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
 DECIMAL_LITERAL=([0-9]+.[0-9]+)([fF]|[dD])?
