@@ -55,9 +55,9 @@ IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*@?
 PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]*@?\??
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
-DECIMAL_LITERAL=([0-9]+.[0-9]+)
+DECIMAL_LITERAL=([0-9]+.[0-9]+)([fF]|[dD])?
 HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+
-INTEGER_LITERAL=([0-9]+)
+INTEGER_LITERAL=([0-9]+)(([uU][lL][lL])|([uU][lL])|[uU]|[lL]{1,2})?
 REGULAR_EXPRESSION=\/([\(\)\[\].\+\^\$\|\\\?_\{\}a-zA-Z0-9!:@*\-\']*.*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace|,)))
 
 // Comments
