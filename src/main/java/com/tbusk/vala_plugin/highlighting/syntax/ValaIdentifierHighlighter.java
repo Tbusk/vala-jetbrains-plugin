@@ -8,10 +8,7 @@ import com.tbusk.vala_plugin.highlighting.ValaElementScope;
 import com.tbusk.vala_plugin.highlighting.ValaHighlighter;
 import com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator;
 import com.tbusk.vala_plugin.highlighting.ValaTextAttributeKey;
-import com.tbusk.vala_plugin.psi.ValaCatchClause;
-import com.tbusk.vala_plugin.psi.ValaForeachStatement;
-import com.tbusk.vala_plugin.psi.ValaIdentifier;
-import com.tbusk.vala_plugin.psi.ValaParameter;
+import com.tbusk.vala_plugin.psi.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
@@ -73,14 +70,15 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
                 ValaElementScope scope = findClosestScope(identifier, scopes);
 
-                if (scope != null && !KEY_MAP.containsKey(scope.type())) {
-                    throw new RuntimeException(scope.type());
-                }
-
                 if (scope != null && scope.type() != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .range(psiElement.getTextRange())
                             .textAttributes(KEY_MAP.get(scope.type()))
+                            .create();
+                } else {
+                    annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .range(psiElement.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
                             .create();
                 }
             }
