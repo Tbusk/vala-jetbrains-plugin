@@ -4342,7 +4342,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LPAREN [ arguments ] RPAREN [ object_initializer (member_access [method_call])* | object_initializer | member_access [method_call] ]
+  // LPAREN [ arguments ] RPAREN [ object_initializer (member_access [method_call])* | object_initializer | (member_access [method_call])* ]
   public static boolean object_creation_expression(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_creation_expression")) return false;
     if (!nextTokenIs(b, LPAREN)) return false;
@@ -4363,14 +4363,14 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ object_initializer (member_access [method_call])* | object_initializer | member_access [method_call] ]
+  // [ object_initializer (member_access [method_call])* | object_initializer | (member_access [method_call])* ]
   private static boolean object_creation_expression_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_creation_expression_3")) return false;
     object_creation_expression_3_0(b, l + 1);
     return true;
   }
 
-  // object_initializer (member_access [method_call])* | object_initializer | member_access [method_call]
+  // object_initializer (member_access [method_call])* | object_initializer | (member_access [method_call])*
   private static boolean object_creation_expression_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_creation_expression_3_0")) return false;
     boolean r;
@@ -4422,20 +4422,31 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // member_access [method_call]
+  // (member_access [method_call])*
   private static boolean object_creation_expression_3_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "object_creation_expression_3_0_2")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!object_creation_expression_3_0_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "object_creation_expression_3_0_2", c)) break;
+    }
+    return true;
+  }
+
+  // member_access [method_call]
+  private static boolean object_creation_expression_3_0_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_creation_expression_3_0_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = member_access(b, l + 1);
-    r = r && object_creation_expression_3_0_2_1(b, l + 1);
+    r = r && object_creation_expression_3_0_2_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [method_call]
-  private static boolean object_creation_expression_3_0_2_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "object_creation_expression_3_0_2_1")) return false;
+  private static boolean object_creation_expression_3_0_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "object_creation_expression_3_0_2_0_1")) return false;
     method_call(b, l + 1);
     return true;
   }

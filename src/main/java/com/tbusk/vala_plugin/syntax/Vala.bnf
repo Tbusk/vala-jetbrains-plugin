@@ -249,7 +249,7 @@ base_access ::= base
 
 object_or_array_creation_expression ::= new (member | type | type_with_parenthesis | type_weak | type_weak_with_parenthesis ) [STAR*] [QUESTION_MARK] ( object_creation_expression | array_creation_expression )
 
-object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer (member_access [method_call])* | object_initializer | member_access [method_call] ]
+object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer (member_access [method_call])* | object_initializer | (member_access [method_call])* ]
 
 object_initializer ::= LBRACE member_initializer [ (COMMA member_initializer)* ] [COMMA] RBRACE
 
