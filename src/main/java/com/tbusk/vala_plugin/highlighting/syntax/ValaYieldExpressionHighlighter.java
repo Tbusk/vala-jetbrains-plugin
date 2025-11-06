@@ -33,6 +33,21 @@ public final class ValaYieldExpressionHighlighter implements ValaHighlighter {
             if (memberNode != null) {
                 highlightMemberPartNodes(annotationHolder, memberNode);
             }
+
+            ASTNode[] memberAccessNodes = psiElement.getNode().getChildren(TokenSet.create(ValaTypes.MEMBER_ACCESS));
+            for (ASTNode memberAccessNode : memberAccessNodes) {
+                ASTNode simpleNameNode = memberAccessNode.findChildByType(ValaTypes.SIMPLE_NAME);
+
+                if (simpleNameNode != null) {
+                    ASTNode identifierNode = simpleNameNode.findChildByType(TokenSet.create(ValaTypes.IDENTIFIER));
+                    if (identifierNode != null) {
+                        annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                                .create();
+                    }
+                }
+            }
         }
     }
 
