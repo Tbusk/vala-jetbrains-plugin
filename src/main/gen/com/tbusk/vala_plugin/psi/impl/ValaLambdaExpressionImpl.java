@@ -34,9 +34,15 @@ public class ValaLambdaExpressionImpl extends ASTWrapperPsiElement implements Va
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public ValaLambdaExpressionParam getLambdaExpressionParam() {
+    return findChildByClass(ValaLambdaExpressionParam.class);
+  }
+
+  @Override
+  @Nullable
   public ValaLambdaExpressionParams getLambdaExpressionParams() {
-    return findNotNullChildByClass(ValaLambdaExpressionParams.class);
+    return findChildByClass(ValaLambdaExpressionParams.class);
   }
 
   @Override

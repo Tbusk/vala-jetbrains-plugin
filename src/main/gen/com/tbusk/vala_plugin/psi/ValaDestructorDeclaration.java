@@ -4,8 +4,9 @@ package com.tbusk.vala_plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface ValaDestructorDeclaration extends PsiElement {
+public interface ValaDestructorDeclaration extends ValaNamedElement {
 
   @NotNull
   ValaBlock getBlock();
@@ -13,10 +14,15 @@ public interface ValaDestructorDeclaration extends PsiElement {
   @Nullable
   ValaConstructorDeclarationModifiers getConstructorDeclarationModifiers();
 
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
+  @NotNull
+  ValaIdentifier getIdentifier();
 
-  @Nullable
-  PsiElement getIdentifier();
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }

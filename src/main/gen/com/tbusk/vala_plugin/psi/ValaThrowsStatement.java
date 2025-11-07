@@ -11,6 +11,6 @@ public interface ValaThrowsStatement extends PsiElement {
   List<ValaType> getTypeList();
 
   @NotNull
-  List<ValaTypeWithParameters> getTypeWithParametersList();
+  List<ValaTypeWithParenthesis> getTypeWithParenthesisList();
 
 }

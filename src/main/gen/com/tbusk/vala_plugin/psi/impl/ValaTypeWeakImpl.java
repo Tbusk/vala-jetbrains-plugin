@@ -35,12 +35,6 @@ public class ValaTypeWeakImpl extends ASTWrapperPsiElement implements ValaTypeWe
 
   @Override
   @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
-  }
-
-  @Override
-  @Nullable
   public ValaSymbol getSymbol() {
     return findChildByClass(ValaSymbol.class);
   }

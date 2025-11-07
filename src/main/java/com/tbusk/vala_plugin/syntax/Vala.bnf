@@ -12,6 +12,8 @@
     elementTypeClass="com.tbusk.vala_plugin.psi.ValaElementType"
     tokenTypeClass="com.tbusk.vala_plugin.psi.ValaTokenType"
 
+    psiImplUtilClass="com.tbusk.vala_plugin.psi.ValaPsiImplUtil"
+
     tokens=[
 
         // Equality Operators
@@ -95,12 +97,12 @@
         PREPROCESSOR_ELIF='#elif'
 
         WHITESPACE='regexp:\s+'
-        IDENTIFIER='regexp:@?[a-zA-Z_0-9][a-zA-Z0-9_]*([.][a-zA-Z_][a-zA-Z0-9_]*)*@?'
+        IDENTIFIER_TOKEN='regexp:@?[a-zA-Z_0-9][a-zA-Z0-9_]*([a-zA-Z_][a-zA-Z0-9_]*)*@?'
         STRING_LITERAL='regexp:@?\"([^\\\"]|\\.)*\"'
         CHAR_LITERAL="regexp:'([^'\\]|\\.)'"
         INTEGER_LITERAL='regexp:([0-9]+)'
         DECIMAL_LITERAL='regexp:([0-9]+(.)[0-9]+)'
-        HEXADECIMAL_LITERAL='regexp:0[xX][0-9a-fA-F]+'
+        HEXADECIMAL_LITERAL='regexp:0[xX][0-9a-fA-F]+(\.[0-9a-fA-F]+([pP][0-9]+[fFlLdD]?)?)?'
         TRIPLE_QUOTE_STRING='regexp:@?"""([^"]|"[^"]|""[^"])*"""'
         COMMENT='regexp://.*'
         DOC_COMMENT='regexp:/\*\*.*?\*/'
@@ -110,7 +112,6 @@
         PREPROCESSOR_DIRECTIVE="regexp:(#if | #endif | #elif | #else) .* (\r|\n|\r\n)"
     ]
 }
-
 
 input ::= using_directive* main_block_member
 
@@ -142,15 +143,20 @@ namespace_member ::= [ attributes ]
 // parse_symbol_name
 symbol ::= symbol_part [QUESTION_MARK] [ (DOT symbol_part [QUESTION_MARK])* ]
 
-symbol_part ::= ( global "::" IDENTIFIER ) | IDENTIFIER | valid_identifier_keywords
+identifier ::= IDENTIFIER_TOKEN | valid_identifier_keywords {
+    mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+    implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+    methods=[getName setName getNameIdentifier getPresentation]
+}
+symbol_part ::= ( global "::" identifier ) | identifier
 
 attributes ::= attribute*
 
-attribute ::= LBRACKET (IDENTIFIER | valid_identifier_keywords) [ attribute_arguments ] [ (COMMA (IDENTIFIER | valid_identifier_keywords) [ attribute_arguments ])* ] RBRACKET
+attribute ::= LBRACKET identifier [ attribute_arguments ] [ (COMMA identifier [ attribute_arguments ])* ] RBRACKET
 
 attribute_arguments ::= LPAREN [attribute_argument [ (COMMA attribute_argument)* ] ] RPAREN
 
-attribute_argument ::= (IDENTIFIER | valid_identifier_keywords) EQUALS expression
+attribute_argument ::= identifier EQUALS expression
 
 expression ::= (lambda_expression | ( conditional_expression [ assignment_operator expression ] ))
 
@@ -178,40 +184,16 @@ equality_expression ::= relational_expression [( ( EQUALS_EQUALS | NOT_EQUALS ) 
 relational_expression ::= shift_expression [ ((( LESS_THAN | LESS_THAN_EQUALS | GREATER_THAN | GREATER_THAN_EQUALS ) shift_expression ) | ( is type ) | ( as type ) )*]
 
 // parse_type
-type ::= ( void [ (STAR)* ] [array_type*] ) | ( [ dynamic ] [ unowned | owned ] ['global::'] (symbol | primitive_type) [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type* )
+type ::= ( void [ (STAR)* ] [array_type*] ) | ( [ dynamic ] [ unowned | owned ] ['global::'] (symbol) [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type* )
 
-type_with_parameters ::= LPAREN type RPAREN array_type*
-
-primitive_type ::= ( char
-                     | uchar
-                     | unichar
-                     | int
-                     | uint
-                     | long
-                     | ulong
-                     | short
-                     | ushort
-                     | int8
-                     | int16
-                     | int32
-                     | int64
-                     | uint8
-                     | uint16
-                     | uint32
-                     | uint64
-                     | float
-                     | double
-                     | bool
-                     | size_t
-                     | ssize_t
-                     | string ) [QUESTION_MARK]
+type_with_parenthesis ::= LPAREN type RPAREN array_type*
 
 // parse_type can_weak
-type_weak ::= ( void [ STAR* ] [array_type*]) | ( [ dynamic ] [ unowned | weak | owned ] ['global::'] (symbol | primitive_type) [ type_arguments ] [ STAR ] [ STAR ] [ QUESTION_MARK ] array_type* )
+type_weak ::= ( void [ STAR* ] [array_type*]) | ( [ dynamic ] [ unowned | weak | owned ] ['global::'] (symbol) [ type_arguments ] [ STAR ] [ STAR ] [ QUESTION_MARK ] array_type* )
 type_weak_with_parenthesis ::= LPAREN type_weak RPAREN array_type*
 
 
-array_type ::= LBRACKET [[(array_size | member | expression | primitive_type)] [(COLON) | (COMMA)*] [(array_size | member | expression | primitive_type)] ] RBRACKET [ QUESTION_MARK ]
+array_type ::= LBRACKET [[(array_size | member | expression)] [(COLON) | (COMMA)*] [(array_size | member | expression)] ] RBRACKET [ QUESTION_MARK ]
 
 shift_expression ::= additive_expression [ ( ( '<<' | '>>' ) additive_expression)* ]
 
@@ -220,7 +202,7 @@ additive_expression ::= multiplicative_expression [ (( PLUS | MINUS ) multiplica
 multiplicative_expression ::= unary_expression [ (( STAR | FORWARD_SLASH | MODULO ) unary_expression)* ]
 
 unary_expression ::= ( unary_operator unary_expression ) |
-                     ( LPAREN ( owned | void | dynamic | EXCLAMATION | (type | type_with_parameters) ) [STAR] RPAREN unary_expression ) |
+                     ( LPAREN ( owned | void | dynamic | EXCLAMATION | (type | type_with_parenthesis) ) [STAR] RPAREN unary_expression ) |
                      primary_expression
 
 // get_unary_operator
@@ -228,11 +210,11 @@ unary_operator ::= PLUS | MINUS | EXCLAMATION | TILDE | INCREMENT | DECREMENT | 
 
 primary_expression ::= ( literal | object_or_array_creation_expression | initializer | tuple | template | this_access | base_access |
                         yield_expression | sizeof_expression | typeof_expression |
-                       simple_name | primitive_type )
+                       simple_name )
                        [ ( [QUESTION_MARK] member_access | pointer_member_access | element_access |
                          post_increment_expression | method_call | post_decrement_expression)* ]
 
-member_access ::= DOT member
+member_access ::= DOT (simple_name | 'default')
 
 pointer_member_access ::= ARROW member
 
@@ -252,8 +234,8 @@ initializer ::= LBRACE [argument [ (COMMA  argument)* ] [COMMA] ] RBRACE
 // parse_argument_list
 arguments ::= ( named_argument | argument) [ (COMMA (named_argument | argument))* ]
 
-argument ::= [ref | out] (expression | (IDENTIFIER | valid_identifier_keywords) COLON expression | IDENTIFIER | valid_identifier_keywords)
-named_argument ::= [parameter_direction] [parameter_ownage] (IDENTIFIER | valid_identifier_keywords) COLON (expression | type_weak | type_with_parameters | type_weak_with_parenthesis | ['_'] LPAREN expression RPAREN ) [EQUALS expression]
+argument ::= [ref | out] (expression | identifier COLON expression | identifier)
+named_argument ::= [parameter_direction] [parameter_ownage] identifier COLON (expression | type_weak | type_with_parenthesis | type_weak_with_parenthesis | ['_'] LPAREN expression RPAREN ) [EQUALS expression]
 
 tuple ::= LPAREN expression [ (COMMA expression)* ] RPAREN
 
@@ -265,13 +247,13 @@ this_access ::= this
 
 base_access ::= base
 
-object_or_array_creation_expression ::= new (member | type | type_with_parameters | type_weak | type_weak_with_parenthesis ) [STAR*] [QUESTION_MARK] ( object_creation_expression | array_creation_expression )
+object_or_array_creation_expression ::= new (member | type | type_with_parenthesis | type_weak | type_weak_with_parenthesis ) [STAR*] [QUESTION_MARK] ( object_creation_expression | array_creation_expression )
 
-object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer (member_access [method_call])* | object_initializer | member_access [method_call] ]
+object_creation_expression ::= LPAREN [ arguments ] RPAREN [ object_initializer (member_access [method_call])* | object_initializer | (member_access [method_call])* ]
 
 object_initializer ::= LBRACE member_initializer [ (COMMA member_initializer)* ] [COMMA] RBRACE
 
-member_initializer ::= (IDENTIFIER | valid_identifier_keywords) EQUALS expression
+member_initializer ::= identifier EQUALS expression
 
 array_creation_expression ::= [ (LBRACKET RBRACKET)* ] [ LBRACKET [ array_size ] RBRACKET ] [ initializer ]
 
@@ -280,20 +262,22 @@ array_size ::= (expression | COMMA) [ (COMMA | COMMA expression)* ]
 // parse_member_name
 member ::= member_part [ (DOT member_part)* ]
 
-member_part ::= ( ["global::"] IDENTIFIER | primitive_type | valid_identifier_keywords | partially_supported_keywords ) [ type_arguments ]
-
-private partially_supported_keywords ::= default
+member_part ::= ( ["global::"] identifier) [ type_arguments ]
 
 // parse_type_argument_list
 type_arguments ::= LESS_THAN [ weak ] (type_weak | type_weak_with_parenthesis) [ (COMMA (type_weak | type_weak_with_parenthesis))* ] GREATER_THAN
 
 method_call ::= LPAREN [ arguments ] RPAREN [ object_initializer ]
 
-simple_name ::= ( ['global::'] IDENTIFIER | valid_identifier_keywords) [ type_arguments ]
+simple_name ::= ( ['global::'] identifier) [ type_arguments ]
+lambda_expression ::= (lambda_expression_param | lambda_expression_params) [ type_arguments ] '=' '>' lambda_expression_body
 
-lambda_expression ::= lambda_expression_params [ type_arguments ] '=' '>' lambda_expression_body
-
-lambda_expression_params ::= (IDENTIFIER | valid_identifier_keywords) | ( LPAREN [ ([ ref | out ] (IDENTIFIER | valid_identifier_keywords) ) [ (COMMA ([ ref | out ] (IDENTIFIER | valid_identifier_keywords) | ref))* ] ] RPAREN )
+lambda_expression_params ::= LPAREN [ lambda_expression_param [(COMMA lambda_expression_param)*]] RPAREN
+lambda_expression_param ::= [ ref | out ] identifier {
+                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                          methods=[getName setName getNameIdentifier getPresentation]
+                                                      }
 
 lambda_expression_body ::= expression | block
 
@@ -305,12 +289,20 @@ constructor_declaration ::= [ constructor_declaration_modifiers ] construct bloc
 constructor_declaration_modifiers ::= constructor_declaration_modifier [ ( constructor_declaration_modifier )* ]
 constructor_declaration_modifier ::= async | class | extern | inline | static | abstract | virtual | override
 
-destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE (IDENTIFIER | valid_identifier_keywords) LPAREN RPAREN block
+destructor_declaration ::= [ constructor_declaration_modifiers ] TILDE identifier LPAREN RPAREN block {
+                                                                                                         mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                         implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                      }
 
 class_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] class symbol [ type_arguments ]
-                      [ COLON base_types ] LBRACE class_member* RBRACE
+                      [ COLON base_types ] LBRACE class_member* RBRACE {
+                                                                           mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                           implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                           methods=[getName setName getNameIdentifier getPresentation]
+                                                                       }
 
-base_types ::= (type | type_with_parameters) [type_arguments] [ (COMMA (type | type_with_parameters) [type_arguments])* ]
+base_types ::= (type | type_with_parenthesis) [type_arguments] [ (COMMA (type | type_with_parenthesis) [type_arguments])* ]
 
 class_member ::= [ attributes ]
                  ( class_declaration |
@@ -333,40 +325,67 @@ type_declaration_modifiers ::= type_declaration_modifier [ ( type_declaration_mo
 type_declaration_modifier ::= abstract | extern | partial | sealed | static
 
 // parse_type_parameter_list
-type_parameters ::= LESS_THAN (IDENTIFIER | valid_identifier_keywords) [ (COMMA (IDENTIFIER | valid_identifier_keywords))* ] GREATER_THAN
+type_parameters ::= LESS_THAN identifier [ (COMMA identifier)* ] GREATER_THAN
 
-struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct (symbol | primitive_type) [type_arguments]
-                       [ COLON base_types ] LBRACE struct_member* RBRACE
+struct_declaration ::= [ access_modifier ] [ type_declaration_modifiers ] struct symbol [type_arguments]
+                       [ COLON base_types ] LBRACE struct_member* RBRACE {
+                                                                             mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                             implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                             methods=[getName setName getNameIdentifier getPresentation]
+                                                                         }
 
 struct_member ::= [ attributes ] ( field_declaration | method_declaration | constant_declaration | property_declaration | creation_method_declaration )
 
-creation_method_declaration ::= [ access_modifier ] [ constructor_declaration_modifiers ] symbol
-                                LPAREN [ parameters ] RPAREN [ throws_statement ] [ requires_statement ] [ ensures_statement ] ( SEMICOLON | block )
+creation_method_declaration ::= [ access_modifier ] [ constructor_declaration_modifiers ] member
+                                LPAREN [ parameters ] RPAREN [ throws_statement ] [ requires_statement ] [ ensures_statement ] ( SEMICOLON | block ) {
+                                                                                                                                                         mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                                                         implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                     }
 
 requires_statement ::= requires LPAREN expression RPAREN [ requires_statement ]
 
 ensures_statement ::= ensures LPAREN expression RPAREN [ ensures_statement ]
 
-signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal (type | type_with_parameters) (IDENTIFIER | valid_identifier_keywords)
-                       LPAREN [ parameters ] RPAREN ( SEMICOLON | block )
+signal_declaration ::= [ access_modifier ] [ signal_declaration_modifiers ] signal (type | type_with_parenthesis) identifier
+                       LPAREN [ parameters ] RPAREN ( SEMICOLON | block ) {
+                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                          }
 
 signal_declaration_modifiers ::= signal_declaration_modifier [ (signal_declaration_modifier)* ]
 signal_declaration_modifier ::= async | extern | inline | abstract | virtual | override | new
 
-method_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] (type | type_with_parameters) (IDENTIFIER | valid_identifier_keywords) [(DOT (IDENTIFIER | valid_identifier_keywords))*] [ type_parameters ]
-                       LPAREN [ parameters ] RPAREN [ throws_statement ] [ requires_statement ] [ ensures_statement ] ( SEMICOLON | block )
+method_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] (type | type_with_parenthesis) member [ type_parameters ]
+                       LPAREN [ parameters ] RPAREN [ throws_statement ] [ requires_statement ] [ ensures_statement ] ( SEMICOLON | block ) {
+                                                                                                                                                mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                                                implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                                                methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                            }
 
-constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) ((IDENTIFIER | valid_identifier_keywords) [ inline_array_type ])
-                         [ EQUALS expression ] [COMMA (IDENTIFIER | valid_identifier_keywords) [ inline_array_type ]
-                                                                                [ EQUALS expression ]] SEMICOLON
+constant_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] const (type [ inline_array_type ]) (identifier [ inline_array_type ])
+                         [ EQUALS expression ] [COMMA identifier [ inline_array_type ][ EQUALS expression ]] SEMICOLON {
+                                                                                                                             mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                             implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                             methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                         }
 
 inline_array_type ::= LBRACKET [ (expression | INTEGER_LITERAL | member | COMMA*) [COLON (expression | INTEGER_LITERAL | member)]] RBRACKET
 
 field_declaration ::= [ access_modifier ] [ member_declaration_modifiers ] [(type_weak | [unowned] type_weak_with_parenthesis)] field_declaration_section (COMMA field_declaration_section)* SEMICOLON
-field_declaration_section ::= (IDENTIFIER | valid_identifier_keywords) [inline_array_type] [ EQUALS expression [inline_array_type] ]
+field_declaration_section ::= identifier [inline_array_type] [ EQUALS expression [inline_array_type] ] {
+                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                          methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                       }
 
-property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] (type_weak | type_weak_with_parenthesis) (IDENTIFIER | valid_identifier_keywords)
-                         LBRACE property_declaration_part* RBRACE
+property_declaration ::= [ access_modifier ] [ property_declaration_modifiers ] (type_weak | type_weak_with_parenthesis) identifier
+                         LBRACE property_declaration_part* RBRACE {
+                                                                      mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                      implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                      methods=[getName setName getNameIdentifier getPresentation]
+                                                                  }
 
 property_declaration_part ::= ( default EQUALS expression SEMICOLON ) | property_accessor
 
@@ -396,30 +415,46 @@ embedded_statement_without_block ::= SEMICOLON | object_or_array_creation_expres
 
 statement_expression ::= expression
 
-local_variable_declarations ::= [dynamic] [ weak | unowned | owned ] ( var [QUESTION_MARK] | (type | type_with_parameters) ) [QUESTION_MARK] local_variable_declaration [ (COMMA local_variable_declaration)* ]
+local_variable_declarations ::= [dynamic] [ weak | unowned | owned ] ( var [QUESTION_MARK] | (type | type_with_parenthesis) ) [QUESTION_MARK] local_variable_declaration [ (COMMA local_variable_declaration)* ]
 
 local_variable_declaration ::= local_tuple_declaration | local_variable
 
-local_tuple_declaration ::= LPAREN (IDENTIFIER | valid_identifier_keywords) [ (COMMA (IDENTIFIER | valid_identifier_keywords))* ] RPAREN EQUALS expression
+local_tuple_declaration ::= LPAREN member RPAREN EQUALS expression {
+                                                                       mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                       implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                       methods=[getName setName getNameIdentifier getPresentation]
+                                                                   }
 
-local_variable ::= (IDENTIFIER | valid_identifier_keywords) [ inline_array_type ] [ EQUALS expression ]
+local_variable ::= identifier [ inline_array_type ] [ EQUALS expression ] {
+                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                          }
 
 expression_statement ::= statement_expression [SEMICOLON]
 
 // -- Error Domain, Checked Parser --
 errordomain_declaration ::= [ errordomain_access_modifier ] [ errordomain_type_declaration_modifiers ] errordomain symbol
-                            LBRACE [errorcodes [SEMICOLON]] [ ( [attributes] method_declaration)* ] RBRACE
+                            LBRACE [errorcodes [SEMICOLON]] [ ( [attributes] method_declaration)* ] RBRACE {
+                                                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                               methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                           }
 
 private errordomain_access_modifier ::= private | public | protected | internal
 
 private errordomain_type_declaration_modifiers ::= extern | abstract | partial | sealed
 
 errorcodes ::= errorcode [ (COMMA errorcode)* [ COMMA ] ]
-errorcode ::= [ attributes ] (IDENTIFIER | valid_identifier_keywords) [ EQUALS expression ]
+errorcode ::= [ attributes ] identifier [ EQUALS expression ]
 
 // -- Delegates, Checked Parser --
-delegate_declaration ::= [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] [delegate] (type | type_with_parameters) symbol [ type_parameters ]
-                         LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON | block)
+delegate_declaration ::= [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] [delegate] (type | type_with_parenthesis) symbol [ type_parameters ]
+                         LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON | block) {
+                                                                                                   mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                   implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                   methods=[getName setName getNameIdentifier getPresentation]
+                                                                                               }
 
 private delegate_access_modifiers ::= private | protected | internal | public
 
@@ -427,9 +462,13 @@ private delegate_declaration_modifiers ::= delegate_declaration_modifier [ (dele
 private delegate_declaration_modifier ::= abstract | async | class | extern | inline | override | sealed | static | virtual
 
 // -- Parameters, Checked Parser --
-parameters ::= (parameter) [ (COMMA (parameter))* [ COMMA ] ]
+parameters ::= parameter [ (COMMA parameter)* [ COMMA ] ]
 
-parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parameters | type_weak_with_parenthesis) ( IDENTIFIER | valid_identifier_keywords | primitive_type) [inline_array_type] [ EQUALS expression ] ) )
+parameter ::= [ attributes ] ( ELLIPSIS | ( [parameter_direction] [parameter_ownage] ) [params] ( (type | type_weak | type_with_parenthesis | type_weak_with_parenthesis) identifier [inline_array_type] [ EQUALS expression ] ) ) {
+                                                                                                                                                                                                                                         mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                                                                                                                                         implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                                                                                                                                         methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                                                      }
 
 private parameter_direction ::= in | out | ref
 private parameter_ownage ::= own | unowned
@@ -441,7 +480,11 @@ throw_statement ::= throw expression SEMICOLON
 try_statement ::= try block (catch_clauses | finally_clause)
 
 catch_clauses ::= catch_clause (catch_clause)* [finally_clause]
-catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) (IDENTIFIER | valid_identifier_keywords) RPAREN ] block
+catch_clause ::= catch [ LPAREN (type_weak | type_weak_with_parenthesis) identifier RPAREN ] block {
+                                                                                                          mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                          implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                          methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                      }
 
 // -- Finally Statement, Checked Parser --
 finally_clause ::= finally block
@@ -450,7 +493,11 @@ finally_clause ::= finally block
 yield_statement ::= yield SEMICOLON | yield_expression [SEMICOLON]
 
 // -- Yield Expression, Checked Parser --
-yield_expression ::= yield [new] [ base_access DOT ] member [ (member_access | method_call)* ]
+yield_expression ::= yield [new] [ base_access DOT ] member [ (member_access | method_call)* ] {
+                                                                                                    mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                    implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                    methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                }
 
 // -- Break Statement, Checked Parser --
 break_statement ::= break SEMICOLON
@@ -498,23 +545,31 @@ for_initializer ::= local_variable_declarations | ( statement_expression [ (COMM
 for_iterator ::= statement_expression [ (COMMA statement_expression)* ]
 
 // -- Sizeof Expression, Checked Parser --			Api.Parameter? param = params.get (0);
-sizeof_expression ::= sizeof LPAREN (type | type_with_parameters) RPAREN
+sizeof_expression ::= sizeof LPAREN (type | type_with_parenthesis) RPAREN
 
 // -- Typeof Expression, Checked Parser --
-typeof_expression ::= typeof LPAREN (type | type_with_parameters) RPAREN
+typeof_expression ::= typeof LPAREN (type | type_with_parenthesis) RPAREN
 
 // -- Namespace Declaration, Checked Parser --
-namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE
+namespace_declaration ::= namespace symbol LBRACE using_directive* namespace_member* RBRACE {
+                                                                                               mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                               implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                               methods=[getName setName getNameIdentifier getPresentation]
+                                                                                            }
 
 // -- Using Statement, Checked Parser --
 using_directive ::= using symbol [ (COMMA symbol)* ] SEMICOLON
 
 // -- Throws Statement, Checked Parser --
-throws_statement ::= throws (type | type_with_parameters) [ (COMMA (type | type_with_parameters))* ]
+throws_statement ::= throws (type | type_with_parenthesis) [ (COMMA (type | type_with_parenthesis))* ]
 
 // -- Enum Declaration, Checked Parser --
 enum_declaration ::= [ access_modifier ] [ enum_type_declaration_modifiers ] enum symbol
-                     LBRACE enumvalues [ SEMICOLON [ enum_member* ] ] RBRACE
+                     LBRACE enumvalues [ SEMICOLON [ enum_member* ] ] RBRACE {
+                                                                                 mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                 implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                 methods=[getName setName getNameIdentifier getPresentation]
+                                                                             }
 // doesn't prevent duplicates
 private enum_type_declaration_modifiers ::= enum_type_declaration_modifier [ enum_type_declaration_modifier* ]
 // all other type declaration modifiers won't compile
@@ -522,13 +577,17 @@ private enum_type_declaration_modifier ::= abstract | extern | sealed
 
 enumvalues ::= enumvalue [ (COMMA enumvalue)* ] [ COMMA ]
 // enums need at least one value
-enumvalue ::= [ attributes ] (IDENTIFIER | valid_identifier_keywords) [ EQUALS expression ]
+enumvalue ::= [ attributes ] identifier [ EQUALS expression ]
 // creation/construction methods explicitly are not permitted
 enum_member ::= [attributes] (constant_declaration | method_declaration)
 
 // -- Interface Declaration, Checked Parser --
 interface_declaration ::= [ access_modifier ] [ interface_type_declaration_modifiers ] interface symbol [ type_parameters ]
-                          [ COLON base_types ] LBRACE interface_member* RBRACE
+                          [ COLON base_types ] LBRACE interface_member* RBRACE {
+                                                                                   mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                   implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                   methods=[getName setName getNameIdentifier getPresentation ]
+                                                                               }
 
 private interface_type_declaration_modifiers ::= interface_type_declaration_modifier [ interface_type_declaration_modifier* ]
 private interface_type_declaration_modifier ::= abstract | extern | sealed
@@ -550,7 +609,11 @@ interface_member ::= [ attributes ]
                        interface_declaration ) // interfaces area allowed to be declared in interfaces
 
 // -- Foreach Statement, Checked Parser --
-foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) (IDENTIFIER | valid_identifier_keywords) in expression RPAREN embedded_statement
+foreach_statement ::= foreach LPAREN [ (dynamic unowned) | (unowned dynamic) | unowned | dynamic ] ( var [QUESTION_MARK] | (type_weak | type_weak_with_parenthesis) ) identifier in expression RPAREN embedded_statement {
+                                                                                                                                                                                                                              mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
+                                                                                                                                                                                                                              implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
+                                                                                                                                                                                                                              methods=[getName setName getNameIdentifier getPresentation]
+                                                                                                                                                                                                                           }
 
 valid_identifier_keywords ::= ( abstract
                             | async

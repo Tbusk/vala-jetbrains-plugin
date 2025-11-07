@@ -14,7 +14,7 @@ public interface ValaUnaryExpression extends PsiElement {
   ValaType getType();
 
   @Nullable
-  ValaTypeWithParameters getTypeWithParameters();
+  ValaTypeWithParenthesis getTypeWithParenthesis();
 
   @Nullable
   ValaUnaryExpression getUnaryExpression();

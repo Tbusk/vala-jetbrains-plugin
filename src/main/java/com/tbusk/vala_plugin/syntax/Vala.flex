@@ -55,9 +55,9 @@ IDENTIFIER=@?[a-zA-Z_][a-zA-Z0-9$_]*@?
 PRE_NUMERIC_IDENTIFIER=@?[0-9][a-zA-Z0-9$_]*@?\??
 STRING_LITERAL=@?\"([^\\\"]|\\.)*\"
 CHAR_LITERAL=\'([^\\\']|\\.)*\'
-DECIMAL_LITERAL=([0-9]+.[0-9]+)
-HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+
-INTEGER_LITERAL=([0-9]+)
+DECIMAL_LITERAL=([0-9]+.[0-9]+)([fF]|[dD])?
+HEXADECIMAL_LITERAL=0[xX][0-9a-fA-F]+(\.[0-9a-fA-F]+([pP][0-9]+[fFlLdD]?)?)?
+INTEGER_LITERAL=([0-9]+)(([uU][lL][lL])|([uU][lL])|[uU]|[lL]{1,2})?
 REGULAR_EXPRESSION=\/([\(\)\[\].\+\^\$\|\\\?_\{\}a-zA-Z0-9!:@*\-\']*.*\/[\n]?[ ]*([mixos]*[\n]?[ ]*(\.match_all|\.match|;|\.replace_eval|\.replace|,)))
 
 // Comments
@@ -180,31 +180,6 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "with" { return ValaTypes.WITH; }
     "params" { return ValaTypes.PARAMS; }
 
-    // Primitive Types
-    "bool" { return ValaTypes.BOOL; }
-    "int" { return ValaTypes.INT; }
-    "uint" { return ValaTypes.UINT; }
-    "long" { return ValaTypes.LONG; }
-    "ulong" { return ValaTypes.ULONG; }
-    "float" { return ValaTypes.FLOAT; }
-    "double" { return ValaTypes.DOUBLE; }
-    "string" { return ValaTypes.STRING; }
-    "char" { return ValaTypes.CHAR; }
-    "uchar" { return ValaTypes.UCHAR; }
-    "unichar" { return ValaTypes.UNICHAR; }
-    "short" { return ValaTypes.SHORT; }
-    "ushort" { return ValaTypes.USHORT; }
-    "uint8" { return ValaTypes.UINT8; }
-    "uint16" { return ValaTypes.UINT16; }
-    "uint32" { return ValaTypes.UINT32; }
-    "uint64" { return ValaTypes.UINT64; }
-    "int8" { return ValaTypes.INT8; }
-    "int16" { return ValaTypes.INT16; }
-    "int32" { return ValaTypes.INT32; }
-    "int64" { return ValaTypes.INT64; }
-    "size_t" { return ValaTypes.SIZE_T; }
-    "ssize_t" { return ValaTypes.SSIZE_T; }
-
     // Operator Keywords
     "as" { return ValaTypes.AS; }
     "is" { return ValaTypes.IS; }
@@ -279,11 +254,11 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "$" { return ValaTypes.DOLLAR; }
 
     // Lastly
-    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
     {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
-    {PRE_NUMERIC_IDENTIFIER} { return ValaTypes.IDENTIFIER; }
+    {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
+    {PRE_NUMERIC_IDENTIFIER} { return ValaTypes.IDENTIFIER_TOKEN; }
     {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
-    {IDENTIFIER} { return ValaTypes.IDENTIFIER; }
+    {IDENTIFIER} { return ValaTypes.IDENTIFIER_TOKEN; }
     {PREPROCESSOR_DIRECTIVE} { return ValaTypes.PREPROCESSOR_DIRECTIVE; }
 
     {REGULAR_EXPRESSION} {
