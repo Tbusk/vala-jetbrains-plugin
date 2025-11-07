@@ -11,9 +11,6 @@ public interface ValaTypeWeak extends PsiElement {
   List<ValaArrayType> getArrayTypeList();
 
   @Nullable
-  ValaPrimitiveType getPrimitiveType();
-
-  @Nullable
   ValaSymbol getSymbol();
 
   @Nullable

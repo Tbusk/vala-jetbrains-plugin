@@ -28,9 +28,9 @@ public class ValaMemberAccessImpl extends ASTWrapperPsiElement implements ValaMe
   }
 
   @Override
-  @NotNull
-  public ValaMember getMember() {
-    return findNotNullChildByClass(ValaMember.class);
+  @Nullable
+  public ValaSimpleName getSimpleName() {
+    return findChildByClass(ValaSimpleName.class);
   }
 
 }

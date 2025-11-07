@@ -13,10 +13,7 @@ public interface ValaErrorcode extends PsiElement {
   @Nullable
   ValaExpression getExpression();
 
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
+  @NotNull
+  ValaIdentifier getIdentifier();
 
 }
