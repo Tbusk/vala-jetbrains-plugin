@@ -64,8 +64,8 @@ If you want to support this project or encounter any problems, please consider o
     - [ ] Type checks
 - [ ] Syntax highlighting
     - [x] Keywords
-    - [ ] Declarations (class, namespace, enum, errordomain, etc.)
-    - [ ] Already declared identifiers for method calls, variable usage, etc. in project
+    - [x] Declarations (class, namespace, enum, errordomain, etc.)
+    - [x] Already declared identifiers for method calls, variable usage, etc. in project
     - [ ] Identifiers declared in namespaces outside of project via Vapi
 - [ ] Run
     - [ ] File outside file
