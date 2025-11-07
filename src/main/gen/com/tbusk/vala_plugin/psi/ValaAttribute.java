@@ -11,6 +11,6 @@ public interface ValaAttribute extends PsiElement {
   List<ValaAttributeArguments> getAttributeArgumentsList();
 
   @NotNull
-  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
+  List<ValaIdentifier> getIdentifierList();
 
 }

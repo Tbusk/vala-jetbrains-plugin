@@ -10,10 +10,7 @@ public interface ValaMemberInitializer extends PsiElement {
   @NotNull
   ValaExpression getExpression();
 
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
+  @NotNull
+  ValaIdentifier getIdentifier();
 
 }

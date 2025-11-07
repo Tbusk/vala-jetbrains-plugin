@@ -8,12 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
-public class ValaCreationMethodDeclarationImpl extends ASTWrapperPsiElement implements ValaCreationMethodDeclaration {
+public class ValaCreationMethodDeclarationImpl extends ValaNamedElementImpl implements ValaCreationMethodDeclaration {
 
-  public ValaCreationMethodDeclarationImpl(@NotNull ASTNode node) {
+  public ValaCreationMethodDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 
@@ -52,6 +53,12 @@ public class ValaCreationMethodDeclarationImpl extends ASTWrapperPsiElement impl
   }
 
   @Override
+  @NotNull
+  public ValaMember getMember() {
+    return findNotNullChildByClass(ValaMember.class);
+  }
+
+  @Override
   @Nullable
   public ValaParameters getParameters() {
     return findChildByClass(ValaParameters.class);
@@ -64,15 +71,29 @@ public class ValaCreationMethodDeclarationImpl extends ASTWrapperPsiElement impl
   }
 
   @Override
-  @NotNull
-  public ValaSymbol getSymbol() {
-    return findNotNullChildByClass(ValaSymbol.class);
-  }
-
-  @Override
   @Nullable
   public ValaThrowsStatement getThrowsStatement() {
     return findChildByClass(ValaThrowsStatement.class);
+  }
+
+  @Override
+  public String getName() {
+    return ValaPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return ValaPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return ValaPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return ValaPsiImplUtil.getPresentation(this);
   }
 
 }

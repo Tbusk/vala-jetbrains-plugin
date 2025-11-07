@@ -8,12 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
-public class ValaParameterImpl extends ASTWrapperPsiElement implements ValaParameter {
+public class ValaParameterImpl extends ValaNamedElementImpl implements ValaParameter {
 
-  public ValaParameterImpl(@NotNull ASTNode node) {
+  public ValaParameterImpl(@Nullable ASTNode node) {
     super(node);
   }
 
@@ -41,14 +42,14 @@ public class ValaParameterImpl extends ASTWrapperPsiElement implements ValaParam
 
   @Override
   @Nullable
-  public ValaInlineArrayType getInlineArrayType() {
-    return findChildByClass(ValaInlineArrayType.class);
+  public ValaIdentifier getIdentifier() {
+    return findChildByClass(ValaIdentifier.class);
   }
 
   @Override
   @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
+  public ValaInlineArrayType getInlineArrayType() {
+    return findChildByClass(ValaInlineArrayType.class);
   }
 
   @Override
@@ -71,20 +72,28 @@ public class ValaParameterImpl extends ASTWrapperPsiElement implements ValaParam
 
   @Override
   @Nullable
-  public ValaTypeWithParameters getTypeWithParameters() {
-    return findChildByClass(ValaTypeWithParameters.class);
+  public ValaTypeWithParenthesis getTypeWithParenthesis() {
+    return findChildByClass(ValaTypeWithParenthesis.class);
   }
 
   @Override
-  @Nullable
-  public ValaValidIdentifierKeywords getValidIdentifierKeywords() {
-    return findChildByClass(ValaValidIdentifierKeywords.class);
+  public String getName() {
+    return ValaPsiImplUtil.getName(this);
   }
 
   @Override
-  @Nullable
-  public PsiElement getIdentifier() {
-    return findChildByType(IDENTIFIER);
+  public PsiElement setName(String newName) {
+    return ValaPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return ValaPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return ValaPsiImplUtil.getPresentation(this);
   }
 
 }

@@ -10,7 +10,10 @@ public interface ValaLambdaExpression extends PsiElement {
   @NotNull
   ValaLambdaExpressionBody getLambdaExpressionBody();
 
-  @NotNull
+  @Nullable
+  ValaLambdaExpressionParam getLambdaExpressionParam();
+
+  @Nullable
   ValaLambdaExpressionParams getLambdaExpressionParams();
 
   @Nullable

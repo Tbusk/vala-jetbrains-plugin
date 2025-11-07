@@ -65,8 +65,8 @@ public class ValaObjectOrArrayCreationExpressionImpl extends ASTWrapperPsiElemen
 
   @Override
   @Nullable
-  public ValaTypeWithParameters getTypeWithParameters() {
-    return findChildByClass(ValaTypeWithParameters.class);
+  public ValaTypeWithParenthesis getTypeWithParenthesis() {
+    return findChildByClass(ValaTypeWithParenthesis.class);
   }
 
 }

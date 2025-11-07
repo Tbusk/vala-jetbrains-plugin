@@ -30,21 +30,28 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
      * settings page.
      */
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Line comment", ValaSyntaxHighlighter.LINE_COMMENT),
-            new AttributesDescriptor("Block comment", ValaSyntaxHighlighter.BLOCK_COMMENT),
-            new AttributesDescriptor("Doc comment", ValaSyntaxHighlighter.DOC_COMMENT),
-            new AttributesDescriptor("Identifier", ValaSyntaxHighlighter.IDENTIFIER),
-            new AttributesDescriptor("Keyword", ValaSyntaxHighlighter.KEYWORD),
-            new AttributesDescriptor("String", ValaSyntaxHighlighter.STRING),
-            new AttributesDescriptor("Number", ValaSyntaxHighlighter.NUMBER),
-            new AttributesDescriptor("Constant", ValaSyntaxHighlighter.CONSTANT),
-            new AttributesDescriptor("Method call", ValaSyntaxHighlighter.METHOD_CALL),
-            new AttributesDescriptor("Semicolon", ValaSyntaxHighlighter.SEMICOLON),
-            new AttributesDescriptor("Brackets", ValaSyntaxHighlighter.BRACKETS),
-            new AttributesDescriptor("Braces", ValaSyntaxHighlighter.BRACES),
-            new AttributesDescriptor("Comma", ValaSyntaxHighlighter.COMMA),
-            new AttributesDescriptor("Dot", ValaSyntaxHighlighter.DOT),
-            new AttributesDescriptor("Parentheses", ValaSyntaxHighlighter.PARENTHESES),
+            new AttributesDescriptor("Keywords", ValaTextAttributeKey.KEYWORD),
+            new AttributesDescriptor("Comments//Line comment", ValaTextAttributeKey.LINE_COMMENT),
+            new AttributesDescriptor("Comments//Block comment", ValaTextAttributeKey.BLOCK_COMMENT),
+            new AttributesDescriptor("Comments//Doc comment", ValaTextAttributeKey.DOC_COMMENT),
+            new AttributesDescriptor("Strings", ValaTextAttributeKey.STRING_LITERAL),
+            new AttributesDescriptor("Numbers", ValaTextAttributeKey.NUMBER_LITERAL),
+            new AttributesDescriptor("Constants", ValaTextAttributeKey.CONSTANT),
+            new AttributesDescriptor("Parameters", ValaTextAttributeKey.PARAMETER),
+            new AttributesDescriptor("Attributes", ValaTextAttributeKey.ATTRIBUTE),
+            new AttributesDescriptor("Misc instances", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AttributesDescriptor("Local variables", ValaTextAttributeKey.LOCAL_VARIABLE),
+            new AttributesDescriptor("Method call", ValaTextAttributeKey.METHOD_CALL),
+            new AttributesDescriptor("Semicolons", ValaTextAttributeKey.SEMICOLON),
+            new AttributesDescriptor("Brackets", ValaTextAttributeKey.BRACKETS),
+            new AttributesDescriptor("Braces", ValaTextAttributeKey.BRACES),
+            new AttributesDescriptor("Commas", ValaTextAttributeKey.COMMA),
+            new AttributesDescriptor("Dots", ValaTextAttributeKey.DOT),
+            new AttributesDescriptor("Parentheses", ValaTextAttributeKey.PARENTHESES),
+            new AttributesDescriptor("Method declaration", ValaTextAttributeKey.METHOD_DECLARATION),
+            new AttributesDescriptor("Misc declarations", ValaTextAttributeKey.STRUCTURE_NAMES),
+            new AttributesDescriptor("Interfaces", ValaTextAttributeKey.INTERFACE_NAME),
+            new AttributesDescriptor("Operations", ValaTextAttributeKey.OPERATIONS)
     };
 
     /**
@@ -76,6 +83,7 @@ public class ValaColorSettingsPage implements ColorSettingsPage {
      */
     @Override
     public @NonNls @NotNull String getDemoText() {
+        //language=vala
         return """
                 using GObject.Introspection;
                 

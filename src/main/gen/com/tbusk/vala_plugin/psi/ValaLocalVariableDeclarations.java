@@ -14,6 +14,6 @@ public interface ValaLocalVariableDeclarations extends PsiElement {
   ValaType getType();
 
   @Nullable
-  ValaTypeWithParameters getTypeWithParameters();
+  ValaTypeWithParenthesis getTypeWithParenthesis();
 
 }
