@@ -65,6 +65,7 @@ public interface ValaTypes {
   IElementType FOR_INITIALIZER = new ValaElementType("FOR_INITIALIZER");
   IElementType FOR_ITERATOR = new ValaElementType("FOR_ITERATOR");
   IElementType FOR_STATEMENT = new ValaElementType("FOR_STATEMENT");
+  IElementType IDENTIFIER = new ValaElementType("IDENTIFIER");
   IElementType IF_STATEMENT = new ValaElementType("IF_STATEMENT");
   IElementType INCLUSIVE_OR_EXPRESSION = new ValaElementType("INCLUSIVE_OR_EXPRESSION");
   IElementType INITIALIZER = new ValaElementType("INITIALIZER");
@@ -74,6 +75,7 @@ public interface ValaTypes {
   IElementType IN_EXPRESSION = new ValaElementType("IN_EXPRESSION");
   IElementType LAMBDA_EXPRESSION = new ValaElementType("LAMBDA_EXPRESSION");
   IElementType LAMBDA_EXPRESSION_BODY = new ValaElementType("LAMBDA_EXPRESSION_BODY");
+  IElementType LAMBDA_EXPRESSION_PARAM = new ValaElementType("LAMBDA_EXPRESSION_PARAM");
   IElementType LAMBDA_EXPRESSION_PARAMS = new ValaElementType("LAMBDA_EXPRESSION_PARAMS");
   IElementType LITERAL = new ValaElementType("LITERAL");
   IElementType LOCAL_TUPLE_DECLARATION = new ValaElementType("LOCAL_TUPLE_DECLARATION");
@@ -103,7 +105,6 @@ public interface ValaTypes {
   IElementType POST_DECREMENT_EXPRESSION = new ValaElementType("POST_DECREMENT_EXPRESSION");
   IElementType POST_INCREMENT_EXPRESSION = new ValaElementType("POST_INCREMENT_EXPRESSION");
   IElementType PRIMARY_EXPRESSION = new ValaElementType("PRIMARY_EXPRESSION");
-  IElementType PRIMITIVE_TYPE = new ValaElementType("PRIMITIVE_TYPE");
   IElementType PROPERTY_ACCESSOR = new ValaElementType("PROPERTY_ACCESSOR");
   IElementType PROPERTY_CONSTRUCT_ACCESSOR = new ValaElementType("PROPERTY_CONSTRUCT_ACCESSOR");
   IElementType PROPERTY_DECLARATION = new ValaElementType("PROPERTY_DECLARATION");
@@ -144,7 +145,7 @@ public interface ValaTypes {
   IElementType TYPE_PARAMETERS = new ValaElementType("TYPE_PARAMETERS");
   IElementType TYPE_WEAK = new ValaElementType("TYPE_WEAK");
   IElementType TYPE_WEAK_WITH_PARENTHESIS = new ValaElementType("TYPE_WEAK_WITH_PARENTHESIS");
-  IElementType TYPE_WITH_PARAMETERS = new ValaElementType("TYPE_WITH_PARAMETERS");
+  IElementType TYPE_WITH_PARENTHESIS = new ValaElementType("TYPE_WITH_PARENTHESIS");
   IElementType UNARY_EXPRESSION = new ValaElementType("UNARY_EXPRESSION");
   IElementType UNARY_OPERATOR = new ValaElementType("UNARY_OPERATOR");
   IElementType UNLOCK_STATEMENT = new ValaElementType("UNLOCK_STATEMENT");
@@ -166,12 +167,10 @@ public interface ValaTypes {
   IElementType BACKTICK = new ValaTokenType("`");
   IElementType BASE = new ValaTokenType("base");
   IElementType BLOCK_COMMENT = new ValaTokenType("BLOCK_COMMENT");
-  IElementType BOOL = new ValaTokenType("bool");
   IElementType BREAK = new ValaTokenType("break");
   IElementType CARET = new ValaTokenType("^");
   IElementType CASE = new ValaTokenType("case");
   IElementType CATCH = new ValaTokenType("catch");
-  IElementType CHAR = new ValaTokenType("char");
   IElementType CHAR_LITERAL = new ValaTokenType("CHAR_LITERAL");
   IElementType CLASS = new ValaTokenType("class");
   IElementType COALESCING = new ValaTokenType("??");
@@ -204,7 +203,6 @@ public interface ValaTypes {
   IElementType EXTERN = new ValaTokenType("extern");
   IElementType FALSE = new ValaTokenType("false");
   IElementType FINALLY = new ValaTokenType("finally");
-  IElementType FLOAT = new ValaTokenType("float");
   IElementType FOR = new ValaTokenType("for");
   IElementType FOREACH = new ValaTokenType("foreach");
   IElementType FORWARD_SLASH = new ValaTokenType("/");
@@ -213,16 +211,12 @@ public interface ValaTypes {
   IElementType GREATER_THAN = new ValaTokenType(">");
   IElementType GREATER_THAN_EQUALS = new ValaTokenType(">=");
   IElementType HEXADECIMAL_LITERAL = new ValaTokenType("HEXADECIMAL_LITERAL");
-  IElementType IDENTIFIER = new ValaTokenType("IDENTIFIER");
+  IElementType IDENTIFIER_TOKEN = new ValaTokenType("IDENTIFIER_TOKEN");
   IElementType IF = new ValaTokenType("if");
   IElementType IN = new ValaTokenType("in");
   IElementType INCREMENT = new ValaTokenType("++");
   IElementType INLINE = new ValaTokenType("inline");
   IElementType INT = new ValaTokenType("int");
-  IElementType INT16 = new ValaTokenType("int16");
-  IElementType INT32 = new ValaTokenType("int32");
-  IElementType INT64 = new ValaTokenType("int64");
-  IElementType INT8 = new ValaTokenType("int8");
   IElementType INTEGER_LITERAL = new ValaTokenType("INTEGER_LITERAL");
   IElementType INTERFACE = new ValaTokenType("interface");
   IElementType INTERNAL = new ValaTokenType("internal");
@@ -232,7 +226,6 @@ public interface ValaTypes {
   IElementType LESS_THAN = new ValaTokenType("<");
   IElementType LESS_THAN_EQUALS = new ValaTokenType("<=");
   IElementType LOCK = new ValaTokenType("lock");
-  IElementType LONG = new ValaTokenType("long");
   IElementType LPAREN = new ValaTokenType("(");
   IElementType MINUS = new ValaTokenType("-");
   IElementType MINUS_EQUALS = new ValaTokenType("-=");
@@ -276,11 +269,8 @@ public interface ValaTypes {
   IElementType SET = new ValaTokenType("set");
   IElementType SHIFT_LEFT_EQUALS = new ValaTokenType("<<=");
   IElementType SHIFT_RIGHT_EQUALS = new ValaTokenType(">>=");
-  IElementType SHORT = new ValaTokenType("short");
   IElementType SIGNAL = new ValaTokenType("signal");
   IElementType SIZEOF = new ValaTokenType("sizeof");
-  IElementType SIZE_T = new ValaTokenType("size_t");
-  IElementType SSIZE_T = new ValaTokenType("ssize_t");
   IElementType STAR = new ValaTokenType("*");
   IElementType STATIC = new ValaTokenType("static");
   IElementType STRING = new ValaTokenType("string");
@@ -295,17 +285,8 @@ public interface ValaTypes {
   IElementType TRUE = new ValaTokenType("true");
   IElementType TRY = new ValaTokenType("try");
   IElementType TYPEOF = new ValaTokenType("typeof");
-  IElementType UCHAR = new ValaTokenType("uchar");
-  IElementType UINT = new ValaTokenType("uint");
-  IElementType UINT16 = new ValaTokenType("uint16");
-  IElementType UINT32 = new ValaTokenType("uint32");
-  IElementType UINT64 = new ValaTokenType("uint64");
-  IElementType UINT8 = new ValaTokenType("uint8");
-  IElementType ULONG = new ValaTokenType("ulong");
-  IElementType UNICHAR = new ValaTokenType("unichar");
   IElementType UNLOCK = new ValaTokenType("unlock");
   IElementType UNOWNED = new ValaTokenType("unowned");
-  IElementType USHORT = new ValaTokenType("ushort");
   IElementType USING = new ValaTokenType("using");
   IElementType VAR = new ValaTokenType("var");
   IElementType VIRTUAL = new ValaTokenType("virtual");
@@ -491,6 +472,9 @@ public interface ValaTypes {
       else if (type == FOR_STATEMENT) {
         return new ValaForStatementImpl(node);
       }
+      else if (type == IDENTIFIER) {
+        return new ValaIdentifierImpl(node);
+      }
       else if (type == IF_STATEMENT) {
         return new ValaIfStatementImpl(node);
       }
@@ -517,6 +501,9 @@ public interface ValaTypes {
       }
       else if (type == LAMBDA_EXPRESSION_BODY) {
         return new ValaLambdaExpressionBodyImpl(node);
+      }
+      else if (type == LAMBDA_EXPRESSION_PARAM) {
+        return new ValaLambdaExpressionParamImpl(node);
       }
       else if (type == LAMBDA_EXPRESSION_PARAMS) {
         return new ValaLambdaExpressionParamsImpl(node);
@@ -604,9 +591,6 @@ public interface ValaTypes {
       }
       else if (type == PRIMARY_EXPRESSION) {
         return new ValaPrimaryExpressionImpl(node);
-      }
-      else if (type == PRIMITIVE_TYPE) {
-        return new ValaPrimitiveTypeImpl(node);
       }
       else if (type == PROPERTY_ACCESSOR) {
         return new ValaPropertyAccessorImpl(node);
@@ -728,8 +712,8 @@ public interface ValaTypes {
       else if (type == TYPE_WEAK_WITH_PARENTHESIS) {
         return new ValaTypeWeakWithParenthesisImpl(node);
       }
-      else if (type == TYPE_WITH_PARAMETERS) {
-        return new ValaTypeWithParametersImpl(node);
+      else if (type == TYPE_WITH_PARENTHESIS) {
+        return new ValaTypeWithParenthesisImpl(node);
       }
       else if (type == UNARY_EXPRESSION) {
         return new ValaUnaryExpressionImpl(node);

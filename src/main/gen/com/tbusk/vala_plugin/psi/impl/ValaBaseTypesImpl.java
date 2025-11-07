@@ -41,8 +41,8 @@ public class ValaBaseTypesImpl extends ASTWrapperPsiElement implements ValaBaseT
 
   @Override
   @NotNull
-  public List<ValaTypeWithParameters> getTypeWithParametersList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWithParameters.class);
+  public List<ValaTypeWithParenthesis> getTypeWithParenthesisList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaTypeWithParenthesis.class);
   }
 
 }

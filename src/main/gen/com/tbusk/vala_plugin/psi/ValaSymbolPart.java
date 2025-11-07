@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaSymbolPart extends PsiElement {
 
-  @Nullable
-  ValaValidIdentifierKeywords getValidIdentifierKeywords();
-
-  @Nullable
-  PsiElement getIdentifier();
+  @NotNull
+  ValaIdentifier getIdentifier();
 
 }

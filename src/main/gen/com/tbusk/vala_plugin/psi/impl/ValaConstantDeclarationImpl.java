@@ -8,12 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
-public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements ValaConstantDeclaration {
+public class ValaConstantDeclarationImpl extends ValaNamedElementImpl implements ValaConstantDeclaration {
 
-  public ValaConstantDeclarationImpl(@NotNull ASTNode node) {
+  public ValaConstantDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 
@@ -41,6 +42,12 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
+  public List<ValaIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaIdentifier.class);
+  }
+
+  @Override
+  @NotNull
   public List<ValaInlineArrayType> getInlineArrayTypeList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaInlineArrayType.class);
   }
@@ -58,9 +65,23 @@ public class ValaConstantDeclarationImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @NotNull
-  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  public String getName() {
+    return ValaPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return ValaPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return ValaPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return ValaPsiImplUtil.getPresentation(this);
   }
 
 }

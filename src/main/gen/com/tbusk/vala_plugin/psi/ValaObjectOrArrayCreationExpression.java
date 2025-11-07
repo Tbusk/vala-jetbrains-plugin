@@ -26,6 +26,6 @@ public interface ValaObjectOrArrayCreationExpression extends PsiElement {
   ValaTypeWeakWithParenthesis getTypeWeakWithParenthesis();
 
   @Nullable
-  ValaTypeWithParameters getTypeWithParameters();
+  ValaTypeWithParenthesis getTypeWithParenthesis();
 
 }

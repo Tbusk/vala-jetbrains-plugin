@@ -11,20 +11,32 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaPrimitiveTypeImpl extends ASTWrapperPsiElement implements ValaPrimitiveType {
+public class ValaTypeWithParenthesisImpl extends ASTWrapperPsiElement implements ValaTypeWithParenthesis {
 
-  public ValaPrimitiveTypeImpl(@NotNull ASTNode node) {
+  public ValaTypeWithParenthesisImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitPrimitiveType(this);
+    visitor.visitTypeWithParenthesis(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof ValaVisitor) accept((ValaVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<ValaArrayType> getArrayTypeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaArrayType.class);
+  }
+
+  @Override
+  @NotNull
+  public ValaType getType() {
+    return findNotNullChildByClass(ValaType.class);
   }
 
 }
