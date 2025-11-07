@@ -8,12 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.tbusk.vala_plugin.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.tbusk.vala_plugin.psi.ValaNamedElementImpl;
 import com.tbusk.vala_plugin.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
-public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements ValaMethodDeclaration {
+public class ValaMethodDeclarationImpl extends ValaNamedElementImpl implements ValaMethodDeclaration {
 
-  public ValaMethodDeclarationImpl(@NotNull ASTNode node) {
+  public ValaMethodDeclarationImpl(@Nullable ASTNode node) {
     super(node);
   }
 
@@ -43,6 +44,12 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
   @Nullable
   public ValaEnsuresStatement getEnsuresStatement() {
     return findChildByClass(ValaEnsuresStatement.class);
+  }
+
+  @Override
+  @NotNull
+  public ValaMember getMember() {
+    return findNotNullChildByClass(ValaMember.class);
   }
 
   @Override
@@ -83,14 +90,28 @@ public class ValaMethodDeclarationImpl extends ASTWrapperPsiElement implements V
 
   @Override
   @Nullable
-  public ValaTypeWithParameters getTypeWithParameters() {
-    return findChildByClass(ValaTypeWithParameters.class);
+  public ValaTypeWithParenthesis getTypeWithParenthesis() {
+    return findChildByClass(ValaTypeWithParenthesis.class);
   }
 
   @Override
-  @NotNull
-  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  public String getName() {
+    return ValaPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return ValaPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return ValaPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return ValaPsiImplUtil.getPresentation(this);
   }
 
 }

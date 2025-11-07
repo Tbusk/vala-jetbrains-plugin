@@ -11,6 +11,6 @@ public interface ValaSizeofExpression extends PsiElement {
   ValaType getType();
 
   @Nullable
-  ValaTypeWithParameters getTypeWithParameters();
+  ValaTypeWithParenthesis getTypeWithParenthesis();
 
 }

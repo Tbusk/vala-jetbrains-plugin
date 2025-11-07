@@ -120,6 +120,9 @@
                 implementationClass="com.tbusk.vala_plugin.code_style.ValaPairedBraceMatcher"
         />
 
+        <annotator language="Vala"
+                   implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator"/>
+
     </extensions>
 
     <actions >

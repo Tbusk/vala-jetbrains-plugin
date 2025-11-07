@@ -89,12 +89,6 @@ public class ValaPrimaryExpressionImpl extends ASTWrapperPsiElement implements V
 
   @Override
   @Nullable
-  public ValaPrimitiveType getPrimitiveType() {
-    return findChildByClass(ValaPrimitiveType.class);
-  }
-
-  @Override
-  @Nullable
   public ValaSimpleName getSimpleName() {
     return findChildByClass(ValaSimpleName.class);
   }

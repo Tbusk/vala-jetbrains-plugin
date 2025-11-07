@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaTypeWithParameters extends PsiElement {
+public interface ValaTypeWithParenthesis extends PsiElement {
 
   @NotNull
   List<ValaArrayType> getArrayTypeList();

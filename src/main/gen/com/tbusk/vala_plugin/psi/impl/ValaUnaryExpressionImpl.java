@@ -41,8 +41,8 @@ public class ValaUnaryExpressionImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @Nullable
-  public ValaTypeWithParameters getTypeWithParameters() {
-    return findChildByClass(ValaTypeWithParameters.class);
+  public ValaTypeWithParenthesis getTypeWithParenthesis() {
+    return findChildByClass(ValaTypeWithParenthesis.class);
   }
 
   @Override

@@ -35,8 +35,8 @@ public class ValaAttributeImpl extends ASTWrapperPsiElement implements ValaAttri
 
   @Override
   @NotNull
-  public List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaValidIdentifierKeywords.class);
+  public List<ValaIdentifier> getIdentifierList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaIdentifier.class);
   }
 
 }

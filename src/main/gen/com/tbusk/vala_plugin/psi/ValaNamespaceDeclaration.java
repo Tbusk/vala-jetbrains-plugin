@@ -4,8 +4,9 @@ package com.tbusk.vala_plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface ValaNamespaceDeclaration extends PsiElement {
+public interface ValaNamespaceDeclaration extends ValaNamedElement {
 
   @NotNull
   List<ValaNamespaceMember> getNamespaceMemberList();
@@ -15,5 +16,13 @@ public interface ValaNamespaceDeclaration extends PsiElement {
 
   @NotNull
   List<ValaUsingDirective> getUsingDirectiveList();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }

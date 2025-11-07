@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaMemberAccess extends PsiElement {
 
-  @NotNull
-  ValaMember getMember();
+  @Nullable
+  ValaSimpleName getSimpleName();
 
 }

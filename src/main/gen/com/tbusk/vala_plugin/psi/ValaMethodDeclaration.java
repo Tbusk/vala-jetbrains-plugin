@@ -4,8 +4,9 @@ package com.tbusk.vala_plugin.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface ValaMethodDeclaration extends PsiElement {
+public interface ValaMethodDeclaration extends ValaNamedElement {
 
   @Nullable
   ValaAccessModifier getAccessModifier();
@@ -15,6 +16,9 @@ public interface ValaMethodDeclaration extends PsiElement {
 
   @Nullable
   ValaEnsuresStatement getEnsuresStatement();
+
+  @NotNull
+  ValaMember getMember();
 
   @Nullable
   ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
@@ -35,9 +39,14 @@ public interface ValaMethodDeclaration extends PsiElement {
   ValaTypeParameters getTypeParameters();
 
   @Nullable
-  ValaTypeWithParameters getTypeWithParameters();
+  ValaTypeWithParenthesis getTypeWithParenthesis();
 
-  @NotNull
-  List<ValaValidIdentifierKeywords> getValidIdentifierKeywordsList();
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }
