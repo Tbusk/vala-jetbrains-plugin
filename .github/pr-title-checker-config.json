@@ -10,7 +10,8 @@
       "change: ",
       "docs: ",
       "test: ",
-      "chore: "
+      "chore: ",
+      "chore(deps):"
     ]
   },
   "MESSAGES": {
