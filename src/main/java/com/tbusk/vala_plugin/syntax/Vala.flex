@@ -256,8 +256,8 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     // Lastly
     {HEXADECIMAL_LITERAL} { return ValaTypes.HEXADECIMAL_LITERAL; }
     {INTEGER_LITERAL} { return ValaTypes.INTEGER_LITERAL; }
-    {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
     {PRE_NUMERIC_IDENTIFIER} { return ValaTypes.IDENTIFIER_TOKEN; }
+    {DECIMAL_LITERAL} { return ValaTypes.DECIMAL_LITERAL; }
     {IDENTIFIER} { return ValaTypes.IDENTIFIER_TOKEN; }
     {PREPROCESSOR_DIRECTIVE} { return ValaTypes.PREPROCESSOR_DIRECTIVE; }
 
