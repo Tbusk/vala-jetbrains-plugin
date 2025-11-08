@@ -6,6 +6,12 @@
 
 ### What's Changed
 
+- 
+
+## [1.2.5-ALPHA]
+
+### What's Changed
+
 - Improved syntax highlighting (declarations, identifier, reference, etc.)
 
 ## [1.2.4-ALPHA]
