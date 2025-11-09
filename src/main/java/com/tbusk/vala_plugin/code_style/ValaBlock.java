@@ -66,10 +66,6 @@ public class ValaBlock extends AbstractBlock {
             return new ChildAttributes(Indent.getNormalIndent(), null);
         }
 
-        if (parentType == ValaTypes.SWITCH_SECTION) {
-            return new ChildAttributes(Indent.getNormalIndent(), null);
-        }
-
         if (parentType == ValaTypes.NAMESPACE_DECLARATION ||
                 parentType == ValaTypes.INTERFACE_DECLARATION ||
                 parentType == ValaTypes.CLASS_DECLARATION ||
@@ -80,7 +76,10 @@ public class ValaBlock extends AbstractBlock {
                 parentType == ValaTypes.PROPERTY_DECLARATION ||
                 parentType == ValaTypes.INITIALIZER ||
                 parentType == ValaTypes.OBJECT_INITIALIZER ||
-                parentType == ValaTypes.SWITCH_STATEMENT) {
+                parentType == ValaTypes.SWITCH_STATEMENT ||
+                parentType == ValaTypes.SWITCH_CASE_STATEMENT ||
+                parentType == ValaTypes.SWITCH_DEFAULT_STATEMENT
+        ) {
             return new ChildAttributes(Indent.getNormalIndent(), null);
         }
 
@@ -144,18 +143,11 @@ public class ValaBlock extends AbstractBlock {
             return Indent.getNormalIndent();
         }
 
-        if (parentType == ValaTypes.SWITCH_SECTION && childType == ValaTypes.COLON) {
-            return Indent.getNoneIndent();
-        }
-
-        if (parentType == ValaTypes.SWITCH_STATEMENT &&
-                (childType == ValaTypes.SWITCH_SECTION)) {
+        if (parentType == ValaTypes.BLOCK && childType == ValaTypes.STATEMENT) {
             return Indent.getNormalIndent();
         }
 
-        if ((parentType == ValaTypes.BLOCK || parentType == ValaTypes.EMBEDDED_STATEMENT_WITHOUT_BLOCK
-        ) &&
-                (childType != ValaTypes.LBRACE && childType != ValaTypes.RBRACE && childType != ValaTypes.SEMICOLON && childType != ValaTypes.BLOCK)) {
+        if (parentType == ValaTypes.IF_STATEMENT && childType == ValaTypes.ELSE_IF_STATEMENT) {
             return Indent.getNormalIndent();
         }
 
@@ -174,6 +166,19 @@ public class ValaBlock extends AbstractBlock {
         if ((parentType == ValaTypes.LOCAL_VARIABLE) &&
                 (childType == ValaTypes.EXPRESSION)) {
             return Indent.getContinuationIndent();
+        }
+
+        if (parentType == ValaTypes.SWITCH_STATEMENT &&
+                (childType == ValaTypes.SWITCH_SECTION)) {
+            return Indent.getNormalIndent();
+        }
+
+        if (parentType == ValaTypes.SWITCH_CASE_STATEMENT && childType == ValaTypes.EMBEDDED_STATEMENT_WITHOUT_BLOCK) {
+            return Indent.getNormalIndent();
+        }
+
+        if (parentType == ValaTypes.SWITCH_DEFAULT_STATEMENT && childType == ValaTypes.EMBEDDED_STATEMENT_WITHOUT_BLOCK) {
+            return Indent.getNormalIndent();
         }
 
         return Indent.getNoneIndent();

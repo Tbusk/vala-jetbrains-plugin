@@ -19,7 +19,6 @@ public class ValaFormattingModelBuilder implements FormattingModelBuilder {
                 .beforeInside(ValaTypes.LBRACE, ValaTypes.ENUM_DECLARATION).spacing(1, 1, 0, false, 0)
                 .beforeInside(ValaTypes.LBRACE, ValaTypes.NAMESPACE_DECLARATION).spacing(1, 1, 0, false, 0)
                 .beforeInside(ValaTypes.LBRACE, ValaTypes.STRUCT_DECLARATION).spacing(1, 1, 0, false, 0)
-                .beforeInside(ValaTypes.EMBEDDED_STATEMENT, ValaTypes.IF_STATEMENT).spacing(1, 1, 0, false, 0)
                 .beforeInside(ValaTypes.LBRACE, ValaTypes.FOR_STATEMENT).spacing(1, 1, 0, false, 0)
                 .beforeInside(ValaTypes.LBRACE, ValaTypes.FOREACH_STATEMENT).spacing(1, 1, 0, false, 0)
                 .beforeInside(ValaTypes.LBRACE, ValaTypes.DO_STATEMENT).spacing(1, 1, 0, false, 0)
@@ -113,8 +112,8 @@ public class ValaFormattingModelBuilder implements FormattingModelBuilder {
                 .betweenInside(ValaTypes.BLOCK, ValaTypes.SEMICOLON, ValaTypes.BLOCK).spacing(0, 0, 0, false, 0)
                 .betweenInside(ValaTypes.ATTRIBUTES, ValaTypes.ENUM_DECLARATION, ValaTypes.CLASS_MEMBER).spacing(0, 0, 1, true, 1)
 
-                .afterInside(ValaTypes.LPAREN, ValaTypes.METHOD_CALL).spacing(0, 1, 0, false, 1)
-                .beforeInside(ValaTypes.RPAREN, ValaTypes.METHOD_CALL).spacing(0, 1, 0, false, 1)
+                .afterInside(ValaTypes.LPAREN, ValaTypes.METHOD_CALL).spacing(0, 1, 0, true, 1)
+                .beforeInside(ValaTypes.RPAREN, ValaTypes.METHOD_CALL).spacing(0, 1, 0, true, 1)
                 ;
     }
 

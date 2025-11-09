@@ -11,14 +11,14 @@ import static com.tbusk.vala_plugin.psi.ValaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.tbusk.vala_plugin.psi.*;
 
-public class ValaSwitchSectionImpl extends ASTWrapperPsiElement implements ValaSwitchSection {
+public class ValaSwitchDefaultStatementImpl extends ASTWrapperPsiElement implements ValaSwitchDefaultStatement {
 
-  public ValaSwitchSectionImpl(@NotNull ASTNode node) {
+  public ValaSwitchDefaultStatementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitSwitchSection(this);
+    visitor.visitSwitchDefaultStatement(this);
   }
 
   @Override
@@ -28,15 +28,15 @@ public class ValaSwitchSectionImpl extends ASTWrapperPsiElement implements ValaS
   }
 
   @Override
-  @Nullable
-  public ValaSwitchCaseStatements getSwitchCaseStatements() {
-    return findChildByClass(ValaSwitchCaseStatements.class);
+  @NotNull
+  public List<ValaEmbeddedStatementWithoutBlock> getEmbeddedStatementWithoutBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaEmbeddedStatementWithoutBlock.class);
   }
 
   @Override
-  @Nullable
-  public ValaSwitchDefaultStatement getSwitchDefaultStatement() {
-    return findChildByClass(ValaSwitchDefaultStatement.class);
+  @NotNull
+  public List<ValaExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
   }
 
 }

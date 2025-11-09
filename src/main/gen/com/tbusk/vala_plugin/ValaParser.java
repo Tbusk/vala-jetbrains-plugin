@@ -1747,6 +1747,32 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // else if LPAREN expression RPAREN embedded_statement*
+  public static boolean else_if_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "else_if_statement")) return false;
+    if (!nextTokenIs(b, ELSE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, ELSE, IF, LPAREN);
+    r = r && expression(b, l + 1);
+    r = r && consumeToken(b, RPAREN);
+    r = r && else_if_statement_5(b, l + 1);
+    exit_section_(b, m, ELSE_IF_STATEMENT, r);
+    return r;
+  }
+
+  // embedded_statement*
+  private static boolean else_if_statement_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "else_if_statement_5")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!embedded_statement(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "else_if_statement_5", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
   // block | embedded_statement_without_block
   public static boolean embedded_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "embedded_statement")) return false;
@@ -2794,7 +2820,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // if LPAREN expression RPAREN embedded_statement* [ else embedded_statement ]
+  // if LPAREN expression RPAREN embedded_statement* else_if_statement* [ else embedded_statement* ]
   public static boolean if_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "if_statement")) return false;
     if (!nextTokenIs(b, IF)) return false;
@@ -2805,6 +2831,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && consumeToken(b, RPAREN);
     r = r && if_statement_4(b, l + 1);
     r = r && if_statement_5(b, l + 1);
+    r = r && if_statement_6(b, l + 1);
     exit_section_(b, m, IF_STATEMENT, r);
     return r;
   }
@@ -2820,22 +2847,44 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ else embedded_statement ]
+  // else_if_statement*
   private static boolean if_statement_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "if_statement_5")) return false;
-    if_statement_5_0(b, l + 1);
+    while (true) {
+      int c = current_position_(b);
+      if (!else_if_statement(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "if_statement_5", c)) break;
+    }
     return true;
   }
 
-  // else embedded_statement
-  private static boolean if_statement_5_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "if_statement_5_0")) return false;
+  // [ else embedded_statement* ]
+  private static boolean if_statement_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement_6")) return false;
+    if_statement_6_0(b, l + 1);
+    return true;
+  }
+
+  // else embedded_statement*
+  private static boolean if_statement_6_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement_6_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, ELSE);
-    r = r && embedded_statement(b, l + 1);
+    r = r && if_statement_6_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // embedded_statement*
+  private static boolean if_statement_6_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "if_statement_6_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!embedded_statement(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "if_statement_6_0_1", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -5637,8 +5686,8 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // case (expression (COMMA expression)*) COLON embedded_statement_without_block* [switch_default_statement]
-  static boolean switch_case_statement(PsiBuilder b, int l) {
+  // case (expression (COMMA expression)*) COLON embedded_statement_without_block*
+  public static boolean switch_case_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "switch_case_statement")) return false;
     if (!nextTokenIs(b, CASE)) return false;
     boolean r;
@@ -5647,8 +5696,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && switch_case_statement_1(b, l + 1);
     r = r && consumeToken(b, COLON);
     r = r && switch_case_statement_3(b, l + 1);
-    r = r && switch_case_statement_4(b, l + 1);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, SWITCH_CASE_STATEMENT, r);
     return r;
   }
 
@@ -5696,23 +5744,17 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [switch_default_statement]
-  private static boolean switch_case_statement_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "switch_case_statement_4")) return false;
-    switch_default_statement(b, l + 1);
-    return true;
-  }
-
   /* ********************************************************** */
-  // switch_case_statement (switch_case_statement*)
-  static boolean switch_case_statements(PsiBuilder b, int l) {
+  // switch_case_statement (switch_case_statement*) [switch_default_statement]
+  public static boolean switch_case_statements(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "switch_case_statements")) return false;
     if (!nextTokenIs(b, CASE)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = switch_case_statement(b, l + 1);
     r = r && switch_case_statements_1(b, l + 1);
-    exit_section_(b, m, null, r);
+    r = r && switch_case_statements_2(b, l + 1);
+    exit_section_(b, m, SWITCH_CASE_STATEMENTS, r);
     return r;
   }
 
@@ -5727,9 +5769,16 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
+  // [switch_default_statement]
+  private static boolean switch_case_statements_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "switch_case_statements_2")) return false;
+    switch_default_statement(b, l + 1);
+    return true;
+  }
+
   /* ********************************************************** */
   // default COLON embedded_statement_without_block* [ (case expression COLON embedded_statement_without_block*)*]
-  static boolean switch_default_statement(PsiBuilder b, int l) {
+  public static boolean switch_default_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "switch_default_statement")) return false;
     if (!nextTokenIs(b, DEFAULT)) return false;
     boolean r;
@@ -5737,7 +5786,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = consumeTokens(b, 0, DEFAULT, COLON);
     r = r && switch_default_statement_2(b, l + 1);
     r = r && switch_default_statement_3(b, l + 1);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, SWITCH_DEFAULT_STATEMENT, r);
     return r;
   }
 
