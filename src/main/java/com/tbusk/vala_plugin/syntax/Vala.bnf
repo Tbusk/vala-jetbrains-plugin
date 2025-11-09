@@ -450,7 +450,7 @@ errorcode ::= [ attributes ] identifier [ EQUALS expression ]
 
 // -- Delegates, Checked Parser --
 delegate_declaration ::= [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] [delegate] (type | type_with_parenthesis) symbol [ type_parameters ]
-                         LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON | block) {
+                         LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON) {
                                                                                                    mixin="com.tbusk.vala_plugin.psi.ValaNamedElementImpl"
                                                                                                    implements="com.tbusk.vala_plugin.psi.ValaNamedElement"
                                                                                                    methods=[getName setName getNameIdentifier getPresentation]

@@ -1476,7 +1476,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // [ delegate_access_modifiers ] [ delegate_declaration_modifiers ] [delegate] (type | type_with_parenthesis) symbol [ type_parameters ]
-  //                          LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON | block)
+  //                          LPAREN [ parameters ] RPAREN [ throws_statement ] (SEMICOLON)
   public static boolean delegate_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "delegate_declaration")) return false;
     boolean r;
@@ -1491,7 +1491,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = r && delegate_declaration_7(b, l + 1);
     r = r && consumeToken(b, RPAREN);
     r = r && delegate_declaration_9(b, l + 1);
-    r = r && delegate_declaration_10(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -1545,15 +1545,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "delegate_declaration_9")) return false;
     throws_statement(b, l + 1);
     return true;
-  }
-
-  // SEMICOLON | block
-  private static boolean delegate_declaration_10(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "delegate_declaration_10")) return false;
-    boolean r;
-    r = consumeToken(b, SEMICOLON);
-    if (!r) r = block(b, l + 1);
-    return r;
   }
 
   /* ********************************************************** */

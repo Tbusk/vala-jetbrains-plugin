@@ -9,9 +9,6 @@ import com.intellij.navigation.ItemPresentation;
 public interface ValaDelegateDeclaration extends ValaNamedElement {
 
   @Nullable
-  ValaBlock getBlock();
-
-  @Nullable
   ValaParameters getParameters();
 
   @NotNull

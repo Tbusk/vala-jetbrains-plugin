@@ -6,6 +6,7 @@
 
 ### What's Changed
 
+- Removed block support for delegates in line with docs.
 - Added syntax highlighting for using directive.
 
 ## [1.2.5-ALPHA]
