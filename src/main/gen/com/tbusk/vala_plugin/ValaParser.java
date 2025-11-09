@@ -3394,78 +3394,24 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // true | false | null | INTEGER_LITERAL [ numerical_suffix ] | DECIMAL_LITERAL [ numerical_suffix ] | CHAR_LITERAL |
-  //             STRING_LITERAL | TRIPLE_QUOTE_STRING | HEXADECIMAL_LITERAL [ numerical_suffix ] | regex_literal
+  // INTEGER_LITERAL | DECIMAL_LITERAL | true | false | null | CHAR_LITERAL |
+  //             STRING_LITERAL | TRIPLE_QUOTE_STRING | HEXADECIMAL_LITERAL | regex_literal
   public static boolean literal(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "literal")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, LITERAL, "<literal>");
-    r = consumeToken(b, TRUE);
+    r = consumeToken(b, INTEGER_LITERAL);
+    if (!r) r = consumeToken(b, DECIMAL_LITERAL);
+    if (!r) r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
     if (!r) r = consumeToken(b, NULL);
-    if (!r) r = literal_3(b, l + 1);
-    if (!r) r = literal_4(b, l + 1);
     if (!r) r = consumeToken(b, CHAR_LITERAL);
     if (!r) r = consumeToken(b, STRING_LITERAL);
     if (!r) r = consumeToken(b, TRIPLE_QUOTE_STRING);
-    if (!r) r = literal_8(b, l + 1);
+    if (!r) r = consumeToken(b, HEXADECIMAL_LITERAL);
     if (!r) r = regex_literal(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
-  }
-
-  // INTEGER_LITERAL [ numerical_suffix ]
-  private static boolean literal_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, INTEGER_LITERAL);
-    r = r && literal_3_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ numerical_suffix ]
-  private static boolean literal_3_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_3_1")) return false;
-    numerical_suffix(b, l + 1);
-    return true;
-  }
-
-  // DECIMAL_LITERAL [ numerical_suffix ]
-  private static boolean literal_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_4")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, DECIMAL_LITERAL);
-    r = r && literal_4_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ numerical_suffix ]
-  private static boolean literal_4_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_4_1")) return false;
-    numerical_suffix(b, l + 1);
-    return true;
-  }
-
-  // HEXADECIMAL_LITERAL [ numerical_suffix ]
-  private static boolean literal_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_8")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, HEXADECIMAL_LITERAL);
-    r = r && literal_8_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [ numerical_suffix ]
-  private static boolean literal_8_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "literal_8_1")) return false;
-    numerical_suffix(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -4316,28 +4262,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!r) r = method_declaration(b, l + 1);
     if (!r) r = field_declaration(b, l + 1);
     if (!r) r = constant_declaration(b, l + 1);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // 'U' | 'UL' | 'LL' | 'ULL' | 'L' | 'u' | 'ul' | 'll' | 'ull' | 'l' | 'f' | 'F' | 'd' | 'D'
-  static boolean numerical_suffix(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "numerical_suffix")) return false;
-    boolean r;
-    r = consumeToken(b, "U");
-    if (!r) r = consumeToken(b, "UL");
-    if (!r) r = consumeToken(b, "LL");
-    if (!r) r = consumeToken(b, "ULL");
-    if (!r) r = consumeToken(b, "L");
-    if (!r) r = consumeToken(b, "u");
-    if (!r) r = consumeToken(b, "ul");
-    if (!r) r = consumeToken(b, "ll");
-    if (!r) r = consumeToken(b, "ull");
-    if (!r) r = consumeToken(b, "l");
-    if (!r) r = consumeToken(b, "f");
-    if (!r) r = consumeToken(b, "F");
-    if (!r) r = consumeToken(b, "d");
-    if (!r) r = consumeToken(b, "D");
     return r;
   }
 
@@ -6177,7 +6101,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( void [ (STAR)* ] [array_type*] ) | ( [ dynamic ] [ unowned | owned ] ['global::'] (symbol) [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type* )
+  // ( void [ (STAR)* ] [array_type*] ) | ( [ dynamic ] [ unowned | owned ] ['global::'] symbol [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type* )
   public static boolean type(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type")) return false;
     boolean r;
@@ -6236,7 +6160,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ dynamic ] [ unowned | owned ] ['global::'] (symbol) [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type*
+  // [ dynamic ] [ unowned | owned ] ['global::'] symbol [ type_arguments ] [ (STAR)* ] [ QUESTION_MARK ] array_type*
   private static boolean type_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_1")) return false;
     boolean r;
@@ -6244,7 +6168,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = type_1_0(b, l + 1);
     r = r && type_1_1(b, l + 1);
     r = r && type_1_2(b, l + 1);
-    r = r && type_1_3(b, l + 1);
+    r = r && symbol(b, l + 1);
     r = r && type_1_4(b, l + 1);
     r = r && type_1_5(b, l + 1);
     r = r && type_1_6(b, l + 1);
@@ -6281,16 +6205,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "type_1_2")) return false;
     consumeToken(b, "global::");
     return true;
-  }
-
-  // (symbol)
-  private static boolean type_1_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_1_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = symbol(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   // [ type_arguments ]
@@ -6506,7 +6420,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ( void [ STAR* ] [array_type*]) | ( [ dynamic ] [ unowned | weak | owned ] ['global::'] (symbol) [ type_arguments ] [ STAR ] [ STAR ] [ QUESTION_MARK ] array_type* )
+  // ( void [ STAR* ] [array_type*]) | ( [ dynamic ] [ unowned | weak | owned ] ['global::'] symbol [ type_arguments ] [ STAR ] [ STAR ] [ QUESTION_MARK ] array_type* )
   public static boolean type_weak(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_weak")) return false;
     boolean r;
@@ -6565,7 +6479,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // [ dynamic ] [ unowned | weak | owned ] ['global::'] (symbol) [ type_arguments ] [ STAR ] [ STAR ] [ QUESTION_MARK ] array_type*
+  // [ dynamic ] [ unowned | weak | owned ] ['global::'] symbol [ type_arguments ] [ STAR ] [ STAR ] [ QUESTION_MARK ] array_type*
   private static boolean type_weak_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_weak_1")) return false;
     boolean r;
@@ -6573,7 +6487,7 @@ public class ValaParser implements PsiParser, LightPsiParser {
     r = type_weak_1_0(b, l + 1);
     r = r && type_weak_1_1(b, l + 1);
     r = r && type_weak_1_2(b, l + 1);
-    r = r && type_weak_1_3(b, l + 1);
+    r = r && symbol(b, l + 1);
     r = r && type_weak_1_4(b, l + 1);
     r = r && type_weak_1_5(b, l + 1);
     r = r && type_weak_1_6(b, l + 1);
@@ -6612,16 +6526,6 @@ public class ValaParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "type_weak_1_2")) return false;
     consumeToken(b, "global::");
     return true;
-  }
-
-  // (symbol)
-  private static boolean type_weak_1_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_weak_1_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = symbol(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
   }
 
   // [ type_arguments ]
