@@ -6,6 +6,7 @@
 
 ### What's Changed
 
+- Changed syntax coloring for delegate.
 - Removed block support for delegates in line with docs.
 - Added syntax highlighting for using directive.
 
