@@ -6,7 +6,7 @@
 
 ### What's Changed
 
-- 
+- Added syntax highlighting for using directive.
 
 ## [1.2.5-ALPHA]
 
