@@ -6,6 +6,7 @@
 
 ### What's Changed
 
+- Updated default new project .editorconfig to use elementary's defaults
 - Fixed parsing issue with numeric literals mistaken for numeric-prefixed identifiers
 - Changed syntax coloring for delegate.
 - Removed block support for delegates in line with docs.
