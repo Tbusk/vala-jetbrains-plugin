@@ -6,6 +6,7 @@
 
 ### What's Changed
 
+- Fixed issue with switch and if statements being formatted incorrectly
 - Updated default new project .editorconfig to use elementary's defaults
 - Fixed parsing issue with numeric literals mistaken for numeric-prefixed identifiers
 - Changed syntax coloring for delegate.
