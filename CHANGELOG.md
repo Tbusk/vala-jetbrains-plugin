@@ -6,6 +6,17 @@
 
 ### What's Changed
 
+- Fixed issue with switch and if statements being formatted incorrectly
+- Updated default new project .editorconfig to use elementary's defaults
+- Fixed parsing issue with numeric literals mistaken for numeric-prefixed identifiers
+- Changed syntax coloring for delegate.
+- Removed block support for delegates in line with docs.
+- Added syntax highlighting for using directive.
+
+## [1.2.5-ALPHA]
+
+### What's Changed
+
 - Improved syntax highlighting (declarations, identifier, reference, etc.)
 
 ## [1.2.4-ALPHA]

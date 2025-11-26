@@ -36,10 +36,10 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
                     new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
                     new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
                     new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_CALL),
-
-                    new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.METHOD_CALL),
                     new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.LOCAL_VARIABLE),
+                    new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.METHOD_CALL),
+
                     new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.INSTANCE_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaLocalVariable", ValaTextAttributeKey.LOCAL_VARIABLE),
                     new AbstractMap.SimpleEntry<>("ValaForeachStatement", ValaTextAttributeKey.LOCAL_VARIABLE),

@@ -30,12 +30,6 @@ public class ValaDelegateDeclarationImpl extends ValaNamedElementImpl implements
 
   @Override
   @Nullable
-  public ValaBlock getBlock() {
-    return findChildByClass(ValaBlock.class);
-  }
-
-  @Override
-  @Nullable
   public ValaParameters getParameters() {
     return findChildByClass(ValaParameters.class);
   }

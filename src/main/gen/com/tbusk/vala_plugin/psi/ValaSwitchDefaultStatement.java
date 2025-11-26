@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaIfStatement extends PsiElement {
+public interface ValaSwitchDefaultStatement extends PsiElement {
 
   @NotNull
-  List<ValaElseIfStatement> getElseIfStatementList();
+  List<ValaEmbeddedStatementWithoutBlock> getEmbeddedStatementWithoutBlockList();
 
   @NotNull
-  List<ValaEmbeddedStatement> getEmbeddedStatementList();
-
-  @NotNull
-  ValaExpression getExpression();
+  List<ValaExpression> getExpressionList();
 
 }

@@ -44,6 +44,7 @@ public interface ValaTypes {
   IElementType DESTRUCTOR_DECLARATION = new ValaElementType("DESTRUCTOR_DECLARATION");
   IElementType DO_STATEMENT = new ValaElementType("DO_STATEMENT");
   IElementType ELEMENT_ACCESS = new ValaElementType("ELEMENT_ACCESS");
+  IElementType ELSE_IF_STATEMENT = new ValaElementType("ELSE_IF_STATEMENT");
   IElementType EMBEDDED_STATEMENT = new ValaElementType("EMBEDDED_STATEMENT");
   IElementType EMBEDDED_STATEMENT_WITHOUT_BLOCK = new ValaElementType("EMBEDDED_STATEMENT_WITHOUT_BLOCK");
   IElementType ENSURES_STATEMENT = new ValaElementType("ENSURES_STATEMENT");
@@ -127,6 +128,9 @@ public interface ValaTypes {
   IElementType STATEMENT_EXPRESSION = new ValaElementType("STATEMENT_EXPRESSION");
   IElementType STRUCT_DECLARATION = new ValaElementType("STRUCT_DECLARATION");
   IElementType STRUCT_MEMBER = new ValaElementType("STRUCT_MEMBER");
+  IElementType SWITCH_CASE_STATEMENT = new ValaElementType("SWITCH_CASE_STATEMENT");
+  IElementType SWITCH_CASE_STATEMENTS = new ValaElementType("SWITCH_CASE_STATEMENTS");
+  IElementType SWITCH_DEFAULT_STATEMENT = new ValaElementType("SWITCH_DEFAULT_STATEMENT");
   IElementType SWITCH_SECTION = new ValaElementType("SWITCH_SECTION");
   IElementType SWITCH_STATEMENT = new ValaElementType("SWITCH_STATEMENT");
   IElementType SYMBOL = new ValaElementType("SYMBOL");
@@ -409,6 +413,9 @@ public interface ValaTypes {
       else if (type == ELEMENT_ACCESS) {
         return new ValaElementAccessImpl(node);
       }
+      else if (type == ELSE_IF_STATEMENT) {
+        return new ValaElseIfStatementImpl(node);
+      }
       else if (type == EMBEDDED_STATEMENT) {
         return new ValaEmbeddedStatementImpl(node);
       }
@@ -657,6 +664,15 @@ public interface ValaTypes {
       }
       else if (type == STRUCT_MEMBER) {
         return new ValaStructMemberImpl(node);
+      }
+      else if (type == SWITCH_CASE_STATEMENT) {
+        return new ValaSwitchCaseStatementImpl(node);
+      }
+      else if (type == SWITCH_CASE_STATEMENTS) {
+        return new ValaSwitchCaseStatementsImpl(node);
+      }
+      else if (type == SWITCH_DEFAULT_STATEMENT) {
+        return new ValaSwitchDefaultStatementImpl(node);
       }
       else if (type == SWITCH_SECTION) {
         return new ValaSwitchSectionImpl(node);

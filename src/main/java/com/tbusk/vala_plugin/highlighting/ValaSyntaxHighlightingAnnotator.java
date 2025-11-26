@@ -42,6 +42,7 @@ public final class ValaSyntaxHighlightingAnnotator implements Annotator {
             ValaForEachHighlighter.getInstance(),
             ValaCatchHighlighter.getInstance(),
             ValaLambdaExpressionHighlighting.getInstance(),
+            ValaUsingHighlighter.getInstance(),
             ValaPrimaryExpressionHighlighting.getInstance(),
             ValaIdentifierHighlighter.getInstance()
     ));

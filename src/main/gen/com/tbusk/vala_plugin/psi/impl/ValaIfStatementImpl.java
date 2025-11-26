@@ -29,6 +29,12 @@ public class ValaIfStatementImpl extends ASTWrapperPsiElement implements ValaIfS
 
   @Override
   @NotNull
+  public List<ValaElseIfStatement> getElseIfStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaElseIfStatement.class);
+  }
+
+  @Override
+  @NotNull
   public List<ValaEmbeddedStatement> getEmbeddedStatementList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaEmbeddedStatement.class);
   }

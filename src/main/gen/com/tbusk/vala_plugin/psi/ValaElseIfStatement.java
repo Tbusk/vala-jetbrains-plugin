@@ -5,10 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaIfStatement extends PsiElement {
-
-  @NotNull
-  List<ValaElseIfStatement> getElseIfStatementList();
+public interface ValaElseIfStatement extends PsiElement {
 
   @NotNull
   List<ValaEmbeddedStatement> getEmbeddedStatementList();

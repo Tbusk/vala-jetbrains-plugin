@@ -5,10 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaSwitchSection extends PsiElement {
+public interface ValaSwitchCaseStatements extends PsiElement {
 
-  @Nullable
-  ValaSwitchCaseStatements getSwitchCaseStatements();
+  @NotNull
+  List<ValaSwitchCaseStatement> getSwitchCaseStatementList();
 
   @Nullable
   ValaSwitchDefaultStatement getSwitchDefaultStatement();

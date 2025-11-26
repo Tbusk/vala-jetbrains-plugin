@@ -151,6 +151,10 @@ public class ValaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitElseIfStatement(@NotNull ValaElseIfStatement o) {
+    visitPsiElement(o);
+  }
+
   public void visitEmbeddedStatement(@NotNull ValaEmbeddedStatement o) {
     visitPsiElement(o);
   }
@@ -480,6 +484,18 @@ public class ValaVisitor extends PsiElementVisitor {
   }
 
   public void visitStructMember(@NotNull ValaStructMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchCaseStatement(@NotNull ValaSwitchCaseStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchCaseStatements(@NotNull ValaSwitchCaseStatements o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSwitchDefaultStatement(@NotNull ValaSwitchDefaultStatement o) {
     visitPsiElement(o);
   }
 
