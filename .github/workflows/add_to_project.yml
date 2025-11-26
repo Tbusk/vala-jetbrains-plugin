@@ -1,4 +1,4 @@
-name: add_to_project.yml
+name: Add to Project
 on:
   issues:
     types:
@@ -9,6 +9,7 @@ on:
 jobs:
   add-to-project:
     name: Add issue to project
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/add-to-project@v1.0.2
