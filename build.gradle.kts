@@ -120,8 +120,8 @@ intellijPlatform {
 changelog {
     groups.empty()
     repositoryUrl = providers.gradleProperty("pluginRepositoryUrl")
-    // supports 4 layers deep with up to 10 letter and dash characters at the end
-    headerParserRegex.set("((\\d+(\\.\\d+){0,4}([-a-zA-Z]{0,10})))")
+    // supports 4 layers deep with an optional appending label
+    headerParserRegex.set(Regex("(\\d+(?:\\.\\d+)+(?:-[a-zA-Z0-9]+)?)"))
 }
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
