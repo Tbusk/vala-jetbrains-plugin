@@ -129,4 +129,4 @@ If you want to support this project or encounter any problems, please consider o
 Thank you for your interest in contributing to this project. 
 We welcome any and all contributions from the community and appreciate your help in making the project better.
 
-Please refer to the [contributions](CONTRIBUTIONS.md) file for guidelines on how to contribute, including how to report issues, submit pull requests, and adhere to our coding standards.
+Please refer to the [contributions](CONTRIBUTING.md) file for guidelines on how to contribute, including how to report issues, submit pull requests, and adhere to our coding standards.
