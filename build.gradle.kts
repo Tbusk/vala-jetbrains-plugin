@@ -120,6 +120,8 @@ intellijPlatform {
 changelog {
     groups.empty()
     repositoryUrl = providers.gradleProperty("pluginRepositoryUrl")
+    // supports 4 layers deep with an optional appending label
+    headerParserRegex = """(\d+(?:\.\d+)+(?:-[a-zA-Z0-9]+)?)""".toRegex()
 }
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
