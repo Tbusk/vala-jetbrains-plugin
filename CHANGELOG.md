@@ -8,6 +8,12 @@
 
 - Added support for 2025.3 IDE versions
 
+## [1.2.6-alpha]
+
+### What's Changed
+
+- Added support for 2025.3 IDE versions
+
 ## [1.2.5.1-ALPHA]
 
 ### What's Changed
