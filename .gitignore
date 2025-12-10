@@ -1,8 +1,12 @@
-.gradle
-.idea
-.intellijPlatform
-.qodana
-build
+# https://git-scm.com/docs/gitignore
+/.gradle
+/.idea
+/.intellijPlatform
+/.qodana
+/.claude
+/.run
+/.vscode
+/build
 bin
 vala_repo
 *_repo
