@@ -29,7 +29,7 @@ Generated:
 
 Configuration:
   - changed-files:
-      - any-glob-to-any-file: [ 'gradle.properties', 'build.gradle.kts', '.gitignore', 'settings.gradle.kts', '.github/labeler.yml', '.github/dependabot.yml' ]
+      - any-glob-to-any-file: [ 'gradle.properties', 'build.gradle', '.gitignore', 'settings.gradle', '.github/labeler.yml', '.github/dependabot.yml', 'MarketplaceDescription.md' ]
 
 Syntax:
   - changed-files:
