@@ -1,0 +1,118 @@
+import org.jetbrains.changelog.Changelog
+import org.jetbrains.changelog.ExtensionsKt
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
+plugins {
+    id 'java'
+    // versions specified in gradle/libs.versions.toml
+    alias(libs.plugins.intelliJPlatform)
+    alias(libs.plugins.changelog)
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    intellijPlatform {
+        defaultRepositories()
+    }
+}
+
+dependencies {
+    testImplementation libs.junit
+    testImplementation libs.opentest4j
+    compileOnly 'org.jetbrains:grammar-kit:2023.3'
+
+    intellijPlatform {
+        create(providers.gradleProperty('platformType'), providers.gradleProperty('platformVersion'))
+
+        bundledPlugins(providers.gradleProperty('platformBundledPlugins').map { it.split(',').toList() })
+
+        plugins(providers.gradleProperty('platformPlugins').map { it.split(',').toList() })
+
+        testFramework(TestFrameworkType.Platform.INSTANCE)
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// Parser/Lexer files generate to this src dir
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/gen'
+        }
+    }
+}
+
+group = providers.gradleProperty("pluginGroup").get()
+version = providers.gradleProperty("pluginVersion").get()
+
+def projectChangelog = project.changelog
+def pluginDescription = ExtensionsKt.markdownToHTML(file('MarketplaceDescription.md').text, '\n')
+
+// Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
+intellijPlatform {
+    pluginConfiguration {
+        name = providers.gradleProperty('pluginName')
+        version = providers.gradleProperty('pluginVersion')
+        description = pluginDescription
+
+        changeNotes = providers.gradleProperty('pluginVersion').map { pluginVersion ->
+            projectChangelog.renderItem(
+                (projectChangelog.getOrNull(pluginVersion) ?: projectChangelog.getUnreleased())
+                    .withHeader(false)
+                    .withEmptySections(false),
+                    Changelog.OutputType.HTML
+            )
+        }
+
+        ideaVersion {
+            sinceBuild = providers.gradleProperty('pluginSinceBuild')
+            untilBuild = providers.gradleProperty('pluginUntilBuild')
+        }
+    }
+
+    signing {
+        certificateChain = providers.environmentVariable('CERTIFICATE_CHAIN')
+        privateKey = providers.environmentVariable('PRIVATE_KEY')
+        password = providers.environmentVariable('PRIVATE_KEY_PASSWORD')
+    }
+
+    publishing {
+        token = providers.environmentVariable('PUBLISH_TOKEN')
+        channels = ['default']
+    }
+
+    pluginVerification {
+        ides {
+            recommended()
+        }
+    }
+}
+
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+changelog {
+    groups.empty()
+    repositoryUrl = providers.gradleProperty('pluginRepositoryUrl')
+    // required due to release version 1.2.5.1-ALPHA (SemVer doesn't support this config by default)
+    headerParserRegex = ~/(\d+(?:\.\d+)+(?:-[a-zA-Z0-9]+)?)/
+}
+
+tasks {
+    wrapper {
+        gradleVersion = providers.gradleProperty('gradleVersion').get()
+    }
+
+    publishPlugin {
+        dependsOn(patchChangelog)
+    }
+}
+
+intellijPlatformTesting {
+    runIde {
+    }
+}

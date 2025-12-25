@@ -1,5 +1,3 @@
-<!-- Plugin description -->
-
 Vala language support for JetBrains IDEs.
 
 This plugin provides syntax highlighting, code completion, integrated documentation, and other features for development with the Vala programming language.
@@ -13,5 +11,3 @@ A Language Server Protocol (LSP) is used to provide many features, including doc
 The supported LSP is required to be installed separately for now. More details for the LSP are available [here](https://github.com/Tbusk/vala-jetbrains-plugin/blob/main/docs/LanguageServer.md).
 
 If you want to support this project or encounter any problems, please consider opening issues (features requests, bug fixes, etc.) or pull requests on our GitHub repository [here](https://github.com/Tbusk/vala-jetbrains-plugin).
-
-<!-- Plugin description end -->
