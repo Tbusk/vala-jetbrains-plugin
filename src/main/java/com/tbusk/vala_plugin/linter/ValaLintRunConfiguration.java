@@ -18,11 +18,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 public class ValaLintRunConfiguration extends RunConfigurationBase<ValaLintRunConfigurationOptions> {
 
@@ -93,7 +91,12 @@ public class ValaLintRunConfiguration extends RunConfigurationBase<ValaLintRunCo
             String globPatterns = options.getCustomGlobPattern();
 
             if (globPatterns != null && !globPatterns.trim().isEmpty()) {
-                commandLine.addParameter(globPatterns);
+
+                String[] paths = globPatterns.trim().split(" ");
+
+                for (String path : paths) {
+                    commandLine.addParameter(path.trim());
+                }
             }
         }
     }
@@ -114,9 +117,11 @@ public class ValaLintRunConfiguration extends RunConfigurationBase<ValaLintRunCo
         String configPath = options.getConfigFilePath();
 
         if (configPath != null && !configPath.trim().isEmpty()) {
-            String resolvedPath = Path.of(Objects.requireNonNull(project.getBasePath()), configPath).toString();
             commandLine.addParameter(ValaLintCommands.CONFIG_FILE_FLAG);
-            commandLine.addParameter(getRelativePath(resolvedPath, project));
+
+            String resolvedPath = getRelativePath(configPath, project);
+
+            commandLine.addParameter(resolvedPath);
         }
     }
 
