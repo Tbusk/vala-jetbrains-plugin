@@ -1,4 +1,4 @@
-package com.tbusk.vala_plugin.linter;
+package com.tbusk.vala_plugin.linter.run_config;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
@@ -14,6 +14,7 @@ import com.intellij.openapi.vcs.changes.ChangeListManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.tbusk.vala_plugin.linter.ValaLintCommands;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

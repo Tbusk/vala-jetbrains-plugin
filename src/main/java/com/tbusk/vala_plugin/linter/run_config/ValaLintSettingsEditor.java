@@ -1,4 +1,4 @@
-package com.tbusk.vala_plugin.linter;
+package com.tbusk.vala_plugin.linter.run_config;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;

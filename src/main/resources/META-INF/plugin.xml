@@ -123,8 +123,11 @@
         <annotator language="Vala"
                    implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator"/>
 
+        <externalAnnotator language="Vala"
+                           implementationClass="com.tbusk.vala_plugin.linter.highlighting.ValaLintExternalAnnotator"/>
+
         <configurationType
-                implementation="com.tbusk.vala_plugin.linter.ValaLintRunConfigurationType"/>
+                implementation="com.tbusk.vala_plugin.linter.run_config.ValaLintRunConfigurationType"/>
 
     </extensions>
 
