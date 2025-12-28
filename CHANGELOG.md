@@ -6,6 +6,12 @@
 
 ### What's Changed
 
+- Added support for vala-lint linter via run configuration 
+
+## [1.2.6]
+
+### What's Changed
+
 - Added support for 2025.3 IDE versions
 
 ## [1.2.6-alpha]
