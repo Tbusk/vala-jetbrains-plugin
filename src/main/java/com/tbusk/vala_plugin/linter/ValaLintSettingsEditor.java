@@ -29,9 +29,9 @@ public class ValaLintSettingsEditor extends SettingsEditor<ValaLintRunConfigurat
 
     public ValaLintSettingsEditor() {
 
-        lintEverythingRadioBtn = new JRadioButton("Lint Everything");
-        changesOnlyRadioBtn = new JRadioButton("Changes Only");
-        specificFilesRadioBtn = new JRadioButton("Specific Files");
+        lintEverythingRadioBtn = new JRadioButton("All vala/vapi files in project");
+        changesOnlyRadioBtn = new JRadioButton("Uncommitted changes");
+        specificFilesRadioBtn = new JRadioButton("Patterns (glob)");
 
         ButtonGroup lintingModeBtnGroup = new ButtonGroup();
         lintingModeBtnGroup.add(lintEverythingRadioBtn);
@@ -40,7 +40,7 @@ public class ValaLintSettingsEditor extends SettingsEditor<ValaLintRunConfigurat
 
         lintEverythingRadioBtn.setSelected(true);
 
-        globPatternLabel = new JLabel("Glob Pattern:");
+        globPatternLabel = new JLabel("Pattern(s):");
         globPatternField = new JTextField();
         globPatternField.setEnabled(false);
 
