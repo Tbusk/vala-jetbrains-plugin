@@ -56,7 +56,7 @@ _Windows (via MSYS2)_: `pacman -S mingw-w64-x86_64-vala-language-server`
 ### Windows
 The easiest way to configure the language server on Windows is to locate the path to the `vala-language-server` executable
 and set the `PATH` environment variable in your settings.
-If you do this, then you can use `language-server-protocol` instead of having to specify the path to it.
+If you do this, then you can use `vala-language-server` instead of having to specify the path to it.
 
 **Note**: developing with Windows does require you to manually install each dependency used in a project, which needs to be
 satisfied for the language server to work properly.
@@ -64,13 +64,13 @@ satisfied for the language server to work properly.
 ### Linux
 The default path for the language server is `/usr/bin/vala-language-server`.
 
-You also should be able to get away with using `language-server-protocol` as the path instead assuming you can run it 
+You also should be able to get away with using `vala-language-server` as the path instead assuming you can run it 
 in your terminal with that command.
 
 ### macOS
 The default path for the language server is `/usr/local/bin/vala-language-server`.
 
-You also should be able to get away with using `language-server-protocol` as the path instead assuming you can run it
+You also should be able to get away with using `vala-language-server` as the path instead assuming you can run it
 in your terminal with that command.  
 
 ## Development
