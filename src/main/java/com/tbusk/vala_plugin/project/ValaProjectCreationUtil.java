@@ -47,6 +47,8 @@ public final class ValaProjectCreationUtil {
         VirtualFile gitIgnore = createGitIgnoreFile(templateManager, projectFile);
         VirtualFile editorConfig = createEditorConfigFile(templateManager, projectFile);
         VirtualFile readme = createReadmeFile(templateManager, projectFile, module);
+        VirtualFile valaLintConfig = createValaLintConfigFile(templateManager, projectFile);
+        VirtualFile valaLintIgnore = createValaLintIgnoreFile(templateManager, projectFile);
     }
 
     public VirtualFile createSourceDirectory(VirtualFile projectFile, Module module) throws IOException {
@@ -121,6 +123,24 @@ public final class ValaProjectCreationUtil {
         gitIgnoreFile.setBinaryContent(gitIgnoreTemplate.getText().getBytes(StandardCharsets.UTF_8));
 
         return gitIgnoreFile;
+    }
+
+    public VirtualFile createValaLintConfigFile(FileTemplateManager templateManager, VirtualFile projectFile) throws IOException {
+        FileTemplate valaLintConfigTemplate = templateManager.getJ2eeTemplate("ValaLintConfig");
+
+        VirtualFile valaLintConfigFile = projectFile.createChildData(this, "vala-lint.conf");
+        valaLintConfigFile.setBinaryContent(valaLintConfigTemplate.getText().getBytes(StandardCharsets.UTF_8));
+
+        return valaLintConfigFile;
+    }
+
+    public VirtualFile createValaLintIgnoreFile(FileTemplateManager templateManager, VirtualFile projectFile) throws IOException {
+        FileTemplate valaLintIgnoreTemplate = templateManager.getJ2eeTemplate("ValaLintIgnore");
+
+        VirtualFile valaLintIgnoreFile = projectFile.createChildData(this, ".valalintignore");
+        valaLintIgnoreFile.setBinaryContent(valaLintIgnoreTemplate.getText().getBytes(StandardCharsets.UTF_8));
+
+        return valaLintIgnoreFile;
     }
 
 }
