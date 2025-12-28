@@ -74,7 +74,7 @@
 - [ ] Meson support (syntax highlighting, validation)
     - [x] CLion
     - [ ] Others
-- [ ] Linter support
+- [x] Linter support
 - [ ] Documentation
     - [ ] LSP
     - [ ] Formatter/editorconfig
