@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSSwitchboardParserTest extends BasePlatformTestCase {
 
     public void testEOSSwitchboardRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/switchboard/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/settings/archive/refs/tags/8.0.3.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

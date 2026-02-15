@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSMailParserTest extends BasePlatformTestCase {
 
     public void testEOSMailRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/mail/archive/refs/heads/master.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/mail/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

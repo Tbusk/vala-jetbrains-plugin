@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSGraniteParserTest extends BasePlatformTestCase {
 
     public void testEOSGraniteRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/granite/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/granite/archive/refs/tags/7.8.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

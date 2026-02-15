@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSWingpanelParserTest extends BasePlatformTestCase {
 
     public void testEOSWingpanelRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/wingpanel/archive/refs/heads/master.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/wingpanel/archive/refs/tags/8.0.4.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(

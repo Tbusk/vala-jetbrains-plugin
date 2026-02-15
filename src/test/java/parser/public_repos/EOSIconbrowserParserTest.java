@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSIconbrowserParserTest extends BasePlatformTestCase {
 
     public void testEOSIconbrowserRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/iconbrowser/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/iconbrowser/archive/refs/tags/8.1.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

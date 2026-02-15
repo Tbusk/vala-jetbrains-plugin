@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSCalendarParserTest extends BasePlatformTestCase {
 
     public void testEOSCalendarRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/calendar/archive/refs/heads/master.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/calendar/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(

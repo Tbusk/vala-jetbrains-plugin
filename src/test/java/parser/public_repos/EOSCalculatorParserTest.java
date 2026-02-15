@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSCalculatorParserTest extends BasePlatformTestCase {
 
     public void testEOSCalculatorRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/calculator/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/calculator/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

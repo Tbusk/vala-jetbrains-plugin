@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSSettingsDaemonParserTest extends BasePlatformTestCase {
 
     public void testEOSSettingsDaemonRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/settings-daemon/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/settings-daemon/archive/refs/tags/8.5.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(

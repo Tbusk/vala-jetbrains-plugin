@@ -11,7 +11,7 @@ import java.util.Set;
 public class ValaLanguageServerParserTest extends BasePlatformTestCase {
 
     public void testValaLanguageServerRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/vala-lang/vala-language-server/archive/refs/heads/master.zip";
+        final String repositoryZipUrl = "https://github.com/vala-lang/vala-language-server/archive/refs/tags/0.48.7.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(

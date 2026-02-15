@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSGreeterParserTest extends BasePlatformTestCase {
 
     public void testEOSGreeterRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/greeter/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/greeter/archive/refs/tags/8.1.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(

@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSQuickSettingsParserTest extends BasePlatformTestCase {
 
     public void testEOSQuickSettingsRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/quick-settings/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/quick-settings/archive/refs/tags/1.4.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

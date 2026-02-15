@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSInitialSetupParserTest extends BasePlatformTestCase {
 
     public void testEOSInitialSetupRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/initial-setup/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/initial-setup/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()
