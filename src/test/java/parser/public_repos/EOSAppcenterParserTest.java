@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class EOSAppcenterParserTest extends BasePlatformTestCase {
     public void testEOSAppcenterRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/appcenter/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/appcenter/archive/refs/tags/8.3.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

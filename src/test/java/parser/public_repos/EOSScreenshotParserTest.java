@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSScreenshotParserTest extends BasePlatformTestCase {
 
     public void testEOSScreenshotRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/screenshot/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/screenshot/archive/refs/tags/8.0.4.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

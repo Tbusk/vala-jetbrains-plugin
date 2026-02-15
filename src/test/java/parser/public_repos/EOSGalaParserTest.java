@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSGalaParserTest extends BasePlatformTestCase {
 
     public void testEOSGalaRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/gala/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/gala/archive/refs/tags/8.4.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(

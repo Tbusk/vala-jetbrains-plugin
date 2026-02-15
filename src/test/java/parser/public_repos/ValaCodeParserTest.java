@@ -11,7 +11,7 @@ import java.util.Set;
 public class ValaCodeParserTest extends BasePlatformTestCase {
 
     public void testValaRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://gitlab.gnome.org/GNOME/vala/-/archive/main/vala-main.zip";
+        final String repositoryZipUrl = "https://gitlab.gnome.org/GNOME/vala/-/archive/0.56.18/vala-0.56.18.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of(
