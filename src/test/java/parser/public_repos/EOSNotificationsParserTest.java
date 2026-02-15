@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSNotificationsParserTest extends BasePlatformTestCase {
 
     public void testEOSNotificationsRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/notifications/archive/refs/heads/master.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/notifications/archive/refs/tags/8.1.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

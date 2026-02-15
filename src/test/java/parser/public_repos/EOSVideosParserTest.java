@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSVideosParserTest extends BasePlatformTestCase {
 
     public void testEOSVideosRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/videos/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/videos/archive/refs/tags/8.0.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()

@@ -11,7 +11,7 @@ import java.util.Set;
 public class EOSCameraParserTest extends BasePlatformTestCase {
 
     public void testEOSCameraRepoParsing() throws CompressorException, IOException {
-        final String repositoryZipUrl = "https://github.com/elementary/camera/archive/refs/heads/main.zip";
+        final String repositoryZipUrl = "https://github.com/elementary/camera/archive/refs/tags/8.0.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
                 Set.of()
