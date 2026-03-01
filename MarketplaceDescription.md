@@ -8,6 +8,6 @@ This currently is in an early stage of development. Most luxuries of JetBrain ID
 
 A Language Server Protocol (LSP) is used to provide many features, including documentation, code completion, syntax checking, etc.
 
-The supported LSP is required to be installed separately for now. More details for the LSP are available [here](https://github.com/Tbusk/vala-jetbrains-plugin/blob/main/docs/LanguageServer.md).
+The supported LSP is required to be installed separately for now. More details for the LSP are available [here](https://github.com/vala-lang/vala-jetbrains/blob/main/docs/LanguageServer.md).
 
-If you want to support this project or encounter any problems, please consider opening issues (features requests, bug fixes, etc.) or pull requests on our GitHub repository [here](https://github.com/Tbusk/vala-jetbrains-plugin).
+If you want to support this project or encounter any problems, please consider opening issues (features requests, bug fixes, etc.) or pull requests on our GitHub repository [here](https://github.com/vala-lang/vala-jetbrains).

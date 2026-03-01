@@ -1,6 +1,6 @@
 # Vala Language for JetBrains IDEs
 
-![Build](https://github.com/Tbusk/vala-jetbrains-plugin/workflows/Build/badge.svg)
+![Build](https://github.com/vala-lang/vala-jetbrains/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/27464-vala-language.svg)](https://plugins.jetbrains.com/plugin/27464-vala-language)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/27464-vala-language.svg)](https://plugins.jetbrains.com/plugin/27464-vala-language)
 
@@ -9,7 +9,7 @@ This plugin provides syntax highlighting, code completion, integrated documentat
 Most luxuries of JetBrain IDEs are not implemented yet or are limited.
 
 A Language Server Protocol (LSP) is used to provide many features, including documentation, code completion, syntax checking, etc.
-The supported LSP is required to be installed separately for now. More details for the LSP are available [here](https://github.com/Tbusk/vala-jetbrains-plugin/blob/main/docs/LanguageServer.md).
+The supported LSP is required to be installed separately for now. More details for the LSP are available [here](./docs/LanguageServer.md).
 
 > [!NOTE]
 > The IDE most compatible currently is CLion because Meson is supported. 
@@ -32,7 +32,7 @@ The supported LSP is required to be installed separately for now. More details f
 
 - Manually:
 
-  Download the [latest release](https://github.com/Tbusk/vala-jetbrains-plugin/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/vala-lang/vala-jetbrains/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 ## Screenshots
