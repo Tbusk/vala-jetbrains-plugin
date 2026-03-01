@@ -1,6 +1,6 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# vala-jetbrains-plugin Changelog
+# Plugin Changelog
 
 ## [Unreleased]
 
