@@ -11,18 +11,18 @@ JFlex: https://jflex.de/
 
 In order to add and modify tokens, a few steps are necessary.
 
-1. Open `src/main/java/com/tbusk/vala_plugin/syntax/Vala.bnf`. This file is necessary for defining tokens is where the
+1. Open `src/main/java/dev/vala/vala_plugin/syntax/Vala.bnf`. This file is necessary for defining tokens is where the
    grammar is defined.
 2. Right-click the `Vala.bnf` file and select `Generate Parser Code`. This will generate the necessary parser code files
    in `src/main/gen/`.
-3. Open `src/main/java/com/tbusk/vala_plugin/ValaTokenSets.java` and add the keyword/token (if applicable) to
+3. Open `src/main/java/dev/vala/vala_plugin/ValaTokenSets.java` and add the keyword/token (if applicable) to
    `KEYWORDS`, or whichever is applicable, if any.
 4. If it is a new type, then you'll need to define the type in
-   `src/main/java/com/tbusk/vala_plugin/highlighting/ValaSyntaxHighlighter.java`.
+   `src/main/java/dev/vala/vala_plugin/highlighting/ValaSyntaxHighlighter.java`.
 5. If it is a type not already defined, it may be helpful to add it to
-   `src/main/java/com/tbusk/vala_plugin/highlighting/ValaColorSettingsPage.java` to allow changing the colors in the
+   `src/main/java/dev/vala/vala_plugin/highlighting/ValaColorSettingsPage.java` to allow changing the colors in the
    settings for the token.
-6. Open `src/main/java/com/tbusk/vala_plugin/syntax/Vala.flex` and add the keyword/token there.
+6. Open `src/main/java/dev/vala/vala_plugin/syntax/Vala.flex` and add the keyword/token there.
 7. Right-click the `Vala.flex` file and select `Run JFlex Generator`. This will generate the necessary lexer code files
    in `src/main/gen/`.
 8. For more specific syntax highlighting and checks that aren't easy to do in a parser/lexer, you can make a new
