@@ -20,7 +20,7 @@ repositories {
 dependencies {
     testImplementation libs.junit
     testImplementation libs.opentest4j
-    compileOnly 'org.jetbrains:grammar-kit:2023.3'
+    compileOnly 'org.jetbrains:grammar-kit:2023.3.1'
 
     intellijPlatform {
         create(providers.gradleProperty('platformType'), providers.gradleProperty('platformVersion'))
