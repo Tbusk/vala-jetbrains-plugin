@@ -15,7 +15,7 @@ public class ValaElementFactory {
     private static ValaFile createFile(Project project, String text) {
         String name = "dummy.vala";
         return (ValaFile) PsiFileFactory
-                .getInstance(project)
-                .createFileFromText(name, ValaFileType.INSTANCE, text);
+            .getInstance(project)
+            .createFileFromText(name, ValaFileType.INSTANCE, text);
     }
 }

@@ -14,9 +14,9 @@ public class EOSSettingsDaemonParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/settings-daemon/archive/refs/tags/8.5.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "Application.vala" // will be fixed with preprocessor support
-                )
+            Set.of(
+                "Application.vala" // will be fixed with preprocessor support
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_settings_daemon", 0, errorsToIgnore);

@@ -57,8 +57,8 @@ public class ValaCreateFileAction extends CreateFileFromTemplateAction {
     @Override
     protected void buildDialog(@NotNull Project project, @NotNull PsiDirectory psiDirectory, CreateFileFromTemplateDialog.@NotNull Builder builder) {
         builder.setTitle("New Vala File")
-                .addKind("Vala file", ValaIcons.FILE, VALA_FILE_TEMPLATE)
-                .setValidator(getInputValidator())
+            .addKind("Vala file", ValaIcons.FILE, VALA_FILE_TEMPLATE)
+            .setValidator(getInputValidator())
         ;
     }
 

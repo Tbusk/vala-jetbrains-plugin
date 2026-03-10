@@ -38,16 +38,16 @@ public class ValaLanguageCodeStyleSettingsProvider extends LanguageCodeStyleSett
 
         if (settingsType == SettingsType.SPACING_SETTINGS) {
             consumer.showStandardOptions(
-                    "SPACE_BEFORE_METHOD_CALL_PARENTHESES",
-                    "SPACE_BEFORE_METHOD_PARENTHESES",
-                    "SPACE_BEFORE_IF_PARENTHESES",
-                    "SPACE_BEFORE_FOR_PARENTHESES",
-                    "SPACE_BEFORE_WHILE_PARENTHESES",
-                    "SPACE_BEFORE_SWITCH_PARENTHESES",
-                    "SPACE_BEFORE_TRY_PARENTHESES",
-                    "SPACE_BEFORE_CATCH_PARENTHESES",
-                    "SPACE_BEFORE_COMMA",
-                    "SPACE_AFTER_COMMA"
+                "SPACE_BEFORE_METHOD_CALL_PARENTHESES",
+                "SPACE_BEFORE_METHOD_PARENTHESES",
+                "SPACE_BEFORE_IF_PARENTHESES",
+                "SPACE_BEFORE_FOR_PARENTHESES",
+                "SPACE_BEFORE_WHILE_PARENTHESES",
+                "SPACE_BEFORE_SWITCH_PARENTHESES",
+                "SPACE_BEFORE_TRY_PARENTHESES",
+                "SPACE_BEFORE_CATCH_PARENTHESES",
+                "SPACE_BEFORE_COMMA",
+                "SPACE_AFTER_COMMA"
             );
 
             // Space Before Left Brace Options

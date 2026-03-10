@@ -52,23 +52,23 @@ public class ValaLintSettingsEditor extends SettingsEditor<ValaLintRunConfigurat
 
         configFileField = new TextFieldWithBrowseButton();
         FileChooserDescriptor confFileDescriptor = FileChooserDescriptorFactory.createSingleFileDescriptor("conf")
-                .withTitle("Select Vala-Lint Config File");
+            .withTitle("Select Vala-Lint Config File");
         configFileField.addBrowseFolderListener(null, confFileDescriptor);
 
         autoFixCheckbox = new JCheckBox("Auto-fix where possible");
         autoConfigAddCheckbox = new JCheckBox("Detect and use available lint config");
 
         settingsPanel = FormBuilder.createFormBuilder()
-                .addComponent(new TitledSeparator("Linting Mode"))
-                .addComponent(lintEverythingRadioBtn)
-                .addComponent(changesOnlyRadioBtn)
-                .addComponent(specificFilesRadioBtn)
-                .addLabeledComponent(globPatternLabel, globPatternField)
-                .addComponent(new TitledSeparator("Configuration"))
-                .addLabeledComponent("Config file:", configFileField)
-                .addComponent(autoConfigAddCheckbox)
-                .addComponent(autoFixCheckbox)
-                .getPanel();
+            .addComponent(new TitledSeparator("Linting Mode"))
+            .addComponent(lintEverythingRadioBtn)
+            .addComponent(changesOnlyRadioBtn)
+            .addComponent(specificFilesRadioBtn)
+            .addLabeledComponent(globPatternLabel, globPatternField)
+            .addComponent(new TitledSeparator("Configuration"))
+            .addLabeledComponent("Config file:", configFileField)
+            .addComponent(autoConfigAddCheckbox)
+            .addComponent(autoFixCheckbox)
+            .getPanel();
     }
 
     @Override

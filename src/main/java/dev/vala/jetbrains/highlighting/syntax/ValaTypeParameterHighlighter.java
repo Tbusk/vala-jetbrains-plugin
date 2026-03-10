@@ -33,9 +33,9 @@ public final class ValaTypeParameterHighlighter implements ValaHighlighter {
             for (ASTNode identifierNode : identifierNodes) {
 
                 annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(identifierNode.getTextRange())
-                        .textAttributes(DefaultLanguageHighlighterColors.CLASS_NAME)
-                        .create();
+                    .range(identifierNode.getTextRange())
+                    .textAttributes(DefaultLanguageHighlighterColors.CLASS_NAME)
+                    .create();
             }
         }
     }

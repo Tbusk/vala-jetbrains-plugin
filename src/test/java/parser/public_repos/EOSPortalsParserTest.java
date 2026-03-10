@@ -14,7 +14,7 @@ public class EOSPortalsParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/portals/archive/refs/tags/8.1.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_portals", 0, errorsToIgnore);

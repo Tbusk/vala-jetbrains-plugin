@@ -14,7 +14,7 @@ public class EOSMapsParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/maps/archive/refs/tags/8.1.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_maps", 0, errorsToIgnore);

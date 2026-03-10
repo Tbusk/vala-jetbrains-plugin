@@ -38,9 +38,9 @@ public final class ValaObjectCreationHighlighter implements ValaHighlighter {
 
                 if (identifierNode != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.PARAMETER)
-                            .create();
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(ValaTextAttributeKey.PARAMETER)
+                        .create();
                 }
             }
         }

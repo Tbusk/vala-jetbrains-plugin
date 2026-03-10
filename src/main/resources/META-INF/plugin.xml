@@ -6,7 +6,7 @@
         Vala Community
     </vendor>
 
-    <depends>com.intellij.modules.platform </depends>
+    <depends>com.intellij.modules.platform</depends>
     <depends>com.redhat.devtools.lsp4ij</depends>
 
     <extensions defaultExtensionNs="com.redhat.devtools.lsp4ij">
@@ -38,20 +38,20 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType
-                name="Vala File"
-                implementationClass="dev.vala.jetbrains.language.ValaFileType"
-                fieldName="INSTANCE"
-                language="Vala"
-                extensions="vala;vapi;in"/>
+            name="Vala File"
+            implementationClass="dev.vala.jetbrains.language.ValaFileType"
+            fieldName="INSTANCE"
+            language="Vala"
+            extensions="vala;vapi;in"/>
         <internalFileTemplate id="empty_vala_file" name="Vala_File"/>
 
         <lang.parserDefinition
-                language="Vala"
-                implementationClass="dev.vala.jetbrains.ValaParserDefinition"/>
+            language="Vala"
+            implementationClass="dev.vala.jetbrains.ValaParserDefinition"/>
 
         <lang.syntaxHighlighterFactory
-                language="Vala"
-                implementationClass="dev.vala.jetbrains.highlighting.ValaSyntaxHighlighterFactory"/>
+            language="Vala"
+            implementationClass="dev.vala.jetbrains.highlighting.ValaSyntaxHighlighterFactory"/>
 
         <lang.foldingBuilder language="Vala"
                              implementationClass="com.redhat.devtools.lsp4ij.features.foldingRange.LSPFoldingRangeBuilder"
@@ -68,66 +68,66 @@
         <colorSettingsPage implementation="dev.vala.jetbrains.highlighting.ValaColorSettingsPage"/>
 
         <applicationService
-            serviceImplementation="dev.vala.jetbrains.settings.PluginSettings" />
+            serviceImplementation="dev.vala.jetbrains.settings.PluginSettings"/>
 
         <applicationConfigurable
             parentId="tools"
             instance="dev.vala.jetbrains.settings.PluginSettingsConfigurable"
             id="dev.vala.jetbrains.settings.PluginSettingsConfigurable"
-            displayName="Vala Plugin Settings" />
+            displayName="Vala Plugin Settings"/>
 
         <lang.commenter language="Vala"
                         implementationClass="dev.vala.jetbrains.comment_out.ValaCommenter"/>
 
         <directoryProjectGenerator
-                implementation="dev.vala.jetbrains.project.ValaNonJavaEmptyProjectWizard"
-                id="VALA_EMPTY_NON_JAVA"
-                order="first"/>
+            implementation="dev.vala.jetbrains.project.ValaNonJavaEmptyProjectWizard"
+            id="VALA_EMPTY_NON_JAVA"
+            order="first"/>
 
         <directoryProjectGenerator
-                implementation="dev.vala.jetbrains.project.ValaNonJavaMesonProjectWizard"
-                id="VALA_EMPTY_MESON_NON_JAVA"
-                order="after VALA_EMPTY_NON_JAVA"/>
+            implementation="dev.vala.jetbrains.project.ValaNonJavaMesonProjectWizard"
+            id="VALA_EMPTY_MESON_NON_JAVA"
+            order="after VALA_EMPTY_NON_JAVA"/>
 
         <newProjectWizard.languageGenerator
-                implementation="dev.vala.jetbrains.project.ValaLanguageGeneratorNewProjectWizard"
-                id="VALA_EMPTY"
-                order="first"
+            implementation="dev.vala.jetbrains.project.ValaLanguageGeneratorNewProjectWizard"
+            id="VALA_EMPTY"
+            order="first"
         />
 
         <newProjectWizard.languageGenerator
-                implementation="dev.vala.jetbrains.project.ValaLanguageGeneratorNewMesonProjectWizard"
-                id="VALA_EMPTY_MESON"
-                order="after VALA_EMPTY"
+            implementation="dev.vala.jetbrains.project.ValaLanguageGeneratorNewMesonProjectWizard"
+            id="VALA_EMPTY_MESON"
+            order="after VALA_EMPTY"
         />
 
         <fileIndentOptionsProvider
-                implementation="dev.vala.jetbrains.code_style.ValaFileTypeIndentOptionsProvider"/>
+            implementation="dev.vala.jetbrains.code_style.ValaFileTypeIndentOptionsProvider"/>
 
         <langCodeStyleSettingsProvider
-                implementation="dev.vala.jetbrains.code_style.ValaLanguageCodeStyleSettingsProvider"/>
+            implementation="dev.vala.jetbrains.code_style.ValaLanguageCodeStyleSettingsProvider"/>
 
         <codeStyleSettingsProvider
-                implementation="dev.vala.jetbrains.code_style.ValaCodeStyleSettingsProvider"/>
+            implementation="dev.vala.jetbrains.code_style.ValaCodeStyleSettingsProvider"/>
 
         <lang.formatter
-                language="Vala"
-                implementationClass="dev.vala.jetbrains.code_style.ValaFormattingModelBuilder"/>
+            language="Vala"
+            implementationClass="dev.vala.jetbrains.code_style.ValaFormattingModelBuilder"/>
 
         <lang.braceMatcher
-                language="Vala"
-                implementationClass="dev.vala.jetbrains.code_style.ValaPairedBraceMatcher"
+            language="Vala"
+            implementationClass="dev.vala.jetbrains.code_style.ValaPairedBraceMatcher"
         />
 
         <annotator language="Vala"
                    implementationClass="dev.vala.jetbrains.highlighting.ValaSyntaxHighlightingAnnotator"/>
 
         <configurationType
-                implementation="dev.vala.jetbrains.linter.ValaLintRunConfigurationType"/>
+            implementation="dev.vala.jetbrains.linter.ValaLintRunConfigurationType"/>
 
     </extensions>
 
-    <actions >
+    <actions>
         <action id="CreateValaFile"
                 class="dev.vala.jetbrains.actions.ValaCreateFileAction"
                 text="Create Vala File"

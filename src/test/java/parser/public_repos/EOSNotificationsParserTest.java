@@ -14,7 +14,7 @@ public class EOSNotificationsParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/notifications/archive/refs/tags/8.1.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_notifications", 0, errorsToIgnore);

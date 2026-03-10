@@ -32,11 +32,11 @@ public class ValaBlock extends AbstractBlock {
         while (child != null) {
             if (child.getElementType() != TokenType.WHITE_SPACE) {
                 Block block = new ValaBlock(
-                        child,
-                        Wrap.createWrap(WrapType.NONE, false),
-                        calculateAlignment(),
-                        calculateChildIndent(child),
-                        spacingBuilder
+                    child,
+                    Wrap.createWrap(WrapType.NONE, false),
+                    calculateAlignment(),
+                    calculateChildIndent(child),
+                    spacingBuilder
                 );
 
                 blocks.add(block);
@@ -67,18 +67,18 @@ public class ValaBlock extends AbstractBlock {
         }
 
         if (parentType == ValaTypes.NAMESPACE_DECLARATION ||
-                parentType == ValaTypes.INTERFACE_DECLARATION ||
-                parentType == ValaTypes.CLASS_DECLARATION ||
-                parentType == ValaTypes.ENUM_DECLARATION ||
-                parentType == ValaTypes.STRUCT_DECLARATION ||
-                parentType == ValaTypes.SIGNAL_DECLARATION ||
-                parentType == ValaTypes.ERRORDOMAIN_DECLARATION ||
-                parentType == ValaTypes.PROPERTY_DECLARATION ||
-                parentType == ValaTypes.INITIALIZER ||
-                parentType == ValaTypes.OBJECT_INITIALIZER ||
-                parentType == ValaTypes.SWITCH_STATEMENT ||
-                parentType == ValaTypes.SWITCH_CASE_STATEMENT ||
-                parentType == ValaTypes.SWITCH_DEFAULT_STATEMENT
+            parentType == ValaTypes.INTERFACE_DECLARATION ||
+            parentType == ValaTypes.CLASS_DECLARATION ||
+            parentType == ValaTypes.ENUM_DECLARATION ||
+            parentType == ValaTypes.STRUCT_DECLARATION ||
+            parentType == ValaTypes.SIGNAL_DECLARATION ||
+            parentType == ValaTypes.ERRORDOMAIN_DECLARATION ||
+            parentType == ValaTypes.PROPERTY_DECLARATION ||
+            parentType == ValaTypes.INITIALIZER ||
+            parentType == ValaTypes.OBJECT_INITIALIZER ||
+            parentType == ValaTypes.SWITCH_STATEMENT ||
+            parentType == ValaTypes.SWITCH_CASE_STATEMENT ||
+            parentType == ValaTypes.SWITCH_DEFAULT_STATEMENT
         ) {
             return new ChildAttributes(Indent.getNormalIndent(), null);
         }
@@ -96,9 +96,9 @@ public class ValaBlock extends AbstractBlock {
         IElementType childType = child.getElementType();
 
         if ((parentType == ValaTypes.CLASS_MEMBER ||
-                parentType == ValaTypes.NAMESPACE_MEMBER ||
-                parentType == ValaTypes.INTERFACE_MEMBER ||
-                parentType == ValaTypes.STRUCT_MEMBER) && (myNode.findChildByType(ValaTypes.ATTRIBUTES) != null || myNode.findChildByType(ValaTypes.ATTRIBUTE) != null)) {
+            parentType == ValaTypes.NAMESPACE_MEMBER ||
+            parentType == ValaTypes.INTERFACE_MEMBER ||
+            parentType == ValaTypes.STRUCT_MEMBER) && (myNode.findChildByType(ValaTypes.ATTRIBUTES) != null || myNode.findChildByType(ValaTypes.ATTRIBUTE) != null)) {
             return Indent.getNoneIndent();
         }
 
@@ -135,11 +135,11 @@ public class ValaBlock extends AbstractBlock {
         }
 
         if (parentType == ValaTypes.ENUM_DECLARATION &&
-                (
-                        childType == ValaTypes.METHOD_DECLARATION ||
-                                childType == ValaTypes.ENUMVALUES ||
-                                childType == ValaTypes.CONSTANT_DECLARATION
-                )) {
+            (
+                childType == ValaTypes.METHOD_DECLARATION ||
+                    childType == ValaTypes.ENUMVALUES ||
+                    childType == ValaTypes.CONSTANT_DECLARATION
+            )) {
             return Indent.getNormalIndent();
         }
 
@@ -164,12 +164,12 @@ public class ValaBlock extends AbstractBlock {
         }
 
         if ((parentType == ValaTypes.LOCAL_VARIABLE) &&
-                (childType == ValaTypes.EXPRESSION)) {
+            (childType == ValaTypes.EXPRESSION)) {
             return Indent.getContinuationIndent();
         }
 
         if (parentType == ValaTypes.SWITCH_STATEMENT &&
-                (childType == ValaTypes.SWITCH_SECTION)) {
+            (childType == ValaTypes.SWITCH_SECTION)) {
             return Indent.getNormalIndent();
         }
 

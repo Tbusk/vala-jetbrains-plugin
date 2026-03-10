@@ -14,10 +14,10 @@ public class EOSCodeParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/code/archive/refs/tags/8.1.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "spell.vala", // will be fixed with preprocessor support
-                        "file-item.vala" // will be fixed with introspection of template strings
-                )
+            Set.of(
+                "spell.vala", // will be fixed with preprocessor support
+                "file-item.vala" // will be fixed with introspection of template strings
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_code", 0, errorsToIgnore);

@@ -14,16 +14,16 @@ public class ValaCodeParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://gitlab.gnome.org/GNOME/vala/-/archive/0.56.18/vala-0.56.18.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "delegate_only.vala",
-                        "arrays.vala",
-                        "empty-length-0.vala",
-                        "enum_only.vala",
-                        "struct_only.vala",
-                        "glib-2.0.vapi",
-                        "regex.vala",
-                        "bug761267-2.vala"
-                )
+            Set.of(
+                "delegate_only.vala",
+                "arrays.vala",
+                "empty-length-0.vala",
+                "enum_only.vala",
+                "struct_only.vala",
+                "glib-2.0.vapi",
+                "regex.vala",
+                "bug761267-2.vala"
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "vala", 0, errorsToIgnore);

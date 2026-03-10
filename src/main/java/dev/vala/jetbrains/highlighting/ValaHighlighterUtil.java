@@ -25,9 +25,9 @@ public final class ValaHighlighterUtil {
         if (identifierNode != null) {
 
             annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(identifierNode.getTextRange())
-                    .textAttributes(textAttributesKey)
-                    .create();
+                .range(identifierNode.getTextRange())
+                .textAttributes(textAttributesKey)
+                .create();
         }
     }
 
@@ -43,9 +43,9 @@ public final class ValaHighlighterUtil {
 
                 if (identifierNode != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(textAttributesKey)
-                            .create();
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(textAttributesKey)
+                        .create();
                 }
             }
         }
@@ -63,9 +63,9 @@ public final class ValaHighlighterUtil {
 
                 if (identifierNode != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(textAttributesKey)
-                            .create();
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(textAttributesKey)
+                        .create();
                 }
             }
         }

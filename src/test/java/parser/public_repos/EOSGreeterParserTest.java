@@ -14,12 +14,12 @@ public class EOSGreeterParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/greeter/archive/refs/tags/8.1.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "WindowManager.vala", // will fix with preprocessor support
-                        "mutter-clutter.vapi", // will fix with preprocessor support
-                        "mutter-cogl-14.vapi", // will fix with preprocessor support
-                        "libmutter.vapi" // will fix with preprocessor support
-                )
+            Set.of(
+                "WindowManager.vala", // will fix with preprocessor support
+                "mutter-clutter.vapi", // will fix with preprocessor support
+                "mutter-cogl-14.vapi", // will fix with preprocessor support
+                "libmutter.vapi" // will fix with preprocessor support
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_greeter", 0, errorsToIgnore);

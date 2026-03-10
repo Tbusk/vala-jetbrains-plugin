@@ -14,7 +14,7 @@ public class EOSGraniteParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/granite/archive/refs/tags/7.8.0.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_granite", 0, errorsToIgnore);

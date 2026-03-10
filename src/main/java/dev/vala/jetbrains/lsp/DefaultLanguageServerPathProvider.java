@@ -46,7 +46,7 @@ public final class DefaultLanguageServerPathProvider {
     public String getCommandLineOSConfiguration() {
         String osNameLowercase = System.getProperty("os.name").toLowerCase();
 
-        if(osNameLowercase.contains("windows")) {
+        if (osNameLowercase.contains("windows")) {
             return DEFAULT_WINDOWS_COMMAND_PATH;
         } else if (osNameLowercase.contains("mac")) {
             return DEFAULT_MAC_COMMAND_PATH;

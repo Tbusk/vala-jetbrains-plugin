@@ -13,57 +13,57 @@ public final class ValaSyntaxHighlightingAnnotator implements Annotator {
 
     public static final Map<String, Set<ValaElementScope>> SCOPE_MAP = new HashMap<>();
     public static final List<ValaHighlighter> SYNTAX_HIGHLIGHTERS = Collections.synchronizedList(List.of(
-            ValaParameterHighlighter.getInstance(),
-            ValaMethodDeclarationHighlighter.getInstance(),
-            ValaSignalDeclarationHighlighter.getInstance(),
-            ValaInterfaceDeclarationHighlighter.getInstance(),
-            ValaLocalVariableDeclarationHighlighter.getInstance(),
-            ValaConstantDeclarationHighlighter.getInstance(),
-            ValaAttributeHighlighter.getInstance(),
-            ValaAttributeArgumentHighlighter.getInstance(),
-            ValaTypeHighlighter.getInstance(),
-            ValaObjectCreationHighlighter.getInstance(),
-            ValaFieldDeclarationHighlighter.getInstance(),
-            ValaObjectOrArrayCreationExpressionHighlighter.getInstance(),
-            ValaTypeParameterHighlighter.getInstance(),
-            ValaArgumentHighlighter.getInstance(),
-            ValaErrorCodeHighlighter.getInstance(),
-            ValaEnumValueHighlighter.getInstance(),
-            ValaClassDeclarationHighlighter.getInstance(),
-            ValaEnumDeclarationHighlighter.getInstance(),
-            ValaStructDeclarationHighlighter.getInstance(),
-            ValaErrorDomainDeclarationHighlighter.getInstance(),
-            ValaNamespaceDeclarationHighlighter.getInstance(),
-            ValaDelegateDeclarationHighlighter.getInstance(),
-            ValaCreationMethodDeclarationHighlighter.getInstance(),
-            ValaPropertyDeclarationHighlighter.getInstance(),
-            ValaYieldExpressionHighlighter.getInstance(),
-            ValaDestructorDeclarationHighlighter.getInstance(),
-            ValaForEachHighlighter.getInstance(),
-            ValaCatchHighlighter.getInstance(),
-            ValaLambdaExpressionHighlighting.getInstance(),
-            ValaUsingHighlighter.getInstance(),
-            ValaPrimaryExpressionHighlighting.getInstance(),
-            ValaIdentifierHighlighter.getInstance()
+        ValaParameterHighlighter.getInstance(),
+        ValaMethodDeclarationHighlighter.getInstance(),
+        ValaSignalDeclarationHighlighter.getInstance(),
+        ValaInterfaceDeclarationHighlighter.getInstance(),
+        ValaLocalVariableDeclarationHighlighter.getInstance(),
+        ValaConstantDeclarationHighlighter.getInstance(),
+        ValaAttributeHighlighter.getInstance(),
+        ValaAttributeArgumentHighlighter.getInstance(),
+        ValaTypeHighlighter.getInstance(),
+        ValaObjectCreationHighlighter.getInstance(),
+        ValaFieldDeclarationHighlighter.getInstance(),
+        ValaObjectOrArrayCreationExpressionHighlighter.getInstance(),
+        ValaTypeParameterHighlighter.getInstance(),
+        ValaArgumentHighlighter.getInstance(),
+        ValaErrorCodeHighlighter.getInstance(),
+        ValaEnumValueHighlighter.getInstance(),
+        ValaClassDeclarationHighlighter.getInstance(),
+        ValaEnumDeclarationHighlighter.getInstance(),
+        ValaStructDeclarationHighlighter.getInstance(),
+        ValaErrorDomainDeclarationHighlighter.getInstance(),
+        ValaNamespaceDeclarationHighlighter.getInstance(),
+        ValaDelegateDeclarationHighlighter.getInstance(),
+        ValaCreationMethodDeclarationHighlighter.getInstance(),
+        ValaPropertyDeclarationHighlighter.getInstance(),
+        ValaYieldExpressionHighlighter.getInstance(),
+        ValaDestructorDeclarationHighlighter.getInstance(),
+        ValaForEachHighlighter.getInstance(),
+        ValaCatchHighlighter.getInstance(),
+        ValaLambdaExpressionHighlighting.getInstance(),
+        ValaUsingHighlighter.getInstance(),
+        ValaPrimaryExpressionHighlighting.getInstance(),
+        ValaIdentifierHighlighter.getInstance()
     ));
     private static final Set<String> PARENTS_TO_IGNORE = Collections.synchronizedSet(new HashSet<>(
-            Set.of("ValaLocalVariableDeclaration",
-                    "ValaLocalVariableDeclarations",
-                    "ValaStatement",
-                    "ValaParameters",
-                    "ValaEmbeddedStatementWithoutBlock",
-                    "ValaEmbeddedStatement",
-                    "ValaFieldDeclaration",
-                    "ValaClassMember",
-                    "ValaNamespaceMember",
-                    "ValaStructMember",
-                    "ValaInterfaceMember",
-                    "ValaIfStatement",
-                    "ValaBlock",
-                    "ValaForInitializer",
-                    "ValaLambdaExpressionParams",
-                    "ValaLambdaExpression"
-            )
+        Set.of("ValaLocalVariableDeclaration",
+            "ValaLocalVariableDeclarations",
+            "ValaStatement",
+            "ValaParameters",
+            "ValaEmbeddedStatementWithoutBlock",
+            "ValaEmbeddedStatement",
+            "ValaFieldDeclaration",
+            "ValaClassMember",
+            "ValaNamespaceMember",
+            "ValaStructMember",
+            "ValaInterfaceMember",
+            "ValaIfStatement",
+            "ValaBlock",
+            "ValaForInitializer",
+            "ValaLambdaExpressionParams",
+            "ValaLambdaExpression"
+        )
     ));
 
     @Override
@@ -95,11 +95,11 @@ public final class ValaSyntaxHighlightingAnnotator implements Annotator {
             String scopeName = String.format("%s.%s", psiElement.getContainingFile().getName(), namedElement.getName());
 
             ValaElementScope scope = new ValaElementScope(
-                    namedElement.getName(),
-                    typeName,
-                    namedElement.getTextRange(),
-                    parentTypeName,
-                    parent.getTextRange()
+                namedElement.getName(),
+                typeName,
+                namedElement.getTextRange(),
+                parentTypeName,
+                parent.getTextRange()
             );
 
             if (SCOPE_MAP.containsKey(scopeName)) {
