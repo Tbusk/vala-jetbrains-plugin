@@ -14,7 +14,7 @@ public class EOSSettingsDisplayParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/settings-display/archive/refs/tags/8.0.2.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_settings_display", 0, errorsToIgnore);

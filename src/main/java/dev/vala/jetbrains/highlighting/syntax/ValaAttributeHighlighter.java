@@ -16,7 +16,7 @@ public final class ValaAttributeHighlighter implements ValaHighlighter {
     }
 
     public static synchronized ValaAttributeHighlighter getInstance() {
-        if  (instance == null) {
+        if (instance == null) {
             instance = new ValaAttributeHighlighter();
         }
 

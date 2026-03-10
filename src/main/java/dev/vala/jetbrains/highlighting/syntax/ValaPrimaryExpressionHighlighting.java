@@ -61,9 +61,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
                     if (identifierNode != null) {
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
-                                .create();
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                            .create();
                     }
                 }
 
@@ -75,9 +75,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
                         if (identifierNode != null) {
                             annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                    .range(identifierNode.getTextRange())
-                                    .textAttributes(ValaTextAttributeKey.METHOD_CALL)
-                                    .create();
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                                .create();
                         }
                     }
                 }
@@ -97,9 +97,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
                 if (identifierNode != null && identifierNode.getText().matches(constantRegex)) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.CONSTANT)
-                            .create();
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(ValaTextAttributeKey.CONSTANT)
+                        .create();
                 }
             }
 
@@ -111,9 +111,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
                     if (identifierNode != null && identifierNode.getText().matches(constantRegex)) {
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(ValaTextAttributeKey.CONSTANT)
-                                .create();
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.CONSTANT)
+                            .create();
                     }
                 }
             }
@@ -134,9 +134,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                 if (!ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeKey)) {
 
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                            .create();
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                        .create();
                 } else {
                     Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeKey);
 
@@ -144,9 +144,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                         int identifierStart = identifierNode.getPsi().getTextRange().getStartOffset();
                         if (!(scope.parentRange().getStartOffset() <= identifierStart && scope.parentRange().getEndOffset() >= identifierStart)) {
                             annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                    .range(identifierNode.getTextRange())
-                                    .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                                    .create();
+                                .range(identifierNode.getTextRange())
+                                .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                                .create();
                         }
                     }
                 }
@@ -166,9 +166,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
                     if (!ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeKey)) {
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                                .create();
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                            .create();
                     } else {
                         Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeKey);
 
@@ -176,9 +176,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                             int identifierStart = identifierNode.getPsi().getTextRange().getStartOffset();
                             if (!(scope.parentRange().getStartOffset() <= identifierStart && scope.parentRange().getEndOffset() >= identifierStart)) {
                                 annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                        .range(identifierNode.getTextRange())
-                                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                                        .create();
+                                    .range(identifierNode.getTextRange())
+                                    .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                                    .create();
                             }
                         }
                     }
@@ -199,9 +199,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
 
                     if (!ValaSyntaxHighlightingAnnotator.SCOPE_MAP.containsKey(scopeKey)) {
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                                .create();
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                            .create();
                     } else {
                         Set<ValaElementScope> scopes = ValaSyntaxHighlightingAnnotator.SCOPE_MAP.get(scopeKey);
 
@@ -209,9 +209,9 @@ public final class ValaPrimaryExpressionHighlighting implements ValaHighlighter 
                             int identifierStart = identifierNode.getPsi().getTextRange().getStartOffset();
                             if (!(scope.parentRange().getStartOffset() <= identifierStart && scope.parentRange().getEndOffset() >= identifierStart)) {
                                 annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                        .range(identifierNode.getTextRange())
-                                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                                        .create();
+                                    .range(identifierNode.getTextRange())
+                                    .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                                    .create();
                             }
                         }
                     }

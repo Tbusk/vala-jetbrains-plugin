@@ -65,7 +65,7 @@ intellijPlatform {
                 (projectChangelog.getOrNull(pluginVersion) ?: projectChangelog.getUnreleased())
                     .withHeader(false)
                     .withEmptySections(false),
-                    Changelog.OutputType.HTML
+                Changelog.OutputType.HTML
             )
         }
 

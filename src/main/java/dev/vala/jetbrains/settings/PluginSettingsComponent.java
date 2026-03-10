@@ -43,10 +43,10 @@ public class PluginSettingsComponent {
      */
     public JPanel setupMainPanel() {
         return FormBuilder.createFormBuilder()
-                .addComponent(new TitledSeparator("LSP Settings"), 1)
-                .addLabeledComponent(languageServerPathLabel, languageServerPathTextField, 1, false)
-                .addComponentFillVertically(new JPanel(), 0)
-                .getPanel();
+            .addComponent(new TitledSeparator("LSP Settings"), 1)
+            .addLabeledComponent(languageServerPathLabel, languageServerPathTextField, 1, false)
+            .addComponentFillVertically(new JPanel(), 0)
+            .getPanel();
     }
 
     /**
@@ -64,11 +64,11 @@ public class PluginSettingsComponent {
         textField.setText(PluginSettings.getInstance().getState().lspServerPath);
 
         textField.addBrowseFolderListener(
-                ProjectManager.getInstance().getDefaultProject(),
-                FileChooserDescriptorFactory.singleFile().withFileFilter(
-                        file -> file.exists() &&
-                                file.getNameWithoutExtension().equals("vala-language-server")
-                )
+            ProjectManager.getInstance().getDefaultProject(),
+            FileChooserDescriptorFactory.singleFile().withFileFilter(
+                file -> file.exists() &&
+                    file.getNameWithoutExtension().equals("vala-language-server")
+            )
         );
 
         return textField;

@@ -19,9 +19,9 @@ public class ValaPairedBraceMatcher implements PairedBraceMatcher {
     @Override
     public BracePair @NotNull [] getPairs() {
         return new BracePair[]{
-                new BracePair(ValaTypes.LBRACE, ValaTypes.RBRACE, true),
-                new BracePair(ValaTypes.LPAREN, ValaTypes.RPAREN, false),
-                new BracePair(ValaTypes.LBRACKET, ValaTypes.RBRACKET, false),
+            new BracePair(ValaTypes.LBRACE, ValaTypes.RBRACE, true),
+            new BracePair(ValaTypes.LPAREN, ValaTypes.RPAREN, false),
+            new BracePair(ValaTypes.LBRACKET, ValaTypes.RBRACKET, false),
         };
     }
 

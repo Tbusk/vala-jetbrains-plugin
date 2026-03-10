@@ -42,9 +42,9 @@ public final class ValaYieldExpressionHighlighter implements ValaHighlighter {
                     ASTNode identifierNode = simpleNameNode.findChildByType(TokenSet.create(ValaTypes.IDENTIFIER));
                     if (identifierNode != null) {
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
-                                .create();
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                            .create();
                     }
                 }
             }
@@ -58,14 +58,14 @@ public final class ValaYieldExpressionHighlighter implements ValaHighlighter {
             ASTNode identifierNode = memberPartNode.findChildByType(TokenSet.create(ValaTypes.IDENTIFIER));
             if (identifierNode != null && memberPartNode.equals(memberPartNodes[memberPartNodes.length - 1])) {
                 annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(identifierNode.getTextRange())
-                        .textAttributes(ValaTextAttributeKey.METHOD_CALL)
-                        .create();
+                    .range(identifierNode.getTextRange())
+                    .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                    .create();
             } else if (identifierNode != null) {
                 annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                        .range(identifierNode.getTextRange())
-                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                        .create();
+                    .range(identifierNode.getTextRange())
+                    .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                    .create();
             }
         }
     }

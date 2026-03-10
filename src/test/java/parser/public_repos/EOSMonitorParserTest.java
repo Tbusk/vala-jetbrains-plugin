@@ -14,9 +14,9 @@ public class EOSMonitorParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/monitor/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "test_statusbar.vala" // object declaration syntax error, missing commas.
-                )
+            Set.of(
+                "test_statusbar.vala" // object declaration syntax error, missing commas.
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_monitor", 0, errorsToIgnore);

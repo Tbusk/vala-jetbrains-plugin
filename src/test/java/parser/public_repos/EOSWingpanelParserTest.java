@@ -14,12 +14,12 @@ public class EOSWingpanelParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/wingpanel/archive/refs/tags/8.0.4.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "libmutter.vapi",
-                        "mutter-cogl-14.vapi",
-                        "BackgroundManager.vala",
-                        "mutter-clutter.vapi"
-                )
+            Set.of(
+                "libmutter.vapi",
+                "mutter-cogl-14.vapi",
+                "BackgroundManager.vala",
+                "mutter-clutter.vapi"
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_wingpanel", 0, errorsToIgnore);

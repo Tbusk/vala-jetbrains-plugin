@@ -34,6 +34,7 @@ public class PluginSettingsConfigurable implements Configurable {
      * Returns the preferred focused component of the settings component.
      * <br/>
      * This method is used to set the initial focus when the settings dialog is opened.
+     *
      * @return JComponent - the preferred focused component
      */
     @Override
@@ -83,7 +84,7 @@ public class PluginSettingsConfigurable implements Configurable {
         state.lspServerPath = settingsComponent.getLanguageServerPath();
 
         ValaLanguageServer.getInstance().updateCommandLineConfiguration(
-                state.lspServerPath
+            state.lspServerPath
         );
     }
 

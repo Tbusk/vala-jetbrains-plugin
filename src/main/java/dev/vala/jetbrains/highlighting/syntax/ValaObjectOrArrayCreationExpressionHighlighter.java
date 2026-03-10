@@ -47,7 +47,7 @@ public final class ValaObjectOrArrayCreationExpressionHighlighter implements Val
         if (objectCreationExpressionNode != null) {
             ASTNode[] memberAccessNodes = objectCreationExpressionNode.getChildren(TokenSet.create(ValaTypes.MEMBER_ACCESS));
 
-            for  (ASTNode memberAccessNode : memberAccessNodes) {
+            for (ASTNode memberAccessNode : memberAccessNodes) {
                 ASTNode simpleNameNode = memberAccessNode.findChildByType(ValaTypes.SIMPLE_NAME);
 
                 if (simpleNameNode != null) {
@@ -55,9 +55,9 @@ public final class ValaObjectOrArrayCreationExpressionHighlighter implements Val
 
                     if (identifierNode != null) {
                         annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                                .range(identifierNode.getTextRange())
-                                .textAttributes(ValaTextAttributeKey.METHOD_CALL)
-                                .create();
+                            .range(identifierNode.getTextRange())
+                            .textAttributes(ValaTextAttributeKey.METHOD_CALL)
+                            .create();
                     }
                 }
             }

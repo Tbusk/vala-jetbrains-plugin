@@ -14,9 +14,9 @@ public class EOSCalendarParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/calendar/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "util-tests.vala" // can be fixed with introspection of template strings
-                )
+            Set.of(
+                "util-tests.vala" // can be fixed with introspection of template strings
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_calendar", 0, errorsToIgnore);

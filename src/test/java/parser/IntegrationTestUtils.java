@@ -83,7 +83,7 @@ public class IntegrationTestUtils {
 
         try (Stream<Path> stream = Files.walk(testDirPath)) {
             files = stream.filter(file -> file.getFileName().toString().endsWith(".vala") || file.getFileName().toString().endsWith(".vapi"))
-                    .toList();
+                .toList();
         }
 
         return files;

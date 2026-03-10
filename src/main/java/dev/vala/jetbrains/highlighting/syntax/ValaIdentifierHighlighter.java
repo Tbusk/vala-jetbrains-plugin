@@ -27,33 +27,33 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
     }
 
     public static final Map<String, TextAttributesKey> KEY_MAP = new ConcurrentHashMap<>(
-            Map.ofEntries(
-                    new AbstractMap.SimpleEntry<>("ValaClassDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaInterfaceDeclaration", ValaTextAttributeKey.INTERFACE_NAME),
-                    new AbstractMap.SimpleEntry<>("ValaStructDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaEnumDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaErrordomainDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaNamespaceDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+        Map.ofEntries(
+            new AbstractMap.SimpleEntry<>("ValaClassDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaInterfaceDeclaration", ValaTextAttributeKey.INTERFACE_NAME),
+            new AbstractMap.SimpleEntry<>("ValaStructDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaEnumDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaErrordomainDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaNamespaceDeclaration", ValaTextAttributeKey.INSTANCE_VARIABLE),
 
-                    new AbstractMap.SimpleEntry<>("ValaPropertyDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.METHOD_CALL),
-                    new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaPropertyDeclaration", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaCreationMethodDeclaration", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaDestructorDeclaration", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaDelegateDeclaration", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaSignalDeclaration", ValaTextAttributeKey.METHOD_CALL),
+            new AbstractMap.SimpleEntry<>("ValaYieldExpression", ValaTextAttributeKey.METHOD_CALL),
 
-                    new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.INSTANCE_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaLocalVariable", ValaTextAttributeKey.LOCAL_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaForeachStatement", ValaTextAttributeKey.LOCAL_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaCatchClause", ValaTextAttributeKey.LOCAL_VARIABLE),
-                    new AbstractMap.SimpleEntry<>("ValaLocalTupleDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaFieldDeclarationSection", ValaTextAttributeKey.INSTANCE_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaLocalVariable", ValaTextAttributeKey.LOCAL_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaForeachStatement", ValaTextAttributeKey.LOCAL_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaCatchClause", ValaTextAttributeKey.LOCAL_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaLocalTupleDeclaration", ValaTextAttributeKey.LOCAL_VARIABLE),
 
-                    new AbstractMap.SimpleEntry<>("ValaParameter", ValaTextAttributeKey.PARAMETER),
-                    new AbstractMap.SimpleEntry<>("ValaLambdaExpressionParam", ValaTextAttributeKey.LOCAL_VARIABLE),
+            new AbstractMap.SimpleEntry<>("ValaParameter", ValaTextAttributeKey.PARAMETER),
+            new AbstractMap.SimpleEntry<>("ValaLambdaExpressionParam", ValaTextAttributeKey.LOCAL_VARIABLE),
 
-                    new AbstractMap.SimpleEntry<>("ValaConstantDeclaration", ValaTextAttributeKey.CONSTANT)
-            )
+            new AbstractMap.SimpleEntry<>("ValaConstantDeclaration", ValaTextAttributeKey.CONSTANT)
+        )
     );
 
     public static synchronized ValaIdentifierHighlighter getInstance() {
@@ -75,14 +75,14 @@ public final class ValaIdentifierHighlighter implements ValaHighlighter {
 
                 if (scope != null && scope.type() != null) {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(psiElement.getTextRange())
-                            .textAttributes(KEY_MAP.get(scope.type()))
-                            .create();
+                        .range(psiElement.getTextRange())
+                        .textAttributes(KEY_MAP.get(scope.type()))
+                        .create();
                 } else {
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(psiElement.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                            .create();
+                        .range(psiElement.getTextRange())
+                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                        .create();
                 }
             }
         }

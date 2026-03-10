@@ -20,7 +20,7 @@ public final class ValaLambdaExpressionHighlighting implements ValaHighlighter {
     }
 
     public static synchronized ValaLambdaExpressionHighlighting getInstance() {
-        if  (instance == null) {
+        if (instance == null) {
             instance = new ValaLambdaExpressionHighlighting();
         }
 

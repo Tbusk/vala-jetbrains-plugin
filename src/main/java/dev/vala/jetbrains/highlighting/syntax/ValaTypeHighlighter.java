@@ -26,7 +26,7 @@ public final class ValaTypeHighlighter implements ValaHighlighter {
 
     public void highlight(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         if (psiElement instanceof ValaTypeImpl ||
-                psiElement instanceof ValaTypeWeakImpl) {
+            psiElement instanceof ValaTypeWeakImpl) {
             ValaHighlighterUtil util = ValaHighlighterUtil.getInstance();
 
             util.highlightSymbol(psiElement, annotationHolder, DefaultLanguageHighlighterColors.CLASS_NAME);

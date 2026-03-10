@@ -50,6 +50,7 @@ public final class ValaLanguageServer extends OSProcessStreamConnectionProvider 
      * This method sets a new command path for the language server and prompts the user to restart the IDE.
      * The restart is necessary because LSP4IJ doesn't provide any way to reliably restart the language server
      * outside the UI.
+     *
      * @param commandPath - the new command path to set for the language server
      */
     public void updateCommandLineConfiguration(String commandPath) {
@@ -58,7 +59,7 @@ public final class ValaLanguageServer extends OSProcessStreamConnectionProvider 
 
         int userChoice = showRestartPopup();
 
-        if(userChoice == Messages.YES) {
+        if (userChoice == Messages.YES) {
             restartIDE();
         }
     }
@@ -72,9 +73,9 @@ public final class ValaLanguageServer extends OSProcessStreamConnectionProvider 
      */
     public int showRestartPopup() {
         return Messages.showYesNoDialog(
-                "A restart is required for the changes to take affect. Do you want to restart now?",
-                "Restart Required",
-                Messages.getQuestionIcon()
+            "A restart is required for the changes to take affect. Do you want to restart now?",
+            "Restart Required",
+            Messages.getQuestionIcon()
         );
     }
 
@@ -86,7 +87,7 @@ public final class ValaLanguageServer extends OSProcessStreamConnectionProvider 
      * <a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/206105709-How-do-you-make-a-plugin-setting-change-require-a-restart">view forum q/a...</a>
      */
     public void restartIDE() {
-        ApplicationEx app = (ApplicationEx)ApplicationManager.getApplication();
+        ApplicationEx app = (ApplicationEx) ApplicationManager.getApplication();
 
         app.restart(true);
     }

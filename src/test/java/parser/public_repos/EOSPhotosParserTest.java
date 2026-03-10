@@ -14,9 +14,9 @@ public class EOSPhotosParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/photos/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of(
-                        "Page.vala" // will be fixed with preprocessor support
-                )
+            Set.of(
+                "Page.vala" // will be fixed with preprocessor support
+            )
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_photos", 0, errorsToIgnore);

@@ -1,6 +1,7 @@
 # Features
 
 ## LSP
+
 - [x] diagnostics
 - [x] code completion
     - [x] member access and scope-visible completion

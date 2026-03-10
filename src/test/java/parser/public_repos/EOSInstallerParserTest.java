@@ -14,7 +14,7 @@ public class EOSInstallerParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/installer/archive/refs/tags/8.1.3.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_installer", 0, errorsToIgnore);

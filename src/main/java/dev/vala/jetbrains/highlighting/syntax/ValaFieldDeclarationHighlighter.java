@@ -41,9 +41,9 @@ public final class ValaFieldDeclarationHighlighter implements ValaHighlighter {
                 if (identifierNode != null) {
 
                     annotationHolder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                            .range(identifierNode.getTextRange())
-                            .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
-                            .create();
+                        .range(identifierNode.getTextRange())
+                        .textAttributes(ValaTextAttributeKey.INSTANCE_VARIABLE)
+                        .create();
                 }
             }
         }

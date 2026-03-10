@@ -14,7 +14,7 @@ public class EOSSwitchboardParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/settings/archive/refs/tags/8.0.3.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_switchboard", 0, errorsToIgnore);

@@ -14,7 +14,7 @@ public class EOSInitialSetupParserTest extends BasePlatformTestCase {
         final String repositoryZipUrl = "https://github.com/elementary/initial-setup/archive/refs/tags/8.0.1.zip";
 
         HashSet<String> errorsToIgnore = new HashSet<>(
-                Set.of()
+            Set.of()
         );
 
         IntegrationTestUtils.testRepoSourceFilesForParsingErrors(this.myFixture, repositoryZipUrl, "eos_initial_setup", 0, errorsToIgnore);

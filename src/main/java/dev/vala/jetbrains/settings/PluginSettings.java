@@ -17,8 +17,8 @@ import org.jetbrains.annotations.Nullable;
  * <a href="https://plugins.jetbrains.com/docs/intellij/settings-tutorial.html#the-appsettings-class">view plugin docs...</a>
  */
 @State(
-        name = "settings.dev.vala.jetbrains.PluginSettings",
-        storages = @Storage("ValaPluginSettings.xml")
+    name = "settings.dev.vala.jetbrains.PluginSettings",
+    storages = @Storage("ValaPluginSettings.xml")
 )
 public final class PluginSettings implements PersistentStateComponent<PluginSettings.State> {
 
@@ -55,6 +55,7 @@ public final class PluginSettings implements PersistentStateComponent<PluginSett
 
     /**
      * Loads the state of the plugin settings from the provided state.
+     *
      * @param state the state to load
      */
     @Override

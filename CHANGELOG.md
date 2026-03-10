@@ -6,7 +6,7 @@
 
 ### What's Changed
 
-- Added support for vala-lint linter via run configuration 
+- Added support for vala-lint linter via run configuration
 
 ## [1.2.6]
 
@@ -108,6 +108,7 @@
 - Added support for additional nullability of variables / types
 
 ## [1.2.1-ALPHA]
+
 ### What's Changed
 
 - Added keyword highlighting for delegate
@@ -118,6 +119,7 @@
 ## [1.2.0-ALPHA]
 
 ### What's Changed
+
 - Added new Vala project wizard to Java-based IDEs
 - Added new Vala project wizard with Meson to Java-based IDEs
 - Added new Vala project wizard to non-Java-based IDEs
@@ -127,7 +129,9 @@
 - Added new settings page for code style with some configuration options
 
 ## [1.1.3-ALPHA]
+
 ### What's Changed
+
 - Update parser to permit constants being declared in statements.
 - Update parser to no longer permit non-constant variables being declared in the namespace.
 - Update parser to allow delegate declaration in the namespace.
@@ -147,20 +151,28 @@
 - Implemented robust parser that can handle majority of Vala syntax.
 
 ## [1.1.1-ALPHA]
+
 ### What's Changed
+
 - Added additional keywords for syntax highlighting and to parser/lexer.
 - Added additional configurability for color customization.
 
 ## [1.1.0-ALPHA]
+
 ### What's Changed
+
 - Added plugin settings page.
 - Added configuration option for Language Server executable path.
 - Documentation for the Language Server configuration.
 
 ## [1.0.1-ALPHA]
+
 ### What's Changed
+
 - Support for MacOS and Windows platforms with the LSP server.
 
 ## 1.0.0-ALPHA
+
 ### What's Changed
+
 - Initial version with basic features: lsp support, syntax highlighting, file creation.
