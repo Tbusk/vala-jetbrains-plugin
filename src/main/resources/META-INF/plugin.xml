@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.tbusk.vala_plugin</id>
+    <id>dev.vala.jetbrains</id>
     <name>Vala</name>
     <vendor url="https://github.com/vala-lang/vala-jetbrains">
         Vala Community
@@ -12,7 +12,7 @@
     <extensions defaultExtensionNs="com.redhat.devtools.lsp4ij">
         <server id="vala-server"
                 name="Vala Language Server"
-                factoryClass="com.tbusk.vala_plugin.lsp.ValaLanguageServerFactory">
+                factoryClass="dev.vala.jetbrains.lsp.ValaLanguageServerFactory">
             <description>
                 <![CDATA[Vala Language Server]]>
             </description>
@@ -39,7 +39,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType
                 name="Vala File"
-                implementationClass="com.tbusk.vala_plugin.language.ValaFileType"
+                implementationClass="dev.vala.jetbrains.language.ValaFileType"
                 fieldName="INSTANCE"
                 language="Vala"
                 extensions="vala;vapi;in"/>
@@ -47,11 +47,11 @@
 
         <lang.parserDefinition
                 language="Vala"
-                implementationClass="com.tbusk.vala_plugin.ValaParserDefinition"/>
+                implementationClass="dev.vala.jetbrains.ValaParserDefinition"/>
 
         <lang.syntaxHighlighterFactory
                 language="Vala"
-                implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlighterFactory"/>
+                implementationClass="dev.vala.jetbrains.highlighting.ValaSyntaxHighlighterFactory"/>
 
         <lang.foldingBuilder language="Vala"
                              implementationClass="com.redhat.devtools.lsp4ij.features.foldingRange.LSPFoldingRangeBuilder"
@@ -63,73 +63,73 @@
         <codeInsight.parameterInfo language="Vala"
                                    implementationClass="com.redhat.devtools.lsp4ij.features.signatureHelp.LSPParameterInfoHandler"/>
 
-        <typedHandler implementation="com.tbusk.vala_plugin.editing.CharacterAutoCloser"/>
+        <typedHandler implementation="dev.vala.jetbrains.editing.CharacterAutoCloser"/>
 
-        <colorSettingsPage implementation="com.tbusk.vala_plugin.highlighting.ValaColorSettingsPage"/>
+        <colorSettingsPage implementation="dev.vala.jetbrains.highlighting.ValaColorSettingsPage"/>
 
         <applicationService
-            serviceImplementation="com.tbusk.vala_plugin.settings.PluginSettings" />
+            serviceImplementation="dev.vala.jetbrains.settings.PluginSettings" />
 
         <applicationConfigurable
             parentId="tools"
-            instance="com.tbusk.vala_plugin.settings.PluginSettingsConfigurable"
-            id="com.tbusk.vala_plugin.settings.PluginSettingsConfigurable"
+            instance="dev.vala.jetbrains.settings.PluginSettingsConfigurable"
+            id="dev.vala.jetbrains.settings.PluginSettingsConfigurable"
             displayName="Vala Plugin Settings" />
 
         <lang.commenter language="Vala"
-                        implementationClass="com.tbusk.vala_plugin.comment_out.ValaCommenter"/>
+                        implementationClass="dev.vala.jetbrains.comment_out.ValaCommenter"/>
 
         <directoryProjectGenerator
-                implementation="com.tbusk.vala_plugin.project.ValaNonJavaEmptyProjectWizard"
+                implementation="dev.vala.jetbrains.project.ValaNonJavaEmptyProjectWizard"
                 id="VALA_EMPTY_NON_JAVA"
                 order="first"/>
 
         <directoryProjectGenerator
-                implementation="com.tbusk.vala_plugin.project.ValaNonJavaMesonProjectWizard"
+                implementation="dev.vala.jetbrains.project.ValaNonJavaMesonProjectWizard"
                 id="VALA_EMPTY_MESON_NON_JAVA"
                 order="after VALA_EMPTY_NON_JAVA"/>
 
         <newProjectWizard.languageGenerator
-                implementation="com.tbusk.vala_plugin.project.ValaLanguageGeneratorNewProjectWizard"
+                implementation="dev.vala.jetbrains.project.ValaLanguageGeneratorNewProjectWizard"
                 id="VALA_EMPTY"
                 order="first"
         />
 
         <newProjectWizard.languageGenerator
-                implementation="com.tbusk.vala_plugin.project.ValaLanguageGeneratorNewMesonProjectWizard"
+                implementation="dev.vala.jetbrains.project.ValaLanguageGeneratorNewMesonProjectWizard"
                 id="VALA_EMPTY_MESON"
                 order="after VALA_EMPTY"
         />
 
         <fileIndentOptionsProvider
-                implementation="com.tbusk.vala_plugin.code_style.ValaFileTypeIndentOptionsProvider"/>
+                implementation="dev.vala.jetbrains.code_style.ValaFileTypeIndentOptionsProvider"/>
 
         <langCodeStyleSettingsProvider
-                implementation="com.tbusk.vala_plugin.code_style.ValaLanguageCodeStyleSettingsProvider"/>
+                implementation="dev.vala.jetbrains.code_style.ValaLanguageCodeStyleSettingsProvider"/>
 
         <codeStyleSettingsProvider
-                implementation="com.tbusk.vala_plugin.code_style.ValaCodeStyleSettingsProvider"/>
+                implementation="dev.vala.jetbrains.code_style.ValaCodeStyleSettingsProvider"/>
 
         <lang.formatter
                 language="Vala"
-                implementationClass="com.tbusk.vala_plugin.code_style.ValaFormattingModelBuilder"/>
+                implementationClass="dev.vala.jetbrains.code_style.ValaFormattingModelBuilder"/>
 
         <lang.braceMatcher
                 language="Vala"
-                implementationClass="com.tbusk.vala_plugin.code_style.ValaPairedBraceMatcher"
+                implementationClass="dev.vala.jetbrains.code_style.ValaPairedBraceMatcher"
         />
 
         <annotator language="Vala"
-                   implementationClass="com.tbusk.vala_plugin.highlighting.ValaSyntaxHighlightingAnnotator"/>
+                   implementationClass="dev.vala.jetbrains.highlighting.ValaSyntaxHighlightingAnnotator"/>
 
         <configurationType
-                implementation="com.tbusk.vala_plugin.linter.ValaLintRunConfigurationType"/>
+                implementation="dev.vala.jetbrains.linter.ValaLintRunConfigurationType"/>
 
     </extensions>
 
     <actions >
         <action id="CreateValaFile"
-                class="com.tbusk.vala_plugin.actions.ValaCreateFileAction"
+                class="dev.vala.jetbrains.actions.ValaCreateFileAction"
                 text="Create Vala File"
                 description="Create a new Vala file">
 

@@ -1,0 +1,31 @@
+// This is a generated file. Not intended for manual editing.
+package dev.vala.jetbrains.psi;
+
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
+
+public interface ValaErrordomainDeclaration extends ValaNamedElement {
+
+  @NotNull
+  List<ValaAttributes> getAttributesList();
+
+  @Nullable
+  ValaErrorcodes getErrorcodes();
+
+  @NotNull
+  List<ValaMethodDeclaration> getMethodDeclarationList();
+
+  @NotNull
+  ValaSymbol getSymbol();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
+
+}
