@@ -5,7 +5,7 @@ labels: [ "Change Request" ]
 assignees:
   - tbusk
 projects:
-  - "Tbusk/11"
+  - "vala-lang/4"
 
 body:
   - type: markdown

@@ -5,7 +5,7 @@ labels: [ "Bug" ]
 assignees:
   - tbusk
 projects:
-  - "Tbusk/11"
+  - "vala-lang/4"
 
 body:
   - type: markdown
@@ -37,6 +37,9 @@ body:
       description: What version of the plugin are you using?
       options:
         - Latest (if not added)
+        - 1.2.7
+        - 1.2.6
+        - 1.2.5.1-ALPHA
         - 1.2.5-ALPHA
         - 1.2.4-ALPHA
         - 1.2.3-ALPHA
