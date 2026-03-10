@@ -1,0 +1,40 @@
+// This is a generated file. Not intended for manual editing.
+package dev.vala.jetbrains.psi;
+
+import java.util.List;
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
+
+public interface ValaSignalDeclaration extends ValaNamedElement {
+
+  @Nullable
+  ValaAccessModifier getAccessModifier();
+
+  @Nullable
+  ValaBlock getBlock();
+
+  @NotNull
+  ValaIdentifier getIdentifier();
+
+  @Nullable
+  ValaParameters getParameters();
+
+  @Nullable
+  ValaSignalDeclarationModifiers getSignalDeclarationModifiers();
+
+  @Nullable
+  ValaType getType();
+
+  @Nullable
+  ValaTypeWithParenthesis getTypeWithParenthesis();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
+
+}

@@ -1,0 +1,21 @@
+package dev.vala.jetbrains.psi;
+
+import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiFileFactory;
+import dev.vala.jetbrains.language.ValaFile;
+import dev.vala.jetbrains.language.ValaFileType;
+
+public class ValaElementFactory {
+
+    public static ValaIdentifier createIdentifier(Project project, String name) {
+        final ValaFile file = createFile(project, name);
+        return (ValaIdentifier) file.getFirstChild();
+    }
+
+    private static ValaFile createFile(Project project, String text) {
+        String name = "dummy.vala";
+        return (ValaFile) PsiFileFactory
+                .getInstance(project)
+                .createFileFromText(name, ValaFileType.INSTANCE, text);
+    }
+}
