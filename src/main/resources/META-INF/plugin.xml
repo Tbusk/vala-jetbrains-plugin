@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>dev.vala.jetbrains</id>
+    <id>com.tbusk.vala_plugin</id>
     <name>Vala</name>
     <vendor url="https://github.com/vala-lang/vala-jetbrains">
         Vala Community

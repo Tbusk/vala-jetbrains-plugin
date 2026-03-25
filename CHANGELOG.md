@@ -11,14 +11,14 @@
 ### Changed
 
 - Transferred project to `vala-lang` org on GitHub
-- Updated packaging (and plugin id) naming to reflect repo naming with `dev.vala.jetbrains`
+- Updated packaging naming to reflect repo naming with `dev.vala.jetbrains`
 - Updated vendor to reflect org name `Vala Community`
 - Updated intellij platform version to `2.13.1`
 - Updated gradle plugin version to `9.4.1`
 - Updated parser test urls to target specific releases for consistency
 - Updated LSP4IJ version to `0.19.2`
-- Extend plugin compatibility limit to next year with version `2027.2`
-- Bump CL platform for testing to latest version `2025.3.4`
+- Extended plugin compatibility limit to next year with version `2027.2`
+- Bumped CL platform for testing to latest version `2025.3.4`
 - Updated various GitHub Action workflow versioning
 
 ### Removed
