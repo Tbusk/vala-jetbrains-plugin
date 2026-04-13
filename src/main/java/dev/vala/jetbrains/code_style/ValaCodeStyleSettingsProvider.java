@@ -3,6 +3,7 @@ package dev.vala.jetbrains.code_style;
 import com.intellij.application.options.CodeStyleAbstractConfigurable;
 import com.intellij.application.options.CodeStyleAbstractPanel;
 import com.intellij.application.options.TabbedLanguageCodeStylePanel;
+import com.intellij.lang.Language;
 import com.intellij.psi.codeStyle.CodeStyleConfigurable;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.codeStyle.CodeStyleSettingsProvider;
@@ -35,6 +36,17 @@ public final class ValaCodeStyleSettingsProvider extends CodeStyleSettingsProvid
     @Override
     public String getConfigurableDisplayName() {
         return ValaLanguage.INSTANCE.getDisplayName();
+    }
+
+
+    /**
+     * Returns the language for which the code style settings are provided.
+     *
+     * @return the vala language object
+     */
+    @Override
+    public @NotNull Language getLanguage() {
+        return ValaLanguage.INSTANCE;
     }
 
     /**

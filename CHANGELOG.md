@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed issue involving legacy configurable id calculation that sometimes pops up in an error message
+
+## [1.2.8]
+
 ### Added
 
 - Added `.editorconfig` file to repo for more consistent code style
