@@ -30,38 +30,20 @@ public class ValaConstantDeclarationImpl extends ValaNamedElementImpl implements
 
   @Override
   @Nullable
-  public ValaAccessModifier getAccessModifier() {
-    return findChildByClass(ValaAccessModifier.class);
+  public ValaExpression getExpression() {
+    return findChildByClass(ValaExpression.class);
   }
 
   @Override
   @NotNull
-  public List<ValaExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaExpression.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaIdentifier> getIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaIdentifier.class);
-  }
-
-  @Override
-  @NotNull
-  public List<ValaInlineArrayType> getInlineArrayTypeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaInlineArrayType.class);
+  public ValaIdentifier getIdentifier() {
+    return findNotNullChildByClass(ValaIdentifier.class);
   }
 
   @Override
   @Nullable
-  public ValaMemberDeclarationModifiers getMemberDeclarationModifiers() {
-    return findChildByClass(ValaMemberDeclarationModifiers.class);
-  }
-
-  @Override
-  @NotNull
-  public ValaType getType() {
-    return findNotNullChildByClass(ValaType.class);
+  public ValaInlineArrayType getInlineArrayType() {
+    return findChildByClass(ValaInlineArrayType.class);
   }
 
 }

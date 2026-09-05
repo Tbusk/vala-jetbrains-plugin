@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaErrorcode extends PsiElement {
 
-  @Nullable
-  ValaAttributes getAttributes();
+  @NotNull
+  List<ValaAttributes> getAttributesList();
 
   @Nullable
   ValaExpression getExpression();

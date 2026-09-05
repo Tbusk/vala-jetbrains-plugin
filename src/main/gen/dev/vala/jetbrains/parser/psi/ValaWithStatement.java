@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaWithStatement extends PsiElement {
 
+  @NotNull
+  ValaEmbeddedStatement getEmbeddedStatement();
+
   @Nullable
   ValaExpression getExpression();
 

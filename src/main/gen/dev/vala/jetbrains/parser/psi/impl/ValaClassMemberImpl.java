@@ -29,9 +29,9 @@ public class ValaClassMemberImpl extends ASTWrapperPsiElement implements ValaCla
   }
 
   @Override
-  @Nullable
-  public ValaAttributes getAttributes() {
-    return findChildByClass(ValaAttributes.class);
+  @NotNull
+  public List<ValaAttributes> getAttributesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
   }
 
   @Override
@@ -42,8 +42,8 @@ public class ValaClassMemberImpl extends ASTWrapperPsiElement implements ValaCla
 
   @Override
   @Nullable
-  public ValaConstantDeclaration getConstantDeclaration() {
-    return findChildByClass(ValaConstantDeclaration.class);
+  public ValaConstantDeclarations getConstantDeclarations() {
+    return findChildByClass(ValaConstantDeclarations.class);
   }
 
   @Override

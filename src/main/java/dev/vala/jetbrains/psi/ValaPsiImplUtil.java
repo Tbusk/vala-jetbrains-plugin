@@ -5,8 +5,11 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.openapi.util.NlsSafe;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiReference;
 import com.intellij.psi.tree.TokenSet;
 import dev.vala.jetbrains.parser.psi.ValaIdentifier;
+import dev.vala.jetbrains.parser.psi.ValaMemberAccess;
+import dev.vala.jetbrains.parser.psi.ValaSimpleName;
 import dev.vala.jetbrains.parser.psi.ValaTypes;
 import org.jetbrains.annotations.Nullable;
 
@@ -80,7 +83,14 @@ public class ValaPsiImplUtil {
     }
 
     public static PsiElement getNameIdentifier(ValaNamedElement element) {
-        return element;
+
+        ASTNode identifierNode = element.getNode().findChildByType(ValaTypes.IDENTIFIER);
+
+        if (identifierNode != null) {
+            return identifierNode.getPsi();
+        }
+
+        return null;
     }
 
     public static PsiElement setName(ValaNamedElement element, String newName) {
@@ -95,6 +105,16 @@ public class ValaPsiImplUtil {
         }
 
         return element;
+    }
+
+    public static PsiReference getReference(ValaSimpleName simpleName) {
+
+        if (simpleName.getParent() instanceof ValaMemberAccess) {
+            return null;
+        }
+
+        return new ValaSimpleNameReference(simpleName);
+
     }
 
     public static ItemPresentation getPresentation(final ValaNamedElement element) {

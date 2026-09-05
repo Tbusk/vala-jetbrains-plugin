@@ -8,8 +8,8 @@ import dev.vala.jetbrains.psi.ValaNamedElement;
 
 public interface ValaParameter extends ValaNamedElement {
 
-  @Nullable
-  ValaAttributes getAttributes();
+  @NotNull
+  List<ValaAttributes> getAttributesList();
 
   @Nullable
   ValaExpression getExpression();

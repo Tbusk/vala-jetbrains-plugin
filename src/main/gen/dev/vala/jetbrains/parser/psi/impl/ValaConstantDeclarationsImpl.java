@@ -12,14 +12,14 @@ import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.vala.jetbrains.parser.psi.*;
 import dev.vala.jetbrains.psi.ValaPsiImplUtil;
 
-public class ValaPropertyAccessorImpl extends ASTWrapperPsiElement implements ValaPropertyAccessor {
+public class ValaConstantDeclarationsImpl extends ASTWrapperPsiElement implements ValaConstantDeclarations {
 
-  public ValaPropertyAccessorImpl(@NotNull ASTNode node) {
+  public ValaConstantDeclarationsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitPropertyAccessor(this);
+    visitor.visitConstantDeclarations(this);
   }
 
   @Override
@@ -36,26 +36,26 @@ public class ValaPropertyAccessorImpl extends ASTWrapperPsiElement implements Va
 
   @Override
   @NotNull
-  public List<ValaAttributes> getAttributesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
+  public List<ValaConstantDeclaration> getConstantDeclarationList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaConstantDeclaration.class);
   }
 
   @Override
   @Nullable
-  public ValaPropertyConstructAccessor getPropertyConstructAccessor() {
-    return findChildByClass(ValaPropertyConstructAccessor.class);
+  public ValaInlineArrayType getInlineArrayType() {
+    return findChildByClass(ValaInlineArrayType.class);
   }
 
   @Override
   @Nullable
-  public ValaPropertyGetAccessor getPropertyGetAccessor() {
-    return findChildByClass(ValaPropertyGetAccessor.class);
+  public ValaMemberDeclarationModifiers getMemberDeclarationModifiers() {
+    return findChildByClass(ValaMemberDeclarationModifiers.class);
   }
 
   @Override
-  @Nullable
-  public ValaPropertySetAccessor getPropertySetAccessor() {
-    return findChildByClass(ValaPropertySetAccessor.class);
+  @NotNull
+  public ValaType getType() {
+    return findNotNullChildByClass(ValaType.class);
   }
 
 }

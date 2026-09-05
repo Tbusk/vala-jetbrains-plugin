@@ -11,7 +11,7 @@ public interface ValaEmbeddedStatementWithoutBlock extends PsiElement {
   ValaBreakStatement getBreakStatement();
 
   @Nullable
-  ValaConstantDeclaration getConstantDeclaration();
+  ValaConstantDeclarations getConstantDeclarations();
 
   @Nullable
   ValaContinueStatement getContinueStatement();

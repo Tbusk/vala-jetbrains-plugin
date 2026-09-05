@@ -187,6 +187,9 @@ PREPROCESSOR_DIRECTIVE=("#if" | "#endif" | "#elif" | "#else") .* ("\r"|"\n"|"\r\
     "sizeof" { return ValaTypes.SIZEOF; }
     "typeof" { return ValaTypes.TYPEOF; }
 
+    // Lambda
+    "=>" { return ValaTypes.LAMBDA; }
+
     // Relational Operators
     ">" { return ValaTypes.GREATER_THAN; }
     "<" { return ValaTypes.LESS_THAN; }

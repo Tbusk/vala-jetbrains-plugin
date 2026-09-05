@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static dev.vala.jetbrains.parser.psi.ValaTypes.*;
-import dev.vala.jetbrains.psi.ValaNamedElementImpl;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.vala.jetbrains.parser.psi.*;
 import dev.vala.jetbrains.psi.ValaPsiImplUtil;
 
-public class ValaIdentifierImpl extends ValaNamedElementImpl implements ValaIdentifier {
+public class ValaIdentifierImpl extends ASTWrapperPsiElement implements ValaIdentifier {
 
-  public ValaIdentifierImpl(ASTNode node) {
+  public ValaIdentifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 

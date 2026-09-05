@@ -9,21 +9,12 @@ import dev.vala.jetbrains.psi.ValaNamedElement;
 public interface ValaConstantDeclaration extends ValaNamedElement {
 
   @Nullable
-  ValaAccessModifier getAccessModifier();
+  ValaExpression getExpression();
 
   @NotNull
-  List<ValaExpression> getExpressionList();
-
-  @NotNull
-  List<ValaIdentifier> getIdentifierList();
-
-  @NotNull
-  List<ValaInlineArrayType> getInlineArrayTypeList();
+  ValaIdentifier getIdentifier();
 
   @Nullable
-  ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
-
-  @NotNull
-  ValaType getType();
+  ValaInlineArrayType getInlineArrayType();
 
 }

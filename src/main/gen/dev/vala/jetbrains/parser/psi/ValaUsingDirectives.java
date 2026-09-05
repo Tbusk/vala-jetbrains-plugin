@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaUsingDirective extends PsiElement {
+public interface ValaUsingDirectives extends PsiElement {
 
   @NotNull
-  ValaSymbol getSymbol();
+  List<ValaUsingDirective> getUsingDirectiveList();
 
 }

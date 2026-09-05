@@ -42,8 +42,8 @@ public class ValaNamespaceDeclarationImpl extends ValaNamedElementImpl implement
 
   @Override
   @NotNull
-  public List<ValaUsingDirective> getUsingDirectiveList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaUsingDirective.class);
+  public List<ValaUsingDirectives> getUsingDirectivesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaUsingDirectives.class);
   }
 
 }

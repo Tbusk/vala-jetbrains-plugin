@@ -14,7 +14,7 @@ public interface ValaMainBlockMember extends PsiElement {
   List<ValaClassDeclaration> getClassDeclarationList();
 
   @NotNull
-  List<ValaConstantDeclaration> getConstantDeclarationList();
+  List<ValaConstantDeclarations> getConstantDeclarationsList();
 
   @NotNull
   List<ValaDelegateDeclaration> getDelegateDeclarationList();

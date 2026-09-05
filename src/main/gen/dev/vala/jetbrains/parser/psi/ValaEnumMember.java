@@ -7,11 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaEnumMember extends PsiElement {
 
-  @Nullable
-  ValaAttributes getAttributes();
+  @NotNull
+  List<ValaAttributes> getAttributesList();
 
   @Nullable
-  ValaConstantDeclaration getConstantDeclaration();
+  ValaConstantDeclarations getConstantDeclarations();
 
   @Nullable
   ValaMethodDeclaration getMethodDeclaration();

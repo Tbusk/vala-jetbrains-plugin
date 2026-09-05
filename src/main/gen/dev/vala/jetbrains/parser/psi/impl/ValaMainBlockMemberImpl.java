@@ -42,8 +42,8 @@ public class ValaMainBlockMemberImpl extends ASTWrapperPsiElement implements Val
 
   @Override
   @NotNull
-  public List<ValaConstantDeclaration> getConstantDeclarationList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaConstantDeclaration.class);
+  public List<ValaConstantDeclarations> getConstantDeclarationsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaConstantDeclarations.class);
   }
 
   @Override

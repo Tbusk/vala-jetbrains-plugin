@@ -14,7 +14,7 @@ public interface ValaStatement extends PsiElement {
   ValaBreakStatement getBreakStatement();
 
   @Nullable
-  ValaConstantDeclaration getConstantDeclaration();
+  ValaConstantDeclarations getConstantDeclarations();
 
   @Nullable
   ValaContinueStatement getContinueStatement();
