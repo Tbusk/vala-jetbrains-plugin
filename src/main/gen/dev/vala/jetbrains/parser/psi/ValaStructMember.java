@@ -7,11 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaStructMember extends PsiElement {
 
-  @Nullable
-  ValaAttributes getAttributes();
+  @NotNull
+  List<ValaAttributes> getAttributesList();
 
   @Nullable
-  ValaConstantDeclaration getConstantDeclaration();
+  ValaConstantDeclarations getConstantDeclarations();
 
   @Nullable
   ValaCreationMethodDeclaration getCreationMethodDeclaration();

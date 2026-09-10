@@ -36,6 +36,7 @@ public interface ValaTypes {
   IElementType CONDITIONAL_EXPRESSION = new ValaElementType("CONDITIONAL_EXPRESSION");
   IElementType CONDITIONAL_OR_EXPRESSION = new ValaElementType("CONDITIONAL_OR_EXPRESSION");
   IElementType CONSTANT_DECLARATION = new ValaElementType("CONSTANT_DECLARATION");
+  IElementType CONSTANT_DECLARATIONS = new ValaElementType("CONSTANT_DECLARATIONS");
   IElementType CONSTRUCTOR_DECLARATION = new ValaElementType("CONSTRUCTOR_DECLARATION");
   IElementType CONSTRUCTOR_DECLARATION_MODIFIER = new ValaElementType("CONSTRUCTOR_DECLARATION_MODIFIER");
   IElementType CONSTRUCTOR_DECLARATION_MODIFIERS = new ValaElementType("CONSTRUCTOR_DECLARATION_MODIFIERS");
@@ -156,6 +157,7 @@ public interface ValaTypes {
   IElementType UNARY_OPERATOR = new ValaElementType("UNARY_OPERATOR");
   IElementType UNLOCK_STATEMENT = new ValaElementType("UNLOCK_STATEMENT");
   IElementType USING_DIRECTIVE = new ValaElementType("USING_DIRECTIVE");
+  IElementType USING_DIRECTIVES = new ValaElementType("USING_DIRECTIVES");
   IElementType VALID_IDENTIFIER_KEYWORDS = new ValaElementType("VALID_IDENTIFIER_KEYWORDS");
   IElementType WHILE_STATEMENT = new ValaElementType("WHILE_STATEMENT");
   IElementType WITH_STATEMENT = new ValaElementType("WITH_STATEMENT");
@@ -227,6 +229,7 @@ public interface ValaTypes {
   IElementType INTERFACE = new ValaTokenType("interface");
   IElementType INTERNAL = new ValaTokenType("internal");
   IElementType IS = new ValaTokenType("is");
+  IElementType LAMBDA = new ValaTokenType("=>");
   IElementType LBRACE = new ValaTokenType("{");
   IElementType LBRACKET = new ValaTokenType("[");
   IElementType LESS_THAN = new ValaTokenType("<");
@@ -384,6 +387,9 @@ public interface ValaTypes {
       }
       else if (type == CONSTANT_DECLARATION) {
         return new ValaConstantDeclarationImpl(node);
+      }
+      else if (type == CONSTANT_DECLARATIONS) {
+        return new ValaConstantDeclarationsImpl(node);
       }
       else if (type == CONSTRUCTOR_DECLARATION) {
         return new ValaConstructorDeclarationImpl(node);
@@ -744,6 +750,9 @@ public interface ValaTypes {
       }
       else if (type == USING_DIRECTIVE) {
         return new ValaUsingDirectiveImpl(node);
+      }
+      else if (type == USING_DIRECTIVES) {
+        return new ValaUsingDirectivesImpl(node);
       }
       else if (type == VALID_IDENTIFIER_KEYWORDS) {
         return new ValaValidIdentifierKeywordsImpl(node);

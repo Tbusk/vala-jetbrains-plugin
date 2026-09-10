@@ -4,9 +4,8 @@ package dev.vala.jetbrains.parser.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import dev.vala.jetbrains.psi.ValaNamedElement;
 
-public interface ValaIdentifier extends ValaNamedElement {
+public interface ValaIdentifier extends PsiElement {
 
   @Nullable
   ValaValidIdentifierKeywords getValidIdentifierKeywords();

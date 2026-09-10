@@ -116,6 +116,10 @@
         <annotator language="Vala"
                    implementationClass="dev.vala.jetbrains.highlighting.ValaSyntaxHighlightingAnnotator"/>
 
+        <lang.elementManipulator
+            forClass="dev.vala.jetbrains.parser.psi.ValaSimpleName"
+            implementationClass="dev.vala.jetbrains.psi.ValaSimpleNameManipulator"/>
+
         <configurationType
             implementation="dev.vala.jetbrains.linter.ValaLintRunConfigurationType"/>
 

@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static dev.vala.jetbrains.parser.psi.ValaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import dev.vala.jetbrains.psi.ValaNamedElementImpl;
 import dev.vala.jetbrains.parser.psi.*;
 import dev.vala.jetbrains.psi.ValaPsiImplUtil;
 
-public class ValaEnumvalueImpl extends ASTWrapperPsiElement implements ValaEnumvalue {
+public class ValaEnumvalueImpl extends ValaNamedElementImpl implements ValaEnumvalue {
 
-  public ValaEnumvalueImpl(@NotNull ASTNode node) {
+  public ValaEnumvalueImpl(ASTNode node) {
     super(node);
   }
 
@@ -29,9 +29,9 @@ public class ValaEnumvalueImpl extends ASTWrapperPsiElement implements ValaEnumv
   }
 
   @Override
-  @Nullable
-  public ValaAttributes getAttributes() {
-    return findChildByClass(ValaAttributes.class);
+  @NotNull
+  public List<ValaAttributes> getAttributesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
   }
 
   @Override

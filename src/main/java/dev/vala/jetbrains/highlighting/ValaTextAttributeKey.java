@@ -91,7 +91,7 @@ public class ValaTextAttributeKey {
 
     public static final TextAttributesKey ATTRIBUTE = TextAttributesKey.createTextAttributesKey(
         "VALA_ATTRIBUTE",
-        DefaultLanguageHighlighterColors.PARAMETER
+        DefaultLanguageHighlighterColors.METADATA
     );
 
     public static final TextAttributesKey IDENTIFIER = TextAttributesKey.createTextAttributesKey(
@@ -101,6 +101,16 @@ public class ValaTextAttributeKey {
 
     public static final TextAttributesKey INSTANCE_VARIABLE = TextAttributesKey.createTextAttributesKey(
         "VALA_INSTANCE_VARIABLE",
+        DefaultLanguageHighlighterColors.INSTANCE_FIELD
+    );
+
+    public static final TextAttributesKey STATIC_VARIABLE = TextAttributesKey.createTextAttributesKey(
+        "VALA_STATIC_VARIABLE",
+        DefaultLanguageHighlighterColors.STATIC_FIELD
+    );
+
+    public static final TextAttributesKey OBJECT_INITIALIZER = TextAttributesKey.createTextAttributesKey(
+        "VALA_OBJECT_INITIALIZER",
         DefaultLanguageHighlighterColors.INSTANCE_FIELD
     );
 

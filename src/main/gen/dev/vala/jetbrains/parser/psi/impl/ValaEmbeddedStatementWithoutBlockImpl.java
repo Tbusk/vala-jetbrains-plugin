@@ -36,8 +36,8 @@ public class ValaEmbeddedStatementWithoutBlockImpl extends ASTWrapperPsiElement 
 
   @Override
   @Nullable
-  public ValaConstantDeclaration getConstantDeclaration() {
-    return findChildByClass(ValaConstantDeclaration.class);
+  public ValaConstantDeclarations getConstantDeclarations() {
+    return findChildByClass(ValaConstantDeclarations.class);
   }
 
   @Override

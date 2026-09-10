@@ -15,6 +15,6 @@ public interface ValaNamespaceDeclaration extends ValaNamedElement {
   ValaSymbol getSymbol();
 
   @NotNull
-  List<ValaUsingDirective> getUsingDirectiveList();
+  List<ValaUsingDirectives> getUsingDirectivesList();
 
 }

@@ -29,9 +29,9 @@ public class ValaErrorcodeImpl extends ASTWrapperPsiElement implements ValaError
   }
 
   @Override
-  @Nullable
-  public ValaAttributes getAttributes() {
-    return findChildByClass(ValaAttributes.class);
+  @NotNull
+  public List<ValaAttributes> getAttributesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaAttributes.class);
   }
 
   @Override

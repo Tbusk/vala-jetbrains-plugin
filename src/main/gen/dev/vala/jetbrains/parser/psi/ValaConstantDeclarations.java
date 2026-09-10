@@ -5,21 +5,21 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface ValaPropertyAccessor extends PsiElement {
+public interface ValaConstantDeclarations extends PsiElement {
 
   @Nullable
   ValaAccessModifier getAccessModifier();
 
   @NotNull
-  List<ValaAttributes> getAttributesList();
+  List<ValaConstantDeclaration> getConstantDeclarationList();
 
   @Nullable
-  ValaPropertyConstructAccessor getPropertyConstructAccessor();
+  ValaInlineArrayType getInlineArrayType();
 
   @Nullable
-  ValaPropertyGetAccessor getPropertyGetAccessor();
+  ValaMemberDeclarationModifiers getMemberDeclarationModifiers();
 
-  @Nullable
-  ValaPropertySetAccessor getPropertySetAccessor();
+  @NotNull
+  ValaType getType();
 
 }

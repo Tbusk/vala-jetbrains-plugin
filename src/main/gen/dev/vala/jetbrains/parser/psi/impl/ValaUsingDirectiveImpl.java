@@ -30,8 +30,8 @@ public class ValaUsingDirectiveImpl extends ASTWrapperPsiElement implements Vala
 
   @Override
   @NotNull
-  public List<ValaSymbol> getSymbolList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaSymbol.class);
+  public ValaSymbol getSymbol() {
+    return findNotNullChildByClass(ValaSymbol.class);
   }
 
 }

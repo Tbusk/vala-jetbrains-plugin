@@ -8,18 +8,18 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static dev.vala.jetbrains.parser.psi.ValaTypes.*;
-import dev.vala.jetbrains.psi.ValaSimpleNameMixin;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.vala.jetbrains.parser.psi.*;
 import dev.vala.jetbrains.psi.ValaPsiImplUtil;
 
-public class ValaSimpleNameImpl extends ValaSimpleNameMixin implements ValaSimpleName {
+public class ValaUsingDirectivesImpl extends ASTWrapperPsiElement implements ValaUsingDirectives {
 
-  public ValaSimpleNameImpl(ASTNode node) {
+  public ValaUsingDirectivesImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull ValaVisitor visitor) {
-    visitor.visitSimpleName(this);
+    visitor.visitUsingDirectives(this);
   }
 
   @Override
@@ -30,14 +30,8 @@ public class ValaSimpleNameImpl extends ValaSimpleNameMixin implements ValaSimpl
 
   @Override
   @NotNull
-  public ValaIdentifier getIdentifier() {
-    return findNotNullChildByClass(ValaIdentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public ValaTypeArguments getTypeArguments() {
-    return findChildByClass(ValaTypeArguments.class);
+  public List<ValaUsingDirective> getUsingDirectiveList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, ValaUsingDirective.class);
   }
 
 }

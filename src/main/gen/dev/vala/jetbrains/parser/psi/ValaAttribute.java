@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface ValaAttribute extends PsiElement {
 
-  @NotNull
-  List<ValaAttributeArguments> getAttributeArgumentsList();
+  @Nullable
+  ValaAttributeArguments getAttributeArguments();
 
   @NotNull
-  List<ValaIdentifier> getIdentifierList();
+  ValaIdentifier getIdentifier();
 
 }

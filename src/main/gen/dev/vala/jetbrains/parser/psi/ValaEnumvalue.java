@@ -4,11 +4,12 @@ package dev.vala.jetbrains.parser.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import dev.vala.jetbrains.psi.ValaNamedElement;
 
-public interface ValaEnumvalue extends PsiElement {
+public interface ValaEnumvalue extends ValaNamedElement {
 
-  @Nullable
-  ValaAttributes getAttributes();
+  @NotNull
+  List<ValaAttributes> getAttributesList();
 
   @Nullable
   ValaExpression getExpression();

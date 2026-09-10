@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static dev.vala.jetbrains.parser.psi.ValaTypes.*;
-import dev.vala.jetbrains.psi.ValaNamedElementImpl;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import dev.vala.jetbrains.parser.psi.*;
 import dev.vala.jetbrains.psi.ValaPsiImplUtil;
 
-public class ValaYieldExpressionImpl extends ValaNamedElementImpl implements ValaYieldExpression {
+public class ValaYieldExpressionImpl extends ASTWrapperPsiElement implements ValaYieldExpression {
 
-  public ValaYieldExpressionImpl(ASTNode node) {
+  public ValaYieldExpressionImpl(@NotNull ASTNode node) {
     super(node);
   }
 

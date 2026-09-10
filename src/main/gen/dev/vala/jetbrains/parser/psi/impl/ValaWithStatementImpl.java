@@ -29,6 +29,12 @@ public class ValaWithStatementImpl extends ASTWrapperPsiElement implements ValaW
   }
 
   @Override
+  @NotNull
+  public ValaEmbeddedStatement getEmbeddedStatement() {
+    return findNotNullChildByClass(ValaEmbeddedStatement.class);
+  }
+
+  @Override
   @Nullable
   public ValaExpression getExpression() {
     return findChildByClass(ValaExpression.class);
